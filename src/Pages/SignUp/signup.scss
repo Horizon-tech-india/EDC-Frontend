@@ -1,0 +1,44 @@
+.signup {
+  &__nav {
+    font-family: "Adamina";
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    &-link {
+      & span {
+        vertical-align: middle;
+      }
+      & a {
+        margin-left: 5px;
+        text-decoration: none;
+      }
+    }
+    &-current {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      &--1 {
+        color: #bdbdbd;
+      }
+      &--2 {
+        color: #8692a6;
+      }
+      & p {
+        margin: 0;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.login-link {
+  display: flex;
+  font-family: "Adamina";
+  justify-content: center;
+
+  & p {
+    color: #bdbdbd;
+    margin: 0;
+    margin-right: 5px;
+  }
+}
