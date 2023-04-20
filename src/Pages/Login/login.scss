@@ -98,12 +98,28 @@
 .input-block {
   margin: 1rem 0rem;
 
+  & select {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid #a2a2a6;
+    outline: none;
+    margin-top: 3px;
+  }
+
   &__input {
     display: flex;
     border: 1px solid #a2a2a6;
     padding: 6px 12px;
     border-radius: 4px;
     font-family: "Adamina";
+
+    &--dropdown {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+    }
   }
 
   & input {
@@ -149,6 +165,7 @@
     font-size: 12px;
     font-weight: 600;
     color: red;
+    margin-top: 2px;
   }
 }
 
@@ -180,6 +197,8 @@
     list-style-type: none;
     display: flex;
     justify-content: space-around;
+    max-width: 20rem;
+    margin: auto;
   }
 
   &__item {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import "../Login/login.scss";
 import "./signup.scss";
@@ -19,21 +19,24 @@ const initialValues = {
 
 const SignUpStep1 = () => {
   const [passwordHidden, setPasswordHidden] = useState(true);
+  const navigate = useNavigate();
 
   const {
     values,
-    errors: errors,
-    touched: touched,
-    handleBlur: handleBlur,
-    handleChange: handleChange,
-    handleSubmit: handleSubmit,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: signupSchemaStep1,
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      //POST REQUEST
+      navigate("/signup/2");
+    },
   });
 
-  console.log(values);
   return (
     <>
       <div className="login__head">
@@ -41,33 +44,35 @@ const SignUpStep1 = () => {
         <p>Fill the details below to submit register account</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="input-block input-block--grid">
-          <div>
-            <label htmlFor="first_name">First Name</label>
-            <div className="input-block__input">
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={values.first_name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Your Firstname*"
-              />
+        <div className="input-block">
+          <div className="input-block--grid">
+            <div>
+              <label htmlFor="first_name">First Name</label>
+              <div className="input-block__input">
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value={values.first_name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Your Firstname"
+                />
+              </div>
             </div>
-          </div>
-          <div>
-            <label htmlFor="last_name">Last Name</label>
-            <div className="input-block__input">
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={values.last_name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Your Lastname*"
-              />
+            <div>
+              <label htmlFor="last_name">Last Name</label>
+              <div className="input-block__input">
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value={values.last_name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Your Lastname"
+                />
+              </div>
             </div>
           </div>
           {(errors.first_name || errors.last_name) &&
@@ -90,7 +95,7 @@ const SignUpStep1 = () => {
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Your email*"
+              placeholder="Your email"
             />
           </div>
           {errors.email && touched.email ? (
@@ -104,13 +109,13 @@ const SignUpStep1 = () => {
               <img src={phone} alt="" />
             </span>
             <input
-              type="number"
+              type="tel"
               id="phone_number"
               name="phone_number"
               value={values.phone_number}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="(+123) 9876543210*"
+              placeholder="(+123) 9876543210"
             />
           </div>
           {errors.phone_number && touched.phone_number ? (
@@ -130,7 +135,7 @@ const SignUpStep1 = () => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Your password*"
+              placeholder="Your password"
             />
             <span onClick={() => setPasswordHidden(!passwordHidden)}>
               <img src={eyeOff} alt="" />

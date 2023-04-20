@@ -9,7 +9,6 @@ import eyeOff from "../../assets/eye-off.svg";
 import facebook from "../../assets/facebook.svg";
 import google from "../../assets/google.svg";
 import linkedin from "../../assets/linkedin.svg";
-import hero from "../../assets/hero.png";
 
 const initialValues = {
   email: "",
@@ -29,7 +28,9 @@ const Login = () => {
   } = useFormik({
     initialValues,
     validationSchema: loginSchema,
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      //POST REQUEST
+    },
   });
 
   return (
@@ -41,7 +42,7 @@ const Login = () => {
       <div className="login__container">
         <div className="signup-link">
           <p>Don't have an account?</p>
-          <Link to="/signup">Signup</Link>
+          <Link to="/signup/1">Signup</Link>
         </div>
         <div className="login__head">
           <h2>Welcome</h2>
@@ -61,7 +62,7 @@ const Login = () => {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Your email*"
+                placeholder="Your email"
               />
             </div>
             {errors.email && touched.email ? (
@@ -81,7 +82,7 @@ const Login = () => {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Your password*"
+                placeholder="Your password"
               />
               <span onClick={() => setPasswordHidden(!passwordHidden)}>
                 <img src={eyeOff} alt="" />

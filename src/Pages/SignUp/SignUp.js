@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../Login/login.scss";
 import SignUpStep1 from "./SignUpStep1";
+import SignUpStep2 from "./SignUpStep2";
+import SignUpStep3 from "./SignUpStep3";
 import left from "../../assets/left.svg";
 
-const SignUp = () => {
+const SignUp = ({ step }) => {
   return (
     <div className="wrapper">
       <div className="banner">
@@ -17,14 +19,26 @@ const SignUp = () => {
             <span>
               <img src={left} alt="" />
             </span>
-            <Link to="/">Back</Link>
+            <Link
+              to={
+                step === 1 ? "/login" : step === 2 ? "/signup/1" : "/signup/2"
+              }
+            >
+              Back
+            </Link>
           </div>
           <div className="signup__nav-current">
-            <p className="signup__nav-current--1">Step 1 of 3</p>
+            <p className="signup__nav-current--1">Step {step} of 3</p>
             <p className="signup__nav-current--2">Signup</p>
           </div>
         </nav>
-        <SignUpStep1 />
+        {step === 1 ? (
+          <SignUpStep1 />
+        ) : step === 2 ? (
+          <SignUpStep2 />
+        ) : (
+          <SignUpStep3 />
+        )}
       </div>
     </div>
   );
