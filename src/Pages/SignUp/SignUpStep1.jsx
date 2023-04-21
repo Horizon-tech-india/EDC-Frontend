@@ -29,7 +29,7 @@ const SignUpStep1 = () => {
     handleChange,
     handleSubmit,
   } = useFormik({
-    initialValues: initialValues,
+    initialValues,
     validationSchema: signupSchemaStep1,
     onSubmit: (values) => {
       //POST REQUEST

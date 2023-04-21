@@ -16,7 +16,7 @@ const initialValues = {
 };
 
 const Login = () => {
-  const [passwordHidden, setPasswordHidden] = useState(false);
+  const [passwordHidden, setPasswordHidden] = useState(true);
 
   const {
     values,
@@ -103,7 +103,7 @@ const Login = () => {
               />
               <label htmlFor="remember_me">Remember Me</label>
             </div>
-            <Link to="/">Forgot Password?</Link>
+            <Link to="/forgot-password/1">Forgot Password?</Link>
           </div>
           <div className="input-block">
             <button className="submit-btn" type="submit">
