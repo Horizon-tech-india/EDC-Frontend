@@ -8,16 +8,17 @@ import lock from "../../assets/lock.svg";
 import mail from "../../assets/mail.svg";
 import eyeOff from "../../assets/eye-off.svg";
 import phone from "../../assets/phone.svg";
+import axios from "axios";
 
 const initialValues = {
-  first_name: "",
-  last_name: "",
-  email: "",
-  phone_number: "",
+  firstName: "",
+  lastName: "",
   password: "",
+  email: "",
+  phoneNumber: "",
 };
 
-const SignUpStep1 = () => {
+const SignUpStep1 = ({ setEmail }) => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
 
@@ -29,14 +30,21 @@ const SignUpStep1 = () => {
     handleChange,
     handleSubmit,
   } = useFormik({
-    initialValues: initialValues,
+    initialValues,
     validationSchema: signupSchemaStep1,
     onSubmit: (values) => {
+      setEmail(values.email);
       //POST REQUEST
-      navigate("/signup/2");
+      axios
+        .post("https://localhost:9000/users/signup", values)
+        .then((response) => {
+          navigate("/signup/2");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   });
-
   return (
     <>
       <div className="login__head">
@@ -47,13 +55,13 @@ const SignUpStep1 = () => {
         <div className="input-block">
           <div className="input-block--grid">
             <div>
-              <label htmlFor="first_name">First Name</label>
+              <label htmlFor="firstName">First Name</label>
               <div className="input-block__input">
                 <input
                   type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={values.first_name}
+                  id="firstName"
+                  name="firstName"
+                  value={values.firstName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Your Firstname"
@@ -61,13 +69,13 @@ const SignUpStep1 = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="last_name">Last Name</label>
+              <label htmlFor="lastName">Last Name</label>
               <div className="input-block__input">
                 <input
                   type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={values.last_name}
+                  id="lastName"
+                  name="lastName"
+                  value={values.lastName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Your Lastname"
@@ -75,10 +83,10 @@ const SignUpStep1 = () => {
               </div>
             </div>
           </div>
-          {(errors.first_name || errors.last_name) &&
-          (touched.first_name || touched.last_name) ? (
+          {(errors.firstName || errors.lastName) &&
+          (touched.firstName || touched.lastName) ? (
             <p className="input-block__error">
-              {errors.first_name ? errors.first_name : errors.last_name}
+              {errors.firstName ? errors.firstName : errors.lastName}
             </p>
           ) : null}
         </div>
@@ -103,23 +111,23 @@ const SignUpStep1 = () => {
           ) : null}
         </div>
         <div className="input-block">
-          <label htmlFor="phone_number">Phone Number</label>
+          <label htmlFor="phoneNumber">Phone Number</label>
           <div className="input-block__input">
             <span>
               <img src={phone} alt="" />
             </span>
             <input
               type="tel"
-              id="phone_number"
-              name="phone_number"
-              value={values.phone_number}
+              id="phoneNumber"
+              name="phoneNumber"
+              value={values.phoneNumber}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="(+123) 9876543210"
             />
           </div>
-          {errors.phone_number && touched.phone_number ? (
-            <p className="input-block__error">{errors.phone_number}</p>
+          {errors.phoneNumber && touched.phoneNumber ? (
+            <p className="input-block__error">{errors.phoneNumber}</p>
           ) : null}
         </div>
         <div className="input-block">

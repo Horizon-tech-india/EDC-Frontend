@@ -4,7 +4,7 @@ import "../Login/login.scss";
 import "./signup.scss";
 import axios from "axios";
 
-const SignUpStep3 = ({ email }) => {
+const SignUpStep2 = ({ email }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
 
@@ -13,14 +13,15 @@ const SignUpStep3 = ({ email }) => {
     otpCopy[value - 1] = event.target.value;
     setOtp(otpCopy);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const body = { email: email, otp: otp.join(""), isForgotPassword: false };
+    const body = { email, otp: otp.join(""), isForgotPassword: true };
     //POST REQUEST
     axios
       .post("https://localhost:9000/users/verify-mail-otp", body)
       .then((response) => {
-        navigate("/login");
+        navigate("/forgot-password/3");
       })
       .catch((error) => {
         console.error(error);
@@ -121,16 +122,16 @@ const SignUpStep3 = ({ email }) => {
         </div>
         <div className="input-block">
           <button className="submit-btn" type="submit">
-            Verify
+            Next
           </button>
         </div>
       </form>
-      <div className="login-link">
-        <p>Didn't Receive code?</p>
-        <Link>Resend Code</Link>
+      <div className="login-link login-link--column">
+        <p>Didn't Receive any email? Check in spam or</p>
+        <Link to="/forgot-password/1">Try another email address</Link>
       </div>
     </>
   );
 };
 
-export default SignUpStep3;
+export default SignUpStep2;

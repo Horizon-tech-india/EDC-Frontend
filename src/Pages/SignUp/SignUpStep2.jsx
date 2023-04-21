@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import { signupSchemaStep2 } from "./formSchema";
 import "../Login/login.scss";
 import "./signup.scss";
+import axios from "axios";
+
 
 const initialValues = {
   first_name: "",
@@ -26,7 +28,7 @@ const SignUpStep2 = () => {
     validationSchema: signupSchemaStep2,
     onSubmit: (values) => {
       //POST REQUEST
-      navigate("/signup/3");
+      
     },
   });
   const navigate = useNavigate();
