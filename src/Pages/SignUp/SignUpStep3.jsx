@@ -54,7 +54,8 @@ const SignUpStep3 = ({ email }) => {
     axios
       .post("https://localhost:9000/users/resend-otp", body)
       .then((response) => {
-        navigate("/login");
+        setError("Code sent");
+        setOpen(true);
       })
       .catch((error) => {
         console.error(error);
