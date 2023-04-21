@@ -4,7 +4,10 @@ export const signupSchemaStep1 = Yup.object({
   first_name: Yup.string().required("Please enter your Full Name"),
   last_name: Yup.string().required("Please enter your Full Name"),
   email: Yup.string().email().required("Please enter your Email"),
-  phone_number: Yup.number().required("Please enter a valid phone number"),
+  phone_number: Yup.string().matches(/^[0-9]\d{9}$/, {
+    message: "Please enter valid number.",
+    excludeEmptyString: false,
+  }),
   password: Yup.string().min(6).required("Please enter your Password"),
 });
 
