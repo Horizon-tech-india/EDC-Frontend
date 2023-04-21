@@ -9,6 +9,8 @@ import mail from "../../assets/mail.svg";
 import eyeOff from "../../assets/eye-off.svg";
 import phone from "../../assets/phone.svg";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const initialValues = {
   firstName: "",
@@ -19,6 +21,9 @@ const initialValues = {
 };
 
 const SignUpStep1 = ({ setEmail }) => {
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
 
@@ -42,11 +47,18 @@ const SignUpStep1 = ({ setEmail }) => {
         })
         .catch((error) => {
           console.error(error);
+          setError(error.response.data.message);
+          setOpen(true);
         });
     },
   });
   return (
     <>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <div className="login__head">
         <h2>Register your account</h2>
         <p>Fill the details below to submit register account</p>

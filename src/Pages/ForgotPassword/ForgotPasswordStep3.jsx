@@ -7,6 +7,8 @@ import "./signup.scss";
 import lock from "../../assets/lock.svg";
 import eyeOff from "../../assets/eye-off.svg";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const initialValues = {
   new_password: "",
@@ -14,6 +16,9 @@ const initialValues = {
 };
 
 const SignUpStep3 = ({ email }) => {
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
   const [passwordHidden1, setPasswordHidden1] = useState(true);
   const [passwordHidden2, setPasswordHidden2] = useState(true);
 
@@ -41,6 +46,8 @@ const SignUpStep3 = ({ email }) => {
         })
         .catch((error) => {
           console.error(error);
+          setError(error.response.data.message);
+          setOpen(true);
         });
     },
   });
@@ -48,6 +55,11 @@ const SignUpStep3 = ({ email }) => {
 
   return (
     <>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <div className="login__head">
         <h2>Create New Password</h2>
         <p>Enter the new password for your account</p>

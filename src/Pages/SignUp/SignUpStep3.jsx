@@ -3,8 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Login/login.scss";
 import "./signup.scss";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const SignUpStep3 = ({ email }) => {
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
 
@@ -12,19 +17,6 @@ const SignUpStep3 = ({ email }) => {
     let otpCopy = otp;
     otpCopy[value - 1] = event.target.value;
     setOtp(otpCopy);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const body = { email: email, otp: otp.join(""), isForgotPassword: false };
-    //POST REQUEST
-    axios
-      .post("https://localhost:9000/users/verify-mail-otp", body)
-      .then((response) => {
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 
   const inputfocus = (elmnt) => {
@@ -40,8 +32,41 @@ const SignUpStep3 = ({ email }) => {
       }
     }
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const body = { email: email, otp: otp.join(""), isForgotPassword: false };
+    //POST REQUEST
+    axios
+      .post("https://localhost:9000/users/verify-mail-otp", body)
+      .then((response) => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error.response.data.message);
+        setOpen(true);
+      });
+  };
+
+  const handleResendCode = () => {
+    const body = { email: email, isForgotPassword: false };
+    axios
+      .post("https://localhost:9000/users/resend-otp", body)
+      .then((response) => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <div className="login__head">
         <h2>Check your Mail</h2>
         <p>
@@ -127,7 +152,7 @@ const SignUpStep3 = ({ email }) => {
       </form>
       <div className="login-link">
         <p>Didn't Receive code?</p>
-        <Link>Resend Code</Link>
+        <Link onClick={handleResendCode}>Resend Code</Link>
       </div>
     </>
   );
