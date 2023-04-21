@@ -3,8 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Login/login.scss";
 import "./signup.scss";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const SignUpStep2 = ({ email }) => {
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
 
@@ -25,6 +30,8 @@ const SignUpStep2 = ({ email }) => {
       })
       .catch((error) => {
         console.error(error);
+        setError(error.response.data.message);
+        setOpen(true);
       });
   };
 
@@ -43,6 +50,11 @@ const SignUpStep2 = ({ email }) => {
   };
   return (
     <>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <div className="login__head">
         <h2>Check your Mail</h2>
         <p>
