@@ -36,7 +36,7 @@
     margin: 40px auto;
     display: flex;
     flex-direction: column;
-    flex-shrink: 1;
+    
 }
 
 .gallery-row1, .gallery-row2 {
@@ -60,6 +60,8 @@
     
     .gallery-row1, .gallery-row2 {
         flex-direction: column;
+        align-items: center;
     }
+   
 
   }
