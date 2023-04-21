@@ -1,20 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Login/login.scss";
 import "./signup.scss";
+import axios from "axios";
 
-const SignUpStep3 = () => {
+const SignUpStep3 = ({ email }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const navigate = useNavigate();
 
   const handleChange = (value, event) => {
     let otpCopy = otp;
     otpCopy[value - 1] = event.target.value;
     setOtp(otpCopy);
   };
-
   const handleSubmit = (event) => {
-    const data = Number(otp.join(""));
+    event.preventDefault();
+    const body = { email: email, otp: otp.join(""), isForgotPassword: false };
     //POST REQUEST
+    axios
+      .post("https://localhost:9000/users/verify-mail-otp", body)
+      .then((response) => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const inputfocus = (elmnt) => {

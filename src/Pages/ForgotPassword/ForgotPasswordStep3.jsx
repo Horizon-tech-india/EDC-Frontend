@@ -6,13 +6,14 @@ import "../Login/login.scss";
 import "./signup.scss";
 import lock from "../../assets/lock.svg";
 import eyeOff from "../../assets/eye-off.svg";
+import axios from "axios";
 
 const initialValues = {
   new_password: "",
   confirm_password: "",
 };
 
-const SignUpStep3 = () => {
+const SignUpStep3 = ({ email }) => {
   const [passwordHidden1, setPasswordHidden1] = useState(true);
   const [passwordHidden2, setPasswordHidden2] = useState(true);
 
@@ -27,8 +28,20 @@ const SignUpStep3 = () => {
     initialValues,
     validationSchema: forgotPasswordSchemaStep3,
     onSubmit: (values) => {
+      const body = {
+        email,
+        newPassword: values.new_password,
+        confirmNewPassword: values.confirm_password,
+      };
       //POST REQUEST
-      navigate("/login");
+      axios
+        .post("https://localhost:9000/users/set-new-password", body)
+        .then((response) => {
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   });
   const navigate = useNavigate();

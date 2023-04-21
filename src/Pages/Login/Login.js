@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import "./login.scss";
 import loginSchema from "./formSchema";
@@ -9,14 +9,17 @@ import eyeOff from "../../assets/eye-off.svg";
 import facebook from "../../assets/facebook.svg";
 import google from "../../assets/google.svg";
 import linkedin from "../../assets/linkedin.svg";
+import axios from "axios";
 
 const initialValues = {
   email: "",
   password: "",
+  rememberMe: false,
 };
 
 const Login = () => {
   const [passwordHidden, setPasswordHidden] = useState(true);
+  const navigate = useNavigate();
 
   const {
     values,
@@ -30,6 +33,14 @@ const Login = () => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       //POST REQUEST
+      axios
+        .post("https://localhost:9000/users/login", values)
+        .then((response) => {
+          navigate("/home");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   });
 
@@ -96,12 +107,12 @@ const Login = () => {
             <div>
               <input
                 type="checkbox"
-                id="remember_me"
-                name="remember_me"
-                value={values.remember_me}
+                id="rememberMe"
+                name="remember_Me"
+                value={values.rememberMe}
                 onChange={handleChange}
               />
-              <label htmlFor="remember_me">Remember Me</label>
+              <label htmlFor="rememberMe">Remember Me</label>
             </div>
             <Link to="/forgot-password/1">Forgot Password?</Link>
           </div>

@@ -5,12 +5,13 @@ import "../Login/login.scss";
 import "./signup.scss";
 import { forgotPasswordSchemaStep1 } from "./formSchema";
 import mail from "../../assets/mail.svg";
+import axios from "axios";
 
 const initialValues = {
   email: "",
 };
 
-const SignUpStep1 = () => {
+const SignUpStep1 = ({ setEmail }) => {
   const navigate = useNavigate();
 
   const {
@@ -24,8 +25,17 @@ const SignUpStep1 = () => {
     initialValues,
     validationSchema: forgotPasswordSchemaStep1,
     onSubmit: (values) => {
+      setEmail(values.email);
+      const body = { email: values.email, isForgotPassword: true };
       //POST REQUEST
-      navigate("/forgot-password/2");
+      axios
+        .post("https://localhost:9000/users/resend-otp", body)
+        .then((response) => {
+          navigate("/forgot-password/2");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   });
 

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Login/login.scss";
 import "./signup.scss";
+import axios from "axios";
 
-const SignUpStep2 = () => {
+const SignUpStep2 = ({ email }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
 
@@ -14,9 +15,17 @@ const SignUpStep2 = () => {
   };
 
   const handleSubmit = (event) => {
-    const data = Number(otp.join(""));
+    event.preventDefault();
+    const body = { email, otp: otp.join(""), isForgotPassword: true };
     //POST REQUEST
-    navigate("/forgot-password/3");
+    axios
+      .post("https://localhost:9000/users/verify-mail-otp", body)
+      .then((response) => {
+        navigate("/forgot-password/3");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const inputfocus = (elmnt) => {

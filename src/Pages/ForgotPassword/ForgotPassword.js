@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Login/login.scss";
 import ForgotPasswordStep1 from "./ForgotPasswordStep1";
@@ -7,6 +7,8 @@ import ForgotPasswordStep3 from "./ForgotPasswordStep3";
 import left from "../../assets/left.svg";
 
 const SignUp = ({ step }) => {
+  const [email, setEmail] = useState("");
+
   return (
     <div className="wrapper">
       <div className="banner">
@@ -37,11 +39,11 @@ const SignUp = ({ step }) => {
           </div>
         </nav>
         {step === 1 ? (
-          <ForgotPasswordStep1 />
+          <ForgotPasswordStep1 setEmail={setEmail} />
         ) : step === 2 ? (
-          <ForgotPasswordStep2 />
+          <ForgotPasswordStep2 email={email} />
         ) : (
-          <ForgotPasswordStep3 />
+          <ForgotPasswordStep3 email={email} />
         )}
       </div>
     </div>
