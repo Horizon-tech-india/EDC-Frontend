@@ -1,8 +1,8 @@
 import React from "react";
 import parul3 from "../assets/parul3.png";
-import '../styles/banner.scss'
+import '../styles/headerImg.scss'
 
-const BannerImg = () => {
+const HeaderImg = () => {
   return (
     <div className="image-wrapper">
         <img src={parul3} />
@@ -10,4 +10,4 @@ const BannerImg = () => {
   );
 };
 
-export default BannerImg;
+export default HeaderImg;

@@ -1,9 +1,9 @@
 import React from 'react'
 import logo from "../assets/logo.png"
 import { Button } from 'react-bootstrap';
-import twticon from "../assets/links/UI/twitter.png"
-import fbicon from "../assets/links/UI/facebook.png"
-import igicon from "../assets/links/UI/instagram.png"
+import twticon from "../assets/links/UI/twitter.svg"
+import fbicon from "../assets/links/UI/facebook.svg"
+import igicon from "../assets/links/UI/instagram.svg"
 
 import "../styles/footer.css";
 

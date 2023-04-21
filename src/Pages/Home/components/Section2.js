@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, styled} from "@mui/material";
-import logo1 from "../assets/icons/home.png"
-import logo2 from "../assets/icons/location.png"
-import logo3 from "../assets/icons/documents.png"
-import logo4 from "../assets/icons/badge.png"
+import logo1 from "../assets/icons/home.svg"
+import logo2 from "../assets/icons/location.svg"
+import logo3 from "../assets/icons/documents.svg"
+import logo4 from "../assets/icons/badge.svg"
 
 
 import "../styles/section2.css";
@@ -75,7 +75,7 @@ const Section2 = () => {
                 </div>
 
 
-                <div className='column2 components.container'>
+                <div className='column2 components-container'>
                     <div className='coumn2-row1'>
                         <div className='card1'>
                             <Card image={logo1} alt="img" heading="Leaders in Idea Innovation" para="Lorem ipsum dolor sit amet adipcing aqua lorem ipsum"/>
