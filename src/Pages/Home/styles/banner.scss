@@ -1,11 +1,9 @@
 
 .image-wrapper {
     width: 100%;
-    background-color: black;
   
     & img {
       width: 100%;
-      opacity: 0.4;
     
       object-fit: cover;
       @media screen and (min-width: 800px) {

@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, styled} from "@mui/material";
 import "../styles/section1.css";
 import sampleVideo from "../assets/sample.mp4";
+import thumbnail from "../assets/thumbnail.png";
+import PlayBtn from "../assets/icons/playButton.png"
 
 
 
@@ -10,8 +12,8 @@ const Section1 = () => {
 
   const VideoPlayer = () => {
     return (
-      <video controls className='videoSample'>
-        <source src={ sampleVideo } type="video/mp4 " style={{width:'100%', height: 'auto'}} />
+      <video src={ sampleVideo } controls poster={ thumbnail } className='videoSample'>
+         
       </video>
     );
   };
