@@ -4,6 +4,7 @@ import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
 import Home from "./Pages/Home/Home";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
+import ApplicationStatus from "./Pages/ApplicationStatus/ApplicationStatus";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route exact path="/signup/1" element={<SignUp step={1} />} />
           <Route exact path="/signup/2" element={<SignUp step={2} />} />
           <Route exact path="/home" element={<Home />} />
+          <Route exact path="/application" element={<ApplicationStatus />} />
           <Route
             exact
             path="/forgot-password/1"
