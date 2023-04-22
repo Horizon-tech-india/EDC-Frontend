@@ -6,7 +6,7 @@ import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-const SignUpStep3 = ({ email }) => {
+const SignUpStep2 = ({ email }) => {
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -17,6 +17,22 @@ const SignUpStep3 = ({ email }) => {
     let otpCopy = otp;
     otpCopy[value - 1] = event.target.value;
     setOtp(otpCopy);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const body = { email, otp: otp.join(""), isForgotPassword: true };
+    //POST REQUEST
+    axios
+      .post("https://localhost:9000/users/verify-mail-otp", body)
+      .then((response) => {
+        navigate("/forgot-password/3");
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error.response.data.message);
+        setOpen(true);
+      });
   };
 
   const inputfocus = (elmnt) => {
@@ -31,35 +47,6 @@ const SignUpStep3 = ({ email }) => {
         elmnt.target.form.elements[next].focus();
       }
     }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const body = { email: email, otp: otp.join(""), isForgotPassword: false };
-    //POST REQUEST
-    axios
-      .post("https://localhost:9000/users/verify-mail-otp", body)
-      .then((response) => {
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(error.response.data.message);
-        setOpen(true);
-      });
-  };
-
-  const handleResendCode = () => {
-    const body = { email: email, isForgotPassword: false };
-    axios
-      .post("https://localhost:9000/users/resend-otp", body)
-      .then((response) => {
-        setError("Code sent");
-        setOpen(true);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
   return (
     <>
@@ -147,16 +134,16 @@ const SignUpStep3 = ({ email }) => {
         </div>
         <div className="input-block">
           <button className="submit-btn" type="submit">
-            Verify
+            Next
           </button>
         </div>
       </form>
-      <div className="login-link">
-        <p>Didn't Receive code?</p>
-        <Link onClick={handleResendCode}>Resend Code</Link>
+      <div className="login-link login-link--column">
+        <p>Didn't Receive any email? Check in spam or</p>
+        <Link to="/forgot-password/1">Try another email address</Link>
       </div>
     </>
   );
 };
 
-export default SignUpStep3;
+export default SignUpStep2;

@@ -1,10 +1,10 @@
 import * as Yup from "yup";
 
 export const signupSchemaStep1 = Yup.object({
-  first_name: Yup.string().required("Please enter your Full Name"),
-  last_name: Yup.string().required("Please enter your Full Name"),
+  firstName: Yup.string().required("Please enter your Full Name"),
+  lastName: Yup.string().required("Please enter your Full Name"),
   email: Yup.string().email().required("Please enter your Email"),
-  phone_number: Yup.string().matches(/^[0-9]\d{9}$/, {
+  phoneNumber: Yup.string().matches(/^[0-9]\d{9}$/, {
     message: "Please enter valid number.",
     excludeEmptyString: false,
   }),
