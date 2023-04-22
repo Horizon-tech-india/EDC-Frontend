@@ -4,8 +4,10 @@ import '../styles/headerImg.scss'
 
 const HeaderImg = () => {
   return (
-    <div className="image-wrapper">
-        <img src={parul3} />
+    <div className="bgImg1">
+        <div className="bgImg1-overlay">
+          
+        </div>
     </div>
   );
 };
