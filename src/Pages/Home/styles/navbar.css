@@ -20,8 +20,7 @@
     width: 100%;
     background-color: transparent;
     z-index: 999;
-    padding: 40px 154px 20px 0;
-
+    padding: 40px 154px 40px 0;
   }
   
   .navbar ul {
@@ -44,7 +43,7 @@
     font-size: 1.28rem; 
     letter-spacing: 0.2px;
   }
-  
+
   .main-nav {
     padding-bottom: 10px;
 }
