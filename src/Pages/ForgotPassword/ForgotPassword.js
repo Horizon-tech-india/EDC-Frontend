@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Login/login.scss";
-import SignUpStep1 from "./SignUpStep1";
-import SignUpStep2 from "./SignUpStep2";
-import SignUpStep3 from "./SignUpStep3";
+import ForgotPasswordStep1 from "./ForgotPasswordStep1";
+import ForgotPasswordStep2 from "./ForgotPasswordStep2";
+import ForgotPasswordStep3 from "./ForgotPasswordStep3";
 import left from "../../assets/left.svg";
 
 const SignUp = ({ step }) => {
@@ -21,17 +21,29 @@ const SignUp = ({ step }) => {
             <span>
               <img src={left} alt="" />
             </span>
-            <Link to={step === 1 ? "/login" : "/signup/1"}>Back</Link>
+            <Link
+              to={
+                step === 1
+                  ? "/login"
+                  : step === 2
+                  ? "/forgot-password/1"
+                  : "/forgot-password/2"
+              }
+            >
+              Back
+            </Link>
           </div>
           <div className="signup__nav-current">
-            <p className="signup__nav-current--1">Step {step} of 2</p>
-            <p className="signup__nav-current--2">Signup</p>
+            <p className="signup__nav-current--1">Step {step} of 3</p>
+            <p className="signup__nav-current--2">Forgot Password</p>
           </div>
         </nav>
         {step === 1 ? (
-          <SignUpStep1 setEmail={setEmail} />
+          <ForgotPasswordStep1 setEmail={setEmail} />
+        ) : step === 2 ? (
+          <ForgotPasswordStep2 email={email} />
         ) : (
-          <SignUpStep3 email={email} />
+          <ForgotPasswordStep3 email={email} />
         )}
       </div>
     </div>
