@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerImg from './components/BannerImg';
+import Header from './components/HeaderImg';
 import Navigation from './components/Navbar';
 import Section1 from './components/Section1';
 import Section2 from './components/Section2';
@@ -11,7 +11,7 @@ const App = () => {
   <>
     <Navigation />
 
-    <BannerImg />
+    <Header />
 
     <Section1 />
 

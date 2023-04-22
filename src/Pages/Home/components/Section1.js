@@ -46,7 +46,7 @@ const Section1 = () => {
 
                     <h2>Leaders in Entrepreneurship</h2>
 
-                    <div className='text'>
+                    <div className='section1-text'>
 
                         <p>We believe, innovation is the foundation for any 
                         entrepreneurial process.</p>
