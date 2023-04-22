@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
 import Home from "./Pages/Home/Home";
+import ApplicationStatus from "./Pages/ApplicationStatus/ApplicationStatus";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route exact path="/signup/3" element={<SignUp step={3} />} />
           <Route exact path="/" element={<Login />} />
           <Route exact path="/home" element={<Home />} />
+          <Route exact path="/application" element={<ApplicationStatus />} />
         </Routes>
       </BrowserRouter>
     </div>
