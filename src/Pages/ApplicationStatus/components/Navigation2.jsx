@@ -14,7 +14,24 @@ const Navigation = () => {
     }
   })
 
+  const navLists = document.querySelector('.nav-list');
+ 
+  const handleMenu = () => {
+    if(navLists.classList.contains('activeMenu')) {
+      navLists.classList.remove('activeMenu');
+    }
+    else {
+      navLists.classList.add("activeMenu");
+    }
+  }
+
+  const handleMenuForLinks = () => {
+    navLists.classList.remove('activeMenu');
+  }
+
+
   
+
   return (
     <nav className='navbar2'>
 
@@ -22,19 +39,19 @@ const Navigation = () => {
          <img src={ logo }></img>
       </div>
 
-      <ul className="nav-list">
-        <div className='nav-links'>
-          <li className="nav-item"><NavLink to="/home"  className="main-nav" >Home</NavLink></li>
-          <li className="nav-item"><NavLink to="/application" className="main-nav"  >Application Status</NavLink></li>
-          <li className="nav-item"><NavLink to="/document" className="main-nav"  >Document</NavLink></li>
-          <li className="nav-item"><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
-          <li className="nav-item"><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
-          <li className="nav-item"><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
-          <li className="nav-item"><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
-        </div>
+      <ul className="nav-list" >
+      
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/home"  className="main-nav" >Home</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/application" className="main-nav"  >Application Status</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/document" className="main-nav"  >Document</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
+    
       </ul>
 
-      <div className="ham-menu">
+      <div className="ham-menu" onClick={ handleMenu }>
         < Menu sx={{color:"white"}} />
       </div>
     </nav>
