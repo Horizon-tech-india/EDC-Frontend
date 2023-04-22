@@ -1,11 +1,14 @@
 import React from "react";
-import parul3 from "../assets/parul3.png";
-import '../styles/banner.scss'
+import bannerImg from "../assets/parul3.png";
 
 const BannerImg = () => {
   return (
-    <div className="image-wrapper">
-        <img src={parul3} />
+    <div className="flex flex-col items-center p-0 w-1440 h-88 left-0 top-0  w-full  lg:w-1440 lg:h-528">
+      <img
+        className="w-full object-cover md:h-700 lg:h-700 xl:h-700 2xl:h-700 sm:h-400 md:h-auto"
+        src={bannerImg}
+        alt="your-banner"
+      />
     </div>
   );
 };
