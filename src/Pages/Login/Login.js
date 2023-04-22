@@ -26,30 +26,24 @@ const Login = () => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
 
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues,
-    validationSchema: loginSchema,
-    onSubmit: (values) => {
-      //POST REQUEST
-      axios
-        .post("https://localhost:9000/users/login", values)
-        .then((response) => {
-          navigate("/home");
-        })
-        .catch((error) => {
-          console.error(error);
-          setError(error.response.data.message);
-          setOpen(true);
-        });
-    },
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: loginSchema,
+      onSubmit: (values) => {
+        //POST REQUEST
+        axios
+          .post("http://localhost:9000/users/login", values)
+          .then((response) => {
+            navigate("/home");
+          })
+          .catch((error) => {
+            console.error(error);
+            setError(error.response.data.message);
+            setOpen(true);
+          });
+      },
+    });
 
   return (
     <>

@@ -27,34 +27,28 @@ const SignUpStep1 = ({ setEmail }) => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
 
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues,
-    validationSchema: signupSchemaStep1,
-    onSubmit: (values) => {
-      setEmail(values.email);
-      //POST REQUEST
-      axios
-        .post("https://localhost:9000/users/signup", values)
-        .then((response) => {
-          navigate("/signup/2");
-        })
-        .catch((error) => {
-          console.error(error);
-          setError(error.response.data.message);
-          setOpen(true);
-        });
-    },
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: signupSchemaStep1,
+      onSubmit: (values) => {
+        setEmail(values.email);
+        //POST REQUEST
+        axios
+          .post("http://localhost:9000/users/signup", values)
+          .then((response) => {
+            navigate("/signup/2");
+          })
+          .catch((error) => {
+            console.error(error);
+            setError(error.response.data.message);
+            setOpen(true);
+          });
+      },
+    });
   return (
     <>
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           {error}
         </Alert>

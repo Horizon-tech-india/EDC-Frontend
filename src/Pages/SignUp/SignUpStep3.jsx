@@ -38,7 +38,7 @@ const SignUpStep3 = ({ email }) => {
     const body = { email: email, otp: otp.join(""), isForgotPassword: false };
     //POST REQUEST
     axios
-      .post("https://localhost:9000/users/verify-mail-otp", body)
+      .post("http://localhost:9000/users/verify-mail-otp", body)
       .then((response) => {
         navigate("/login");
       })
@@ -52,7 +52,7 @@ const SignUpStep3 = ({ email }) => {
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false };
     axios
-      .post("https://localhost:9000/users/resend-otp", body)
+      .post("http://localhost:9000/users/resend-otp", body)
       .then((response) => {
         setError("Code sent");
         setOpen(true);

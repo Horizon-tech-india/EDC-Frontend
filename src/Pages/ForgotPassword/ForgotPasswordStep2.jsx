@@ -24,7 +24,7 @@ const SignUpStep2 = ({ email }) => {
     const body = { email, otp: otp.join(""), isForgotPassword: true };
     //POST REQUEST
     axios
-      .post("https://localhost:9000/users/verify-mail-otp", body)
+      .post("http://localhost:9000/users/verify-mail-otp", body)
       .then((response) => {
         navigate("/forgot-password/3");
       })
