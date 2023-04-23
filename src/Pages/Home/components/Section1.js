@@ -12,6 +12,12 @@ const Section1 = () => {
         poster={thumbnail}
         className="videoSample"
       ></video>
+      <video
+        src={sampleVideo}
+        controls
+        poster={thumbnail}
+        className="videoSample"
+      ></video>
     );
   };
 

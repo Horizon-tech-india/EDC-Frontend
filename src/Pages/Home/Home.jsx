@@ -6,7 +6,6 @@ import Section2 from "./components/Section2";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 
-const App = () => {
   return (
     <div class="bg-white">
       <Navigation />
@@ -20,3 +19,4 @@ const App = () => {
 };
 
 export default App;
+
