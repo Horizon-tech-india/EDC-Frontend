@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import '../Login/login.scss'
+import '../../styles/login.scss'
 import ForgotPasswordStep1 from './ForgotPasswordStep1'
 import ForgotPasswordStep2 from './ForgotPasswordStep2'
 import ForgotPasswordStep3 from './ForgotPasswordStep3'

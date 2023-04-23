@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import '../Login/login.scss'
+import '../../styles/login.scss'
 import SignUpStep1 from './SignUpStep1'
 import SignUpStep2 from './SignUpStep2'
 import SignUpStep3 from './SignUpStep3'

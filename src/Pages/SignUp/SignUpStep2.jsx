@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { signupSchemaStep2 } from './formSchema'
-import '../Login/login.scss'
-import './signup.scss'
+import { signupSchemaStep2 } from '../../validation/formSchema'
+import '../../styles/login.scss'
+import '../../styles/signup.scss'
 import axios from 'axios'
 
 const initialValues = {
