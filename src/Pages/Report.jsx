@@ -11,8 +11,12 @@ const App = ({ loggedIn, setLoggedIn }) => {
     <div className="bg-white relative">
       <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Header props={'Financial Report'} />
-      <AreaChartComponent />
-      <PieChartComponent />
+      <div className=" h-screen  w-full ">
+        <AreaChartComponent />
+      </div>
+      <div className="min-h-screen w-full ">
+        <PieChartComponent />
+      </div>
       <Footer />
     </div>
   )
