@@ -1,27 +1,28 @@
-import React from 'react'
-import Header from './components/HeaderImg';
-import Navigation from './components/Navbar';
-import Section1 from './components/Section1';
-import Section2 from './components/Section2';
-import Gallery from './components/Gallery';
-import Footer from './components/Footer';
+import React from "react";
+import Header from "./components/HeaderImg";
+import Navigation from "./components/Navbar";
+import Section1 from "./components/Section1";
+import Section2 from "./components/Section2";
+import Gallery from "./components/Gallery";
+import Footer from "./components/Footer";
 
-const App = () => {
+const App = ({ loggedIn, setLoggedIn }) => {
+
   return (
-  <>
-    <Navigation />
+    <>
+      <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
 
-    <Header />
+      <Header />
 
-    <Section1 />
+      <Section1 />
 
-    <Section2 />
+      <Section2 />
 
-    <Gallery />
+      <Gallery />
 
-    <Footer />
-  </>
-  )
-}
+      <Footer />
+    </>
+  );
+};
 
 export default App;

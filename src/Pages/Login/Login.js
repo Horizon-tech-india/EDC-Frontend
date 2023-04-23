@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import "./login.scss";
@@ -19,31 +19,44 @@ const initialValues = {
   rememberMe: false,
 };
 
-const Login = () => {
+const Login = ({ loggedIn, setLoggedIn }) => {
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: loginSchema,
-      onSubmit: (values) => {
-        //POST REQUEST
-        axios
-          .post("http://localhost:9000/users/login", values)
-          .then((response) => {
-            navigate("/home");
-          })
-          .catch((error) => {
-            console.error(error);
-            setError(error.response.data.message);
-            setOpen(true);
-          });
-      },
-    });
+  useEffect(() => {
+    if (loggedIn) navigate("/home");
+  }, []);
+
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik({
+    initialValues,
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      //POST REQUEST
+      axios
+        .post("http://localhost:9000/users/login", values)
+        .then((res) => {
+          localStorage.setItem("pu-edc-auth-token", res.data.token);
+          localStorage.setItem("pu-edc-email", res.data.email);
+          setLoggedIn(true);
+          navigate("/home");
+        })
+        .catch((error) => {
+          console.error(error);
+          setError(error.response.data.message);
+          setOpen(true);
+        });
+    },
+  });
 
   return (
     <>
@@ -115,7 +128,7 @@ const Login = () => {
                 <input
                   type="checkbox"
                   id="rememberMe"
-                  name="remember_Me"
+                  name="rememberMe"
                   value={values.rememberMe}
                   onChange={handleChange}
                 />
