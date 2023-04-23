@@ -6,9 +6,10 @@ import Section2 from "./components/Section2";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 
+const App = ({ loggedIn, setLoggedIn }) => {
   return (
     <div class="bg-white">
-      <Navigation />
+      <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <BannerImg />
       <Section1 />
       <Section2 />
@@ -19,4 +20,3 @@ import Footer from "./components/Footer";
 };
 
 export default App;
-
