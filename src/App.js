@@ -6,6 +6,9 @@ import SignUp from "./Pages/SignUp/SignUp";
 import Home from "./Pages/Home";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import ApplicationStatus from "./Pages/ApplicationStatus";
+import Dashboard from "./Pages/Dashboard";
+import Document from "./Pages/Document";
+import Report from "./Pages/Report";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -27,6 +30,9 @@ const App = () => {
             element={<Home loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
           />
           <Route exact path="/application" element={<ApplicationStatus />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/document" element={<Document />} />
+          <Route exact path="/report" element={<Report />} />
           <Route
             exact
             path="/forgot-password/1"
