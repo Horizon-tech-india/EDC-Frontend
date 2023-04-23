@@ -3,7 +3,7 @@ import "../styles/header.css";
 
 const Header = () => {
 
-    const overlay_txt = "Provide All The Details";
+    const overlay_txt = "PROVIDE ALL THE DETAILS";
   return (
     <>
     <div className="bgImg">

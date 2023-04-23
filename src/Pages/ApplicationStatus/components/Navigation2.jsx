@@ -41,10 +41,10 @@ const Navigation = () => {
 
       <ul className="nav-list" >
       
-          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/home"  className="main-nav" >Home</NavLink></li>
-          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/application" className="main-nav"  >Application Status</NavLink></li>
-          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/document" className="main-nav"  >Document</NavLink></li>
-          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/home"  className="main-nav" >HOME</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/application" className="main-nav"  >APPLY NOW</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/documents" className="main-nav"  >DOCUMENTS</NavLink></li>
+          <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/dashboard" className="main-nav"  >DASHBOARD</NavLink></li>
           <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
           <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
           <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/" className="main-nav"  >N/A</NavLink></li>
@@ -52,7 +52,7 @@ const Navigation = () => {
       </ul>
 
       <div className="ham-menu" onClick={ handleMenu }>
-        < Menu sx={{color:"white"}} />
+        < Menu sx={{color:"white" , fontSize: 40}} />
       </div>
     </nav>
   );

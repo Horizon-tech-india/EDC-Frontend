@@ -18,19 +18,46 @@
 
 }
 
-.overlay {
+.bgImg .overlay {
     height: 100%;
     /* background-color: rgba(6, 16, 25, 0.698); */
     background-color: rgba(8, 16, 25, 0.698);
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 45px;
+    font-size: 32px;
     line-height: 87px;
     display: flex;
     justify-content: center;
     align-items: center;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.1px;
+    text-shadow: 2px 3px 8px black;
     color: #FFFFFF;
     /* background-color: rgba(0, 0, 0, 0.321); */
+}
+
+@media only screen and (max-width: 1340px) {
+    .bgImg .overlay {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 840px) {
+    .bgImg .overlay {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .bgImg .overlay {
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+@media only screen and (max-width: 321px) {
+    .bgImg .overlay {
+        font-size: 12px;
+    }
 }

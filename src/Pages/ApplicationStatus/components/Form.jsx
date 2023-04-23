@@ -1,31 +1,111 @@
 import React, { useState } from 'react'
 import { UploadFile } from '@mui/icons-material';
 import { Button, styled,  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import "../styles/form.scss";
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    setName,
+    setEmail,
+    setContact,
+    setLocation,
+    setInstitute,
+    setOtherInstitute,
+    setAadhar,
+    setCategory,
+    setCategoryOther,
+    setOtherUniversity,
+    setOtherOrganisation,
+    setOtherDesignation,
+    setEnrollment,
+    setTeamSize,
+    setTeamMembers,
+    setTitle,
+    setUniqueFeatures,
+    setCurrentStage,
+    formInputs
+  } from './formSlice';
+
+import "../styles/form.css";
 
 
 const Form = () => {
 
-    const companyName = "XYZ Company name";
+  const formData = useSelector( formInputs );
+  const dispatch = useDispatch();
 
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        contact: '',
-        location: '',
-        institute: '',
-        aadhar: '',
-        category: '',
-        num_other_team: '',
-        enrollment_num: '',
-        team_members: '',
-        title: '',
-        features: '',
-        current_stage: '',
-        applicant_institute_other:'',
-        applicant_category_other_uni: '',
-        designation: ''
-      });
+  const handleNameChange = e =>{
+    dispatch(setName( e.target.value));
+  };
+
+  const handleEmailChange = e =>{
+    dispatch(setEmail(e.target.value));
+  };
+
+  const handleContactChange = e =>{
+    dispatch(setContact(e.target.value));
+  };
+  
+  const handleLocationChange = e =>{
+    dispatch(setLocation(e.target.value));
+  };
+
+  const handleInstituteChange = e =>{
+    dispatch(setInstitute(e.target.value));
+  };
+
+  const handleOtherInstituteChange = e =>{
+    dispatch(setOtherInstitute(e.target.value));
+  };
+
+  const handleAadharChange = e =>{
+    dispatch(setAadhar(e.target.value));
+  };
+
+  const handleCategoryChange = e =>{
+    dispatch(setCategory(e.target.value));
+  };
+
+  const handleCategoryOtherChange = e =>{
+    dispatch(setCategoryOther(e.target.value));
+  };
+
+  const handleOtherUniversityChange = e =>{
+    dispatch(setOtherUniversity(e.target.value));
+  };
+
+  const handleOtherOrganisationChange = e =>{
+    dispatch(setOtherOrganisation(e.target.value));
+  };
+
+  const handleOtherDesignationChange = e =>{
+    dispatch(setOtherDesignation(e.target.value));
+  };
+
+  const handleEnrollmentChange = e =>{
+    dispatch(setEnrollment(e.target.value));
+  };
+
+  const handleTeamSizeChange = e =>{
+    dispatch(setTeamSize(e.target.value));
+  };
+
+  const handleTeamMembersChange = e =>{
+    dispatch(setTeamMembers(e.target.value));
+  };
+
+  const handleTitleChange = e =>{
+    dispatch(setTitle(e.target.value));
+  };
+
+  const handleUniqueFeaturesChange = e =>{
+    dispatch(setUniqueFeatures(e.target.value));
+  };
+
+  const handleCurrentStageChange = e =>{
+    dispatch(setCurrentStage(e.target.value));
+  };
+
+
+    const companyName = "XYZ Company name";
 
       const [selectedFile, setSelectedFile] = useState(null);
 
@@ -54,42 +134,25 @@ const Form = () => {
       borderRadius: 7
     })
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value
-        }));
-    };
-
-    const handleLocationChange = (event) => {
-        const { value } = event.target;
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          location: value,
-          institute: '',
-          aadhar: ''
-        }));
-      };
-
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formData);
         // Alert();
         handleClickOpen();
-        reset();
+        // reset(); // need to be handeled
     };
 
 
-    const reset = () => {
-      setFormData(prevState => {
-        const resetState = {};
-        for (const key in prevState) {
-          resetState[key] = '';
-        }
-        return resetState;
-      });
-    }
+    // Was for use State.
+    // const reset = () => {
+    //   setFormData(prevState => {
+    //     const resetState = {};
+    //     for (const key in prevState) {
+    //       resetState[key] = '';
+    //     }
+    //     return resetState;
+    //   });
+    // }
 
 
     const [open, setOpen] = useState(false);
@@ -119,17 +182,17 @@ const Form = () => {
 
             <div className="form-row">
         <label htmlFor="name">Name:</label>
-        <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required />
+        <input type="text" id="name"  value={formData.name} onChange={handleNameChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required />
+        <input type="email" id="email" name="email" value={formData.email} onChange={handleEmailChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="contact">Contact:</label>
-        <input type="tel" id="contact" name="contact" value={formData.contact} onChange={handleInputChange} required />
+        <input type="tel" id="contact" name="contact" value={formData.contact} onChange={handleContactChange} required />
       </div>
 
       <div className="form-row">
@@ -149,7 +212,8 @@ const Form = () => {
         <div className=" additional-input show">
           <div className="form-row">
         <label htmlFor="institute">Applicant Institute/Organization Name</label>
-        <select id="institute" name="institute" value={formData.institute} onChange={handleInputChange} required>
+        <select id="institute" name="institute" value={formData.institute} onChange={handleInstituteChange} required>
+          <option value = "">Select</option>
           <option value="Parul Institute of Engineering & Technology (PIET)">Parul Institute of Engineering & Technology (PIET)</option>
           <option value="Parul Institute of Technology (PIT)">Parul Institute of Technology (PIT)</option>
           <option value="Parul Polytechnic Institute (PPI)">Parul Polytechnic Institute (PPI)</option>
@@ -190,14 +254,14 @@ const Form = () => {
       {formData.institute === "other" && (
       <div className='form-row additional-input show'>
         <label htmlFor="applicant_institute_other">Specify Other:</label>
-          <input type="text" id="applicant_institute_other" name="applicant_institute_other" value={formData.applicant_institute_other} onChange={handleInputChange} required />
+          <input type="text" id="applicant_institute_other" name="applicant_institute_other" value={formData.other_institute} onChange={handleOtherInstituteChange} required />
       </div>
       )}
 
     
       <div className="form-row">
         <label htmlFor="category">Applicant Category:</label>
-        <select id="category" name="category" value={formData.category} onChange={handleInputChange} required>
+        <select id="category" name="category" value={formData.category} onChange={handleCategoryChange} required>
           <option value="">Select location</option>
           <option value="Parul University Student">Parul University Student</option>
           <option value="Parul University Staff member">Parul University Staff member</option>
@@ -210,33 +274,33 @@ const Form = () => {
       {formData.category === "Other" && (
       <div className='form-row additional-input show'>
         <label htmlFor="applicant_category_other_uni">Specify Other:</label>
-          <input type="text" id="applicant_category_other_uni" name="applicant_category_other_uni" value={formData.applicant_category_other_uni} onChange={handleInputChange} required />
+          <input type="text" id="applicant_category_other_uni" name="applicant_category_other_uni" value={formData.category_other} onChange={handleCategoryOtherChange} required />
       </div>
       )}
       
       <div className="form-row">
         <label htmlFor="enrollment_num">Applicant Enrollment Number/Employee ID/Alumini ID number</label>
-        <input type="text" id="enrollment_num" name="enrollment_num" value={formData.enrollment_num} onChange={handleInputChange} required />
+        <input type="number" id="enrollment_num" name="enrollment_num" value={formData.enrollment_num} onChange={handleEnrollmentChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="team_members">Name of Team Members <span>(Separated by comma)</span></label>
-        <input type="text" id="team_members" name="team_members" value={formData.team_members} onChange={handleInputChange} required />
+        <input type="text" id="team_members" name="team_members" value={formData.team_members} onChange={handleTeamMembersChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="title">Title of the Startup/Idea/Innovation</label>
-        <input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} required />
+        <input type="text" id="title" name="title" value={formData.title} onChange={handleTitleChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="features">Explain the uniqueness and distinctive features of the ( product / process / service / solution)</label>
-        <input type="text" id="features" name="features" value={formData.features} onChange={handleInputChange} required />
+        <input type="text" id="features" name="features" value={formData.unique_features} onChange={handleUniqueFeaturesChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="current_stage">Current stage of Startup</label>
-        <select id="current_stage" name="current_stage" value={formData.current_stage} onChange={handleInputChange} required>
+        <select id="current_stage" name="current_stage" value={formData.current_stage} onChange={handleCurrentStageChange} required>
           <option value="">Select</option>
           <option value="Idea">Idea</option>
           <option value="Prototype stage (If you have developed any working prototype of a solution proposed)">Prototype stage (If you have developed any working prototype of a solution proposed)</option>
@@ -249,7 +313,7 @@ const Form = () => {
             <p>Proposal Idea / PPT</p>
             <p id='selected-file'>Selected file: <span>{selectedFile ? selectedFile.name : ''} </span></p>
           </div>
-          <UploadBtn
+          <UploadBtn className='uploadFiles-btn'
           variant="contained"
           component="label"
           endIcon={<UploadFile sx={{color:"white"}} />}
@@ -277,12 +341,12 @@ const Form = () => {
         <div className="additional-input show">
           <div className='form-row'>
           <label htmlFor="aadhar">Aadhar:</label>
-          <input type="text" id="aadhar" name="aadhar" value={formData.aadhar} onChange={handleInputChange} required />
+          <input type="number" id="aadhar" name="aadhar" value={formData.aadhar} onChange={handleAadharChange} required />
           </div>
           
           <div className="form-row">
         <label htmlFor="category">Applicant Category:</label>
-        <select id="category" name="category" value={formData.category} onChange={handleInputChange} required>
+        <select id="category" name="category" value={formData.category} onChange={handleCategoryChange} required>
           <option value="">Select Category</option>
           <option value="Other University Student">Other University Student</option>
           <option value="Other University Staff member">Other University Staff member</option>
@@ -294,18 +358,18 @@ const Form = () => {
       {(formData.category === "Other University Student" || formData.category === "Other University Staff") && (
           <div className="form-row additional_input show">
           <label htmlFor="other_uni">University name:</label>
-          <input type="text" id="other_uni" name="other_uni" value={formData.other_uni} onChange={handleInputChange} required />
+          <input type="text" id="other_uni" name="other_uni" value={formData.other_university} onChange={handleOtherUniversityChange} required />
         </div>
       )}
       {(formData.category === "Organisation") && (
           <div className="additional_input show">
             <div className='form-row'>
           <label htmlFor="other_uni">Organisation name:</label>
-          <input type="text" id="other_uni" name="other_uni" value={formData.other_uni} onChange={handleInputChange} required />
+          <input type="text" id="other_uni" name="other_uni" value={formData.other_organisation} onChange={handleOtherOrganisationChange} required />
         </div>
         <div className='form-row'>
         <label htmlFor="designation">Your Designation:</label>
-          <input type="text" id="designation" name="designation" value={formData.designation} onChange={handleInputChange} required />
+          <input type="text" id="designation" name="designation" value={formData.designation} onChange={handleOtherDesignationChange} required />
         </div>
         </div>
       )}
@@ -314,26 +378,26 @@ const Form = () => {
 
           <div className="form-row">
         <label htmlFor="num_other_team">No. of other team members</label>
-        <input type="number" id="num_other_team" name="num_other_team" value={formData.num_other_team} onChange={handleInputChange} required />
+        <input type="number" id="num_other_team" name="num_other_team" value={formData.team_size} onChange={handleTeamSizeChange} required />
       </div>
       <div className="form-row">
         <label htmlFor="team_members">Name of Team Members <span>Separated by comma</span></label>
-        <input type="text" id="team_members" name="team_members" value={formData.team_members} onChange={handleInputChange} required />
+        <input type="text" id="team_members" name="team_members" value={formData.team_members} onChange={handleTeamMembersChange} required />
       </div>
       
       <div className="form-row">
         <label htmlFor="title">Title of the Startup/Idea/Innovation</label>
-        <input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} required />
+        <input type="text" id="title" name="title" value={formData.title} onChange={handleTitleChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="features">Explain the uniqueness and distinctive features of the ( product / process / service / solution)</label>
-        <input type="text" id="features" name="features" value={formData.features} onChange={handleInputChange} required />
+        <input type="text" id="features" name="features" value={formData.unique_features} onChange={handleUniqueFeaturesChange} required />
       </div>
 
       <div className="form-row">
         <label htmlFor="current_stage">Current stage of Startup</label>
-        <select id="current_stage" name="current_stage" value={formData.current_stage} onChange={handleInputChange} required>
+        <select id="current_stage" name="current_stage" value={formData.current_stage} onChange={handleCurrentStageChange} required>
           <option value="">Select</option>
           <option value="Idea">Idea</option>
           <option value="Prototype stage (If you have developed any working prototype of a solution proposed)">Prototype stage (If you have developed any working prototype of a solution proposed)</option>

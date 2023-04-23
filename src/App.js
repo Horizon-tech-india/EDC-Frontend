@@ -4,10 +4,14 @@ import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
 import Home from "./Pages/Home/Home";
 import ApplicationStatus from "./Pages/ApplicationStatus/ApplicationStatus";
+import { Provider } from "react-redux";
+import store from "./Pages/ApplicationStatus/components/store";
+
 
 const App = () => {
   return (
     <div className="App">
+      < Provider store = {store}>
       <BrowserRouter>
         <Routes>
           <Route exact path="/login" element={<Login />} />
@@ -19,6 +23,7 @@ const App = () => {
           <Route exact path="/application" element={<ApplicationStatus />} />
         </Routes>
       </BrowserRouter>
+      </Provider>
     </div>
   );
 };
