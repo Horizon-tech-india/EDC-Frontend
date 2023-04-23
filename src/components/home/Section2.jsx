@@ -1,8 +1,8 @@
 import React from "react";
-import logo1 from "../assets/icons/home.svg";
-import logo2 from "../assets/icons/location.svg";
-import logo3 from "../assets/icons/documents.svg";
-import logo4 from "../assets/icons/badge.svg";
+import logo1 from "../../assets/icons/home.svg";
+import logo2 from "../../assets/icons/location.svg";
+import logo3 from "../../assets/icons/documents.svg";
+import logo4 from "../../assets/icons/badge.svg";
 
 // import "../styles/section2.css";
 
@@ -85,7 +85,6 @@ const Section2 = () => {
             </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   );

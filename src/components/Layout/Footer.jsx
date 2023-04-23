@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { Button } from "react-bootstrap";
-import twticon from "../assets/links/UI/twitter.svg";
-import fbicon from "../assets/links/UI/facebook.svg";
-import igicon from "../assets/links/UI/instagram.svg";
+import twticon from "../../assets/links/UI/twitter.svg";
+import fbicon from "../../assets/links/UI/facebook.svg";
+import igicon from "../../assets/links/UI/instagram.svg";
 
-import "../styles/footer.css";
+import "../../styles/footer.css";
 
 const Footer = () => {
   function ImageButton(props) {

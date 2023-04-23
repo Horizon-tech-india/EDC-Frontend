@@ -3,9 +3,9 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
-import Home from "./Pages/Home/Home";
+import Home from "./Pages/Home";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
-import ApplicationStatus from "./Pages/ApplicationStatus/ApplicationStatus";
+import ApplicationStatus from "./Pages/ApplicationStatus";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);

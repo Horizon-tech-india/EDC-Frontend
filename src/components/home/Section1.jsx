@@ -1,17 +1,11 @@
 import React from "react";
-import sampleVideo from "../assets/sample.mp4";
-import thumbnail from "../assets/thumbnail.png";
+import sampleVideo from "../../assets/sample.mp4";
+import thumbnail from "../../assets/thumbnail.png";
 // import PlayBtn from "../assets/icons/playButton.png";
-import Grid from "../components/Grid";
+import Grid from "./Grid";
 const Section1 = () => {
   const VideoPlayer = () => {
     return (
-      <video
-        src={sampleVideo}
-        controls
-        poster={thumbnail}
-        className="videoSample"
-      ></video>
       <video
         src={sampleVideo}
         controls
@@ -23,9 +17,9 @@ const Section1 = () => {
 
   return (
     <>
-      <div className="w-full h-[500px] flex justify-center items-center">
+      <div className="w-full  bg-white h-[500px] flex justify-center items-center">
         <div className="relative w-[1125px] justify-center flex items-center h-[378px]">
-          <div className="flex flex-row bg-white z-10 justify-center items-center ">
+          <div className="flex flex-row bg-white   justify-center items-center ">
             <div className="w-[456px] h-[342px] shadow-md p-2 flex justify-center items-center  md:mr-10">
               <VideoPlayer className="" />
             </div>

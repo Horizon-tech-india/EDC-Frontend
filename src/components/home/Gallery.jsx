@@ -1,11 +1,11 @@
 import React from "react";
 
-import image1 from "../assets/UI/image1.png";
-import image2 from "../assets/UI/image2.png";
-import image3 from "../assets/UI/image3.png";
-import image4 from "../assets/UI/image4.png";
-import image5 from "../assets/UI/image5.png";
-import image6 from "../assets/UI/image6.png";
+import image1 from "../../assets/UI/image1.png";
+import image2 from "../../assets/UI/image2.png";
+import image3 from "../../assets/UI/image3.png";
+import image4 from "../../assets/UI/image4.png";
+import image5 from "../../assets/UI/image5.png";
+import image6 from "../../assets/UI/image6.png";
 
 const GalleryCard = (props) => {
   const { image } = props;
@@ -46,10 +46,6 @@ const Gallery = () => {
         </div>
       </div>
     </>
-  );
-};
-
-export default Gallery;
   );
 };
 
