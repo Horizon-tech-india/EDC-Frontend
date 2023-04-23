@@ -1,17 +1,17 @@
-import React from "react";
-import logo1 from "../../assets/icons/home.svg";
-import logo2 from "../../assets/icons/location.svg";
-import logo3 from "../../assets/icons/documents.svg";
-import logo4 from "../../assets/icons/badge.svg";
+import React from 'react'
+import logo1 from '../../assets/icons/home.svg'
+import logo2 from '../../assets/icons/location.svg'
+import logo3 from '../../assets/icons/documents.svg'
+import logo4 from '../../assets/icons/badge.svg'
 
 // import "../styles/section2.css";
 
 function Logo(props) {
-  return <img src={props.image} alt={props.alt} />;
+  return <img src={props.image} alt={props.alt} />
 }
 
 const Card = (props) => {
-  const { heading, para, image, alt } = props;
+  const { heading, para, image, alt } = props
   return (
     <div className="w-[250px] rounded-md px-5 h-[250px]   flex justify-center items-center shadow-md">
       <div className="w-[235px]   h-[200px]">
@@ -28,8 +28,8 @@ const Card = (props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Section2 = () => {
   return (
@@ -38,7 +38,7 @@ const Section2 = () => {
         <div className="">
           <div className="flex justify-center items-center flex-row">
             <div className="w-[450px] h-[450px] border-r-2 mr-10 flex justify-center text-left items-start flex-col">
-              <h2 class="font-bold text-2xl flex items-center tracking-wider text-secondary">
+              <h2 className="font-bold text-2xl flex items-center tracking-wider text-secondary">
                 Our Vision
               </h2>
               <div className="font-sans font-normal text-base leading-7 tracking-wider text-gray-500 w-80">
@@ -49,7 +49,7 @@ const Section2 = () => {
                   economic development of India.
                 </p>
               </div>
-              <button class="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">
+              <button className="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">
                 Apply Now
               </button>
             </div>
@@ -87,7 +87,7 @@ const Section2 = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Section2;
+export default Section2

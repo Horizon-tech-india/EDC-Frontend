@@ -1,37 +1,29 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import { signupSchemaStep2 } from "./formSchema";
-import "../Login/login.scss";
-import "./signup.scss";
-import axios from "axios";
-
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { signupSchemaStep2 } from './formSchema'
+import '../Login/login.scss'
+import './signup.scss'
+import axios from 'axios'
 
 const initialValues = {
-  first_name: "",
-  last_name: "",
-  email: "",
-  phone_number: "",
-  password: "",
-};
+  first_name: '',
+  last_name: '',
+  email: '',
+  phone_number: '',
+  password: '',
+}
 
 const SignUpStep2 = () => {
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: initialValues,
-    validationSchema: signupSchemaStep2,
-    onSubmit: (values) => {
-      //POST REQUEST
-      
-    },
-  });
-  const navigate = useNavigate();
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: signupSchemaStep2,
+      onSubmit: (values) => {
+        //POST REQUEST
+      },
+    })
+  const navigate = useNavigate()
 
   return (
     <>
@@ -115,7 +107,7 @@ const SignUpStep2 = () => {
           ) : null}
         </div>
         <div className="input-block__terms">
-          By signing in, you're agreeing to our{" "}
+          By signing in, you're agreeing to our{' '}
           <span>
             <Link>Terms & Condition</Link>
           </span>
@@ -135,7 +127,7 @@ const SignUpStep2 = () => {
         <Link to="/login">Login</Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SignUpStep2;
+export default SignUpStep2

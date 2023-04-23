@@ -1,18 +1,18 @@
-import React from "react";
-import Header from "../components/common/Header";
-import Navigation from "../components/Layout/Navbar";
+import React from 'react'
+import Header from '../components/common/Header'
+import Navigation from '../components/Layout/Navbar'
 
-import Footer from "../components/Layout/Footer";
+import Footer from '../components/Layout/Footer'
 
 const App = ({ loggedIn, setLoggedIn }) => {
   return (
-    <div class="bg-white relative">
+    <div className="bg-white relative">
       <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-      <Header props={"Hi, XYZ Company Name"} />
+      <Header props={'Hi, XYZ Company Name'} />
 
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

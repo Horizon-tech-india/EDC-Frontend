@@ -1,49 +1,49 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import "../Login/login.scss";
-import "./signup.scss";
-import { forgotPasswordSchemaStep1 } from "./formSchema";
-import mail from "../../assets/mail.svg";
-import axios from "axios";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import '../Login/login.scss'
+import './signup.scss'
+import { forgotPasswordSchemaStep1 } from './formSchema'
+import mail from '../../assets/mail.svg'
+import axios from 'axios'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 const initialValues = {
-  email: "",
-};
+  email: '',
+}
 
 const SignUpStep1 = ({ setEmail }) => {
-  const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleClose = () => setOpen(false)
+  const navigate = useNavigate()
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: forgotPasswordSchemaStep1,
       onSubmit: (values) => {
-        setEmail(values.email);
-        const body = { email: values.email, isForgotPassword: true };
+        setEmail(values.email)
+        const body = { email: values.email, isForgotPassword: true }
         //POST REQUEST
         axios
-          .post("http://localhost:9000/users/resend-otp", body)
+          .post('http://localhost:9000/users/resend-otp', body)
           .then((response) => {
-            navigate("/forgot-password/2");
+            navigate('/forgot-password/2')
           })
           .catch((error) => {
-            console.error(error);
-            setError(error.response.data.message);
-            setOpen(true);
-          });
+            console.error(error)
+            setError(error.response.data.message)
+            setOpen(true)
+          })
       },
-    });
+    })
 
   return (
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           {error}
         </Alert>
       </Snackbar>
@@ -82,7 +82,7 @@ const SignUpStep1 = ({ setEmail }) => {
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default SignUpStep1;
+export default SignUpStep1

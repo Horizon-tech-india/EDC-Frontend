@@ -1,55 +1,55 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import "../Login/login.scss";
-import "./signup.scss";
-import { signupSchemaStep1 } from "./formSchema";
-import lock from "../../assets/lock.svg";
-import mail from "../../assets/mail.svg";
-import eyeOff from "../../assets/eye-off.svg";
-import phone from "../../assets/phone.svg";
-import axios from "axios";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import '../Login/login.scss'
+import './signup.scss'
+import { signupSchemaStep1 } from './formSchema'
+import lock from '../../assets/lock.svg'
+import mail from '../../assets/mail.svg'
+import eyeOff from '../../assets/eye-off.svg'
+import phone from '../../assets/phone.svg'
+import axios from 'axios'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  password: "",
-  email: "",
-  phoneNumber: "",
-};
+  firstName: '',
+  lastName: '',
+  password: '',
+  email: '',
+  phoneNumber: '',
+}
 
 const SignUpStep1 = ({ setEmail }) => {
-  const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const [passwordHidden, setPasswordHidden] = useState(true);
-  const navigate = useNavigate();
+  const [error, setError] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleClose = () => setOpen(false)
+  const [passwordHidden, setPasswordHidden] = useState(true)
+  const navigate = useNavigate()
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signupSchemaStep1,
       onSubmit: (values) => {
-        setEmail(values.email);
+        setEmail(values.email)
         //POST REQUEST
         axios
-          .post("http://localhost:9000/users/signup", values)
+          .post('http://localhost:9000/users/signup', values)
           .then((response) => {
-            navigate("/signup/2");
+            navigate('/signup/2')
           })
           .catch((error) => {
-            console.error(error);
-            setError(error.response.data.message);
-            setOpen(true);
-          });
+            console.error(error)
+            setError(error.response.data.message)
+            setOpen(true)
+          })
       },
-    });
+    })
   return (
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           {error}
         </Alert>
       </Snackbar>
@@ -143,7 +143,7 @@ const SignUpStep1 = ({ setEmail }) => {
               <img src={lock} alt="" />
             </span>
             <input
-              type={passwordHidden ? "password" : "text"}
+              type={passwordHidden ? 'password' : 'text'}
               id="password"
               name="password"
               value={values.password}
@@ -160,7 +160,7 @@ const SignUpStep1 = ({ setEmail }) => {
           ) : null}
         </div>
         <div className="input-block__terms">
-          By signing in, you're agreeing to our{" "}
+          By signing in, you're agreeing to our{' '}
           <span>
             <Link>Terms & Condition</Link>
           </span>
@@ -180,7 +180,7 @@ const SignUpStep1 = ({ setEmail }) => {
         <Link to="/login">Login</Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SignUpStep1;
+export default SignUpStep1

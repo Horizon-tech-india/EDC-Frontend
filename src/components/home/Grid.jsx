@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 function Grid() {
   return (
@@ -26,7 +26,7 @@ function Grid() {
         <circle cx="125" cy="125" r="5" fill="#0193DC" />
       </g>
     </svg>
-  );
+  )
 }
 
-export default Grid;
+export default Grid

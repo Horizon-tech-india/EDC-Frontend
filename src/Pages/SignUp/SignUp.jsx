@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../Login/login.scss";
-import SignUpStep1 from "./SignUpStep1";
-import SignUpStep2 from "./SignUpStep2";
-import SignUpStep3 from "./SignUpStep3";
-import left from "../../assets/left.svg";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import '../Login/login.scss'
+import SignUpStep1 from './SignUpStep1'
+import SignUpStep2 from './SignUpStep2'
+import SignUpStep3 from './SignUpStep3'
+import left from '../../assets/left.svg'
 
 const SignUp = ({ step }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('')
 
   return (
     <div className="wrapper">
@@ -21,7 +21,7 @@ const SignUp = ({ step }) => {
             <span>
               <img src={left} alt="" />
             </span>
-            <Link to={step === 1 ? "/login" : "/signup/1"}>Back</Link>
+            <Link to={step === 1 ? '/login' : '/signup/1'}>Back</Link>
           </div>
           <div className="signup__nav-current">
             <p className="signup__nav-current--1">Step {step} of 2</p>
@@ -35,7 +35,7 @@ const SignUp = ({ step }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

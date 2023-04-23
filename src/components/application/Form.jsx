@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { UploadFile } from "@mui/icons-material";
+import React, { useState } from 'react'
+import { UploadFile } from '@mui/icons-material'
 import {
   Button,
   styled,
@@ -8,103 +8,103 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from "@mui/material";
-import "../../styles/form.scss";
+} from '@mui/material'
+import '../../styles/form.scss'
 
 const Form = () => {
-  const companyName = "XYZ Company name";
+  const companyName = 'XYZ Company name'
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    contact: "",
-    location: "",
-    institute: "",
-    aadhar: "",
-    category: "",
-    num_other_team: "",
-    enrollment_num: "",
-    team_members: "",
-    title: "",
-    features: "",
-    current_stage: "",
-    applicant_institute_other: "",
-    applicant_category_other_uni: "",
-    designation: "",
-  });
+    name: '',
+    email: '',
+    contact: '',
+    location: '',
+    institute: '',
+    aadhar: '',
+    category: '',
+    num_other_team: '',
+    enrollment_num: '',
+    team_members: '',
+    title: '',
+    features: '',
+    current_stage: '',
+    applicant_institute_other: '',
+    applicant_category_other_uni: '',
+    designation: '',
+  })
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null)
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+    setSelectedFile(event.target.files[0])
+  }
 
   const SubmitBtn = styled(Button)({
-    backgroundColor: "#0193DC",
-    padding: "12px 40px",
+    backgroundColor: '#0193DC',
+    padding: '12px 40px',
     fontSize: 20,
-    fontFamily: "Open sans",
+    fontFamily: 'Open sans',
     fontWeight: 600,
-    textTransform: "none",
+    textTransform: 'none',
     letterSpacing: 0.7,
     borderRadius: 7,
-  });
+  })
 
   const UploadBtn = styled(Button)({
-    padding: "12px 40px",
+    padding: '12px 40px',
     fontSize: 20,
-    fontFamily: "Open sans",
+    fontFamily: 'Open sans',
     fontWeight: 600,
-    textTransform: "none",
+    textTransform: 'none',
     letterSpacing: 0.7,
     borderRadius: 7,
-  });
+  })
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleLocationChange = (event) => {
-    const { value } = event.target;
+    const { value } = event.target
     setFormData((prevFormData) => ({
       ...prevFormData,
       location: value,
-      institute: "",
-      aadhar: "",
-    }));
-  };
+      institute: '',
+      aadhar: '',
+    }))
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
+    event.preventDefault()
+    console.log(formData)
     // Alert();
-    handleClickOpen();
-    reset();
-  };
+    handleClickOpen()
+    reset()
+  }
 
   const reset = () => {
     setFormData((prevState) => {
-      const resetState = {};
+      const resetState = {}
       for (const key in prevState) {
-        resetState[key] = "";
+        resetState[key] = ''
       }
-      return resetState;
-    });
-  };
+      return resetState
+    })
+  }
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <div className="form-section">
@@ -177,7 +177,7 @@ const Form = () => {
               </select>
             </div>
 
-            {formData.location === "Parul University" && (
+            {formData.location === 'Parul University' && (
               <div className=" additional-input show">
                 <div className="form-row">
                   <label htmlFor="institute">
@@ -292,7 +292,7 @@ const Form = () => {
                   </select>
                 </div>
 
-                {formData.institute === "other" && (
+                {formData.institute === 'other' && (
                   <div className="form-row additional-input show">
                     <label htmlFor="applicant_institute_other">
                       Specify Other:
@@ -331,7 +331,7 @@ const Form = () => {
                   </select>
                 </div>
 
-                {formData.category === "Other" && (
+                {formData.category === 'Other' && (
                   <div className="form-row additional-input show">
                     <label htmlFor="applicant_category_other_uni">
                       Specify Other:
@@ -432,14 +432,14 @@ const Form = () => {
                   <div className="file-upload-text">
                     <p>Proposal Idea / PPT</p>
                     <p id="selected-file">
-                      Selected file:{" "}
-                      <span>{selectedFile ? selectedFile.name : ""} </span>
+                      Selected file:{' '}
+                      <span>{selectedFile ? selectedFile.name : ''} </span>
                     </p>
                   </div>
                   <UploadBtn
                     variant="contained"
                     component="label"
-                    endIcon={<UploadFile sx={{ color: "white" }} />}
+                    endIcon={<UploadFile sx={{ color: 'white' }} />}
                   >
                     Upload File
                     <input
@@ -459,10 +459,10 @@ const Form = () => {
               </div>
             )}
 
-            {(formData.location === "Vadodra Startup Studio" ||
-              formData.location === "Surat Startup Studio" ||
-              formData.location === "Rajkot Startup Studio" ||
-              formData.location === "Ahmedabad Startup Studio") && (
+            {(formData.location === 'Vadodra Startup Studio' ||
+              formData.location === 'Surat Startup Studio' ||
+              formData.location === 'Rajkot Startup Studio' ||
+              formData.location === 'Ahmedabad Startup Studio') && (
               <div className="additional-input show">
                 <div className="form-row">
                   <label htmlFor="aadhar">Aadhar:</label>
@@ -496,8 +496,8 @@ const Form = () => {
                   </select>
                 </div>
 
-                {(formData.category === "Other University Student" ||
-                  formData.category === "Other University Staff") && (
+                {(formData.category === 'Other University Student' ||
+                  formData.category === 'Other University Staff') && (
                   <div className="form-row additional_input show">
                     <label htmlFor="other_uni">University name:</label>
                     <input
@@ -510,7 +510,7 @@ const Form = () => {
                     />
                   </div>
                 )}
-                {formData.category === "Organisation" && (
+                {formData.category === 'Organisation' && (
                   <div className="additional_input show">
                     <div className="form-row">
                       <label htmlFor="other_uni">Organisation name:</label>
@@ -620,15 +620,15 @@ const Form = () => {
                   <div className="file-upload-text">
                     <p>Proposal Idea / PPT</p>
                     <p id="selected-file">
-                      Selected file:{" "}
-                      <span>{selectedFile ? selectedFile.name : ""} </span>
+                      Selected file:{' '}
+                      <span>{selectedFile ? selectedFile.name : ''} </span>
                     </p>
                   </div>
 
                   <UploadBtn
                     variant="contained"
                     component="label"
-                    endIcon={<UploadFile sx={{ color: "white" }} />}
+                    endIcon={<UploadFile sx={{ color: 'white' }} />}
                   >
                     Upload File
                     <input
@@ -659,7 +659,7 @@ const Form = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Form submitted successfully!"}
+            {'Form submitted successfully!'}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -674,7 +674,7 @@ const Form = () => {
         </Dialog>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form

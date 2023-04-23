@@ -1,11 +1,11 @@
-import React from "react";
-import logo from "../../assets/logo.png";
-import { Button } from "react-bootstrap";
-import twticon from "../../assets/links/UI/twitter.svg";
-import fbicon from "../../assets/links/UI/facebook.svg";
-import igicon from "../../assets/links/UI/instagram.svg";
+import React from 'react'
+import logo from '../../assets/logo.png'
+import { Button } from 'react-bootstrap'
+import twticon from '../../assets/links/UI/twitter.svg'
+import fbicon from '../../assets/links/UI/facebook.svg'
+import igicon from '../../assets/links/UI/instagram.svg'
 
-import "../../styles/footer.css";
+import '../../styles/footer.css'
 
 const Footer = () => {
   function ImageButton(props) {
@@ -13,7 +13,7 @@ const Footer = () => {
       <button className="image-button" onClick={props.onClick}>
         <img src={props.image} alt={props.alt} />
       </button>
-    );
+    )
   }
 
   function handleClick() {}
@@ -89,7 +89,7 @@ const Footer = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

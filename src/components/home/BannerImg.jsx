@@ -1,9 +1,9 @@
-import React from "react";
-import bannerImg from "../../assets/parul4.jpg";
+import React from 'react'
+import bannerImg from '../../assets/parul4.jpg'
 
 const BannerImg = () => {
   return (
-    <div class="w-full h-70vh relative bg-fixed bg-cover bg-center">
+    <div className="w-full h-70vh relative bg-fixed bg-cover bg-center">
       <img
         className="w-full object-cover md:h-700 lg:h-700 xl:h-700 2xl:h-700 sm:h-400 md:h-auto"
         src={bannerImg}
@@ -18,7 +18,7 @@ const BannerImg = () => {
     //     alt="your-banner"
     //   />
     // </div>
-  );
-};
+  )
+}
 
-export default BannerImg;
+export default BannerImg

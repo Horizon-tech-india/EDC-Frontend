@@ -1,70 +1,70 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../Login/login.scss";
-import "./signup.scss";
-import axios from "axios";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import '../Login/login.scss'
+import './signup.scss'
+import axios from 'axios'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 const SignUpStep3 = ({ email }) => {
-  const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const navigate = useNavigate();
+  const [error, setError] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleClose = () => setOpen(false)
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const navigate = useNavigate()
 
   const handleChange = (value, event) => {
-    let otpCopy = otp;
-    otpCopy[value - 1] = event.target.value;
-    setOtp(otpCopy);
-  };
+    let otpCopy = otp
+    otpCopy[value - 1] = event.target.value
+    setOtp(otpCopy)
+  }
 
   const inputfocus = (elmnt) => {
-    if (elmnt.key === "Delete" || elmnt.key === "Backspace") {
-      const next = elmnt.target.tabIndex - 2;
+    if (elmnt.key === 'Delete' || elmnt.key === 'Backspace') {
+      const next = elmnt.target.tabIndex - 2
       if (next > -1) {
-        elmnt.target.form.elements[next].focus();
+        elmnt.target.form.elements[next].focus()
       }
     } else {
-      const next = elmnt.target.tabIndex;
+      const next = elmnt.target.tabIndex
       if (next < 6) {
-        elmnt.target.form.elements[next].focus();
+        elmnt.target.form.elements[next].focus()
       }
     }
-  };
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const body = { email: email, otp: otp.join(""), isForgotPassword: false };
+    event.preventDefault()
+    const body = { email: email, otp: otp.join(''), isForgotPassword: false }
     //POST REQUEST
     axios
-      .post("http://localhost:9000/users/verify-mail-otp", body)
+      .post('http://localhost:9000/users/verify-mail-otp', body)
       .then((response) => {
-        navigate("/login");
+        navigate('/login')
       })
       .catch((error) => {
-        console.error(error);
-        setError(error.response.data.message);
-        setOpen(true);
-      });
-  };
+        console.error(error)
+        setError(error.response.data.message)
+        setOpen(true)
+      })
+  }
 
   const handleResendCode = () => {
-    const body = { email: email, isForgotPassword: false };
+    const body = { email: email, isForgotPassword: false }
     axios
-      .post("http://localhost:9000/users/resend-otp", body)
+      .post('http://localhost:9000/users/resend-otp', body)
       .then((response) => {
-        setError("Code sent");
-        setOpen(true);
+        setError('Code sent')
+        setOpen(true)
       })
       .catch((error) => {
-        console.error(error);
-      });
-  };
+        console.error(error)
+      })
+  }
   return (
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           {error}
         </Alert>
       </Snackbar>
@@ -156,7 +156,7 @@ const SignUpStep3 = ({ email }) => {
         <Link onClick={handleResendCode}>Resend Code</Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SignUpStep3;
+export default SignUpStep3

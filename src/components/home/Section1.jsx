@@ -1,8 +1,8 @@
-import React from "react";
-import sampleVideo from "../../assets/sample.mp4";
-import thumbnail from "../../assets/thumbnail.png";
+import React from 'react'
+import sampleVideo from '../../assets/sample.mp4'
+import thumbnail from '../../assets/thumbnail.png'
 // import PlayBtn from "../assets/icons/playButton.png";
-import Grid from "./Grid";
+import Grid from './Grid'
 const Section1 = () => {
   const VideoPlayer = () => {
     return (
@@ -12,22 +12,22 @@ const Section1 = () => {
         poster={thumbnail}
         className="videoSample"
       ></video>
-    );
-  };
+    )
+  }
 
   return (
     <>
       <div className="w-full  bg-white h-[500px] flex justify-center items-center">
         <div className="relative w-[1125px] justify-center flex items-center h-[378px]">
-          <div className="flex flex-row bg-white   justify-center items-center ">
+          <div className="flex flex-row bg-white z-10  justify-center items-center ">
             <div className="w-[456px] h-[342px] shadow-md p-2 flex justify-center items-center  md:mr-10">
               <VideoPlayer className="" />
             </div>
             <div className="w-[585px] h-[240px ">
-              <div class="flex items-center font-sans font-bold text-3xl leading-12 py-2 tracking-tight text-black">
+              <div className="flex items-center font-sans font-bold text-3xl leading-12 py-2 tracking-tight text-black">
                 Leaders in Entrepreneurship
               </div>
-              <div class="font-sans font-normal text-base leading-8 tracking-wider text-[#919FAE]">
+              <div className="font-sans font-normal text-base leading-8 tracking-wider text-[#919FAE]">
                 <p>
                   We believe, innovation is the foundation for any
                   entrepreneurial process. Our focus is to facilitate and assist
@@ -36,7 +36,7 @@ const Section1 = () => {
                   business leaders of tomorrow.
                 </p>
               </div>
-              <button class="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">
+              <button className="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">
                 Submit your Idea
               </button>
             </div>
@@ -47,7 +47,7 @@ const Section1 = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Section1;
+export default Section1

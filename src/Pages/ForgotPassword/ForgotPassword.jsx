@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../Login/login.scss";
-import ForgotPasswordStep1 from "./ForgotPasswordStep1";
-import ForgotPasswordStep2 from "./ForgotPasswordStep2";
-import ForgotPasswordStep3 from "./ForgotPasswordStep3";
-import left from "../../assets/left.svg";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import '../Login/login.scss'
+import ForgotPasswordStep1 from './ForgotPasswordStep1'
+import ForgotPasswordStep2 from './ForgotPasswordStep2'
+import ForgotPasswordStep3 from './ForgotPasswordStep3'
+import left from '../../assets/left.svg'
 
 const SignUp = ({ step }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('')
 
   return (
     <div className="wrapper">
@@ -24,10 +24,10 @@ const SignUp = ({ step }) => {
             <Link
               to={
                 step === 1
-                  ? "/login"
+                  ? '/login'
                   : step === 2
-                  ? "/forgot-password/1"
-                  : "/forgot-password/2"
+                  ? '/forgot-password/1'
+                  : '/forgot-password/2'
               }
             >
               Back
@@ -47,7 +47,7 @@ const SignUp = ({ step }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp
