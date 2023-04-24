@@ -4,10 +4,10 @@ import Navigation from '../components/Layout/Navbar'
 import DocumentComponent from '../components/common/DocumentComponent'
 import Footer from '../components/Layout/Footer'
 
-const App = ({ loggedIn, setLoggedIn }) => {
+const App = () => {
   return (
     <div className="bg-white relative">
-      <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Navigation />
       <Header props={'Upload the documents'} />
       <DocumentComponent />
       <Footer />

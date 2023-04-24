@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import '../styles/login.scss'
-import {loginSchema} from '../validation/formSchema'
-import lock from '../assets/lock.svg'
-import mail from '../assets/mail.svg'
-import eyeOff from '../assets/eye-off.svg'
-import facebook from '../assets/facebook.svg'
-import google from '../assets/google.svg'
-import linkedin from '../assets/linkedin.svg'
+import { loginSchema } from '../validation/formSchema'
+import lock from '../assets/icons/svg/lock.svg'
+import mail from '../assets/icons/svg/mail.svg'
+import eyeOff from '../assets/icons/svg/eye-off.svg'
+import facebook from '../assets/icons/svg/facebook.svg'
+import google from '../assets/icons/svg/google.svg'
+import linkedin from '../assets/icons/svg/linkedin.svg'
 import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
@@ -19,16 +19,11 @@ const initialValues = {
   rememberMe: false,
 }
 
-const Login = ({ loggedIn, setLoggedIn }) => {
+const Login = () => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (loggedIn) navigate('/home')
-  }, [])
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
