@@ -1,57 +1,57 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../Login/login.scss";
-import "./signup.scss";
-import axios from "axios";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import '../../styles/login.scss'
+import '../../styles/signup.scss'
+import axios from 'axios'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 const SignUpStep2 = ({ email }) => {
-  const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const navigate = useNavigate();
+  const [error, setError] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleClose = () => setOpen(false)
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const navigate = useNavigate()
 
   const handleChange = (value, event) => {
-    let otpCopy = otp;
-    otpCopy[value - 1] = event.target.value;
-    setOtp(otpCopy);
-  };
+    let otpCopy = otp
+    otpCopy[value - 1] = event.target.value
+    setOtp(otpCopy)
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const body = { email, otp: otp.join(""), isForgotPassword: true };
+    event.preventDefault()
+    const body = { email, otp: otp.join(''), isForgotPassword: true }
     //POST REQUEST
     axios
-      .post("http://localhost:9000/users/verify-mail-otp", body)
+      .post('http://localhost:9000/users/verify-mail-otp', body)
       .then((response) => {
-        navigate("/forgot-password/3");
+        navigate('/forgot-password/3')
       })
       .catch((error) => {
-        console.error(error);
-        setError(error.response.data.message);
-        setOpen(true);
-      });
-  };
+        console.error(error)
+        setError(error.response.data.message)
+        setOpen(true)
+      })
+  }
 
   const inputfocus = (elmnt) => {
-    if (elmnt.key === "Delete" || elmnt.key === "Backspace") {
-      const next = elmnt.target.tabIndex - 2;
+    if (elmnt.key === 'Delete' || elmnt.key === 'Backspace') {
+      const next = elmnt.target.tabIndex - 2
       if (next > -1) {
-        elmnt.target.form.elements[next].focus();
+        elmnt.target.form.elements[next].focus()
       }
     } else {
-      const next = elmnt.target.tabIndex;
+      const next = elmnt.target.tabIndex
       if (next < 6) {
-        elmnt.target.form.elements[next].focus();
+        elmnt.target.form.elements[next].focus()
       }
     }
-  };
+  }
   return (
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           {error}
         </Alert>
       </Snackbar>
@@ -143,7 +143,7 @@ const SignUpStep2 = ({ email }) => {
         <Link to="/forgot-password/1">Try another email address</Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SignUpStep2;
+export default SignUpStep2
