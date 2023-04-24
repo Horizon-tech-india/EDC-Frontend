@@ -253,8 +253,8 @@ const Form = () => {
      
       {formData.institute === "other" && (
       <div className='form-row additional-input show'>
-        <label htmlFor="applicant_institute_other">Specify Other:</label>
-          <input type="text" id="applicant_institute_other" name="applicant_institute_other" value={formData.other_institute} onChange={handleOtherInstituteChange} required />
+        <label htmlFor="other_institute">Specify Other:</label>
+          <input type="text" id="other_institute" name="other_institute" value={formData.other_institute} onChange={handleOtherInstituteChange} required />
       </div>
       )}
 
@@ -273,8 +273,8 @@ const Form = () => {
       
       {formData.category === "Other" && (
       <div className='form-row additional-input show'>
-        <label htmlFor="applicant_category_other_uni">Specify Other:</label>
-          <input type="text" id="applicant_category_other_uni" name="applicant_category_other_uni" value={formData.category_other} onChange={handleCategoryOtherChange} required />
+        <label htmlFor="category_other">Specify Other:</label>
+          <input type="text" id="category_other" name="category_other" value={formData.category_other} onChange={handleCategoryOtherChange} required />
       </div>
       )}
       
@@ -294,8 +294,8 @@ const Form = () => {
       </div>
 
       <div className="form-row">
-        <label htmlFor="features">Explain the uniqueness and distinctive features of the ( product / process / service / solution)</label>
-        <input type="text" id="features" name="features" value={formData.unique_features} onChange={handleUniqueFeaturesChange} required />
+        <label htmlFor="unique_features">Explain the uniqueness and distinctive features of the ( product / process / service ) solution</label>
+        <input type="text" id="unique_features" name="unique_features" value={formData.unique_features} onChange={handleUniqueFeaturesChange} required />
       </div>
 
       <div className="form-row">
@@ -357,15 +357,15 @@ const Form = () => {
 
       {(formData.category === "Other University Student" || formData.category === "Other University Staff") && (
           <div className="form-row additional_input show">
-          <label htmlFor="other_uni">University name:</label>
-          <input type="text" id="other_uni" name="other_uni" value={formData.other_university} onChange={handleOtherUniversityChange} required />
+          <label htmlFor="other_university">University name:</label>
+          <input type="text" id="other_university" name="other_university" value={formData.other_university} onChange={handleOtherUniversityChange} required />
         </div>
       )}
       {(formData.category === "Organisation") && (
           <div className="additional_input show">
             <div className='form-row'>
-          <label htmlFor="other_uni">Organisation name:</label>
-          <input type="text" id="other_uni" name="other_uni" value={formData.other_organisation} onChange={handleOtherOrganisationChange} required />
+          <label htmlFor="other_university">Organisation name:</label>
+          <input type="text" id="other_university" name="other_university" value={formData.other_organisation} onChange={handleOtherOrganisationChange} required />
         </div>
         <div className='form-row'>
         <label htmlFor="designation">Your Designation:</label>
@@ -377,8 +377,8 @@ const Form = () => {
       
 
           <div className="form-row">
-        <label htmlFor="num_other_team">No. of other team members</label>
-        <input type="number" id="num_other_team" name="num_other_team" value={formData.team_size} onChange={handleTeamSizeChange} required />
+        <label htmlFor="tem_size">No. of other team members</label>
+        <input type="number" id="team_size" name="team_size" value={formData.team_size} onChange={handleTeamSizeChange} required />
       </div>
       <div className="form-row">
         <label htmlFor="team_members">Name of Team Members <span>Separated by comma</span></label>
@@ -391,8 +391,8 @@ const Form = () => {
       </div>
 
       <div className="form-row">
-        <label htmlFor="features">Explain the uniqueness and distinctive features of the ( product / process / service / solution)</label>
-        <input type="text" id="features" name="features" value={formData.unique_features} onChange={handleUniqueFeaturesChange} required />
+        <label htmlFor="unique_features">Explain the uniqueness and distinctive features of the ( product / process / service ) solution</label>
+        <input type="text" id="unique_features" name="unique_features" value={formData.unique_features} onChange={handleUniqueFeaturesChange} required />
       </div>
 
       <div className="form-row">

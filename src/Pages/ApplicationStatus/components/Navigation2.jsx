@@ -17,16 +17,16 @@ const Navigation = () => {
   const navLists = document.querySelector('.nav-list');
  
   const handleMenu = () => {
-    if(navLists.classList.contains('activeMenu')) {
-      navLists.classList.remove('activeMenu');
+    if(document.querySelector('.nav-list').classList.contains('activeMenu')) {
+      document.querySelector('.nav-list').classList.remove('activeMenu');
     }
     else {
-      navLists.classList.add("activeMenu");
+      document.querySelector('.nav-list').classList.add("activeMenu");
     }
   }
 
   const handleMenuForLinks = () => {
-    navLists.classList.remove('activeMenu');
+    document.querySelector('.nav-list').classList.remove('activeMenu');
   }
 
 
@@ -39,7 +39,7 @@ const Navigation = () => {
          <img src={ logo }></img>
       </div>
 
-      <ul className="nav-list" >
+      <ul className="nav-list nav-list-links" >
       
           <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/home"  className="main-nav" >HOME</NavLink></li>
           <li className="nav-item" onClick={ handleMenuForLinks }><NavLink to="/application" className="main-nav"  >APPLY NOW</NavLink></li>
