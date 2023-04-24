@@ -4,6 +4,7 @@ import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
 import Home from "./Pages/Home/Home";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
+import Documents from "./Pages/DocumentsPage/Documents";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           />
           <Route exact path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route exact path="/documents" element={<Documents />} />
         </Routes>
       </BrowserRouter>
     </div>
