@@ -10,12 +10,14 @@ import ApplicationStatus from './Pages/ApplicationStatus'
 import Dashboard from './Pages/Dashboard'
 import Document from './Pages/Document'
 import Report from './Pages/Report'
-
+import { Provider } from 'react-redux'
+import store from "./components/slices/store"
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
 
   return (
     <div className="App">
+      < Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route
@@ -76,6 +78,7 @@ const App = () => {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
+      </Provider>
     </div>
   )
 }

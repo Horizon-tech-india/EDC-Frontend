@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { UploadFile } from '@mui/icons-material'
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Button,
   styled,
@@ -31,7 +32,7 @@ import {
   setUniqueFeatures,
   setCurrentStage,
   formInputs
-} from './formSlice';
+} from '../slices/formSlice';
 
 
 const Form = () => {
