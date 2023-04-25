@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import '../styles/login.scss'
-import {loginSchema} from '../validation/formSchema'
+import { loginSchema } from '../validation/formSchema'
 import lock from '../assets/lock.svg'
 import mail from '../assets/mail.svg'
 import eyeOff from '../assets/eye-off.svg'
@@ -39,6 +39,10 @@ const Login = ({ loggedIn, setLoggedIn }) => {
         axios
           .post('http://localhost:9000/users/login', values)
           .then((res) => {
+            const { token } = res.data.data
+            console.log(res)
+            // save the token to localStorage
+            localStorage.setItem('token', token)
             localStorage.setItem('pu-edc-auth-token', res.data.token)
             localStorage.setItem('pu-edc-email', res.data.email)
             setLoggedIn(true)
