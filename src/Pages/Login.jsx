@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import '../styles/login.scss'
 import { loginSchema } from '../validation/formSchema'
@@ -19,11 +19,16 @@ const initialValues = {
   rememberMe: false,
 }
 
-const Login = () => {
+const Login = ({ loggedIn, setLoggedIn }) => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (loggedIn) navigate('/home')
+  }, [])
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
