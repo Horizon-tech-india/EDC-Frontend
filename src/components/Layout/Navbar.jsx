@@ -2,21 +2,11 @@ import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '../../assets/parul-logo.svg'
 
-const Navigation = ({ loggedIn, setLoggedIn }) => {
-  const navigate = useNavigate()
+const Navigation = () => {
   const activePage = window.location.pathname
   console.log(activePage)
 
-  const handleLogin = () => {
-    if (loggedIn) {
-      localStorage.removeItem('pu-edc-email')
-      localStorage.removeItem('pu-edc-auth-token')
-      setLoggedIn(false)
-      navigate('/login')
-    } else {
-      navigate('/login')
-    }
-  }
+  const handleLogin = () => {}
   const styles = {
     header:
       'fixed z-50 h-[88px] px-5 w-full bg-[#101524] flex flex-row items-center justify-between',
@@ -79,9 +69,7 @@ const Navigation = ({ loggedIn, setLoggedIn }) => {
           </NavLink>
         </li>
         <li className="">
-          <button onClick={handleLogin} className={styles.button}>
-            {loggedIn ? 'Logout' : 'Login'}
-          </button>
+          <button>Login</button>
         </li>
       </ul>
     </nav>

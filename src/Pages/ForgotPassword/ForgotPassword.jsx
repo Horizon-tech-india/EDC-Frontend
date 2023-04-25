@@ -6,7 +6,7 @@ import ForgotPasswordStep2 from './ForgotPasswordStep2'
 import ForgotPasswordStep3 from './ForgotPasswordStep3'
 import left from '../../assets/left.svg'
 
-const SignUp = ({ step }) => {
+const ForgotPassword = ({ step }) => {
   const [email, setEmail] = useState('')
 
   return (
@@ -50,4 +50,4 @@ const SignUp = ({ step }) => {
   )
 }
 
-export default SignUp
+export default ForgotPassword
