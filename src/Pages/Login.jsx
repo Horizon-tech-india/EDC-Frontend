@@ -11,7 +11,9 @@ import google from '../assets/icons/svg/google.svg'
 import linkedin from '../assets/icons/svg/linkedin.svg'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { API } from '../Api/Post'
+
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 
 const initialValues = {
   email: '',
@@ -20,31 +22,18 @@ const initialValues = {
 }
 
 const Login = () => {
-  const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
   const navigate = useNavigate()
-
+  const { state, login } = useContext(AuthContext)
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values) => {
-        API('post', '/users/login', values)
-          .then((res) => {
-            const { token } = res.data.data
-            console.log(res.data)
-            localStorage.setItem('token', token)
-            localStorage.setItem('pu-edc-auth-token', res.data.token)
-            localStorage.setItem('pu-edc-email', res.data.email)
-            navigate('/home')
-          })
-          .catch((error) => {
-            console.error(error)
-            setError(error.response.data.message)
-            setOpen(true)
-          })
+        login(values)
+        navigate('/home')
       },
     })
 
@@ -52,7 +41,7 @@ const Login = () => {
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {state.error && <p>{state.error}</p>}
         </Alert>
       </Snackbar>
       <div className="wrapper">
@@ -70,6 +59,7 @@ const Login = () => {
             <p>Login to continue</p>
           </div>
           <form onSubmit={handleSubmit}>
+            {state.error && <p>{state.error}</p>}
             <div className="input-block">
               <label htmlFor="email">Email</label>
               <div className="input-block__input">
