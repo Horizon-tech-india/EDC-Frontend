@@ -131,10 +131,8 @@ const Form = () => {
   //   designation: '',
   //   otherOrganisation: '',
   //   otherInstitute: '',
-  // })
+  // })`
 
-  // category other
-  //other orginzation
   const [selectedFile, setSelectedFile] = useState(null)
 
   const handleFileChange = (event) => {
@@ -185,16 +183,13 @@ const Form = () => {
     console.log(formData)
     API('post', '/users/startup-details', formData)
       .then((res) => {
-        localStorage.setItem('pu-edc-auth-token', res.data.token)
-        localStorage.setItem('pu-edc-email', res.data.email)
-        // setLoggedIn(true)
-        // navigate('/home')
-        console.log(res)
+        console.log(res.data)
+        setOpen(true)
       })
       .catch((error) => {
+        console.error(error.message)
         console.error(error)
-        // setError(error.response.data.message)
-        setOpen(true)
+        alert(error.response.data.message)
       })
     handleClickOpen()
     // reset()
@@ -408,12 +403,12 @@ const Form = () => {
 
                 {formData.institute === 'other' && (
                   <div className="form-row additional-input show">
-                    <label htmlFor="other_institute">Specify Other:</label>
+                    <label htmlFor="otherInstitute">Specify Other:</label>
                     <input
                       type="text"
-                      id="other_institute"
-                      name="other_institute"
-                      value={formData.other_institute}
+                      id="otherInstitute"
+                      name="otherInstitute"
+                      value={formData.otherInstitute}
                       onChange={handleOtherInstituteChange}
                       required
                     />
@@ -445,12 +440,12 @@ const Form = () => {
 
                 {formData.category === 'Other' && (
                   <div className="form-row additional-input show">
-                    <label htmlFor="category_other">Specify Other:</label>
+                    <label htmlFor="categoryOther">Specify Other:</label>
                     <input
                       type="text"
-                      id="category_other"
-                      name="category_other"
-                      value={formData.category_other}
+                      id="categoryOther"
+                      name="categoryOther"
+                      value={formData.categoryOther}
                       onChange={handleCategoryOtherChange}
                       required
                     />
@@ -458,28 +453,28 @@ const Form = () => {
                 )}
 
                 <div className="form-row">
-                  <label htmlFor="enrollment_num">
+                  <label htmlFor="enrollmentNum">
                     Applicant Enrollment Number/Employee ID/Alumini ID number
                   </label>
                   <input
                     type="number"
-                    id="enrollment_num"
-                    name="enrollment_num"
-                    value={formData.enrollment_num}
+                    id="enrollmentNum"
+                    name="enrollmentNum"
+                    value={formData.enrollmentNum}
                     onChange={handleEnrollmentChange}
                     required
                   />
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="team_members">
+                  <label htmlFor="teamMembers">
                     Name of Team Members <span>(Separated by comma)</span>
                   </label>
                   <input
                     type="text"
-                    id="team_members"
-                    name="team_members"
-                    value={formData.team_members}
+                    id="teamMembers"
+                    name="teamMembers"
+                    value={formData.teamMembers}
                     onChange={handleTeamMembersChange}
                     required
                   />
@@ -500,28 +495,26 @@ const Form = () => {
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="unique_features">
+                  <label htmlFor="uniqueFeatures">
                     Explain the uniqueness and distinctive features of the (
                     product / process / service ) solution
                   </label>
                   <input
                     type="text"
-                    id="unique_features"
-                    name="unique_features"
-                    value={formData.unique_features}
+                    id="uniqueFeatures"
+                    name="uniqueFeatures"
+                    value={formData.uniqueFeatures}
                     onChange={handleUniqueFeaturesChange}
                     required
                   />
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="current_stage">
-                    Current stage of Startup
-                  </label>
+                  <label htmlFor="currentStage">Current stage of Startup</label>
                   <select
-                    id="current_stage"
-                    name="current_stage"
-                    value={formData.current_stage}
+                    id="currentStage"
+                    name="currentStage"
+                    value={formData.currentStage}
                     onChange={handleCurrentStageChange}
                     required
                   >
@@ -610,12 +603,12 @@ const Form = () => {
                 {(formData.category === 'Other University Student' ||
                   formData.category === 'Other University Staff') && (
                   <div className="form-row additional_input show">
-                    <label htmlFor="other_university">University name:</label>
+                    <label htmlFor="otherUniversity">University name:</label>
                     <input
                       type="text"
-                      id="other_university"
-                      name="other_university"
-                      value={formData.other_university}
+                      id="otherUniversity"
+                      name="otherUniversity"
+                      value={formData.otherUniversity}
                       onChange={handleOtherUniversityChange}
                       required
                     />
@@ -624,14 +617,14 @@ const Form = () => {
                 {formData.category === 'Organisation' && (
                   <div className="additional_input show">
                     <div className="form-row">
-                      <label htmlFor="other_university">
+                      <label htmlFor="otherUniversity">
                         Organisation name:
                       </label>
                       <input
                         type="text"
-                        id="other_university"
-                        name="other_university"
-                        value={formData.other_organisation}
+                        id="otherUniversity"
+                        name="otherUniversity"
+                        value={formData.otherOrganisation}
                         onChange={handleOtherOrganisationChange}
                         required
                       />
@@ -654,22 +647,22 @@ const Form = () => {
                   <label htmlFor="tem_size">No. of other team members</label>
                   <input
                     type="number"
-                    id="team_size"
-                    name="team_size"
-                    value={formData.team_size}
+                    id="teamSize"
+                    name="teamSize"
+                    value={formData.teamSize}
                     onChange={handleTeamSizeChange}
                     required
                   />
                 </div>
                 <div className="form-row">
-                  <label htmlFor="team_members">
+                  <label htmlFor="teamMembers">
                     Name of Team Members <span>Separated by comma</span>
                   </label>
                   <input
                     type="text"
-                    id="team_members"
-                    name="team_members"
-                    value={formData.team_members}
+                    id="teamMembers"
+                    name="teamMembers"
+                    value={formData.teamMembers}
                     onChange={handleTeamMembersChange}
                     required
                   />
@@ -690,28 +683,26 @@ const Form = () => {
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="unique_features">
+                  <label htmlFor="uniqueFeatures">
                     Explain the uniqueness and distinctive features of the (
                     product / process / service ) solution
                   </label>
                   <input
                     type="text"
-                    id="unique_features"
-                    name="unique_features"
-                    value={formData.unique_features}
+                    id="uniqueFeatures"
+                    name="uniqueFeatures"
+                    value={formData.uniqueFeatures}
                     onChange={handleUniqueFeaturesChange}
                     required
                   />
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="current_stage">
-                    Current stage of Startup
-                  </label>
+                  <label htmlFor="currentStage">Current stage of Startup</label>
                   <select
-                    id="current_stage"
-                    name="current_stage"
-                    value={formData.current_stage}
+                    id="currentStage"
+                    name="currentStage"
+                    value={formData.currentStage}
                     onChange={handleCurrentStageChange}
                     required
                   >

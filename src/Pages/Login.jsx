@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import '../styles/login.scss'
@@ -9,9 +9,9 @@ import eyeOff from '../assets/icons/svg/eye-off.svg'
 import facebook from '../assets/icons/svg/facebook.svg'
 import google from '../assets/icons/svg/google.svg'
 import linkedin from '../assets/icons/svg/linkedin.svg'
-import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import { API } from '../Api/Post'
 
 const initialValues = {
   email: '',
@@ -19,33 +19,25 @@ const initialValues = {
   rememberMe: false,
 }
 
-const Login = ({ loggedIn, setLoggedIn }) => {
+const Login = () => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (loggedIn) navigate('/home')
-  }, [])
-
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values) => {
-        //POST REQUEST
-        axios
-          .post('http://localhost:9000/users/login', values)
+        API('post', '/users/login', values)
           .then((res) => {
             const { token } = res.data.data
-            console.log(res)
-            // save the token to localStorage
+            console.log(res.data)
             localStorage.setItem('token', token)
             localStorage.setItem('pu-edc-auth-token', res.data.token)
             localStorage.setItem('pu-edc-email', res.data.email)
-            setLoggedIn(true)
             navigate('/home')
           })
           .catch((error) => {
