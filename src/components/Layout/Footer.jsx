@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../assets/UI/logo.png'
+import logo from '../../assets/UI/logo-black.png'
 import twticon from '../../assets/icons/svg/twitter.svg'
 import fbicon from '../../assets/icons/svg/facebook.svg'
 import igicon from '../../assets/icons/svg/instagram.svg'
