@@ -10,7 +10,7 @@ const SignUpStep3 = ({ email }) => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
-  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [otp, setOtp] = useState([5, 4, 3, 0, 3, 2])
   const navigate = useNavigate()
 
   const handleChange = (value, event) => {

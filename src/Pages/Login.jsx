@@ -38,7 +38,11 @@ const Login = ({ loggedIn, setLoggedIn }) => {
         //POST REQUEST
         axios
           .post('http://localhost:9000/users/login', values)
-          .then((res) => {
+          .then(res => {
+            const { token } = res.data.data;
+            console.log(res);
+            // save the token to localStorage
+            localStorage.setItem('authToken', token);
             localStorage.setItem('pu-edc-auth-token', res.data.token)
             localStorage.setItem('pu-edc-email', res.data.email)
             setLoggedIn(true)
