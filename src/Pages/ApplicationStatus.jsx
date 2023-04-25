@@ -4,10 +4,10 @@ import Form from '../components/application/Form'
 import Footer from '../components/Layout/Footer'
 import Navigation from '../components/Layout/Navbar'
 
-const ApplicationStatus = ({ loggedIn, setLoggedIn }) => {
+const ApplicationStatus = () => {
   return (
     <>
-      <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Navigation />
       <Header props={'Provide All The Details'} />
       <Form />
       <Footer />

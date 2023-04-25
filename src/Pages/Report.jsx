@@ -1,15 +1,14 @@
 import React from 'react'
 import Header from '../components/common/Header'
 import Navigation from '../components/Layout/Navbar'
-
 import Footer from '../components/Layout/Footer'
 import PieChartComponent from '../components/charts/PieChartComponent'
 import AreaChartComponent from '../components/charts/AreaChartComponent'
 
-const App = ({ loggedIn, setLoggedIn }) => {
+const App = () => {
   return (
     <div className="bg-white relative">
-      <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Navigation />
       <Header props={'Financial Report'} />
       <div className=" h-screen  w-full ">
         <AreaChartComponent />

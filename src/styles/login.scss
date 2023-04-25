@@ -14,7 +14,7 @@
       rgba(255, 255, 255, 0.7),
       rgba(255, 255, 255, 0.7)
     ),
-    url("../assets/hero.png");
+    url("../assets/UI/hero.png");
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,6 +24,7 @@
     font-size: 6rem;
     margin: 0;
     margin-left: 8%;
+    font-weight: 600;
     @media screen and (max-width: 850px) {
       font-size: 5rem;
     }
