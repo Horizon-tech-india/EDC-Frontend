@@ -1,6 +1,6 @@
 import React from 'react'
 import sampleVideo from '../../assets/sample.mp4'
-import thumbnail from '../../assets/thumbnail.png'
+import thumbnail from '../../assets/UI/thumbnail.png'
 // import PlayBtn from "../assets/icons/playButton.png";
 import Grid from './Grid'
 const Section1 = () => {

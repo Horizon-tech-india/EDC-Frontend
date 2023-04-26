@@ -1,17 +1,15 @@
 import React from 'react'
-import logo from '../../assets/logo.png'
-import { Button } from 'react-bootstrap'
-import twticon from '../../assets/links/UI/twitter.svg'
-import fbicon from '../../assets/links/UI/facebook.svg'
-import igicon from '../../assets/links/UI/instagram.svg'
-
+import logo from '../../assets/UI/logo-black.png'
+import twticon from '../../assets/icons/svg/twitter.svg'
+import fbicon from '../../assets/icons/svg/facebook.svg'
+import igicon from '../../assets/icons/svg/instagram.svg'
 import '../../styles/footer.css'
 
 const Footer = () => {
-  function ImageButton(props) {
+  function ImageButton({ image, alt }) {
     return (
-      <button className="image-button" onClick={props.onClick}>
-        <img src={props.image} alt={props.alt} />
+      <button className="image-button">
+        <img src={image} alt={alt} />
       </button>
     )
   }
@@ -62,17 +60,17 @@ const Footer = () => {
                 <div className="button-group">
                   <ImageButton
                     image={twticon}
-                    alt="twitter"
+                    alt={'twitter'}
                     onClick={handleClick}
                   />
                   <ImageButton
                     image={fbicon}
-                    alt="facebook"
+                    alt={'facebook'}
                     onClick={handleClick}
                   />
                   <ImageButton
                     image={igicon}
-                    alt="instagram"
+                    alt={'instagram'}
                     onClick={handleClick}
                   />
                 </div>

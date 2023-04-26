@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import '../styles/login.scss'
 import { loginSchema } from '../validation/formSchema'
-import lock from '../assets/lock.svg'
-import mail from '../assets/mail.svg'
-import eyeOff from '../assets/eye-off.svg'
-import facebook from '../assets/facebook.svg'
-import google from '../assets/google.svg'
-import linkedin from '../assets/linkedin.svg'
-import axios from 'axios'
+import lock from '../assets/icons/svg/lock.svg'
+import mail from '../assets/icons/svg/mail.svg'
+import eyeOff from '../assets/icons/svg/eye-off.svg'
+import facebook from '../assets/icons/svg/facebook.svg'
+import google from '../assets/icons/svg/google.svg'
+import linkedin from '../assets/icons/svg/linkedin.svg'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 
 const initialValues = {
   email: '',
@@ -20,30 +22,18 @@ const initialValues = {
 }
 
 const Login = () => {
-  const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
   const navigate = useNavigate()
-
+  const { state, login } = useContext(AuthContext)
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values) => {
-        //POST REQUEST
-        axios
-          .post('http://localhost:9000/users/login', values)
-          .then((res) => {
-            localStorage.setItem('pu-edc-auth-token', res.data.token)
-            localStorage.setItem('pu-edc-email', res.data.email)
-            navigate('/home')
-          })
-          .catch((error) => {
-            console.error(error)
-            setError(error.response.data.message)
-            setOpen(true)
-          })
+        login(values)
+        navigate('/home')
       },
     })
 
@@ -51,7 +41,7 @@ const Login = () => {
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {state.error && <p>{state.error}</p>}
         </Alert>
       </Snackbar>
       <div className="wrapper">
@@ -69,6 +59,7 @@ const Login = () => {
             <p>Login to continue</p>
           </div>
           <form onSubmit={handleSubmit}>
+            {state.error && <p>{state.error}</p>}
             <div className="input-block">
               <label htmlFor="email">Email</label>
               <div className="input-block__input">

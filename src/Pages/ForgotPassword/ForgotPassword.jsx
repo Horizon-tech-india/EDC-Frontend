@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import '../../styles/login.scss'
 import ForgotPasswordStep1 from './ForgotPasswordStep1'
 import ForgotPasswordStep2 from './ForgotPasswordStep2'
 import ForgotPasswordStep3 from './ForgotPasswordStep3'
-import left from '../../assets/left.svg'
+import '../../styles/login.scss'
+import left from '../../assets/icons/svg/left.svg'
 
 const ForgotPassword = ({ step }) => {
   const [email, setEmail] = useState('')
