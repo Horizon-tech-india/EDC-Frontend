@@ -1,12 +1,14 @@
 import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import logo from '../../assets/parul-logo.svg'
+import { NavLink } from 'react-router-dom'
+import logo from '../../assets/UI/parul-logo.svg'
 
+const Navigation = () => {
 const Navigation = () => {
   const activePage = window.location.pathname
   console.log(activePage)
 
   const handleLogin = () => {}
+
   const styles = {
     header:
       'fixed z-50 h-[88px] px-5 w-full bg-[#101524] flex flex-row items-center justify-between',
@@ -69,7 +71,9 @@ const Navigation = () => {
           </NavLink>
         </li>
         <li className="">
-          <button>Login</button>
+          <button onClick={handleLogin} className={styles.button}>
+            Login
+          </button>
         </li>
       </ul>
     </nav>

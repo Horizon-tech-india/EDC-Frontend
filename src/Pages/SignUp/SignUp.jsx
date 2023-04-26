@@ -4,7 +4,7 @@ import '../../styles/login.scss'
 import SignUpStep1 from './SignUpStep1'
 import SignUpStep2 from './SignUpStep2'
 import SignUpStep3 from './SignUpStep3'
-import left from '../../assets/left.svg'
+import left from '../../assets/icons/svg/left.svg'
 
 const SignUp = ({ step }) => {
   const [email, setEmail] = useState('')
