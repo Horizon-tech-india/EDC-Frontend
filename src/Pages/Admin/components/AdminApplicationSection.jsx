@@ -3,31 +3,34 @@ import searchIcon from "../../../assets/search-normal.svg";
 import filterIcon from "../../../assets/filter-search.svg";
 import "../../../styles/adminApplication.css"
 import StartupsTable from "./StartupsTable"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Companies } from "./Companies";
+import { API } from '../../../Api/Post';
+
 const AdminApplicationSection = () => {
     const [query, setQuery ] = useState("");
+    const [query2, setQuery2 ] = useState("");
+
     const search = (companies) => {
         return companies.filter(item => item.name.toLowerCase().includes(query));
     }
-
-    const SearchStartupsBar = (props) => {
-        return(
-        <div className="search-bar">
-            <div className="search-wrapper">
-                <img src={ searchIcon } className='search-icon' />
-                <input
-                className='search-input'
-                type="text"
-                placeholder="Search startups"
-                // onChange={props.onChange}
-                onChange={(e) => setQuery(e.target.value)}
-                value={props.value}
-                />
-            </div>
-        </div>
-        )
+    const search2 = (companies) => {
+        return companies.filter(item => item.name.toLowerCase().includes(query));
     }
+
+    useEffect(()=> {
+        console.log("line 16");
+        API('get', "/admin/all-startup-details?filters=Parul University,Vadodra Startup Studio")
+      .then((res) => {
+        console.log(res.data.data)
+        setOpen(true)
+      })
+      .catch((error) => {
+        console.error(error.message)
+        console.error(error)
+        alert(error.response.data.message)
+      })
+    })
 
     const FilterStartupsButton = (props) => {
         return(
@@ -106,8 +109,27 @@ const AdminApplicationSection = () => {
         </div>
     )}
 
-    const AllApplicationSection = () => {
-        return(
+  return (
+    <>
+    <div className="admin-application-container">
+        <div className="search-bar">
+            <div className="search-wrapper">
+                <img src={ searchIcon } className='search-icon' />
+                <input
+                className='search-input'
+                type="text"
+                placeholder="Search startups"
+                // onChange={props.onChange}
+                onChange={(e) => setQuery(e.target.value)}
+                value={ query }
+                />
+            </div>
+        </div>
+
+        <Last30Days />
+
+        {/*All application section */}
+
         <div className="all-applications-wrapper">
 
             <div className="all-applications-header">
@@ -117,7 +139,20 @@ const AdminApplicationSection = () => {
                 </div>
                 <div className="all-applications-header-right">
                     <div className="all-applications-header-search">
-                        <SearchStartupsBar />
+                        {/* <SearchStartupsBar /> */}
+                        <div className="search-bar">
+                            <div className="search-wrapper">
+                                <img src={ searchIcon } className='search-icon' />
+                                <input
+                                className='search-input'
+                                type="text"
+                                placeholder="Search startups"
+                                // onChange={props.onChange}
+                                onChange={(e) => setQuery2(e.target.value)}
+                                value={ query2 }
+                                />
+                            </div>
+                        </div>
                     </div>
                     <div className="all-applications-header-filter">
                         <FilterStartupsButton />
@@ -125,21 +160,13 @@ const AdminApplicationSection = () => {
                 </div>
             </div>
 
+
             <div className="all-applications-body">
                 <StartupsTable companies = { search(Companies) }/>
-               <ApplicationFooter />
+                <ApplicationFooter />
             </div>
         </div>
-        )
-    }
-  return (
-    <>
-    <div className="admin-application-container">
-    <SearchStartupsBar />
-    <Last30Days />
-    <AllApplicationSection />
     </div>
-    
     </>
   )
 }

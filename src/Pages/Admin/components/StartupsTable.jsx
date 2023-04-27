@@ -1,7 +1,27 @@
-import React from 'react'
+import React,{ useState, useEffect } from 'react'
 import "../../../styles/startupstable.css";
+import { API } from '../../../Api/Post';
+import axios from "axios";
+
 
 const StartupsTable = ( {companies} ) => {
+  const [data, setData] = useState([]);
+  useEffect(()=> {
+    console.log("line 10");
+    API('get', "/admin/all-startup-details")
+  .then((res) => {
+    console.log(res.data);
+    setData(res.data.data);
+    // setOpen(true);
+  })
+  .catch((error) => {
+    console.error(error.message)
+    console.error(error)
+    alert(error.response.data.message)
+  })
+})
+
+
   return (
     <div className="table-wrapper">
     <table>
@@ -13,11 +33,11 @@ const StartupsTable = ( {companies} ) => {
                 <th>Branch</th>
                 <th>Company Valuation</th>
             </tr>
-            {companies.map((item) => (
-            <tr key={ item.id }>
+            {data.map((item) => (
+            <tr >
                 <td width="20%"> { item.name }</td>
 
-                <td width="15%"><span className= {
+                <td width="13%"><span className= {
                 (item.status.toLowerCase() === 'verified' ? "verified" : "") +
                 (item.status.toLowerCase() === 'pending' ? "pending" : "") +
                 (item.status.toLowerCase() === 'unverified' ? "unverified" : "")
@@ -27,13 +47,13 @@ const StartupsTable = ( {companies} ) => {
                 < progress max="100" value={ item.accountStatus } className={(item.accountStatus === '' ? 'progressFalse' : 'progressTrue')} />
                 <p>{ item.accountStatus }</p>
                 <span className= {
-                (item.accountStatusChange[0] === 'increment' ? "increment" : "") +
-                (item.accountStatusChange[0] === 'decrement' ? "decrement" : "") +
-                (item.accountStatusChange[0] === '' ? "noData" : "")
-                }> { item.accountStatusChange[1] } </span> </td>
+                (item.change === 'increment' ? "increment" : "") +
+                (item.change === 'decrement' ? "decrement" : "") +
+                (item.change === '' ? "noData" : "")
+                }> { item.changeAmount } </span> </td>
 
                 <td width="10%"> { item.branch }</td>
-                <td width="20%"> { item.valuation }</td>
+                <td width="22%"> { item.valuation }</td>
             </tr>
             ))}
             
