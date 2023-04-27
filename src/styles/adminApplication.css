@@ -202,3 +202,14 @@
     border-radius: 50%;
     padding: 2px 7px;
   }
+  .page-nums .active{
+    background: rgb(224,237,233);
+    color: #427A5B;
+  }
+
+  .previous-page {
+    cursor: pointer;
+  }
+  .next-page {
+    cursor: pointer;
+  }

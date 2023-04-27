@@ -5,23 +5,10 @@ import axios from "axios";
 
 
 const StartupsTable = ( {companies} ) => {
-  const [data, setData] = useState([]);
-  useEffect(()=> {
-    console.log("line 10");
-    API('get', "/admin/all-startup-details")
-  .then((res) => {
-    console.log(res.data);
-    setData(res.data.data);
-    // setOpen(true);
-  })
-  .catch((error) => {
-    console.error(error.message)
-    console.error(error)
-    alert(error.response.data.message)
-  })
-})
-
-
+    // const limitPerPage = 6;
+    // const start = (currentPage - 1) * limitPerPage;
+    // const end = currentPage * limitPerPage;
+    // const currentRows = companies.slice(start, end);
   return (
     <div className="table-wrapper">
     <table>
@@ -33,7 +20,7 @@ const StartupsTable = ( {companies} ) => {
                 <th>Branch</th>
                 <th>Company Valuation</th>
             </tr>
-            {data.map((item) => (
+            {companies.map((item) => (
             <tr >
                 <td width="20%"> { item.name }</td>
 
