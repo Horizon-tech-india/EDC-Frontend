@@ -26,7 +26,7 @@ const StartupsTable = ( {companies} ) => {
     const pageNumButtons = [];
 
       for (let i = 1; i <= totalPages; i++) {
-        const buttonClass = i === currentPage ? 'page-num-buttons active' : 'page-num-buttons';
+        const buttonClass = i === currentPage ? 'active' : '';
 
         pageNumButtons.push(
           <button
@@ -39,16 +39,30 @@ const StartupsTable = ( {companies} ) => {
 
       return (
         <div className="all-applications-footer">
-          <div className="previous-page"
-            onClick={()=> handlePageChange(currentPage - 1) }>
-            Previous page
+          <div className="previous-page">
+            {/* onClick={()=> handlePageChange(currentPage - 1) }
+            Previous page */}
+              <button
+              className="prev-page-btn"
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+              >
+              Previous page
+             </button>
           </div>
           <div className="page-nums">
             { pageNumButtons }
           </div>
-          <div className="next-page"
-            onClick={ ()=> handlePageChange(currentPage - 1) }>
-            Next Page
+          <div className="next-page">
+            {/* onClick={ ()=> handlePageChange(currentPage - 1) }
+            Next Page */}
+            <button
+              className="next-page-btn"
+              disabled={currentPage === totalPages}
+              onClick={() => handlePageChange(currentPage + 1)}
+              >
+              Next page
+             </button>
           </div>
         </div>
     )}
