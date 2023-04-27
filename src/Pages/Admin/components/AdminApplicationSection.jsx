@@ -11,19 +11,6 @@ const AdminApplicationSection = () => {
     const [query, setQuery ] = useState("");
     const [query2, setQuery2 ] = useState("");
     const [ tabledata, setTabledata] = useState([]);
-    const [ currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const limitPerPage = 6;
-
-    function handlePageChange(page) {
-        // update current page number
-        setCurrentPage(page);
-    }
-
-    useEffect(() => {
-        // calculate total number of pages based on rows and limit per page
-        setTotalPages(Math.ceil(tabledata.length / limitPerPage));
-      }, [tabledata]);
 
     const search = (companies) => {
         return companies.filter(item => item.name.toLowerCase().includes(query));
@@ -96,39 +83,6 @@ const AdminApplicationSection = () => {
             </div>
         )
     }
-    
-    const ApplicationFooter = (props) => {
-
-        const pageNumButtons = [];
-
-        for (let i = 1; i <= totalPages; i++) {
-        const buttonClass = i === currentPage ? 'page-num-buttons active' : 'page-num-buttons';
-
-        pageNumButtons.push(
-            <button
-            // onClick={ props.numsBtn }
-            className={ buttonClass }
-            onClick={() => handlePageChange(i) }
-            > {i}
-            </button>
-        )
-        }
-
-        return (
-        <div className="all-applications-footer">
-            <div className="previous-page"
-            onClick={()=> handlePageChange(currentPage - 1) }>
-                Previous page
-            </div>
-            <div className="page-nums">
-            { pageNumButtons }
-            </div>
-            <div className="next-page"
-            onClick={ ()=> handlePageChange(currentPage - 1) }>
-                Next Page
-            </div>
-        </div>
-    )}
 
   return (
     <>
@@ -184,7 +138,7 @@ const AdminApplicationSection = () => {
 
             <div className="all-applications-body">
                 <StartupsTable companies = { search(tabledata) }/>
-                <ApplicationFooter />
+                {/* <ApplicationFooter /> */}
             </div>
         </div>
     </div>
