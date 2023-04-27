@@ -9,6 +9,7 @@ import ApplicationStatus from './Pages/ApplicationStatus'
 import Dashboard from './Pages/Dashboard'
 import Document from './Pages/Document'
 import Report from './Pages/Report'
+import FiltersAdmin from './Pages/FiltersAdmin'
 
 import DashboardAdmin from './Pages/Admin/Dashboard'
 import { Provider } from 'react-redux'
@@ -19,6 +20,7 @@ const App = () => {
       < Provider store={store}>
       <BrowserRouter>
         <Routes>
+          <Route exact path="/adminfilters" element={<FiltersAdmin />} />
           <Route exact path="/admin" element={<DashboardAdmin />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup/1" element={<SignUp step={1} />} />
