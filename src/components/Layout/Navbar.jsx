@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import logo from '../../assets/UI/parul-logo.svg'
 
 const Navigation = () => {
-const Navigation = () => {
   const activePage = window.location.pathname
   console.log(activePage)
 

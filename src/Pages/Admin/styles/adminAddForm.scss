@@ -1,0 +1,30 @@
+.admin-add {
+  & form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__submit {
+    background: #b4cd93;
+    border: none;
+    border-radius: 5px;
+    height: 2.2rem;
+    padding: 0rem 0.5rem;
+  }
+}
+
+.input__container {
+  display: flex;
+  flex-direction: column;
+
+  & input,
+  & select {
+    background-color: rgb(243, 235, 235);
+    border-radius: 5px;
+    padding: 0.3rem 0.5rem;
+    outline: none;
+    max-width: 150px;
+  }
+}

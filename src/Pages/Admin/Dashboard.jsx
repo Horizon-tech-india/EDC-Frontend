@@ -4,10 +4,10 @@ import AdminApplicationSection from './components/AdminApplicationSection'
 
 const Dashboard = () => {
   return (
-    <>
-       <AdminApplicationSection />
+    <div className="admin-container">
+      <AdminApplicationSection />
       <SidebarRight />
-    </>
+    </div>
   )
 }
 

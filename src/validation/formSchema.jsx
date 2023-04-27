@@ -67,3 +67,10 @@ export const forgotPasswordSchemaStep3 = Yup.object({
     'Passwords must match',
   ),
 })
+
+export const adminAddSchema = Yup.object({
+  name: Yup.string(),
+  email: Yup.string(),
+  password: Yup.string(),
+  branch: Yup.string(),
+})
