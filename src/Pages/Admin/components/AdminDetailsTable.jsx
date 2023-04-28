@@ -2,7 +2,6 @@ import React from 'react'
 import '../../../styles/startupstable.css'
 
 const AdminDetailsTable = ({ data, handleDelete }) => {
-  console.log('refr')
   return (
     <div className="table-wrapper">
       <table>
@@ -15,10 +14,10 @@ const AdminDetailsTable = ({ data, handleDelete }) => {
           </tr>
           {data.map((item) => (
             <tr key={item.name}>
-              <td width="20%"> {item.name}</td>
-              <td width="20%"> {item.email}</td>
-              <td width="20%"> {item.branch}</td>
-              <td width="20%" onClick={() => handleDelete(item.email)}>
+              <td width="25%"> {item.name}</td>
+              <td width="25%"> {item.email}</td>
+              <td width="25%"> {item.branch}</td>
+              <td width="25%" onClick={() => handleDelete(item.email)}>
                 {' '}
                 Delete
               </td>

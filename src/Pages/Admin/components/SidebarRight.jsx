@@ -28,9 +28,9 @@ const UpcomingMeetingList = () => {
 
   return (
     <ul className="sidebar-right__card-list">
-      {upcomingMeetingData.map((meeting) => {
+      {upcomingMeetingData.map((meeting, index) => {
         return (
-          <li key={meeting.name} className="sidebar-right__card-item">
+          <li key={meeting.name + index} className="sidebar-right__card-item">
             <div className="card__avatar">
               <img src={meeting.img} alt="avatar" />
             </div>

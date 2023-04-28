@@ -12,7 +12,7 @@ const initialValues = {
 }
 
 const AdminAddForm = ({ data, setData }) => {
-  const { values, handleChange, handleSubmit } = useFormik({
+  const { values, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: adminAddSchema,
@@ -20,6 +20,7 @@ const AdminAddForm = ({ data, setData }) => {
       const body = values
       const dataCopy = [...data, values]
       setData(dataCopy)
+      resetForm({ values: initialValues })
       //POST REQUEST
       axios
         .post('http://localhost:9000/', body)
