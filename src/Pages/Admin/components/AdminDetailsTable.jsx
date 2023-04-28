@@ -13,8 +13,11 @@ const AdminDetailsTable = ({ data, handleDelete }) => {
             <th></th>
           </tr>
           {data.map((item) => (
-            <tr key={item.name}>
-              <td width="25%"> {item.name}</td>
+            <tr key={item.email}>
+              <td width="25%">
+                {' '}
+                {item.firstName} {item.lastName}
+              </td>
               <td width="25%"> {item.email}</td>
               <td width="25%"> {item.branch}</td>
               <td width="25%" onClick={() => handleDelete(item.email)}>

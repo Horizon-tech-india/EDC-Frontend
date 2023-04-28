@@ -5,31 +5,36 @@ import AdminDetailsTable from './AdminDetailsTable'
 const AdminAddSection = () => {
   const initialData = [
     {
-      name: 'sam',
+      firstName: 'sam',
+      lastName: 'sss',
       email: 'sam@gmail.com',
       password: 'sam@123',
       branch: 'RSS',
     },
     {
-      name: 'anjal',
+      firstName: 'anjal',
+      lastName: 'sss',
       email: 'anjal@gmail.com',
       password: 'anjal@123',
       branch: 'AHSS',
     },
     {
-      name: 'ram',
+      firstName: 'ram',
+      lastName: 'sss',
       email: 'ram@gmail.com',
       password: 'ram@123',
       branch: 'Surat Branch',
     },
     {
-      name: 'nikhil',
+      firstName: 'nikhil',
+      lastName: 'sss',
       email: 'nikhil@gmail.com',
       password: 'nikhil@123',
       branch: 'VSS',
     },
     {
-      name: 'parul',
+      firstName: 'parul',
+      lastName: 'sss',
       email: 'parul@gmail.com',
       password: 'parul@123',
       branch: 'RSS',

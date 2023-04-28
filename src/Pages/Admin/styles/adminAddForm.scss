@@ -1,23 +1,30 @@
 .admin-add {
-  & form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  margin: 1rem 0rem;
+
+  &__form-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 5rem 5rem;
   }
 
   &__submit {
+    display: block;
+    font-weight: 600;
     background: #b4cd93;
     border: none;
     border-radius: 5px;
     height: 2.2rem;
-    padding: 0rem 0.5rem;
+    padding: 0rem 1rem;
+    margin: 0 auto;
   }
 }
 
 .input__container {
+  align-self: center;
+  justify-self: center;
   display: flex;
   flex-direction: column;
+  margin: 1rem;
 
   & input,
   & select {
@@ -25,6 +32,10 @@
     border-radius: 5px;
     padding: 0.3rem 0.5rem;
     outline: none;
-    max-width: 150px;
+    max-width: 200px;
+  }
+
+  & select {
+    width: 200px;
   }
 }
