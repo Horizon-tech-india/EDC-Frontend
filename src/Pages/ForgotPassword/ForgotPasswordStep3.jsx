@@ -22,29 +22,28 @@ const SignUpStep3 = ({ email }) => {
   const [passwordHidden1, setPasswordHidden1] = useState(true)
   const [passwordHidden2, setPasswordHidden2] = useState(true)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: forgotPasswordSchemaStep3,
-      onSubmit: (values) => {
-        const body = {
-          email,
-          newPassword: values.new_password,
-          confirmNewPassword: values.confirm_password,
-        }
-        //POST REQUEST
-        axios
-          .post('http://localhost:9000/users/set-new-password', body)
-          .then((response) => {
-            navigate('/login')
-          })
-          .catch((error) => {
-            console.error(error)
-            setError(error.response.data.message)
-            setOpen(true)
-          })
-      },
-    })
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: forgotPasswordSchemaStep3,
+    onSubmit: (values) => {
+      const body = {
+        email,
+        newPassword: values.new_password,
+        confirmNewPassword: values.confirm_password,
+      }
+      //POST REQUEST
+      axios
+        .post('http://localhost:9000/users/set-new-password', body)
+        .then((response) => {
+          navigate('/login')
+        })
+        .catch((error) => {
+          console.error(error)
+          setError(error.response.data.message)
+          setOpen(true)
+        })
+    },
+  })
   const navigate = useNavigate()
 
   return (

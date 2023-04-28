@@ -70,10 +70,7 @@ const SignUpStep3 = ({ email }) => {
       </Snackbar>
       <div className="login__head">
         <h2>Check your Mail</h2>
-        <p>
-          We've sent a 6 digit confirmation code to username@gmail.com. Make
-          sure you enter correct code
-        </p>
+        <p>We've sent a 6 digit confirmation code to username@gmail.com. Make sure you enter correct code</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="otpContainer">

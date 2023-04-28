@@ -28,11 +28,7 @@ const SignUp = ({ step }) => {
             <p className="signup__nav-current--2">Signup</p>
           </div>
         </nav>
-        {step === 1 ? (
-          <SignUpStep1 setEmail={setEmail} />
-        ) : (
-          <SignUpStep3 email={email} />
-        )}
+        {step === 1 ? <SignUpStep1 setEmail={setEmail} /> : <SignUpStep3 email={email} />}
       </div>
     </div>
   )

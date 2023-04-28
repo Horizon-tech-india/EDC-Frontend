@@ -28,7 +28,7 @@ const Dashboard = () => {
   return (
     <>
       {isLoading ? (
-        <div className="h-screen w-screen flex justify-center items-center z-50">
+        <div className="h-screen bg-black opacity-40 w-screen flex justify-center items-center z-50">
           <Spinner />
         </div>
       ) : state.role === ROLES.ADMIN || state.role === ROLES.MASTER_ADMIN ? (
@@ -37,7 +37,9 @@ const Dashboard = () => {
           <AdminApplicationSection />
         </div>
       ) : (
-        <div style={{ color: 'red', fontSize: '24px' }}>Access denied.</div>
+        <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">
+          <Spinner />
+        </div>
       )}
     </>
   )

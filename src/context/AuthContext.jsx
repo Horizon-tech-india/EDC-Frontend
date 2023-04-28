@@ -4,27 +4,13 @@ import { API } from '../Api/Post'
 import { decryptData } from './crypto'
 import { authReducer } from './authReducer'
 
-const firstName = localStorage.getItem('pu-edc-fn')
-  ? decryptData(localStorage.getItem('pu-edc-fn'))
-  : ''
-const lastName = localStorage.getItem('pu-edc-ln')
-  ? decryptData(localStorage.getItem('pu-edc-ln'))
-  : ''
-const phoneNumber = localStorage.getItem('pu-edc-pn')
-  ? decryptData(localStorage.getItem('pu-edc-pn'))
-  : ''
-const storedToken = localStorage.getItem('token')
-  ? decryptData(localStorage.getItem('token'))
-  : ''
-const email = localStorage.getItem('pu-edc-m')
-  ? decryptData(localStorage.getItem('pu-edc-m'))
-  : ''
-const role = localStorage.getItem('pu-edc-state')
-  ? decryptData(localStorage.getItem('pu-edc-state'))
-  : ''
-const tokenExpTime = localStorage.getItem('pu-edc-exp')
-  ? decryptData(localStorage.getItem('pu-edc-exp'))
-  : ''
+const firstName = localStorage.getItem('pu-edc-fn') ? decryptData(localStorage.getItem('pu-edc-fn')) : ''
+const lastName = localStorage.getItem('pu-edc-ln') ? decryptData(localStorage.getItem('pu-edc-ln')) : ''
+const phoneNumber = localStorage.getItem('pu-edc-pn') ? decryptData(localStorage.getItem('pu-edc-pn')) : ''
+const storedToken = localStorage.getItem('token') ? decryptData(localStorage.getItem('token')) : ''
+const email = localStorage.getItem('pu-edc-m') ? decryptData(localStorage.getItem('pu-edc-m')) : ''
+const role = localStorage.getItem('pu-edc-state') ? decryptData(localStorage.getItem('pu-edc-state')) : ''
+const tokenExpTime = localStorage.getItem('pu-edc-exp') ? decryptData(localStorage.getItem('pu-edc-exp')) : ''
 
 const initialAuthState = {
   isAuthenticated: !!storedToken && !!email,
@@ -82,11 +68,7 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  return (
-    <AuthContext.Provider value={{ state, dispatch, login, logout, isLoading }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={{ state, dispatch, login, logout, isLoading }}>{children}</AuthContext.Provider>
 }
 
 export { AuthContext, AuthProvider }

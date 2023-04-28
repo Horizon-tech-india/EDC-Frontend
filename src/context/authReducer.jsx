@@ -16,10 +16,7 @@ export const authReducer = (state, action) => {
       localStorage.setItem('pu-edc-ln', encryptData(action.payload.lastName))
       localStorage.setItem('pu-edc-pn', encryptData(action.payload.phoneNumber))
       localStorage.setItem('pu-edc-state', encryptData(action.payload.role))
-      localStorage.setItem(
-        'pu-edc-exp',
-        encryptData(action.payload.tokenExpTime),
-      )
+      localStorage.setItem('pu-edc-exp', encryptData(action.payload.tokenExpTime))
       return {
         ...state,
         isAuthenticated: true,

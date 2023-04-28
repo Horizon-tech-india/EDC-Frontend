@@ -27,15 +27,14 @@ const Login = () => {
   const [passwordHidden, setPasswordHidden] = useState(true)
   const navigate = useNavigate()
   const { state, login } = useContext(AuthContext)
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: loginSchema,
-      onSubmit: (values) => {
-        login(values)
-        navigate('/home')
-      },
-    })
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      login(values)
+      navigate('/home')
+    },
+  })
 
   return (
     <>
@@ -76,9 +75,7 @@ const Login = () => {
                   placeholder="Your email"
                 />
               </div>
-              {errors.email && touched.email ? (
-                <p className="input-block__error">{errors.email}</p>
-              ) : null}
+              {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
             </div>
             <div className="input-block">
               <label htmlFor="password">Password</label>
@@ -99,9 +96,7 @@ const Login = () => {
                   <img src={eyeOff} alt="" />
                 </span>
               </div>
-              {errors.password && touched.password ? (
-                <p className="input-block__error">{errors.password}</p>
-              ) : null}
+              {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}
             </div>
             <div className="input-block login__remember">
               <div>

@@ -3,15 +3,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { UploadFile } from '@mui/icons-material'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  Button,
-  styled,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material'
+import { Button, styled, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import '../../styles/form.scss'
 import {
   setName,
@@ -37,9 +29,7 @@ import {
 import { API } from '../../Api/Post'
 const Form = () => {
   const { state } = useContext(AuthContext)
-  const companyName =
-    (state.isAuthenticated && `Hi, ${state?.firstName} ${state?.lastName}`) ||
-    `Welcome please Login`
+  const companyName = (state.isAuthenticated && `Hi, ${state?.firstName} ${state?.lastName}`) || `Welcome please Login`
 
   const formData = useSelector(formInputs)
   const dispatch = useDispatch()
@@ -230,13 +220,7 @@ const Form = () => {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <label htmlFor="name">Name:</label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={handleNameChange}
-                required
-              />
+              <input type="text" id="name" value={formData.name} onChange={handleNameChange} required />
             </div>
 
             <div className="form-row">
@@ -265,36 +249,20 @@ const Form = () => {
 
             <div className="form-row">
               <label htmlFor="location">Location:</label>
-              <select
-                id="location"
-                name="location"
-                value={formData.location}
-                onChange={handleLocationChange}
-                required
-              >
+              <select id="location" name="location" value={formData.location} onChange={handleLocationChange} required>
                 <option value="">Select location</option>
                 <option value="Parul University">Parul University</option>
-                <option value="Vadodra Startup Studio">
-                  Vadodra Startup Studio
-                </option>
-                <option value="Ahmedabad Startup Studio">
-                  Ahmedabad Startup Studio
-                </option>
-                <option value="Rajkot Startup Studio">
-                  Rajkot Startup Studio
-                </option>
-                <option value="Surat Startup Studio">
-                  Surat Startup Studio
-                </option>
+                <option value="Vadodra Startup Studio">Vadodra Startup Studio</option>
+                <option value="Ahmedabad Startup Studio">Ahmedabad Startup Studio</option>
+                <option value="Rajkot Startup Studio">Rajkot Startup Studio</option>
+                <option value="Surat Startup Studio">Surat Startup Studio</option>
               </select>
             </div>
 
             {formData.location === 'Parul University' && (
               <div className=" additional-input show">
                 <div className="form-row">
-                  <label htmlFor="institute">
-                    Applicant Institute/Organization Name
-                  </label>
+                  <label htmlFor="institute">Applicant Institute/Organization Name</label>
                   <select
                     id="institute"
                     name="institute"
@@ -306,101 +274,63 @@ const Form = () => {
                     <option value="Parul Institute of Engineering & Technology (PIET)">
                       Parul Institute of Engineering & Technology (PIET)
                     </option>
-                    <option value="Parul Institute of Technology (PIT)">
-                      Parul Institute of Technology (PIT)
-                    </option>
-                    <option value="Parul Polytechnic Institute (PPI)">
-                      Parul Polytechnic Institute (PPI)
-                    </option>
+                    <option value="Parul Institute of Technology (PIT)">Parul Institute of Technology (PIT)</option>
+                    <option value="Parul Polytechnic Institute (PPI)">Parul Polytechnic Institute (PPI)</option>
                     <option value="Parul Institute of Engineering & Technology - Diploma Studies (PIET-DS)">
-                      Parul Institute of Engineering & Technology - Diploma
-                      Studies (PIET-DS)
+                      Parul Institute of Engineering & Technology - Diploma Studies (PIET-DS)
                     </option>
-                    <option value="College of Agriculture">
-                      College of Agriculture
-                    </option>
-                    <option value="Parul Institute of Commerce">
-                      Parul Institute of Commerce
-                    </option>
-                    <option value="Parul Institute of Social Work">
-                      Parul Institute of Social Work
-                    </option>
+                    <option value="College of Agriculture">College of Agriculture</option>
+                    <option value="Parul Institute of Commerce">Parul Institute of Commerce</option>
+                    <option value="Parul Institute of Social Work">Parul Institute of Social Work</option>
                     <option value="Parul Institute of Business Administration">
                       Parul Institute of Business Administration
                     </option>
                     <option value="Parul Institute of Management and Research">
                       Parul Institute of Management and Research
                     </option>
-                    <option value="Parul Institute of Ayurveda">
-                      Parul Institute of Ayurveda
-                    </option>
+                    <option value="Parul Institute of Ayurveda">Parul Institute of Ayurveda</option>
                     <option value="Parul Institute of Ayurveda and Research">
                       Parul Institute of Ayurveda and Research
                     </option>
                     <option value="Jawaharlal Nehru Homeopathic Medical College">
                       Jawaharlal Nehru Homeopathic Medical College
                     </option>
-                    <option value="Rajkot Homoeopathic Medical College">
-                      Rajkot Homoeopathic Medical College
-                    </option>
+                    <option value="Rajkot Homoeopathic Medical College">Rajkot Homoeopathic Medical College</option>
                     <option value="Parul Institute of Homeopathy & Research">
                       Parul Institute of Homeopathy & Research
                     </option>
                     <option value="Ahmedabad Homoeopathic Medical College">
                       Ahmedabad Homoeopathic Medical College
                     </option>
-                    <option value="Parul Institute of Law">
-                      Parul Institute of Law
-                    </option>
+                    <option value="Parul Institute of Law">Parul Institute of Law</option>
                     <option value="Parul Institute of Computer Application">
                       Parul Institute of Computer Application
                     </option>
                     <option value="Parul Institute of Architecture & Research">
                       Parul Institute of Architecture & Research
                     </option>
-                    <option value="Parul institute of Design">
-                      Parul institute of Design
-                    </option>
-                    <option value="Parul Institute of Fine Arts">
-                      Parul Institute of Fine Arts
-                    </option>
-                    <option value="Parul Institute of Nursing">
-                      Parul Institute of Nursing
-                    </option>
-                    <option value="Parul Institute of Pharmacy">
-                      Parul Institute of Pharmacy
-                    </option>
+                    <option value="Parul institute of Design">Parul institute of Design</option>
+                    <option value="Parul Institute of Fine Arts">Parul Institute of Fine Arts</option>
+                    <option value="Parul Institute of Nursing">Parul Institute of Nursing</option>
+                    <option value="Parul Institute of Pharmacy">Parul Institute of Pharmacy</option>
                     <option value="Parul Institute of Pharmacy & Research">
                       Parul Institute of Pharmacy & Research
                     </option>
-                    <option value="School of Pharmacy">
-                      School of Pharmacy
-                    </option>
+                    <option value="School of Pharmacy">School of Pharmacy</option>
                     <option value="Parul Institute of Hotel Management and Catering Technology">
-                      Parul Institute of Hotel Management and Catering
-                      Technology
+                      Parul Institute of Hotel Management and Catering Technology
                     </option>
-                    <option value="Parul Institute of Applied Sciences">
-                      Parul Institute of Applied Sciences
-                    </option>
-                    <option value="Parul Institute of Arts">
-                      Parul Institute of Arts
-                    </option>
+                    <option value="Parul Institute of Applied Sciences">Parul Institute of Applied Sciences</option>
+                    <option value="Parul Institute of Arts">Parul Institute of Arts</option>
                     <option value="Parul Institute of Medical Science & Research">
                       Parul Institute of Medical Science & Research
                     </option>
-                    <option value="Department of Public Health">
-                      Department of Public Health
-                    </option>
+                    <option value="Department of Public Health">Department of Public Health</option>
                     <option value="Department of Paramedical and Health Science">
                       Department of Paramedical and Health Science
                     </option>
-                    <option value="Ahmedabad Physiotherapy College">
-                      Ahmedabad Physiotherapy College
-                    </option>
-                    <option value="Parul Institute of Physiotherapy">
-                      Parul Institute of Physiotherapy
-                    </option>
+                    <option value="Ahmedabad Physiotherapy College">Ahmedabad Physiotherapy College</option>
+                    <option value="Parul Institute of Physiotherapy">Parul Institute of Physiotherapy</option>
                     <option value="other">other</option>
                   </select>
                 </div>
@@ -429,15 +359,9 @@ const Form = () => {
                     required
                   >
                     <option value="">Select location</option>
-                    <option value="Parul University Student">
-                      Parul University Student
-                    </option>
-                    <option value="Parul University Staff member">
-                      Parul University Staff member
-                    </option>
-                    <option value="Parul University Alumni">
-                      Parul University Alumni
-                    </option>
+                    <option value="Parul University Student">Parul University Student</option>
+                    <option value="Parul University Staff member">Parul University Staff member</option>
+                    <option value="Parul University Alumni">Parul University Alumni</option>
                     <option value="Other">Other</option>
                   </select>
                 </div>
@@ -457,9 +381,7 @@ const Form = () => {
                 )}
 
                 <div className="form-row">
-                  <label htmlFor="enrollmentNum">
-                    Applicant Enrollment Number/Employee ID/Alumini ID number
-                  </label>
+                  <label htmlFor="enrollmentNum">Applicant Enrollment Number/Employee ID/Alumini ID number</label>
                   <input
                     type="number"
                     id="enrollmentNum"
@@ -485,9 +407,7 @@ const Form = () => {
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="title">
-                    Title of the Startup/Idea/Innovation
-                  </label>
+                  <label htmlFor="title">Title of the Startup/Idea/Innovation</label>
                   <input
                     type="text"
                     id="title"
@@ -500,8 +420,7 @@ const Form = () => {
 
                 <div className="form-row">
                   <label htmlFor="uniqueFeatures">
-                    Explain the uniqueness and distinctive features of the (
-                    product / process / service ) solution
+                    Explain the uniqueness and distinctive features of the ( product / process / service ) solution
                   </label>
                   <input
                     type="text"
@@ -525,12 +444,10 @@ const Form = () => {
                     <option value="">Select</option>
                     <option value="Idea">Idea</option>
                     <option value="Prototype stage (If you have developed any working prototype of a solution proposed)">
-                      Prototype stage (If you have developed any working
-                      prototype of a solution proposed)
+                      Prototype stage (If you have developed any working prototype of a solution proposed)
                     </option>
                     <option value="Startup Stage (If you have developed a final marketable product/service platform)">
-                      Startup Stage (If you have developed a final marketable
-                      product/service platform)
+                      Startup Stage (If you have developed a final marketable product/service platform)
                     </option>
                   </select>
                 </div>
@@ -539,8 +456,7 @@ const Form = () => {
                   <div className="file-upload-text">
                     <p>Proposal Idea / PPT</p>
                     <p id="selected-file">
-                      Selected file:{' '}
-                      <span>{selectedFile ? selectedFile.name : ''} </span>
+                      Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
                     </p>
                   </div>
                   <UploadBtn
@@ -550,12 +466,7 @@ const Form = () => {
                     endIcon={<UploadFile sx={{ color: 'white' }} />}
                   >
                     Upload File
-                    <input
-                      type="file"
-                      accept=".pdf"
-                      onChange={handleFileChange}
-                      hidden
-                    ></input>
+                    <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
                   </UploadBtn>
                 </div>
 
@@ -594,12 +505,8 @@ const Form = () => {
                     required
                   >
                     <option value="">Select Category</option>
-                    <option value="Other University Student">
-                      Other University Student
-                    </option>
-                    <option value="Other University Staff member">
-                      Other University Staff member
-                    </option>
+                    <option value="Other University Student">Other University Student</option>
+                    <option value="Other University Staff member">Other University Staff member</option>
                     <option value="Organisation">Organisation</option>
                   </select>
                 </div>
@@ -621,9 +528,7 @@ const Form = () => {
                 {formData.category === 'Organisation' && (
                   <div className="additional_input show">
                     <div className="form-row">
-                      <label htmlFor="otherUniversity">
-                        Organisation name:
-                      </label>
+                      <label htmlFor="otherUniversity">Organisation name:</label>
                       <input
                         type="text"
                         id="otherUniversity"
@@ -673,9 +578,7 @@ const Form = () => {
                 </div>
 
                 <div className="form-row">
-                  <label htmlFor="title">
-                    Title of the Startup/Idea/Innovation
-                  </label>
+                  <label htmlFor="title">Title of the Startup/Idea/Innovation</label>
                   <input
                     type="text"
                     id="title"
@@ -688,8 +591,7 @@ const Form = () => {
 
                 <div className="form-row">
                   <label htmlFor="uniqueFeatures">
-                    Explain the uniqueness and distinctive features of the (
-                    product / process / service ) solution
+                    Explain the uniqueness and distinctive features of the ( product / process / service ) solution
                   </label>
                   <input
                     type="text"
@@ -713,12 +615,10 @@ const Form = () => {
                     <option value="">Select</option>
                     <option value="Idea">Idea</option>
                     <option value="Prototype stage (If you have developed any working prototype of a solution proposed)">
-                      Prototype stage (If you have developed any working
-                      prototype of a solution proposed)
+                      Prototype stage (If you have developed any working prototype of a solution proposed)
                     </option>
                     <option value="Startup Stage (If you have developed a final marketable product/service platform)">
-                      Startup Stage (If you have developed a final marketable
-                      product/service platform)
+                      Startup Stage (If you have developed a final marketable product/service platform)
                     </option>
                   </select>
                 </div>
@@ -726,23 +626,13 @@ const Form = () => {
                   <div className="file-upload-text">
                     <p>Proposal Idea / PPT</p>
                     <p id="selected-file">
-                      Selected file:{' '}
-                      <span>{selectedFile ? selectedFile.name : ''} </span>
+                      Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
                     </p>
                   </div>
 
-                  <UploadBtn
-                    variant="contained"
-                    component="label"
-                    endIcon={<UploadFile sx={{ color: 'white' }} />}
-                  >
+                  <UploadBtn variant="contained" component="label" endIcon={<UploadFile sx={{ color: 'white' }} />}>
                     Upload File
-                    <input
-                      type="file"
-                      accept=".pdf"
-                      onChange={handleFileChange}
-                      hidden
-                    ></input>
+                    <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
                   </UploadBtn>
                 </div>
 
@@ -764,13 +654,9 @@ const Form = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
-            {'Form submitted successfully!'}
-          </DialogTitle>
+          <DialogTitle id="alert-dialog-title">{'Form submitted successfully!'}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Your details have been submitted.
-            </DialogContentText>
+            <DialogContentText id="alert-dialog-description">Your details have been submitted.</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus>

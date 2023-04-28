@@ -7,14 +7,11 @@ import { Link } from 'react-router-dom'
 const Navigation = () => {
   const { state, logout, isLoading } = useContext(AuthContext)
   const activePage = window.location.pathname
-  console.log(activePage)
 
   const styles = {
-    header:
-      'fixed z-50 h-[88px] px-5 w-full bg-[#101524] flex flex-row items-center justify-between',
+    header: 'fixed z-50 h-[88px] px-5 w-full bg-[#101524] flex flex-row items-center justify-between',
     class: 'hover:text-white pb-2 text-gray-400 transition duration-200',
-    activeClass:
-      'hover:text-white border-b-4 pb-2 text-white transition duration-200',
+    activeClass: 'hover:text-white border-b-4 pb-2 text-white transition duration-200',
     button:
       'hover:text-white bg-blue-500 px-5 py-2 rounded-md hover:bg-blue-700 transition duration-200 text-white transition duration-200',
   }
@@ -26,50 +23,27 @@ const Navigation = () => {
       <img className="h-[53px] p-1 w-[251px]" src={logo} alt="" />
       <ul className="text-white w-auto h-[53px] flex flex-row items-center gap-5">
         <li className="">
-          <NavLink
-            to="/"
-            className={activePage === '/' ? styles.activeClass : styles.class}
-          >
+          <NavLink to="/" className={activePage === '/' ? styles.activeClass : styles.class}>
             Home
           </NavLink>
         </li>
         <li className="">
-          <NavLink
-            to="/application"
-            className={
-              activePage === '/application' ? styles.activeClass : styles.class
-            }
-          >
+          <NavLink to="/application" className={activePage === '/application' ? styles.activeClass : styles.class}>
             Application Status
           </NavLink>
         </li>
         <li className="">
-          <NavLink
-            to="/document"
-            className={
-              activePage === '/document' ? styles.activeClass : styles.class
-            }
-          >
+          <NavLink to="/document" className={activePage === '/document' ? styles.activeClass : styles.class}>
             Document
           </NavLink>
         </li>
         <li className="">
-          <NavLink
-            to="/dashboard"
-            className={
-              activePage === '/dashboard' ? styles.activeClass : styles.class
-            }
-          >
+          <NavLink to="/dashboard" className={activePage === '/dashboard' ? styles.activeClass : styles.class}>
             Dashboard
           </NavLink>
         </li>
         <li className="">
-          <NavLink
-            to="/report"
-            className={
-              activePage === '/report' ? styles.activeClass : styles.class
-            }
-          >
+          <NavLink to="/report" className={activePage === '/report' ? styles.activeClass : styles.class}>
             Report
           </NavLink>
         </li>

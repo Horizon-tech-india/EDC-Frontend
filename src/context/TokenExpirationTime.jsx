@@ -14,9 +14,7 @@ function TokenExpirationTime({ state, dispatch }) {
     const minutes = Math.floor((remainingTime / (1000 * 60)) % 60)
     const seconds = Math.floor((remainingTime / 1000) % 60)
 
-    console.log(
-      `Token expires in ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
-    )
+    console.log(`Token expires in ${hours} hours, ${minutes} minutes, and ${seconds} seconds`)
   }
 }
 

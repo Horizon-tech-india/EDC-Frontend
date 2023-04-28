@@ -39,21 +39,9 @@ const App = () => {
             <Route exact path="/dashboard" element={<Dashboard />} />
             <Route exact path="/document" element={<Document />} />
             <Route exact path="/report" element={<Report />} />
-            <Route
-              exact
-              path="/forgot-password/1"
-              element={<ForgotPassword step={1} />}
-            />
-            <Route
-              exact
-              path="/forgot-password/2"
-              element={<ForgotPassword step={2} />}
-            />
-            <Route
-              exact
-              path="/forgot-password/3"
-              element={<ForgotPassword step={3} />}
-            />
+            <Route exact path="/forgot-password/1" element={<ForgotPassword step={1} />} />
+            <Route exact path="/forgot-password/2" element={<ForgotPassword step={2} />} />
+            <Route exact path="/forgot-password/3" element={<ForgotPassword step={3} />} />
             {/* <Route exact path="/" element={<Navigate to="/login" replace />} /> */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

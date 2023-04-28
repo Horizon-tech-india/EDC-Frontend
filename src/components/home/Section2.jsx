@@ -22,9 +22,7 @@ const Card = (props) => {
           <h2 className="font-sans font-medium text-[20px] flex items-center tracking-wider text-secondary">
             {heading}
           </h2>
-          <p className="font-sans font-normal text-sm leading-6 tracking-wider text-gray-500">
-            {para}
-          </p>
+          <p className="font-sans font-normal text-sm leading-6 tracking-wider text-gray-500">{para}</p>
         </div>
       </div>
     </div>
@@ -38,15 +36,12 @@ const Section2 = () => {
         <div className="">
           <div className="flex justify-center items-center flex-row">
             <div className="w-[450px] h-[450px] border-r-2 mr-10 flex justify-center text-left items-start flex-col">
-              <h2 className="font-bold text-2xl flex items-center tracking-wider text-secondary">
-                Our Vision
-              </h2>
+              <h2 className="font-bold text-2xl flex items-center tracking-wider text-secondary">Our Vision</h2>
               <div className="font-sans font-normal text-base leading-7 tracking-wider text-gray-500 w-80">
                 <p>
-                  To create a Startup Support System that enables 5% of our
-                  students to follow an entrepreneurial career and join the
-                  ranks of job creators, thereby contributing to the social and
-                  economic development of India.
+                  To create a Startup Support System that enables 5% of our students to follow an entrepreneurial career
+                  and join the ranks of job creators, thereby contributing to the social and economic development of
+                  India.
                 </p>
               </div>
               <button className="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">
