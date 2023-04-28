@@ -30,21 +30,10 @@ const Navigation = () => {
         </li>
         <li className="">
           <NavLink to="/application" className={activePage === '/application' ? styles.activeClass : styles.class}>
-            Application Status
+          Apply Now
           </NavLink>
         </li>
 
-        {(!state.isAuthenticated && state.role === 'master admin') || state.role === 'admin' ? (
-          <></>
-        ) : (
-          <>
-            <li className="">
-              <NavLink to="/admin" className={activePage === '/admin' ? styles.activeClass : styles.class}>
-                Admin Panel
-              </NavLink>
-            </li>
-          </>
-        )}
         {!state.isAuthenticated ? (
           <></>
         ) : (
