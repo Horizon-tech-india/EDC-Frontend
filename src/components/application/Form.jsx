@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import { UploadFile } from '@mui/icons-material'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -35,7 +36,10 @@ import {
 } from '../slices/formSlice'
 import { API } from '../../Api/Post'
 const Form = () => {
-  const companyName = 'XYZ Company name'
+  const { state } = useContext(AuthContext)
+  const companyName =
+    (state.isAuthenticated && `Hi, ${state?.firstName} ${state?.lastName}`) ||
+    `Welcome please Login`
 
   const formData = useSelector(formInputs)
   const dispatch = useDispatch()
@@ -219,7 +223,7 @@ const Form = () => {
     <div className="form-section">
       <div className="form-container">
         <div className="form-header">
-          <h1> Hi, {companyName}</h1>
+          <h1> {companyName}</h1>
         </div>
 
         <div className="form-contents">
