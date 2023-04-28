@@ -4,10 +4,12 @@ export const signupSchemaStep1 = Yup.object({
   firstName: Yup.string().required('Please enter your Full Name'),
   lastName: Yup.string().required('Please enter your Full Name'),
   email: Yup.string().email().required('Please enter your Email'),
-  phoneNumber: Yup.string().matches(/^[0-9]\d{9}$/, {
-    message: 'Please enter valid number.',
-    excludeEmptyString: false,
-  }),
+  phoneNumber: Yup.string()
+    .matches(/^[0-9]\d{9}$/, {
+      message: 'Please enter valid number.',
+      excludeEmptyString: false,
+    })
+    .required('Please enter your Phone number'),
   password: Yup.string()
     .min(8, 'Password must be atleast 8 characters')
     .matches(
@@ -66,4 +68,33 @@ export const forgotPasswordSchemaStep3 = Yup.object({
     [Yup.ref('new_password'), null],
     'Passwords must match',
   ),
+})
+
+export const adminAddSchema = Yup.object({
+  firstName: Yup.string().required('Please enter a first name'),
+  lastName: Yup.string().required('Please enter a last name'),
+  email: Yup.string().email().required('Please enter an Email'),
+  password: Yup.string()
+    .min(8, 'Password must be atleast 8 characters')
+    .matches(
+      /^(?=.*[a-z])/,
+      'Password must contain at least 1 lower case letter',
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      'Password must contain at least 1 upper case letter',
+    )
+    .matches(/^(?=.*[0-9])/, 'Password must contain at least 1 number')
+    .matches(
+      /^(?=.*[!@#\$%\^&\*])/,
+      'Password must contain at least 1 special case character',
+    )
+    .required('Please enter a password'),
+  phoneNumber: Yup.string()
+    .matches(/^[0-9]\d{9}$/, {
+      message: 'Please enter a valid number.',
+      excludeEmptyString: false,
+    })
+    .required('Please enter a Phone number'),
+  branch: Yup.string(),
 })
