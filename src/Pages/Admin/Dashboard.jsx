@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import Spinner from '../../components/Layout/Spinner'
+
 import SidebarRight from './components/SidebarRight'
 import AdminApplicationSection from './components/AdminApplicationSection'
-import { AuthContext } from '../../context/AuthContext'
-
-import Spinner from '../../components/Layout/Spinner'
+import { useNavigate } from 'react-router-dom'
 
 const ROLES = {
   ADMIN: 'admin',
@@ -12,18 +13,19 @@ const ROLES = {
 }
 
 const Dashboard = () => {
+  const navigate = useNavigate()
+
   const { state } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     // simulate an API call to check state's role
-    setTimeout(() => {
-      setIsLoading(false)
-      if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN) {
-        window.location.href = '/'
-      }
-    }, 2000)
-  }, [history, state])
+
+    setIsLoading(false)
+    if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN) {
+      navigate('/')
+    }
+  }, [state])
 
   return (
     <>

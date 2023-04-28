@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom'
 import logo from '../../assets/UI/parul-logo.svg'
 import { AuthContext } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom'
 const Navigation = () => {
   const { state, logout, isLoading } = useContext(AuthContext)
-  const activePage = window.location.pathname
+  const location = useLocation()
+  const activePage = location.pathname
 
   const styles = {
     header: 'fixed z-50 h-[88px] px-5 w-full bg-[#101524] flex flex-row items-center justify-between',
@@ -32,21 +33,40 @@ const Navigation = () => {
             Application Status
           </NavLink>
         </li>
-        <li className="">
-          <NavLink to="/document" className={activePage === '/document' ? styles.activeClass : styles.class}>
-            Document
-          </NavLink>
-        </li>
-        <li className="">
-          <NavLink to="/dashboard" className={activePage === '/dashboard' ? styles.activeClass : styles.class}>
-            Dashboard
-          </NavLink>
-        </li>
-        <li className="">
-          <NavLink to="/report" className={activePage === '/report' ? styles.activeClass : styles.class}>
-            Report
-          </NavLink>
-        </li>
+
+        {(!state.isAuthenticated && state.role === 'master admin') || state.role === 'admin' ? (
+          <></>
+        ) : (
+          <>
+            <li className="">
+              <NavLink to="/admin" className={activePage === '/admin' ? styles.activeClass : styles.class}>
+                Admin Panel
+              </NavLink>
+            </li>
+          </>
+        )}
+        {!state.isAuthenticated ? (
+          <></>
+        ) : (
+          <>
+            <li className="">
+              <NavLink to="/document" className={activePage === '/document' ? styles.activeClass : styles.class}>
+                Document
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="/dashboard" className={activePage === '/dashboard' ? styles.activeClass : styles.class}>
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="/report" className={activePage === '/report' ? styles.activeClass : styles.class}>
+                Report
+              </NavLink>
+            </li>
+          </>
+        )}
+
         <li className="">
           {isLoading ? (
             <button className={styles.button}>Loading...</button>
