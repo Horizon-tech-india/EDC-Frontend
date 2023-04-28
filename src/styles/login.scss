@@ -1,7 +1,7 @@
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  font-family: "Agency FB";
+  font-family: 'Agency FB';
   @media screen and (max-width: 700px) {
     display: block;
   }
@@ -14,7 +14,7 @@
       rgba(255, 255, 255, 0.7),
       rgba(255, 255, 255, 0.7)
     ),
-    url("../assets/UI/hero.png");
+    url('../assets/UI/hero.png');
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -44,7 +44,7 @@
 .signup-link {
   display: flex;
   justify-content: end;
-  font-family: "Adamina";
+  font-family: 'Adamina';
 
   & p {
     color: #bdbdbd;
@@ -73,8 +73,13 @@
   }
 
   &__head {
+    & h2 {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
     & p {
-      font-size: 18px;
+      font-size: 1.2rem;
     }
   }
 
@@ -88,7 +93,7 @@
     & input {
       vertical-align: middle;
     }
-    font-family: "Adamina";
+    font-family: 'Adamina';
     font-size: 14px;
     font-weight: 400;
     display: flex;
@@ -114,7 +119,7 @@
     border: 1px solid #a2a2a6;
     padding: 6px 12px;
     border-radius: 4px;
-    font-family: "Adamina";
+    font-family: 'Adamina';
 
     &--dropdown {
       display: block;
@@ -129,6 +134,7 @@
     border: none;
     outline: none;
     flex: 1;
+    font-family: 'open sans';
   }
   &--grid {
     display: grid;
@@ -151,13 +157,19 @@
   }
 
   & label {
-    font-size: 16px;
+    font-size: 1.2rem;
     font-weight: 700;
     display: inline-block;
     margin-bottom: 4px;
   }
 
+  & span {
+    display: flex;
+    align-items: center;
+  }
+
   & img {
+    width: 1.2rem;
     vertical-align: middle;
   }
 
@@ -170,9 +182,13 @@
   }
 }
 
+.hide-password {
+  cursor: pointer;
+}
+
 .submit-btn {
-  font-family: "Agency FB";
-  font-size: 17px;
+  font-family: 'Agency FB';
+  font-size: 1.2rem;
   font-weight: 600;
   color: white;
   background: #3665c5;
@@ -187,6 +203,7 @@
 
 .other-login-options {
   text-align: center;
+  margin-top: 2rem;
 
   & p {
     font-weight: 600;
