@@ -37,19 +37,19 @@ const FiltersSection = () => {
         { label: 'Status', value: 'Status' },
       ];
 
-    //   let url = "/admin/all-startup-details";
-    //   const filtersCount = filters.length;
+      let url = "/admin/all-startup-details";
+      const filtersCount = filters.length;
   
-    //   if( filtersCount !== 0) {
-    //       url+="?filters="
-    //       filters.forEach((element, index) => {
-    //           url+= element.value;
-    //           if( index != filtersCount - 1) {
-    //               url+=",";
-    //           }
-    //       });
-    //   }
-    //   console.log(url);
+      if( filtersCount !== 0) {
+          url+="?filters="
+          filters.forEach((element, index) => {
+              url+= element.value;
+              if( index != filtersCount - 1) {
+                  url+=",";
+              }
+          });
+      }
+      console.log(url);
 
 
     const handleAddFilter = () => {

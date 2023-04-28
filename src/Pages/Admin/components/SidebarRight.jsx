@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SidebarCard from './SidebarCard'
 import DateTime from './DateTime'
 import '../styles/sidebarRight.scss'
 import notification from '../../../assets/icons/notification.svg'
 
 const UpcomingMeetingList = () => {
+
   const upcomingMeetingData = [
     {
       img: 'https://mui.com/static/images/avatar/2.jpg',
@@ -45,6 +46,21 @@ const UpcomingMeetingList = () => {
 }
 
 const FiltersList = () => {
+
+  const [selectedValues, setSelectedValues] = useState([]);
+
+  const handleFiltersClick = (value) => {
+   
+    if (selectedValues.includes(value)) {
+    
+      setSelectedValues(selectedValues.filter((val) => val !== value));
+    } else {
+      
+      setSelectedValues([...selectedValues, value]);
+    }
+  };
+  console.log(selectedValues );
+
   const filtersData = [
     'EDTech',
     'FinTech',
@@ -62,7 +78,7 @@ const FiltersList = () => {
       {filtersData.map((filter) => {
         return (
           <li key={filter} className="sidebar-right__card-item">
-            <button>{filter}</button>
+            <button onClick={()=> handleFiltersClick(filter)}>{filter}</button>
           </li>
         )
       })}
