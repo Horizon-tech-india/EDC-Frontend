@@ -4,12 +4,15 @@ import Last30Days from './Last30Days';
 import "../../../styles/filtersection.css"
 import AddIcon from '@mui/icons-material/Add';
 import filterIcon from "../../../assets/filter-search.svg";
+import { useSelector, useDispatch } from 'react-redux';
+import { addFilter, removeFilter, selectFilters } from './filtersSlice';
 
 const FiltersSection = () => {
 
-    const [selectedFilters, setSelectedFilters] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
     const [filterValue, setFilterValue] = useState('');
+    const filters = useSelector(selectFilters);
+    const dispatch = useDispatch();
 
     const AddFiltersBtn = styled(Button)({
         padding:'12px 12px',
@@ -25,7 +28,7 @@ const FiltersSection = () => {
             boxShadow: 'none',
           },
     })
-
+    // console.log(filters);
 
     const options = [
         { label: 'Company', value: 'Company' },
@@ -39,16 +42,13 @@ const FiltersSection = () => {
             value: filterValue,
         };
         const AddValues = (newFilter.option !== "" && newFilter.value !== "");
-        ( AddValues ? setSelectedFilters([...selectedFilters, newFilter]) : setSelectedFilters([]));
+        ( AddValues ? dispatch(addFilter(newFilter)) : "");
         setSelectedOption('');
         setFilterValue('');
     };
 
     const handleRemoveFilter = (filterToRemove) => {
-        const updatedFilters = selectedFilters.filter(
-            (filter) => filter !== filterToRemove
-        );
-        setSelectedFilters(updatedFilters);
+        dispatch(removeFilter(filterToRemove));
     };
 
   return (
@@ -104,7 +104,7 @@ const FiltersSection = () => {
         
         </div>
         <div className='added-filters-container'>
-            {selectedFilters.map((filter, index) => (
+            {filters.map((filter, index) => (
             <div key={index} className='added-filter-box'>
                 <span>{ filter.option} :  </span><span id='filtered-value'> { filter.value } </span>
                 <button className='close-btn' onClick={() => handleRemoveFilter(filter)}>X</button>
