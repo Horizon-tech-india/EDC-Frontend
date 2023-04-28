@@ -83,7 +83,7 @@ export const Companies = [
 //     "status": "pending",
 //     "accountStatus": "no ratings",
 //     "branch": "AHSS",
-//     "valuation": "1M" 
+//     "valuation": "1M"
 // },
 //     {
 //     "id": 11,

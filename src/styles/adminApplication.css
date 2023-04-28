@@ -11,7 +11,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin: 0;
   /* border: 1px solid black; */
 }
 .search-bar {
@@ -121,6 +120,7 @@ textarea {
 
 .all-applications-wrapper {
   /* border: 1px solid black; */
+  height: 50%;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -173,6 +173,7 @@ textarea {
 .all-applications-body {
   width: 100%;
   /* border: 2px solid red; */
+  height: calc(100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -200,4 +201,15 @@ textarea {
   background: #e6e6e6;
   border-radius: 50%;
   padding: 2px 7px;
+}
+.page-nums .active {
+  background: rgb(224, 237, 233);
+  color: #427a5b;
+}
+
+.previous-page {
+  cursor: pointer;
+}
+.next-page {
+  cursor: pointer;
 }

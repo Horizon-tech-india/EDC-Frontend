@@ -2,24 +2,25 @@ import React from 'react'
 import SidebarCard from './SidebarCard'
 import DateTime from './DateTime'
 import '../styles/sidebarRight.scss'
-import notification from '../../../assets/icons/notification.svg'
+import notification from '../../../assets/icons/svg/notification.svg'
+import avatar from '../../../assets/icons/svg/avatar.svg'
 
 const UpcomingMeetingList = () => {
   const upcomingMeetingData = [
     {
-      img: 'https://mui.com/static/images/avatar/2.jpg',
+      img: '',
       name: 'Atul Singh',
       meetingTime: '10:30 AM',
       meetingDate: 'Today',
     },
     {
-      img: 'https://mui.com/static/images/avatar/2.jpg',
+      img: '',
       name: 'Atul Singh',
       meetingTime: '10:30 AM',
       meetingDate: 'Today',
     },
     {
-      img: 'https://mui.com/static/images/avatar/2.jpg',
+      img: '',
       name: 'Atul Singh',
       meetingTime: '10:30 AM',
       meetingDate: 'Today',
@@ -32,7 +33,7 @@ const UpcomingMeetingList = () => {
         return (
           <li key={meeting.name + index} className="sidebar-right__card-item">
             <div className="card__avatar">
-              <img src={meeting.img} alt="avatar" />
+              <img src={meeting.img || avatar} alt="avatar" />
             </div>
             <p className="card__meeting-name">{meeting.name}</p>
             <p className="card__meeting-time">{meeting.meetingTime}</p>
@@ -74,11 +75,7 @@ const SidebarRight = () => {
   return (
     <div className="sidebar-right">
       <section className="user-profile">
-        <img
-          className="user-profile__avatar"
-          src="https://mui.com/static/images/avatar/2.jpg"
-          alt="avatar"
-        />
+        <img className="user-profile__avatar" src={avatar} alt="avatar" />
         <div className="user-profile__info">
           <p className="user-profile__info-name">Admin Name</p>
           <p className="user-profile__info-type">Admin</p>
