@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/UI/parul-logo.svg'
+import { AuthContext } from '../../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 const Navigation = () => {
+  const { state, logout, isLoading } = useContext(AuthContext)
   const activePage = window.location.pathname
   console.log(activePage)
-
-  const handleLogin = () => {}
 
   const styles = {
     header:
@@ -16,6 +17,9 @@ const Navigation = () => {
       'hover:text-white border-b-4 pb-2 text-white transition duration-200',
     button:
       'hover:text-white bg-blue-500 px-5 py-2 rounded-md hover:bg-blue-700 transition duration-200 text-white transition duration-200',
+  }
+  const handleLogout = async () => {
+    await logout()
   }
   return (
     <nav className={styles.header}>
@@ -70,9 +74,21 @@ const Navigation = () => {
           </NavLink>
         </li>
         <li className="">
-          <button onClick={handleLogin} className={styles.button}>
-            Login
-          </button>
+          {isLoading ? (
+            <button className={styles.button}>Loading...</button>
+          ) : (
+            <>
+              {state.isAuthenticated !== true ? (
+                <Link to="/login">
+                  <button className={styles.button}>Login</button>
+                </Link>
+              ) : (
+                <button onClick={handleLogout} className={styles.button}>
+                  Logout
+                </button>
+              )}
+            </>
+          )}
         </li>
       </ul>
     </nav>

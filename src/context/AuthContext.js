@@ -1,7 +1,5 @@
-// AuthContext.js
+import React, { createContext, useReducer, useState } from 'react'
 
-import React, { createContext, useReducer } from 'react'
-import axios from 'axios'
 import { API } from '../Api/Post'
 
 const firstName = localStorage.getItem('pu-edc-firstName')
@@ -50,12 +48,14 @@ const authReducer = (state, action) => {
         phoneNumber: action.payload.phoneNumber,
       }
     case LOGOUT_SUCCESS:
-      localStorage.removeItem('token')
-      localStorage.removeItem('pu-edc-auth-token')
-      localStorage.removeItem('pu-edc-email')
-      localStorage.removeItem('pu-edc-firstName')
-      localStorage.removeItem('pu-edc-lastName')
-      localStorage.removeItem('pu-edc-phoneNumber')
+      console.log(`logout trigger`)
+      localStorage.setItem('token', '')
+      localStorage.setItem('pu-edc-auth-token', '')
+      localStorage.setItem('pu-edc-email', '')
+      localStorage.setItem('pu-edc-firstName', '')
+      localStorage.setItem('pu-edc-lastName', '')
+      localStorage.setItem('pu-edc-phoneNumber', '')
+
       return {
         ...state,
         isAuthenticated: false,
@@ -73,39 +73,42 @@ const authReducer = (state, action) => {
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialAuthState)
+  const [isLoading, setIsLoading] = useState(false)
+
   console.log(state)
 
   const login = async (values) => {
+    setIsLoading(true)
     try {
       const res = await API('post', '/users/login', values)
       console.log(`LOGIN RESPONSE`, res.data.data)
-      const { token } = res.data.data
-      localStorage.setItem('token', token)
-      localStorage.setItem('pu-edc-auth-token', res.data.data.token)
-      localStorage.setItem('pu-edc-email', res.data.data.email)
-      localStorage.setItem('pu-edc-firstName', res.data.data.firstName)
-      localStorage.setItem('pu-edc-lastName', res.data.data.lastName)
-      localStorage.setItem('pu-edc-phoneNumber', res.data.data.phoneNumber)
+
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data.data,
       })
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err.response.data.message })
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const logout = async () => {
+    setIsLoading(true)
     try {
-      await axios.post('https://example.com/api/logout')
+      const res = await API('POST', '/logout', {})
+      console.log(`LOGOUT RESPONSE`, res.data)
       dispatch({ type: LOGOUT_SUCCESS })
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err.response.data.message })
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <AuthContext.Provider value={{ state, dispatch, login, logout }}>
+    <AuthContext.Provider value={{ state, dispatch, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   )
