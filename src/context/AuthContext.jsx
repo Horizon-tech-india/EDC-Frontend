@@ -51,7 +51,7 @@ const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialAuthState)
   const [isLoading, setIsLoading] = useState(false)
-
+  console.log(state)
   const login = async (values) => {
     setIsLoading(true)
     try {
