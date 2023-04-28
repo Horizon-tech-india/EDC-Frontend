@@ -10,6 +10,7 @@ import { addFilter, removeFilter, selectFilters } from './filtersSlice';
 const FiltersSection = () => {
 
     const [selectedOption, setSelectedOption] = useState('');
+    const [selectedId, setSelectedId] = useState(0);
     const [filterValue, setFilterValue] = useState('');
     const filters = useSelector(selectFilters);
     const dispatch = useDispatch();
@@ -33,20 +34,39 @@ const FiltersSection = () => {
     const options = [
         { label: 'Company', value: 'Company' },
         { label: 'Branch', value: 'Branch' },
-        { label: 'Status', value: 'Location' },
+        { label: 'Status', value: 'Status' },
       ];
 
+    //   let url = "/admin/all-startup-details";
+    //   const filtersCount = filters.length;
+  
+    //   if( filtersCount !== 0) {
+    //       url+="?filters="
+    //       filters.forEach((element, index) => {
+    //           url+= element.value;
+    //           if( index != filtersCount - 1) {
+    //               url+=",";
+    //           }
+    //       });
+    //   }
+    //   console.log(url);
+
+
     const handleAddFilter = () => {
+        const AddValues = (selectedOption !== "" && filterValue !== "");
+        ( AddValues ? setSelectedId(selectedId + 1) : "" )
         const newFilter = {
+            id: selectedId,
             option: selectedOption,
             value: filterValue,
         };
-        const AddValues = (newFilter.option !== "" && newFilter.value !== "");
+
         ( AddValues ? dispatch(addFilter(newFilter)) : "");
         setSelectedOption('');
         setFilterValue('');
     };
 
+    console.log(filters);
     const handleRemoveFilter = (filterToRemove) => {
         dispatch(removeFilter(filterToRemove));
     };
@@ -104,10 +124,10 @@ const FiltersSection = () => {
         
         </div>
         <div className='added-filters-container'>
-            {filters.map((filter, index) => (
+            {filters.map((filtered, index) => (
             <div key={index} className='added-filter-box'>
-                <span>{ filter.option} :  </span><span id='filtered-value'> { filter.value } </span>
-                <button className='close-btn' onClick={() => handleRemoveFilter(filter)}>X</button>
+                <span>{ filtered.option} :  </span><span id='filtered-value'> { filtered.value } </span>
+                <button className='close-btn' onClick={() => handleRemoveFilter(filtered.id)}>X</button>
             </div>
             ))}
         </div>

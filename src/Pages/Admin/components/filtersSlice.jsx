@@ -6,13 +6,20 @@ const filtersSlice = createSlice({
     name: 'filters',
     initialState,
     reducers: {
+
       addFilter: (state, action) => {
         state.push(action.payload);
       },
       removeFilter: (state, action) => {
+        // console.log(action.payload)
+        // console.log(state);
+
+        const toDelete = action.payload;
+        console.log(toDelete);
         const index = state.findIndex(
-          (filter) => filter === action.payload
+          (filter) => filter.id === toDelete
         );
+        console.log(index);
         if (index !== -1) {
           state.splice(index, 1);
         }

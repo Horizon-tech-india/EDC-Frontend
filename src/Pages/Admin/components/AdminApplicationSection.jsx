@@ -7,8 +7,25 @@ import { useState, useEffect } from 'react';
 import { Companies } from "./Companies";
 import { API } from '../../../Api/Post';
 import Last30Days from './Last30Days';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectFilters } from './filtersSlice';
 
 const AdminApplicationSection = () => {
+
+    const filters = useSelector(selectFilters);
+    let url = "/admin/all-startup-details";
+    const filtersCount = filters.length;
+
+    if( filtersCount !== 0) {
+        url+="?filters="
+        filters.forEach((element, index) => {
+            url+= element.value;
+            if( index != filtersCount - 1) {
+                url+=",";
+            }
+        });
+    }
+
     const [query, setQuery ] = useState("");
     const [query2, setQuery2 ] = useState("");
     const [ tabledata, setTabledata] = useState([]);
