@@ -158,7 +158,10 @@ const SignUpStep1 = ({ setEmail }) => {
               onBlur={handleBlur}
               placeholder="Your password"
             />
-            <span onClick={() => setPasswordHidden(!passwordHidden)}>
+            <span
+              className="hide-password"
+              onClick={() => setPasswordHidden(!passwordHidden)}
+            >
               <img src={eyeOff} alt="" />
             </span>
           </div>

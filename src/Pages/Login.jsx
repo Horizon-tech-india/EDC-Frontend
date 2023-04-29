@@ -79,7 +79,7 @@ const Login = () => {
               <label htmlFor="email">Email</label>
               <div className="input-block__input">
                 <span>
-                  <img src={mail} alt="" />
+                  <img src={mail} alt="mail" />
                 </span>
                 <input
                   type="text"
@@ -97,7 +97,7 @@ const Login = () => {
               <label htmlFor="password">Password</label>
               <div className="input-block__input">
                 <span>
-                  <img src={lock} alt="" />
+                  <img src={lock} alt="lock" />
                 </span>
                 <input
                   type={passwordHidden ? 'password' : 'text'}
@@ -108,8 +108,11 @@ const Login = () => {
                   onBlur={handleBlur}
                   placeholder="Your password"
                 />
-                <span onClick={() => setPasswordHidden(!passwordHidden)}>
-                  <img src={eyeOff} alt="" />
+                <span
+                  className="hide-password"
+                  onClick={() => setPasswordHidden(!passwordHidden)}
+                >
+                  <img src={eyeOff} alt="eye" />
                 </span>
               </div>
               {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}

@@ -87,7 +87,10 @@ const SignUpStep3 = ({ email }) => {
               onBlur={handleBlur}
               placeholder="New Password"
             />
-            <span onClick={() => setPasswordHidden1(!passwordHidden1)}>
+            <span
+              className="hide-password"
+              onClick={() => setPasswordHidden1(!passwordHidden1)}
+            >
               <img src={eyeOff} alt="" />
             </span>
           </div>
@@ -110,7 +113,10 @@ const SignUpStep3 = ({ email }) => {
               onBlur={handleBlur}
               placeholder="Confirm Password"
             />
-            <span onClick={() => setPasswordHidden2(!passwordHidden2)}>
+            <span
+              className="hide-password"
+              onClick={() => setPasswordHidden2(!passwordHidden2)}
+            >
               <img src={eyeOff} alt="" />
             </span>
           </div>

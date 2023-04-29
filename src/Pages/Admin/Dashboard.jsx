@@ -12,7 +12,7 @@ const ROLES = {
   STUDENT: 'student',
 }
 
-const Dashboard = () => {
+const Dashboard = ({ page }) => {
   const navigate = useNavigate()
 
   const { state } = useContext(AuthContext)
@@ -35,8 +35,10 @@ const Dashboard = () => {
         </div>
       ) : state.role === ROLES.ADMIN || state.role === ROLES.MASTER_ADMIN ? (
         <div>
-          <SidebarRight />
-          <AdminApplicationSection />
+          <div className="admin-container">
+            <SidebarRight />
+            <AdminApplicationSection page={page} />
+          </div>
         </div>
       ) : (
         <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">
