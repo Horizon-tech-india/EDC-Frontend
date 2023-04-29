@@ -9,6 +9,8 @@ import Alert from '@mui/material/Alert'
 const SignUpStep2 = ({ email }) => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleClose = () => setOpen(false)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const navigate = useNavigate()
@@ -20,18 +22,30 @@ const SignUpStep2 = ({ email }) => {
   }
 
   const handleSubmit = (event) => {
+    setIsLoading(true)
+
     event.preventDefault()
     const body = { email, otp: otp.join(''), isForgotPassword: true }
     //POST REQUEST
     axios
       .post('http://localhost:9000/users/verify-mail-otp', body)
       .then((response) => {
-        navigate('/forgot-password/3')
+        setTimeout(() => {
+          // If successful, redirect to dashboard
+
+          navigate('/forgot-password/3')
+          setIsLoading(false)
+        }, 2000)
       })
       .catch((error) => {
         console.error(error)
         setError(error.response.data.message)
         setOpen(true)
+        setTimeout(() => {
+          // If successful, redirect to dashboard
+
+          setIsLoading(false)
+        }, 2000)
       })
   }
 
@@ -57,10 +71,7 @@ const SignUpStep2 = ({ email }) => {
       </Snackbar>
       <div className="login__head">
         <h2>Check your Mail</h2>
-        <p>
-          We've sent a 6 digit confirmation code to username@gmail.com. Make
-          sure you enter correct code
-        </p>
+        <p>We've sent a 6 digit confirmation code to username@gmail.com. Make sure you enter correct code</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="otpContainer">
@@ -133,8 +144,14 @@ const SignUpStep2 = ({ email }) => {
           />
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
-            Next
+          <button disabled={isLoading} className="submit-btn" type="submit">
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Next'
+            )}
           </button>
         </div>
       </form>

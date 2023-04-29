@@ -9,6 +9,7 @@ import left from '../../assets/icons/svg/left.svg'
 const SignUp = ({ step }) => {
   const [email, setEmail] = useState('')
 
+
   return (
     <div className="wrapper">
       <div className="banner">
@@ -28,11 +29,7 @@ const SignUp = ({ step }) => {
             <p className="signup__nav-current--2">Signup</p>
           </div>
         </nav>
-        {step === 1 ? (
-          <SignUpStep1 setEmail={setEmail} />
-        ) : (
-          <SignUpStep3 email={email} />
-        )}
+        {step === 1 ? <SignUpStep1 setEmail={setEmail} /> : <SignUpStep3 email={email} />}
       </div>
     </div>
   )

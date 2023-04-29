@@ -114,11 +114,13 @@
 
 .footer-row1-col4 .button-group {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 5px;
 }
 
 .footer-row1-col4 .button-group .image-button {
-  padding-top: 4px;
+  padding-top: 2px;
+  padding-left: 10px;
   background-color: white;
   width: 35px;
   height: 35px;

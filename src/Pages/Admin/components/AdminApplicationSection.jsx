@@ -29,3 +29,4 @@ const AdminApplicationSection = ({ page }) => {
 }
 
 export default AdminApplicationSection
+

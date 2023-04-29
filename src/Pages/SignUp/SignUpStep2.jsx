@@ -15,14 +15,36 @@ const initialValues = {
 }
 
 const SignUpStep2 = () => {
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: initialValues,
-      validationSchema: signupSchemaStep2,
-      onSubmit: (values) => {
-        //POST REQUEST
-      },
-    })
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: initialValues,
+    validationSchema: signupSchemaStep2,
+    onSubmit: (values) => {
+      setIsLoading(true)
+
+      //POST REQUEST
+      // axios
+      // .post('url',  )
+      // .then((response) => {
+      //   setTimeout(() => {
+      //     // If successful, redirect to dashboard
+   
+      //     navigate('/login')
+      //     setIsLoading(false)
+      //   }, 2000)
+      // })
+      // .catch((error) => {
+      //   console.error(error)
+ 
+      //   setTimeout(() => {
+      //     // If successful, redirect to dashboard
+      
+      //     setIsLoading(false)
+      //   }, 2000)
+      // })
+    },
+  })
   const navigate = useNavigate()
 
   return (
@@ -51,11 +73,7 @@ const SignUpStep2 = () => {
         </div>
         <div className="input-block">
           <label htmlFor="applying_to">Applying to</label>
-          <select
-            name="applying_to"
-            id="applying_to"
-            className="input-block_input--dropdown"
-          >
+          <select name="applying_to" id="applying_to" className="input-block_input--dropdown">
             <option value="" disabled defaultValue hidden>
               VSS, RSS, AHSS, or Surat Branch
             </option>
@@ -71,11 +89,7 @@ const SignUpStep2 = () => {
         </div>
         <div className="input-block">
           <label htmlFor="applying_to">I'm A</label>
-          <select
-            name="profession"
-            id="profession"
-            className="input-block_input--dropdown"
-          >
+          <select name="profession" id="profession" className="input-block_input--dropdown">
             <option value="" disabled defaultValue hidden>
               PU Student or Working Professional
             </option>
@@ -83,14 +97,10 @@ const SignUpStep2 = () => {
             <option value="professional">Working Professional</option>
           </select>
 
-          {errors.profession && touched.profession ? (
-            <p className="input-block__error">{errors.profession}</p>
-          ) : null}
+          {errors.profession && touched.profession ? <p className="input-block__error">{errors.profession}</p> : null}
         </div>
         <div className="input-block">
-          <label htmlFor="website_link">
-            Company Website link if available
-          </label>
+          <label htmlFor="website_link">Company Website link if available</label>
           <div className="input-block__input">
             <input
               type="text"
@@ -117,8 +127,14 @@ const SignUpStep2 = () => {
           </span>
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
-            Continue
+          <button disabled={isLoading} className="submit-btn" type="submit">
+          {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Continue'
+                )}     
           </button>
         </div>
       </form>

@@ -6,7 +6,7 @@
   "insert_final_newline": true,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "max_line_length": 120,
-  "printWidth": 80,
+  "max_line_length": 160,
+  "printWidth": 120,
   "endOfLine": "lf"
 }

@@ -5,14 +5,7 @@ import thumbnail from '../../assets/UI/thumbnail.png'
 import Grid from './Grid'
 const Section1 = () => {
   const VideoPlayer = () => {
-    return (
-      <video
-        src={sampleVideo}
-        controls
-        poster={thumbnail}
-        className="videoSample"
-      ></video>
-    )
+    return <video src={sampleVideo} controls poster={thumbnail} className="videoSample"></video>
   }
 
   return (
@@ -29,11 +22,9 @@ const Section1 = () => {
               </div>
               <div className="font-sans font-normal text-base leading-8 tracking-wider text-[#919FAE]">
                 <p>
-                  We believe, innovation is the foundation for any
-                  entrepreneurial process. Our focus is to facilitate and assist
-                  the students significantly by providing resources and
-                  appropriate mentoring to transform their potential into
-                  business leaders of tomorrow.
+                  We believe, innovation is the foundation for any entrepreneurial process. Our focus is to facilitate
+                  and assist the students significantly by providing resources and appropriate mentoring to transform
+                  their potential into business leaders of tomorrow.
                 </p>
               </div>
               <button className="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">

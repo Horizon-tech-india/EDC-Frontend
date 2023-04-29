@@ -12,6 +12,7 @@ const SignUpStep3 = ({ email }) => {
   const handleClose = () => setOpen(false)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (value, event) => {
     let otpCopy = otp
@@ -34,18 +35,27 @@ const SignUpStep3 = ({ email }) => {
   }
 
   const handleSubmit = (event) => {
+    setIsLoading(true)
+
     event.preventDefault()
     const body = { email: email, otp: otp.join(''), isForgotPassword: false }
     //POST REQUEST
     axios
       .post('http://localhost:9000/users/verify-mail-otp', body)
       .then((response) => {
-        navigate('/login')
+        setTimeout(() => {
+          // If successful, redirect to dashboard
+          setIsLoading(false)
+          navigate('/login')
+        }, 2000)
       })
       .catch((error) => {
         console.error(error)
         setError(error.response.data.message)
         setOpen(true)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 2000)
       })
   }
 
@@ -70,10 +80,7 @@ const SignUpStep3 = ({ email }) => {
       </Snackbar>
       <div className="login__head">
         <h2>Check your Mail</h2>
-        <p>
-          We've sent a 6 digit confirmation code to username@gmail.com. Make
-          sure you enter correct code
-        </p>
+        <p>We've sent a 6 digit confirmation code to username@gmail.com. Make sure you enter correct code</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="otpContainer">
@@ -146,8 +153,14 @@ const SignUpStep3 = ({ email }) => {
           />
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
-            Verify
+          <button disabled={isLoading} className="submit-btn" type="submit">
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Verify'
+            )}
           </button>
         </div>
       </form>

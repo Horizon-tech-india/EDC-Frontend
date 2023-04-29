@@ -21,17 +21,7 @@ const ForgotPassword = ({ step }) => {
             <span>
               <img src={left} alt="" />
             </span>
-            <Link
-              to={
-                step === 1
-                  ? '/login'
-                  : step === 2
-                  ? '/forgot-password/1'
-                  : '/forgot-password/2'
-              }
-            >
-              Back
-            </Link>
+            <Link to={step === 1 ? '/login' : step === 2 ? '/forgot-password/1' : '/forgot-password/2'}>Back</Link>
           </div>
           <div className="signup__nav-current">
             <p className="signup__nav-current--1">Step {step} of 3</p>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../src/styles/App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './Pages/Login'
@@ -12,8 +12,14 @@ import Report from './Pages/Report'
 import DashboardAdmin from './Pages/Admin/Dashboard'
 import { Provider } from 'react-redux'
 import store from './components/slices/store'
-
+import TokenExpirationTime from './context/TokenExpirationTime'
+import { useContext } from 'react'
+import { AuthContext } from './context/AuthContext'
 const App = () => {
+  const { dispatch, state } = useContext(AuthContext)
+  useEffect(() => {
+    TokenExpirationTime({ state, dispatch })
+  }, [state])
   return (
     <div className="App">
       <Provider store={store}>

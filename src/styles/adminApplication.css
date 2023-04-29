@@ -124,11 +124,6 @@ textarea {
   gap: 20px;
 }
 
-.stats-components-container div {
-  flex: 1;
-  margin: 0 0.5rem;
-}
-
 .all-applications-wrapper {
   /* border: 1px solid black; */
   height: 50%;

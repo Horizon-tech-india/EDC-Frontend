@@ -25,17 +25,32 @@ const Login = () => {
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { state, login } = useContext(AuthContext)
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: loginSchema,
-      onSubmit: (values) => {
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      setIsLoading(true)
+      try {
+        // Call API to authenticate user
+        
         login(values)
-        navigate('/home')
-      },
-    })
+        setTimeout(() => {
+          // If successful, redirect to dashboard
+          navigate('/home')
+          setIsLoading(false)
+        }, 2000)
+        // ...
+
+        // ...
+      } catch (error) {
+        // Handle error
+        // ...
+      }
+    },
+  })
 
   return (
     <>
@@ -76,9 +91,7 @@ const Login = () => {
                   placeholder="Your email"
                 />
               </div>
-              {errors.email && touched.email ? (
-                <p className="input-block__error">{errors.email}</p>
-              ) : null}
+              {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
             </div>
             <div className="input-block">
               <label htmlFor="password">Password</label>
@@ -102,9 +115,7 @@ const Login = () => {
                   <img src={eyeOff} alt="eye" />
                 </span>
               </div>
-              {errors.password && touched.password ? (
-                <p className="input-block__error">{errors.password}</p>
-              ) : null}
+              {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}
             </div>
             <div className="input-block login__remember">
               <div>
@@ -120,8 +131,14 @@ const Login = () => {
               <Link to="/forgot-password/1">Forgot Password?</Link>
             </div>
             <div className="input-block">
-              <button className="submit-btn" type="submit">
-                Login
+              <button disabled={isLoading}   className="submit-btn" type="submit">
+                {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Login'
+                )}
               </button>
             </div>
           </form>

@@ -1,21 +1,50 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import Header from '../components/common/Header'
 import Navigation from '../components/Layout/Navbar'
 import Footer from '../components/Layout/Footer'
 import PieChartComponent from '../components/charts/PieChartComponent'
 import AreaChartComponent from '../components/charts/AreaChartComponent'
-
+import { AuthContext } from '../context/AuthContext'
+import Spinner from '../components/Layout/Spinner'
 const App = () => {
+  const { state } = useContext(AuthContext)
+  const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
+  useEffect(() => {
+    // simulate an API call to check state's role
+    setIsLoading(false)
+    if (!state.isAuthenticated) {
+      navigate('/')
+    }
+  }, [state])
+
   return (
     <div className="bg-white relative">
       <Navigation />
       <Header props={'Financial Report'} />
-      <div className=" h-screen  w-full ">
-        <AreaChartComponent />
-      </div>
-      <div className="min-h-screen w-full ">
-        <PieChartComponent />
-      </div>
+      <>
+        {isLoading ? (
+          <div className="h-screen bg-black opacity-40 w-screen flex justify-center items-center z-50">
+            <Spinner />
+          </div>
+        ) : state.isAuthenticated == true ? (
+          <div>
+            <div className=" h-screen  w-full ">
+              <AreaChartComponent />
+            </div>
+            <div className="min-h-screen w-full ">
+              <PieChartComponent />
+            </div>
+          </div>
+        ) : (
+          <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">
+            <Spinner />
+          </div>
+        )}
+      </>
+
       <Footer />
     </div>
   )

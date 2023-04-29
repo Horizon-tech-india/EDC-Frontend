@@ -18,27 +18,35 @@ const SignUpStep1 = ({ setEmail }) => {
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: forgotPasswordSchemaStep1,
-      onSubmit: (values) => {
-        setEmail(values.email)
-        const body = { email: values.email, isForgotPassword: true }
-        //POST REQUEST
-        axios
-          .post('http://localhost:9000/users/resend-otp', body)
-          .then((response) => {
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: forgotPasswordSchemaStep1,
+    onSubmit: (values) => {
+      setIsLoading(true)
+
+      setEmail(values.email)
+      const body = { email: values.email, isForgotPassword: true }
+      //POST REQUEST
+      axios
+        .post('http://localhost:9000/users/resend-otp', body)
+        .then((response) => {
+          setTimeout(() => {
             navigate('/forgot-password/2')
-          })
-          .catch((error) => {
-            console.error(error)
-            setError(error.response.data.message)
-            setOpen(true)
-          })
-      },
-    })
+            setIsLoading(false)
+          }, 2000)
+        })
+        .catch((error) => {
+          console.error(error)
+          setError(error.response.data.message)
+          setOpen(true)
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 2000)
+        })
+    },
+  })
 
   return (
     <>
@@ -49,10 +57,7 @@ const SignUpStep1 = ({ setEmail }) => {
       </Snackbar>
       <div className="login__head">
         <h2>Forgot Password</h2>
-        <p>
-          Enter the email of your account and we will send the email to reset
-          your password
-        </p>
+        <p>Enter the email of your account and we will send the email to reset your password</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="input-block">
@@ -71,13 +76,17 @@ const SignUpStep1 = ({ setEmail }) => {
               placeholder="Your email"
             />
           </div>
-          {errors.email && touched.email ? (
-            <p className="input-block__error">{errors.email}</p>
-          ) : null}
+          {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
-            Next
+          <button disabled={isLoading} className="submit-btn" type="submit">
+          {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Next'
+                )}
           </button>
         </div>
       </form>

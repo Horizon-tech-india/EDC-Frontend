@@ -28,8 +28,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-row1-col1-row2">
-                  Jl. Siliwangi No 123, Cibadak, Cibadak, Sukabumi, Jawa Barat
-                  43351, Indonesia, (0266)531333
+                  Jl. Siliwangi No 123, Cibadak, Cibadak, Sukabumi, Jawa Barat 43351, Indonesia, (0266)531333
                 </div>
 
                 <div className="footer-row1-col1-row3">
@@ -58,30 +57,15 @@ const Footer = () => {
               <div className="footer-row1-col4">
                 <h3>Social Media</h3>
                 <div className="button-group">
-                  <ImageButton
-                    image={twticon}
-                    alt={'twitter'}
-                    onClick={handleClick}
-                  />
-                  <ImageButton
-                    image={fbicon}
-                    alt={'facebook'}
-                    onClick={handleClick}
-                  />
-                  <ImageButton
-                    image={igicon}
-                    alt={'instagram'}
-                    onClick={handleClick}
-                  />
+                  <ImageButton image={twticon} alt={'twitter'} onClick={handleClick} />
+                  <ImageButton image={fbicon} alt={'facebook'} onClick={handleClick} />
+                  <ImageButton image={igicon} alt={'instagram'} onClick={handleClick} />
                 </div>
               </div>
             </div>
 
             <div className="footer-row2">
-              <p>
-                Copyright © SMP Negeri 1 Cibadak. All right Reserved. Hosting By
-                IDCloudHost
-              </p>
+              <p>Copyright © SMP Negeri 1 Cibadak. All right Reserved. Hosting By IDCloudHost</p>
             </div>
           </div>
         </div>

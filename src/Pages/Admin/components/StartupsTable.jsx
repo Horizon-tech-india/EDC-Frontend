@@ -27,11 +27,7 @@ const StartupsTable = ({ companies }) => {
       const buttonClass = i === currentPage ? 'active' : ''
 
       pageNumButtons.push(
-        <button
-          key={i}
-          className={buttonClass}
-          onClick={() => handlePageChange(i)}
-        >
+        <button className={buttonClass} onClick={() => handlePageChange(i)}>
           {' '}
           {i}
         </button>,
@@ -79,19 +75,15 @@ const StartupsTable = ({ companies }) => {
             <th>Company Valuation</th>
           </tr>
           {currentRows.map((item) => (
-            <tr key={item.name}>
+            <tr>
               <td width="20%"> {item.name} </td>
 
               <td width="13%">
                 <span
                   className={
-                    (item.status.toLowerCase() === 'verified'
-                      ? 'verified'
-                      : '') +
+                    (item.status.toLowerCase() === 'verified' ? 'verified' : '') +
                     (item.status.toLowerCase() === 'pending' ? 'pending' : '') +
-                    (item.status.toLowerCase() === 'unverified'
-                      ? 'unverified'
-                      : '')
+                    (item.status.toLowerCase() === 'unverified' ? 'unverified' : '')
                   }
                 >
                   {' '}
@@ -99,13 +91,11 @@ const StartupsTable = ({ companies }) => {
                 </span>
               </td>
 
-              <td width="35%" className="td-flex">
+              <td width="35%">
                 <progress
                   max="100"
                   value={item.accountStatus}
-                  className={
-                    item.accountStatus === '' ? 'progressFalse' : 'progressTrue'
-                  }
+                  className={item.accountStatus === '' ? 'progressFalse' : 'progressTrue'}
                 />
                 <p>{item.accountStatus}</p>
                 <span

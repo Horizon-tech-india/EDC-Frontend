@@ -21,31 +21,43 @@ const initialValues = {
 }
 
 const SignUpStep1 = ({ setEmail }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
   const navigate = useNavigate()
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: signupSchemaStep1,
-      onSubmit: (values) => {
-        setEmail(values.email)
-        //POST REQUEST
-        axios
-          .post('http://localhost:9000/users/signup', values)
-          .then((response) => {
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: signupSchemaStep1,
+    onSubmit: (values) => {
+      setIsLoading(true)
+
+      setEmail(values.email)
+      //POST REQUEST
+      axios
+        .post('http://localhost:9000/users/signup', values)
+        .then((response) => {
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+
             navigate('/signup/2')
-          })
-          .catch((error) => {
-            console.error(error)
-            setError(error.response.data.message)
-            setOpen(true)
-          })
-      },
-    })
+            setIsLoading(false)
+          }, 2000)
+        })
+        .catch((error) => {
+          console.error(error)
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+
+            setIsLoading(false)
+          }, 2000)
+          setError(error.response.data.message)
+          setOpen(true)
+        })
+    },
+  })
   return (
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -89,11 +101,8 @@ const SignUpStep1 = ({ setEmail }) => {
               </div>
             </div>
           </div>
-          {(errors.firstName || errors.lastName) &&
-          (touched.firstName || touched.lastName) ? (
-            <p className="input-block__error">
-              {errors.firstName ? errors.firstName : errors.lastName}
-            </p>
+          {(errors.firstName || errors.lastName) && (touched.firstName || touched.lastName) ? (
+            <p className="input-block__error">{errors.firstName ? errors.firstName : errors.lastName}</p>
           ) : null}
         </div>
         <div className="input-block">
@@ -112,9 +121,7 @@ const SignUpStep1 = ({ setEmail }) => {
               placeholder="Your email"
             />
           </div>
-          {errors.email && touched.email ? (
-            <p className="input-block__error">{errors.email}</p>
-          ) : null}
+          {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
         </div>
         <div className="input-block">
           <label htmlFor="phoneNumber">Phone Number</label>
@@ -158,9 +165,7 @@ const SignUpStep1 = ({ setEmail }) => {
               <img src={eyeOff} alt="" />
             </span>
           </div>
-          {errors.password && touched.password ? (
-            <p className="input-block__error">{errors.password}</p>
-          ) : null}
+          {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}
         </div>
         <div className="input-block__terms">
           By signing in, you're agreeing to our{' '}
@@ -173,8 +178,14 @@ const SignUpStep1 = ({ setEmail }) => {
           </span>
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
-            Continue
+          <button disabled={isLoading} className="submit-btn" type="submit">
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Continue'
+            )}
           </button>
         </div>
       </form>

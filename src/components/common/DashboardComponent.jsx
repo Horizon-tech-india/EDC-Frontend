@@ -3,7 +3,7 @@ import React from 'react'
 const Box = (props) => {
   return (
     <div className="bg-gray-300 p-2 h-80 w-80">
-      <p className='text-center w-full font-semibold text-xl'>{props.props}</p>{' '}
+      <p className="text-center w-full font-semibold text-xl">{props.props}</p>{' '}
     </div>
   )
 }

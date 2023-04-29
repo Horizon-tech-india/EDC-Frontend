@@ -19,32 +19,45 @@ const SignUpStep3 = ({ email }) => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const [passwordHidden1, setPasswordHidden1] = useState(true)
   const [passwordHidden2, setPasswordHidden2] = useState(true)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: forgotPasswordSchemaStep3,
-      onSubmit: (values) => {
-        const body = {
-          email,
-          newPassword: values.new_password,
-          confirmNewPassword: values.confirm_password,
-        }
-        //POST REQUEST
-        axios
-          .post('http://localhost:9000/users/set-new-password', body)
-          .then((response) => {
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: forgotPasswordSchemaStep3,
+    onSubmit: (values) => {
+      setIsLoading(true)
+
+      const body = {
+        email,
+        newPassword: values.new_password,
+        confirmNewPassword: values.confirm_password,
+      }
+      //POST REQUEST
+      axios
+        .post('http://localhost:9000/users/set-new-password', body)
+        .then((response) => {
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+     
             navigate('/login')
-          })
-          .catch((error) => {
-            console.error(error)
-            setError(error.response.data.message)
-            setOpen(true)
-          })
-      },
-    })
+            setIsLoading(false)
+          }, 2000)
+        })
+        .catch((error) => {
+          console.error(error)
+          setError(error.response.data.message)
+          setOpen(true)
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+        
+            setIsLoading(false)
+          }, 2000)
+        })
+    },
+  })
   const navigate = useNavigate()
 
   return (
@@ -112,8 +125,14 @@ const SignUpStep3 = ({ email }) => {
           ) : null}
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
-            Reset Password
+          <button disabled={isLoading} className="submit-btn" type="submit">
+          {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Reset Password'
+                )}  
           </button>
         </div>
       </form>
