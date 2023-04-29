@@ -9,10 +9,10 @@ import ApplicationStatus from './Pages/ApplicationStatus'
 import Dashboard from './Pages/Dashboard'
 import Document from './Pages/Document'
 import Report from './Pages/Report'
-
 import DashboardAdmin from './Pages/Admin/Dashboard'
 import { Provider } from 'react-redux'
 import store from './components/slices/store'
+
 const App = () => {
   return (
     <div className="App">
@@ -31,6 +31,14 @@ const App = () => {
             <Route
               path="/admin/manage-coordinators"
               element={<DashboardAdmin page={'manage-coordinators'} />}
+            />
+            <Route
+              path="/admin/meetings"
+              element={<DashboardAdmin page={'meetings'} />}
+            />
+            <Route
+              path="/admin/events"
+              element={<DashboardAdmin page={'events'} />}
             />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup/1" element={<SignUp step={1} />} />
