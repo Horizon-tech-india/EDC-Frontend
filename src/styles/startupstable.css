@@ -5,9 +5,14 @@
 
 .table-wrapper {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 table {
   width: 100%;
+  overflow-y: scroll;
   /* border: 1px solid black; */
 }
 
@@ -27,6 +32,7 @@ th {
 
 table tr {
   text-align: start;
+  height: 46px;
 }
 
 td {
@@ -38,6 +44,7 @@ td {
   font-size: 12px;
   line-height: 16px;
   color: #808080;
+  /* height: 46px; */
   background-color: #fcfcfc;
 }
 

@@ -1,7 +1,7 @@
-.admin-container {
-  display: flex;
-  justify-content: space-between;
-}
+  // .admin-container {
+  //   display: flex;
+  //   // justify-content: space-between;
+  // }
 
 .sidebar-right {
   display: flex;
@@ -9,6 +9,8 @@
   justify-content: space-between;
   height: 100vh;
   width: 332px;
+  position: absolute;
+  right: 0;
 
   &__card {
     text-align: center;

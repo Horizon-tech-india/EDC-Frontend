@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.admin-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+.admin-right-sidebar {
+    position: absolute;
+    right: 0;
+}
