@@ -11,6 +11,7 @@ const ROLES = {
   MASTER_ADMIN: 'master admin',
   STUDENT: 'student',
 }
+import "./styles/dashboard.css";
 
 const Dashboard = ({ page }) => {
   const navigate = useNavigate()
@@ -42,7 +43,7 @@ const Dashboard = ({ page }) => {
         </div>
       ) : (
         <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">
-          <Spinner />
+          <Spinner/>
         </div>
       )}
     </>

@@ -16,7 +16,7 @@ export const StartupsDetailsSection = () => {
   useEffect(() => {
     API(
       'get',
-      '/admin/all-startup-details?filters=Parul University,Vadodra Startup Studio',
+      '/admin/all-startup-details',
     )
       .then((res) => {
         console.log(res.data.data)
@@ -30,7 +30,7 @@ export const StartupsDetailsSection = () => {
         //console.log(error.response)
         // alert(error.response.data.message)
       })
-  })
+  },[])
 
   return (
     <>
