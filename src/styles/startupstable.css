@@ -66,10 +66,13 @@ td:nth-child(2) .unverified {
   color: #999999;
 }
 
-td:nth-child(3) {
+.td-flex {
   display: flex;
-  /* flex-shrink: 0; */
   width: 100%;
+}
+
+td:nth-child(3) {
+  /* flex-shrink: 0; */
   gap: 20px;
 }
 
@@ -130,4 +133,16 @@ table p:after {
   background-color: red;
   padding: 0.3rem 0.8rem;
   border-radius: 5px;
+}
+
+.copy-link-btn {
+  color: black;
+  background-color: rgb(219, 201, 219);
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.copy-link-btn:active {
+  transform: scale(1.05);
+  background-color: rgb(189, 155, 189);
 }

@@ -35,7 +35,7 @@ const authReducer = (state, action) => {
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState)
-  console.log(state)
+  //console.log(state)
   const login = async (values) => {
     try {
       const res = await API('post', '/users/login', values)
