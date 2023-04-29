@@ -18,23 +18,32 @@ const SignUpStep1 = ({ setEmail }) => {
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchemaStep1,
     onSubmit: (values) => {
+      setIsLoading(true)
+
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
       //POST REQUEST
       axios
         .post('http://localhost:9000/users/resend-otp', body)
         .then((response) => {
-          navigate('/forgot-password/2')
+          setTimeout(() => {
+            navigate('/forgot-password/2')
+            setIsLoading(false)
+          }, 2000)
         })
         .catch((error) => {
           console.error(error)
           setError(error.response.data.message)
           setOpen(true)
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 2000)
         })
     },
   })
@@ -71,7 +80,13 @@ const SignUpStep1 = ({ setEmail }) => {
         </div>
         <div className="input-block">
           <button className="submit-btn" type="submit">
-            Next
+          {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Next'
+                )}
           </button>
         </div>
       </form>

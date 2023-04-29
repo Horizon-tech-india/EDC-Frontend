@@ -21,6 +21,7 @@ const initialValues = {
 }
 
 const SignUpStep1 = ({ setEmail }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -31,15 +32,27 @@ const SignUpStep1 = ({ setEmail }) => {
     initialValues,
     validationSchema: signupSchemaStep1,
     onSubmit: (values) => {
+      setIsLoading(true)
+
       setEmail(values.email)
       //POST REQUEST
       axios
         .post('http://localhost:9000/users/signup', values)
         .then((response) => {
-          navigate('/signup/2')
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+
+            navigate('/signup/2')
+            setIsLoading(false)
+          }, 2000)
         })
         .catch((error) => {
           console.error(error)
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+
+            setIsLoading(false)
+          }, 2000)
           setError(error.response.data.message)
           setOpen(true)
         })
@@ -163,7 +176,13 @@ const SignUpStep1 = ({ setEmail }) => {
         </div>
         <div className="input-block">
           <button className="submit-btn" type="submit">
-            Continue
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Continue'
+            )}
           </button>
         </div>
       </form>

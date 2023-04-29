@@ -58,8 +58,8 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     setIsLoading(true)
     try {
-      const res = await API('get', '/logout', {}, state.token)
-      console.log(`LOGOUT RESPONSE`, res.data)
+      // const res = await API('get', '/logout', {}, state.token)
+      // console.log(`LOGOUT RESPONSE`, res.data)
       dispatch({ type: LOGOUT_SUCCESS })
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err.response.data.message })

@@ -15,11 +15,34 @@ const initialValues = {
 }
 
 const SignUpStep2 = () => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: signupSchemaStep2,
     onSubmit: (values) => {
+      setIsLoading(true)
+
       //POST REQUEST
+      // axios
+      // .post('url',  )
+      // .then((response) => {
+      //   setTimeout(() => {
+      //     // If successful, redirect to dashboard
+   
+      //     navigate('/login')
+      //     setIsLoading(false)
+      //   }, 2000)
+      // })
+      // .catch((error) => {
+      //   console.error(error)
+ 
+      //   setTimeout(() => {
+      //     // If successful, redirect to dashboard
+      
+      //     setIsLoading(false)
+      //   }, 2000)
+      // })
     },
   })
   const navigate = useNavigate()
@@ -105,7 +128,13 @@ const SignUpStep2 = () => {
         </div>
         <div className="input-block">
           <button className="submit-btn" type="submit">
-            Continue
+          {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Continue'
+                )}     
           </button>
         </div>
       </form>

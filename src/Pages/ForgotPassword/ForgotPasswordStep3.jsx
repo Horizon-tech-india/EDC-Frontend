@@ -19,6 +19,8 @@ const SignUpStep3 = ({ email }) => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const [passwordHidden1, setPasswordHidden1] = useState(true)
   const [passwordHidden2, setPasswordHidden2] = useState(true)
 
@@ -26,6 +28,8 @@ const SignUpStep3 = ({ email }) => {
     initialValues,
     validationSchema: forgotPasswordSchemaStep3,
     onSubmit: (values) => {
+      setIsLoading(true)
+
       const body = {
         email,
         newPassword: values.new_password,
@@ -35,12 +39,22 @@ const SignUpStep3 = ({ email }) => {
       axios
         .post('http://localhost:9000/users/set-new-password', body)
         .then((response) => {
-          navigate('/login')
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+     
+            navigate('/login')
+            setIsLoading(false)
+          }, 2000)
         })
         .catch((error) => {
           console.error(error)
           setError(error.response.data.message)
           setOpen(true)
+          setTimeout(() => {
+            // If successful, redirect to dashboard
+        
+            setIsLoading(false)
+          }, 2000)
         })
     },
   })
@@ -106,7 +120,13 @@ const SignUpStep3 = ({ email }) => {
         </div>
         <div className="input-block">
           <button className="submit-btn" type="submit">
-            Reset Password
+          {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+                  </div>
+                ) : (
+                  'Reset Password'
+                )}  
           </button>
         </div>
       </form>
