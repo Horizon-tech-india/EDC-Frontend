@@ -1,68 +1,70 @@
 import React, { useState, useEffect } from 'react'
 import searchIcon from '../../../assets/search-normal.svg'
 import FilterStartupsButton from './FilterStartupsButton'
-import AdminDetailsTable from './AdminDetailsTable'
-import AdminAddForm from './AdminAddForm'
+import MeetingDetailsTable from './MeetingDetailsTable'
+import MeetingAddForm from './MeetingAddForm'
 
-const AdminAddSection = () => {
+const MeetingAddSection = () => {
   const initialData = [
     {
-      firstName: 'sam',
-      lastName: 'sss',
-      email: 'sam@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'sam@123',
-      branch: 'RSS',
+      title: 'meet',
+      time: '13:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example1.com',
     },
     {
-      firstName: 'anjal',
-      lastName: 'sss',
-      email: 'anjal@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'anjal@123',
-      branch: 'AHSS',
+      title: 'Tuesday meet',
+      time: '11:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example2.com',
     },
     {
-      firstName: 'ram',
-      lastName: 'sss',
-      email: 'ram@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'ram@123',
-      branch: 'Surat Branch',
+      title: 'Important meet',
+      time: '11:00',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example3.com',
     },
     {
-      firstName: 'nikhil',
-      lastName: 'sss',
-      email: 'nikhil@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'nikhil@123',
-      branch: 'VSS',
+      title: 'Daily meet',
+      time: '11:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example4.com',
     },
     {
-      firstName: 'parul',
-      lastName: 'sss',
-      email: 'parul@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'parul@123',
-      branch: 'RSS',
+      title: 'Daily meet',
+      time: '11:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example5.com',
+    },
+    {
+      title: 'Daily meet',
+      time: '11:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example6.com',
+    },
+    {
+      title: 'Daily meet',
+      time: '11:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example7.com',
+    },
+    {
+      title: 'Daily meet',
+      time: '11:15',
+      members: 'Raj, rohit, atul',
+      link: 'https://www.example8.com',
     },
   ]
   const [data, setData] = useState(initialData)
-
-  const handleDelete = (email) => {
-    const filteredData = data.filter((admin) => admin.email !== email)
-    setData(filteredData)
-  }
-
   const [query2, setQuery2] = useState('')
 
   return (
     <div>
-      <AdminAddForm data={data} setData={setData} />
+      <MeetingAddForm data={data} setData={setData} />
       <div className="all-applications-wrapper">
         <div className="all-applications-header">
           <div className="all-applications-header-left">
-            <h2>All Admin</h2>
+            <h2>All Meetings</h2>
           </div>
           <div className="all-applications-header-right">
             <div className="all-applications-header-search">
@@ -72,7 +74,7 @@ const AdminAddSection = () => {
                   <input
                     className="search-input"
                     type="text"
-                    placeholder="Search admin"
+                    placeholder="Search meetings"
                     // onChange={props.onChange}
                     onChange={(e) => setQuery2(e.target.value)}
                     value={query2}
@@ -87,10 +89,8 @@ const AdminAddSection = () => {
         </div>
 
         <div className="all-applications-body">
-          <AdminDetailsTable
-            companies={data}
+          <MeetingDetailsTable
             data={data}
-            handleDelete={handleDelete}
           />
         </div>
       </div>
@@ -98,4 +98,4 @@ const AdminAddSection = () => {
   )
 }
 
-export default AdminAddSection
+export default MeetingAddSection

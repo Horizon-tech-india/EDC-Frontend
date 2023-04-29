@@ -98,3 +98,10 @@ export const adminAddSchema = Yup.object({
     .required('Please enter a Phone number'),
   branch: Yup.string(),
 })
+
+export const meetingAddSchema = Yup.object({
+  title: Yup.string().required('Please enter a title'),
+  time: Yup.string().required('Please choose a time'),
+  members: Yup.string().required('Please enter member names'),
+  link: Yup.string().required('Please enter a link'),
+})

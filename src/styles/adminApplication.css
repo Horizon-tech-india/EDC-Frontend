@@ -14,6 +14,11 @@
   margin: 0 454px 0 303px;
   /* border: 1px solid black; */
 }
+
+.admin-application-container > .search-bar {
+  margin: 0.5rem;
+}
+
 .search-bar {
   display: flex;
   width: 97%;
@@ -57,7 +62,6 @@ textarea {
 }
 
 .stats-box {
-  width: 230px;
   height: 78px;
 }
 
@@ -120,6 +124,11 @@ textarea {
   gap: 20px;
 }
 
+.stats-components-container div {
+  flex: 1;
+  margin: 0 0.5rem;
+}
+
 .all-applications-wrapper {
   /* border: 1px solid black; */
   height: 50%;
@@ -159,7 +168,7 @@ textarea {
 
 .all-applications-header-right {
   display: flex;
-  align-items: end;
+  align-items: center;
 }
 
 .filter-button button {

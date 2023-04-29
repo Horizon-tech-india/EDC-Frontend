@@ -1,8 +1,5 @@
 import React from 'react'
 import { adminAddSchema } from '../../../validation/formSchema'
-import lock from '../../../assets/icons/svg/lock.svg'
-import mail from '../../../assets/icons/svg/mail.svg'
-import phone from '../../../assets/icons/svg/phone.svg'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
 import axios from 'axios'
@@ -47,7 +44,7 @@ const AdminAddForm = ({ data, setData }) => {
   return (
     <div className="admin-add">
       <form onSubmit={handleSubmit} className="admin-add__form">
-        <div className="admin-add__form-wrapper">
+        <div className="admin-add__form-wrapper--admin-add">
           <div className="input__container">
             <label htmlFor="firstName">First Name</label>
             <input

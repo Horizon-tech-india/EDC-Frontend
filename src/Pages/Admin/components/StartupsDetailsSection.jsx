@@ -27,7 +27,7 @@ export const StartupsDetailsSection = () => {
       .catch((error) => {
         console.error(error.message)
         console.error(error)
-        console.log(error.response)
+        //console.log(error.response)
         // alert(error.response.data.message)
       })
   },[])
