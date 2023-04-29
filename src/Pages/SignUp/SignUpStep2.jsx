@@ -127,7 +127,7 @@ const SignUpStep2 = () => {
           </span>
         </div>
         <div className="input-block">
-          <button className="submit-btn" type="submit">
+          <button disabled={isLoading} className="submit-btn" type="submit">
           {isLoading ? (
                   <div className="flex justify-center items-center">
                     <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
