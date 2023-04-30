@@ -15,18 +15,18 @@ const StatsComponent = (props) => {
 
 const Last30Days = () => {
   return (
-    <div className="last30-wrapper">
-      <div className="header-text">
+    <div className=" flex flex-col justify-center items-center w-full px-5 ">
+      <div className="flex justify-start items-start w-full py-2">
         <p>In the last 30 days</p>
       </div>
-      <div className="stats-components-container">
-        <div className="applications-component">
+      <div className="grid w-full gap-5 justify-between items-center grid-cols-12">
+        <div className=" col-span-4">
           <StatsComponent data="1,500" datatype="Applications" />
         </div>
-        <div className="new-application-component">
+        <div className="  col-span-4">
           <StatsComponent datatype="New application" />
         </div>
-        <div className="approved-applications-component">
+        <div className=" col-span-4">
           <StatsComponent datatype="Approved applications" />
         </div>
       </div>

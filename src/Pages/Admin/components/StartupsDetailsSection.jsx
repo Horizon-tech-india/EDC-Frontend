@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import searchIcon from '../../../assets/search-normal.svg'
 import FilterStartupsButton from './FilterStartupsButton'
 import StartupsTable from './StartupsTable'
 import { API } from '../../../Api/Post'
 
 export const StartupsDetailsSection = () => {
+  const { state } = useContext(AuthContext)
+
   const [query, setQuery] = useState('')
   const [query2, setQuery2] = useState('')
   const [tabledata, setTabledata] = useState([])
@@ -14,15 +17,12 @@ export const StartupsDetailsSection = () => {
   }
 
   useEffect(() => {
-    API(
-      'get',
-      '/admin/all-startup-details',
-    )
+    API('get', '/admin/all-startup-details', {}, state.token)
       .then((res) => {
         console.log(res.data.data)
         setTabledata(res.data.data)
         console.log('application data', tabledata)
-        setOpen(true)
+        // setOpen(true)
       })
       .catch((error) => {
         console.error(error.message)
@@ -30,12 +30,12 @@ export const StartupsDetailsSection = () => {
         //console.log(error.response)
         // alert(error.response.data.message)
       })
-  },[])
+  }, [])
 
   return (
     <>
-      <div className="all-applications-wrapper">
-        <div className="all-applications-header">
+      <div className="flex flex-col h-full w-full justify-start items-center">
+        <div className="all-applications-header pb-2">
           <div className="all-applications-header-left">
             <h2>All Applications</h2>
             <p>Approved and Pending Both</p>
@@ -62,7 +62,7 @@ export const StartupsDetailsSection = () => {
           </div>
         </div>
 
-        <div className="all-applications-body">
+        <div className="w-full h-full">
           <StartupsTable companies={search(tabledata)} />
         </div>
       </div>

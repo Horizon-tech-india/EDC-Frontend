@@ -27,7 +27,7 @@ const StartupsTable = ({ companies }) => {
       const buttonClass = i === currentPage ? 'active' : ''
 
       pageNumButtons.push(
-        <button className={buttonClass} onClick={() => handlePageChange(i)}>
+        <button className={buttonClass} key={i+6867} onClick={() => handlePageChange(i)}>
           {' '}
           {i}
         </button>,
@@ -64,55 +64,20 @@ const StartupsTable = ({ companies }) => {
   }
 
   return (
-    <div className="table-wrapper">
-      <table>
-        <tbody>
-          <tr id="table-head">
+    <div className="h-full w-full flex flex-col justify-between">
+      <table className="w-full table-auto">
+        <thead className="bg-gray-100 w-full">
+          <tr className="">
             <th>Company</th>
             <th>Status</th>
             <th>Account Status</th>
             <th>Branch</th>
             <th>Company Valuation</th>
           </tr>
-          {currentRows.map((item) => (
-            <tr>
-              <td width="20%"> {item.name} </td>
-
-              <td width="13%">
-                <span
-                  className={
-                    (item.status.toLowerCase() === 'verified' ? 'verified' : '') +
-                    (item.status.toLowerCase() === 'pending' ? 'pending' : '') +
-                    (item.status.toLowerCase() === 'unverified' ? 'unverified' : '')
-                  }
-                >
-                  {' '}
-                  {item.status}{' '}
-                </span>
-              </td>
-
-              <td width="35%">
-                <progress
-                  max="100"
-                  value={item.accountStatus}
-                  className={item.accountStatus === '' ? 'progressFalse' : 'progressTrue'}
-                />
-                <p>{item.accountStatus}</p>
-                <span
-                  className={
-                    (item.change === 'increment' ? 'increment' : '') +
-                    (item.change === 'decrement' ? 'decrement' : '') +
-                    (item.change === '' ? 'noData' : '')
-                  }
-                >
-                  {' '}
-                  {item.changeAmount}{' '}
-                </span>
-              </td>
-
-              <td width="10%"> {item.branch}</td>
-              <td width="22%"> {item.valuation}</td>
-            </tr>
+        </thead>
+        <tbody className="w-full ">
+          {currentRows?.map((item, index) => (
+            <Tr key={index} props={item} />
           ))}
         </tbody>
       </table>
@@ -122,3 +87,48 @@ const StartupsTable = ({ companies }) => {
 }
 
 export default StartupsTable
+
+export const Tr = (props) => {
+  console.log(props)
+  const item = props.props
+  return (
+    <tr className="h-10">
+      <td> {item?.name} </td>
+
+      <td>
+        <span
+          className={
+            (item?.status.toLowerCase() === 'verified' ? 'verified' : '') +
+            (item?.status.toLowerCase() === 'pending' ? 'pending' : '') +
+            (item?.status.toLowerCase() === 'unverified' ? 'unverified' : '')
+          }
+        >
+          {' '}
+          {item?.status}{' '}
+        </span>
+      </td>
+
+      <td className="flex flex-row">
+        <progress
+          max="100"
+          value={item?.accountStatus || 0}
+          className={item?.accountStatus === '' ? 'progressFalse' : 'progressTrue'}
+        />
+        <p>{item?.accountStatus || 0}</p>
+        <span
+          className={
+            (item?.change === 'increment' ? 'increment' : '') +
+            (item?.change === 'decrement' ? 'decrement' : '') +
+            (item?.change === '' ? 'noData' : '')
+          }
+        >
+          {' '}
+          {item?.changeAmount || 0}{' '}
+        </span>
+      </td>
+
+      <td> {item?.branch}</td>
+      <td> {item?.valuation}</td>
+    </tr>
+  )
+}

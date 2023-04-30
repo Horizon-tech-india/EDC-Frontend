@@ -28,10 +28,10 @@ const UpcomingMeetingList = () => {
   ]
 
   return (
-    <ul className="sidebar-right__card-list">
+    <ul className="grid">
       {upcomingMeetingData.map((meeting, index) => {
         return (
-          <li key={meeting.name + index} className="sidebar-right__card-item">
+          <li key={meeting.name + index} className="flex flex-row gap-4 my-2">
             <div className="card__avatar">
               <img src={meeting.img || avatar} alt="avatar" />
             </div>
@@ -42,6 +42,21 @@ const UpcomingMeetingList = () => {
         )
       })}
     </ul>
+  )
+}
+
+const UserProfile = () => {
+  return (
+    <section className="flex flex-row justify-center items-center w-full max-w-xs  rounded-md px-2">
+      <img className="user-profile__avatar" src={avatar} alt="avatar" />
+      <div className="user-profile__info">
+        <p className="user-profile__info-name">Admin Name</p>
+        <p className="user-profile__info-type">Admin</p>
+      </div>
+      <button className="user-profile__notification">
+        <img className="user-profile__notification-image" src={notification} alt="notification" />
+      </button>
+    </section>
   )
 }
 
@@ -63,17 +78,8 @@ const FiltersList = () => {
 
 const SidebarRight = () => {
   return (
-    <div className="sidebar-right">
-      <section className="user-profile">
-        <img className="user-profile__avatar" src={avatar} alt="avatar" />
-        <div className="user-profile__info">
-          <p className="user-profile__info-name">Admin Name</p>
-          <p className="user-profile__info-type">Admin</p>
-        </div>
-        <button className="user-profile__notification">
-          <img className="user-profile__notification-image" src={notification} alt="notification" />
-        </button>
-      </section>
+    <div className="bg-white h-screen p-5 flex justify-between flex-col">
+      <UserProfile />
       <SidebarCard title="Upcoming Scheduled meeting">
         <UpcomingMeetingList />
       </SidebarCard>

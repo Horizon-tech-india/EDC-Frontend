@@ -44,7 +44,7 @@ const SignUpStep1 = ({ setEmail }) => {
 
             navigate('/signup/2')
             setIsLoading(false)
-          }, 2000)
+          }, 1000)
         })
         .catch((error) => {
           console.error(error)
@@ -52,7 +52,7 @@ const SignUpStep1 = ({ setEmail }) => {
             // If successful, redirect to dashboard
 
             setIsLoading(false)
-          }, 2000)
+          }, 1000)
           setError(error.response.data.message)
           setOpen(true)
         })

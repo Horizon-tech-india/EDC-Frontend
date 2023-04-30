@@ -44,7 +44,7 @@ const SignUpStep3 = ({ email }) => {
      
             navigate('/login')
             setIsLoading(false)
-          }, 2000)
+          }, 1000)
         })
         .catch((error) => {
           console.error(error)
@@ -54,7 +54,7 @@ const SignUpStep3 = ({ email }) => {
             // If successful, redirect to dashboard
         
             setIsLoading(false)
-          }, 2000)
+          }, 1000)
         })
     },
   })

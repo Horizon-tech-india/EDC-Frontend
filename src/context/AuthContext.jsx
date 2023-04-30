@@ -42,11 +42,11 @@ const AuthProvider = ({ children }) => {
     setIsLoading(true)
     try {
       const res = await API('post', '/users/login', values)
-      console.log(`LOGIN RESPONSE`, res.data.data)
+      console.log(`LOGIN RESPONSE`, res?.data?.data)
 
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data.data,
+        payload: res?.data?.data,
       })
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err.response.data.message })
