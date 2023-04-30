@@ -11,7 +11,7 @@ const DateTime = () => {
   })
 
   return (
-    <div className="date-time">
+    <div className="flex flex-row justify-center items-center w-full max-w-xs bg-gray-50 rounded-md p-2">
       <span className="date-time__hours">{date.getHours() % 12}</span>
       <span>:</span>
       <span className="date-time__minutes">{date.getMinutes()}</span>

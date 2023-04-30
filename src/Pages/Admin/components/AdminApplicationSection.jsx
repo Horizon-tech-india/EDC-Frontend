@@ -12,21 +12,22 @@ const AdminApplicationSection = ({ page }) => {
   const [query, setQuery] = useState('')
 
   return (
-    <div className="admin-application-container">
+    <div className="bg-white flex flex-col justify-start h-screen">
       <SearchBar query={query} setQuery={setQuery} />
       <Last30Days />
-      {page === 'dashboard' ? (
-        <StartupsDetailsSection />
-      ) : page === 'meetings' ? (
-        <MeetingAddSection />
-      ) : page === 'events' ? (
-        <EventAddSection />
-      ) : (
-        <AdminAddSection />
-      )}
+      <section className='h-full w-full p-5'>
+        {page === 'dashboard' ? (
+          <StartupsDetailsSection />
+        ) : page === 'meetings' ? (
+          <MeetingAddSection />
+        ) : page === 'events' ? (
+          <EventAddSection />
+        ) : (
+          <AdminAddSection />
+        )}
+      </section>
     </div>
   )
 }
 
 export default AdminApplicationSection
-
