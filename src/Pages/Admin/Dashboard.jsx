@@ -5,13 +5,14 @@ import Spinner from '../../components/Layout/Spinner'
 import SidebarRight from './components/SidebarRight'
 import AdminApplicationSection from './components/AdminApplicationSection'
 import { useNavigate } from 'react-router-dom'
+import Drawer from './components/Drawer'
+import './styles/dashboard.css'
 
 const ROLES = {
   ADMIN: 'admin',
   MASTER_ADMIN: 'master admin',
   STUDENT: 'student',
 }
-import "./styles/dashboard.css";
 
 const Dashboard = ({ page }) => {
   const navigate = useNavigate()
@@ -37,13 +38,14 @@ const Dashboard = ({ page }) => {
       ) : state.role === ROLES.ADMIN || state.role === ROLES.MASTER_ADMIN ? (
         <div>
           <div className="admin-container">
-            <SidebarRight />
+            <Drawer/>
             <AdminApplicationSection page={page} />
+            <SidebarRight />
           </div>
         </div>
       ) : (
         <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">
-          <Spinner/>
+          <Spinner />
         </div>
       )}
     </>

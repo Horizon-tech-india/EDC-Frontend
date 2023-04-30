@@ -7,11 +7,11 @@
 
 .admin-application-container {
   width: 740px;
+  flex: 1;
   height: 100vh;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  margin: 0 454px 0 303px;
+  justify-content: space-around; */
   /* border: 1px solid black; */
 }
 

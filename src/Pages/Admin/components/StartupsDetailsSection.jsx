@@ -14,15 +14,12 @@ export const StartupsDetailsSection = () => {
   }
 
   useEffect(() => {
-    API(
-      'get',
-      '/admin/all-startup-details',
-    )
+    API('get', '/admin/all-startup-details')
       .then((res) => {
         console.log(res.data.data)
         setTabledata(res.data.data)
         console.log('application data', tabledata)
-        setOpen(true)
+        //setOpen(true)
       })
       .catch((error) => {
         console.error(error.message)
@@ -30,7 +27,7 @@ export const StartupsDetailsSection = () => {
         //console.log(error.response)
         // alert(error.response.data.message)
       })
-  },[])
+  }, [])
 
   return (
     <>
