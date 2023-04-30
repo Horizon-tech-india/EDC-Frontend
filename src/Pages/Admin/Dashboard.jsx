@@ -6,6 +6,8 @@ import SidebarRight from './components/SidebarRight'
 import AdminApplicationSection from './components/AdminApplicationSection'
 import Drawer from './components/Drawer'
 import { useNavigate } from 'react-router-dom'
+import Drawer from './components/Drawer'
+import './styles/dashboard.css'
 
 const ROLES = {
   ADMIN: 'admin',
