@@ -1,11 +1,5 @@
 import React from 'react'
 
-const Drawer = () => {
-  return (
-    <div className='h-screen  bg-green-400'>Drawer</div>
-  )
-}
-import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import AdminLogo from '../../../assets/icons/svg/AdminLogo.svg'
 import category from '../../../assets/icons/svg/category.svg'
@@ -21,7 +15,7 @@ const Drawer = () => {
   console.log(pathname)
 
   return (
-    <div className="drawer__container">
+    <div className="drawer__container h-full w-full">
       <div className="drawer__logo">
         <img src={AdminLogo} alt="" />
       </div>
@@ -76,7 +70,5 @@ const Drawer = () => {
     </div>
   )
 }
-
-export default Drawer
 
 export default Drawer

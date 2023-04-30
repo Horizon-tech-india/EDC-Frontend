@@ -6,7 +6,7 @@ import SidebarRight from './components/SidebarRight'
 import AdminApplicationSection from './components/AdminApplicationSection'
 import Drawer from './components/Drawer'
 import { useNavigate } from 'react-router-dom'
-import Drawer from './components/Drawer'
+
 import './styles/dashboard.css'
 
 const ROLES = {
@@ -14,7 +14,6 @@ const ROLES = {
   MASTER_ADMIN: 'master admin',
   STUDENT: 'student',
 }
-import './styles/dashboard.css'
 
 const Dashboard = ({ page }) => {
   const navigate = useNavigate()
@@ -39,8 +38,8 @@ const Dashboard = ({ page }) => {
         </div>
       ) : state.role === ROLES.ADMIN || state.role === ROLES.MASTER_ADMIN ? (
         <div>
-          <div className="grid justify-center items-stretch w-screen bg-black  grid-cols-12 ">
-            <div className='col-span-2'>
+          <div className="grid justify-center items-stretch w-screen  grid-cols-12 ">
+            <div className="col-span-2">
               <Drawer />
             </div>
             <div className="col-span-7">
