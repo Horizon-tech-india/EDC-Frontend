@@ -35,7 +35,7 @@ const SignUpStep1 = ({ setEmail }) => {
           setTimeout(() => {
             navigate('/forgot-password/2')
             setIsLoading(false)
-          }, 2000)
+          }, 1000)
         })
         .catch((error) => {
           console.error(error)
@@ -43,7 +43,7 @@ const SignUpStep1 = ({ setEmail }) => {
           setOpen(true)
           setTimeout(() => {
             setIsLoading(false)
-          }, 2000)
+          }, 1000)
         })
     },
   })

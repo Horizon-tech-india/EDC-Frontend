@@ -39,9 +39,9 @@ const Login = () => {
         login(values)
         setTimeout(() => {
           // If successful, redirect to dashboard
-          navigate('/home')
+          navigate('/Admin')
           setIsLoading(false)
-        }, 2000)
+        }, 1000)
         // ...
 
         // ...

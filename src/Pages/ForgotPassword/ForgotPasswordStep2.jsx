@@ -35,7 +35,7 @@ const SignUpStep2 = ({ email }) => {
 
           navigate('/forgot-password/3')
           setIsLoading(false)
-        }, 2000)
+        }, 1000)
       })
       .catch((error) => {
         console.error(error)
@@ -45,7 +45,7 @@ const SignUpStep2 = ({ email }) => {
           // If successful, redirect to dashboard
 
           setIsLoading(false)
-        }, 2000)
+        }, 1000)
       })
   }
 
