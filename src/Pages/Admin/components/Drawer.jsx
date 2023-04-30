@@ -1,19 +1,22 @@
-import React from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { NavLink, useLocation } from 'react-router-dom'
 import AdminLogo from '../../../assets/icons/svg/AdminLogo.svg'
 import category from '../../../assets/icons/svg/category.svg'
 import gallery from '../../../assets/icons/svg/gallery.svg'
-import logout from '../../../assets/icons/svg/logout.svg'
+import logoutIcon from '../../../assets/icons/svg/logout.svg'
 import profile from '../../../assets/icons/svg/profile.svg'
 import receipt from '../../../assets/icons/svg/receipt-2.svg'
 import setting from '../../../assets/icons/svg/setting-2.svg'
 import '../styles/drawer.css'
 
 const Drawer = () => {
+  const { logout } = useContext(AuthContext)
   const { pathname } = useLocation()
   console.log(pathname)
-
+  const handleLogout = async () => {
+    await logout()
+  }
   return (
     <div className="drawer__container h-full w-full">
       <div className="drawer__logo">
@@ -59,11 +62,11 @@ const Drawer = () => {
               <span>Settings</span>
             </NavLink>
           </li>
-          <li className="drawer__item">
-            <NavLink to="/admin/dashboard">
-              <img src={logout} alt="" />
+          <li className="flex flex-row justify-start px-6 items-start">
+            <button className='flex flex-row p-2 gap-2' onClick={handleLogout}>
+              <img src={logoutIcon} alt="" />
               <span>Logout</span>
-            </NavLink>
+            </button>
           </li>
         </ul>
       </div>
