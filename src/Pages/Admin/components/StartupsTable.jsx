@@ -1,134 +1,237 @@
-import React, { useState, useEffect } from 'react'
-import '../../../styles/startupstable.css'
-import { API } from '../../../Api/Post'
-import axios from 'axios'
+import React from 'react'
+import MaterialReactTable from 'material-react-table'
+import { Box, Button, MenuItem, Typography } from '@mui/material'
+import FileDownloadIcon from '@mui/icons-material/FileDownload'
+import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 
-const StartupsTable = ({ companies }) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const limitPerPage = 6
-  const start = (currentPage - 1) * limitPerPage
-  const end = currentPage * limitPerPage
-  const currentRows = companies.slice(start, end)
+const StartupsTable = ({ data }) => {
+  const columns = [
+    {
+      accessorKey: 'name',
+      header: 'Company',
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      size: 100,
+    },
+    {
+      accessorKey: 'changeAmount',
+      header: 'Account Status',
+    },
+    {
+      accessorKey: 'branch',
+      header: 'Branch',
+      size: 100,
+    },
+    {
+      accessorKey: 'valuation',
+      header: 'Company Valuation',
+      size: 100,
+    },
+  ]
 
-  // calculating total number of pages from the filtered table rows
-  useEffect(() => {
-    setTotalPages(Math.ceil(companies.length / limitPerPage))
-  }, [companies])
-
-  function handlePageChange(page) {
-    setCurrentPage(page)
+  const btnStyl = 'bg-[#b4cd93] mx-1 hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
+  const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
+  const csvOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    useBom: true,
+    useKeysAsHeaders: false,
+    headers: columns.map((c) => c.header),
+  }
+  const csvExporter = new ExportToCsv(csvOptions)
+  console.table(data)
+  const handleExportRows = (rows) => {
+    csvExporter.generateCsv(rows.map((row) => row.original))
   }
 
-  const ApplicationFooter = (props) => {
-    const pageNumButtons = []
-
-    for (let i = 1; i <= totalPages; i++) {
-      const buttonClass = i === currentPage ? 'active' : ''
-
-      pageNumButtons.push(
-        <button className={buttonClass} key={i+6867} onClick={() => handlePageChange(i)}>
-          {' '}
-          {i}
-        </button>,
-      )
-    }
-
-    return (
-      <div className="all-applications-footer">
-        <div className="previous-page">
-          {/* onClick={()=> handlePageChange(currentPage - 1) }
-            Previous page */}
-          <button
-            className="prev-page-btn"
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            Previous page
-          </button>
-        </div>
-        <div className="page-nums">{pageNumButtons}</div>
-        <div className="next-page">
-          {/* onClick={ ()=> handlePageChange(currentPage - 1) }
-            Next Page */}
-          <button
-            className="next-page-btn"
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            Next page
-          </button>
-        </div>
-      </div>
-    )
+  const handleExportData = () => {
+    csvExporter.generateCsv(data)
   }
 
   return (
-    <div className="h-full w-full flex flex-col justify-between">
-      <table className="w-full table-auto">
-        <thead className="bg-gray-100 w-full">
-          <tr className="">
-            <th>Company</th>
-            <th>Status</th>
-            <th>Account Status</th>
-            <th>Branch</th>
-            <th>Company Valuation</th>
-          </tr>
-        </thead>
-        <tbody className="w-full ">
-          {currentRows?.map((item, index) => (
-            <Tr key={index} props={item} />
-          ))}
-        </tbody>
-      </table>
-      <ApplicationFooter />
-    </div>
+    <MaterialReactTable
+      data={data}
+      columns={columns}
+      enableStickyHeader
+      enableStickyFooter
+      enableRowActions
+      enableRowSelection
+      positionActionsColumn="last"
+      enableMultiRowSelection={false}
+      positionToolbarAlertBanner="bottom"
+      initialState={{ density: 'compact' }}
+      muiTableContainerProps={{ sx: { maxHeight: '35%' } }}
+      renderTopToolbarCustomActions={({ table }) => (
+        <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
+          <button className={btnStyl} onClick={handleExportData}>
+            Export All Data
+          </button>
+          <button
+            className={btnStyl}
+            disabled={table.getPrePaginationRowModel().rows.length === 0}
+            //export all rows, including from the next page, (still respects filtering and sorting)
+            onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
+          >
+            Export All Rows
+          </button>
+          <button
+            className={btnStyl}
+            disabled={table.getRowModel().rows.length === 0}
+            //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+            onClick={() => handleExportRows(table.getRowModel().rows)}
+          >
+            Export Page Rows
+          </button>
+        </Box>
+      )}
+      renderRowActionMenuItems={({ row }) => [
+        <MenuItem key="edit" onClick={() => console.info('Edit', row.original.aadhar)}>
+          Edit
+        </MenuItem>,
+        <MenuItem key="delete" onClick={() => console.info('Delete', row.original.aadhar)}>
+          Delete
+        </MenuItem>,
+      ]}
+      muiTablePaperProps={{
+        elevation: 0, //change the mui box shadow
+        //customize paper styles
+        sx: {
+          borderRadius: '0',
+          border: '0px',
+        },
+      }}
+      renderDetailPanel={({ row }) => (
+        <Box className="grid grid-cols-3 gap-1 w-auto">
+          <Typography className="text-xs  ">
+            <span className={liStyl}> aadhar:</span>
+            <span className="text-xs  ">{row.original.aadhar || 'N/A'} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> branch:</span>
+            <span className="text-xs  ">{row.original.branch} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> category:</span>
+            <span className="text-xs  ">{row.original.category} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> categoryOther:</span>
+            <span className="text-xs  ">{row.original.categoryOther} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> contact:</span>
+            <span className="text-xs  ">{row.original.contact} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> currentStage:</span>
+            <span className="text-xs  ">{row.original.currentStage} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> designation:</span>
+            <span className="text-xs  ">{row.original.designation} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> email:</span>
+            <span className="text-xs  ">{row.original.email} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> enrollmentNum:</span>
+            <span className="text-xs  ">{row.original.enrollmentNum} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> institute:</span>
+            <span className="text-xs  ">{row.original.institute} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> location:</span>
+            <span className="text-xs  ">{row.original.location} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> name:</span>
+            <span className="text-xs  ">{row.original.name} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> otherInstitute:</span>
+            <span className="text-xs  ">{row.original.otherInstitute} </span>
+          </Typography>
+
+          <Typography className="text-xs  ">
+            <span className={liStyl}> otherOrganisation:</span>
+            <span className="text-xs  ">{row.original.otherOrganisation} </span>
+          </Typography>
+
+          <Typography className="text-xs  ">
+            <span className={liStyl}> otherUniversity:</span>
+            <span className="text-xs  ">{row.original.otherUniversity} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> startupId:</span>
+            <span className="text-xs  ">{row.original.startupId} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> status:</span>
+            <span className="text-xs  ">{row.original.status} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> teamMembers:</span>
+            <span className="text-xs  ">{row.original.teamMembers} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> teamSize:</span>
+            <span className="text-xs  ">{row.original.teamSize} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> title:</span>
+            <span className="text-xs  ">{row.original.title} </span>
+          </Typography>
+          <Typography className="text-xs  ">
+            <span className={liStyl}> uniqueFeatures:</span>
+            <span className="text-xs  ">{row.original.uniqueFeature}</span>
+          </Typography>
+        </Box>
+      )}
+      muiTableHeadCellProps={{
+        //easier way to create media queries, no useMediaQuery hook needed.
+        sx: {
+          fontSize: {
+            xs: '8px',
+            sm: '11px',
+            md: '12px',
+            lg: '13px',
+            xl: '14px',
+          },
+        },
+      }}
+    />
   )
 }
 
 export default StartupsTable
 
-export const Tr = (props) => {
-  console.log(props)
-  const item = props.props
-  return (
-    <tr className="h-10">
-      <td> {item?.name} </td>
-
-      <td>
-        <span
-          className={
-            (item?.status.toLowerCase() === 'verified' ? 'verified' : '') +
-            (item?.status.toLowerCase() === 'pending' ? 'pending' : '') +
-            (item?.status.toLowerCase() === 'unverified' ? 'unverified' : '')
-          }
-        >
-          {' '}
-          {item?.status}{' '}
-        </span>
-      </td>
-
-      <td className="flex flex-row">
-        <progress
-          max="100"
-          value={item?.accountStatus || 0}
-          className={item?.accountStatus === '' ? 'progressFalse' : 'progressTrue'}
-        />
-        <p>{item?.accountStatus || 0}</p>
-        <span
-          className={
-            (item?.change === 'increment' ? 'increment' : '') +
-            (item?.change === 'decrement' ? 'decrement' : '') +
-            (item?.change === '' ? 'noData' : '')
-          }
-        >
-          {' '}
-          {item?.changeAmount || 0}{' '}
-        </span>
-      </td>
-
-      <td> {item?.branch}</td>
-      <td> {item?.valuation}</td>
-    </tr>
-  )
-}
+// const newRow = {
+//   aadhar: row.original.aadhar,
+//   branch: row.original.branch,
+//   category: row.original.category,
+//   categoryOther: row.original.categoryOther,
+//   contact: row.original.contact,
+//   currentStage: row.original.currentStage,
+//   designation: row.original.designation,
+//   email: row.original.email,
+//   enrollmentNum: row.original.enrollmentNum,
+//   institute: row.original.institute,
+//   location: row.original.location,
+//   name: row.original.name,
+//   otherInstitute: row.original.otherInstitute,
+//   otherOrganisation: row.original.otherOrganisation,
+//   otherUniversity: row.original.otherUniversity,
+//   startupId: row.original.startupId,
+//   status: row.original.status,
+//   teamMembers: row.original.teamMembers,
+//   teamSize: row.original.teamSize,
+//   title: row.original.title,
+//   uniqueFeatures: row.original.uniqueFeatures,
+// }
