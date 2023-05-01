@@ -61,7 +61,7 @@ const StartupsTable = ({ data }) => {
       enableRowActions
       enableRowSelection
       positionActionsColumn="last"
-      enableMultiRowSelection={false}
+      enableMultiRowSelection={true}
       positionToolbarAlertBanner="bottom"
       initialState={{ density: 'compact' }}
       muiTableContainerProps={{ sx: { maxHeight: '35%' } }}

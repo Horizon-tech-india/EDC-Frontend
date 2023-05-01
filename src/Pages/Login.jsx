@@ -33,28 +33,24 @@ const Login = () => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       setIsLoading(true)
-      try {
-        // Call API to authenticate user
-        
-        login(values)
+      login(values)
+      if (state.error === null) {
         setTimeout(() => {
-          // If successful, redirect to dashboard
           navigate('/Admin')
           setIsLoading(false)
         }, 1000)
-        // ...
-
-        // ...
-      } catch (error) {
-        // Handle error
-        // ...
+      } else if (state.error) {
+        setOpen(true)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 1000)
       }
     },
   })
 
   return (
     <>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           {state.error && <p>{state.error}</p>}
         </Alert>
@@ -74,7 +70,6 @@ const Login = () => {
             <p>Login to continue</p>
           </div>
           <form onSubmit={handleSubmit}>
-            {state.error && <p>{state.error}</p>}
             <div className="input-block">
               <label htmlFor="email">Email</label>
               <div className="input-block__input">
@@ -108,10 +103,7 @@ const Login = () => {
                   onBlur={handleBlur}
                   placeholder="Your password"
                 />
-                <span
-                  className="hide-password"
-                  onClick={() => setPasswordHidden(!passwordHidden)}
-                >
+                <span className="hide-password" onClick={() => setPasswordHidden(!passwordHidden)}>
                   <img src={eyeOff} alt="eye" />
                 </span>
               </div>
@@ -131,7 +123,7 @@ const Login = () => {
               <Link to="/forgot-password/1">Forgot Password?</Link>
             </div>
             <div className="input-block">
-              <button disabled={isLoading}   className="submit-btn" type="submit">
+              <button disabled={isLoading} className="submit-btn" type="submit">
                 {isLoading ? (
                   <div className="flex justify-center items-center">
                     <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
