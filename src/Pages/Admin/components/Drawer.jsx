@@ -63,7 +63,7 @@ const Drawer = () => {
             </NavLink>
           </li>
           <li className="flex flex-row justify-start px-6 items-start">
-            <button className='flex flex-row p-2 gap-2' onClick={handleLogout}>
+            <button className="flex flex-row p-2 gap-2" onClick={handleLogout}>
               <img src={logoutIcon} alt="" />
               <span>Logout</span>
             </button>

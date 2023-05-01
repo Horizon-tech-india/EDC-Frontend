@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import SidebarCard from './SidebarCard'
 import DateTime from './DateTime'
 import '../styles/sidebarRight.scss'
@@ -46,12 +47,14 @@ const UpcomingMeetingList = () => {
 }
 
 const UserProfile = () => {
+  const { state } = useContext(AuthContext)
+
   return (
     <section className="flex flex-row justify-center items-center w-full max-w-xs  rounded-md px-2">
       <img className="user-profile__avatar" src={avatar} alt="avatar" />
       <div className="user-profile__info">
-        <p className="user-profile__info-name">Admin Name</p>
-        <p className="user-profile__info-type">Admin</p>
+        <p className="user-profile__info-name">{state.firstName + ' ' + state?.lastName}</p>
+        <p className="user-profile__info-type">{state?.role}</p>
       </div>
       <button className="user-profile__notification">
         <img className="user-profile__notification-image" src={notification} alt="notification" />
@@ -60,21 +63,21 @@ const UserProfile = () => {
   )
 }
 
-const FiltersList = () => {
-  const filtersData = ['EDTech', 'FinTech', 'Cloth', 'Ser', 'Marketplace', 'D2C', 'B2B', 'SofTech', 'HealthCare']
+// const FiltersList = () => {
+//   const filtersData = ['EDTech', 'FinTech', 'Cloth', 'Ser', 'Marketplace', 'D2C', 'B2B', 'SofTech', 'HealthCare']
 
-  return (
-    <ul className="sidebar-right__card-list sidebar-right__card-list--flex-wrap">
-      {filtersData.map((filter) => {
-        return (
-          <li key={filter} className="sidebar-right__card-item">
-            <button>{filter}</button>
-          </li>
-        )
-      })}
-    </ul>
-  )
-}
+//   return (
+//     <ul className="sidebar-right__card-list sidebar-right__card-list--flex-wrap">
+//       {filtersData.map((filter) => {
+//         return (
+//           <li key={filter} className="sidebar-right__card-item">
+//             <button>{filter}</button>
+//           </li>
+//         )
+//       })}
+//     </ul>
+//   )
+// }
 
 const SidebarRight = () => {
   return (
@@ -83,9 +86,9 @@ const SidebarRight = () => {
       <SidebarCard title="Upcoming Scheduled meeting">
         <UpcomingMeetingList />
       </SidebarCard>
-      <SidebarCard title="Quick Filters">
+      {/* <SidebarCard title="Quick Filters">
         <FiltersList />
-      </SidebarCard>
+      </SidebarCard> */}
       <DateTime />
     </div>
   )
