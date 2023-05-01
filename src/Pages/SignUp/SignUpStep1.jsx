@@ -47,6 +47,7 @@ const SignUpStep1 = ({ setEmail }) => {
           }, 1000)
         })
         .catch((error) => {
+          setOpen(true)
           console.error(error)
           setTimeout(() => {
             // If successful, redirect to dashboard
