@@ -13,10 +13,11 @@ import '../styles/drawer.css'
 const Drawer = () => {
   const { logout } = useContext(AuthContext)
   const { pathname } = useLocation()
-  console.log(pathname)
+
   const handleLogout = async () => {
     await logout()
   }
+  
   return (
     <div className="drawer__container h-full w-full">
       <div className="drawer__logo">

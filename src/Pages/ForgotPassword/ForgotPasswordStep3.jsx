@@ -6,7 +6,7 @@ import '../../styles/login.scss'
 import '../../styles/signup.scss'
 import lock from '../../assets/icons/svg/lock.svg'
 import eyeOff from '../../assets/icons/svg/eye-off.svg'
-import axios from 'axios'
+import { API } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
@@ -36,12 +36,11 @@ const SignUpStep3 = ({ email }) => {
         confirmNewPassword: values.confirm_password,
       }
       //POST REQUEST
-      axios
-        .post('http://localhost:9000/users/set-new-password', body)
+      API('post', '/users/set-new-password', body, '')
         .then((response) => {
           setTimeout(() => {
             // If successful, redirect to dashboard
-     
+
             navigate('/login')
             setIsLoading(false)
           }, 1000)
@@ -52,7 +51,7 @@ const SignUpStep3 = ({ email }) => {
           setOpen(true)
           setTimeout(() => {
             // If successful, redirect to dashboard
-        
+
             setIsLoading(false)
           }, 1000)
         })
@@ -87,10 +86,7 @@ const SignUpStep3 = ({ email }) => {
               onBlur={handleBlur}
               placeholder="New Password"
             />
-            <span
-              className="hide-password"
-              onClick={() => setPasswordHidden1(!passwordHidden1)}
-            >
+            <span className="hide-password" onClick={() => setPasswordHidden1(!passwordHidden1)}>
               <img src={eyeOff} alt="" />
             </span>
           </div>
@@ -113,10 +109,7 @@ const SignUpStep3 = ({ email }) => {
               onBlur={handleBlur}
               placeholder="Confirm Password"
             />
-            <span
-              className="hide-password"
-              onClick={() => setPasswordHidden2(!passwordHidden2)}
-            >
+            <span className="hide-password" onClick={() => setPasswordHidden2(!passwordHidden2)}>
               <img src={eyeOff} alt="" />
             </span>
           </div>
@@ -126,13 +119,13 @@ const SignUpStep3 = ({ email }) => {
         </div>
         <div className="input-block">
           <button disabled={isLoading} className="submit-btn" type="submit">
-          {isLoading ? (
-                  <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
-                  </div>
-                ) : (
-                  'Reset Password'
-                )}  
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Reset Password'
+            )}
           </button>
         </div>
       </form>

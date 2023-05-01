@@ -8,7 +8,7 @@ import lock from '../../assets/icons/svg/lock.svg'
 import mail from '../../assets/icons/svg/mail.svg'
 import eyeOff from '../../assets/icons/svg/eye-off.svg'
 import phone from '../../assets/icons/svg/phone.svg'
-import axios from 'axios'
+import { API } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
@@ -36,8 +36,7 @@ const SignUpStep1 = ({ setEmail }) => {
 
       setEmail(values.email)
       //POST REQUEST
-      axios
-        .post('http://localhost:9000/users/signup', values)
+      API('post', '/users/signup', values, '')
         .then((response) => {
           setTimeout(() => {
             // If successful, redirect to dashboard
@@ -158,10 +157,7 @@ const SignUpStep1 = ({ setEmail }) => {
               onBlur={handleBlur}
               placeholder="Your password"
             />
-            <span
-              className="hide-password"
-              onClick={() => setPasswordHidden(!passwordHidden)}
-            >
+            <span className="hide-password" onClick={() => setPasswordHidden(!passwordHidden)}>
               <img src={eyeOff} alt="" />
             </span>
           </div>
