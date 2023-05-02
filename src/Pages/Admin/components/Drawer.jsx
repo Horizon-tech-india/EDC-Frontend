@@ -40,6 +40,7 @@ const Drawer = () => {
   const handleLogout = async () => {
     await logout()
   }
+  
   return (
     <div className="h-screen max-w-xs flex flex-col justify-between w-full bg-[#e5e5e5]">
       <div className="p-2 h-40 flex flex-col justify-between items-center w-full">
