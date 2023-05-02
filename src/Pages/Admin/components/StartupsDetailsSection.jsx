@@ -5,7 +5,6 @@ import { API } from '../../../Api/Post'
 export const StartupsDetailsSection = () => {
   const { state } = useContext(AuthContext)
   const [query, setQuery] = useState('')
-  const [query2, setQuery2] = useState('')
   const [tabledata, setTabledata] = useState([])
   const search = (companies) => {
     return companies.filter((item) => item.name.toLowerCase().includes(query))
@@ -13,13 +12,11 @@ export const StartupsDetailsSection = () => {
   useEffect(() => {
     API('get', '/admin/all-startup-details', {}, state.token)
       .then((res) => {
-        console.log(res.data.data)
         setTabledata(res.data.data)
-        console.log('application data', tabledata)
+        console.log(res.data.message)
       })
       .catch((error) => {
         console.error(error.message)
-        console.error(error)
       })
   }, [])
   return (
