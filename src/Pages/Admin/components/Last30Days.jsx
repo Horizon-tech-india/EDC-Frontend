@@ -14,20 +14,25 @@ const StatsComponent = (props) => {
 }
 
 const Last30Days = () => {
+  const data = {
+    allApplication: 1500,
+    newApplication: 87,
+    approvedApplication: 23,
+  }
   return (
-    <div className=" flex flex-col justify-center items-center w-full px-5 ">
+    <div className=" flex flex-col justify-center items-center w-full ">
       <div className="flex justify-start items-start w-full py-2">
         <p>In the last 30 days</p>
       </div>
       <div className="grid w-full gap-5 justify-between items-center grid-cols-12">
         <div className=" col-span-4">
-          <StatsComponent data="1,500" datatype="Applications" />
+          <StatsComponent data={data.allApplication || 0} datatype="Applications" />
         </div>
         <div className="  col-span-4">
-          <StatsComponent datatype="New application" />
+          <StatsComponent data={data.newApplication || 0} datatype="New application" />
         </div>
         <div className=" col-span-4">
-          <StatsComponent datatype="Approved applications" />
+          <StatsComponent data={data.approvedApplication || 0} datatype="Approved applications" />
         </div>
       </div>
     </div>

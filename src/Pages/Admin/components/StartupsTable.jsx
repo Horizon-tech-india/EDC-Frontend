@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
-import { Box, Button, MenuItem, Typography } from '@mui/material'
-import FileDownloadIcon from '@mui/icons-material/FileDownload'
+import { Box, MenuItem, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
+import { UpdatePayload } from '../../../Api/updatePayload' //or use your library of choice here
 
 const StartupsTable = ({ data }) => {
+  const { state } = useContext(AuthContext)
+  const btnStyl = 'bg-[#b4cd93] mx-1 hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
+  const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
   const columns = [
     {
       accessorKey: 'name',
@@ -30,9 +34,8 @@ const StartupsTable = ({ data }) => {
       size: 100,
     },
   ]
+  // const [isLoading, setIsLoading] = useState(false)
 
-  const btnStyl = 'bg-[#b4cd93] mx-1 hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
-  const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
   const csvOptions = {
     fieldSeparator: ',',
     quoteStrings: '"',
@@ -43,7 +46,7 @@ const StartupsTable = ({ data }) => {
     headers: columns.map((c) => c.header),
   }
   const csvExporter = new ExportToCsv(csvOptions)
-  console.table(data)
+  // console.table(data)
   const handleExportRows = (rows) => {
     csvExporter.generateCsv(rows.map((row) => row.original))
   }
@@ -51,7 +54,18 @@ const StartupsTable = ({ data }) => {
   const handleExportData = () => {
     csvExporter.generateCsv(data)
   }
-
+  const handleClickPayload = async ({ value, StartupId }) => {
+    console.log(value, StartupId)
+    // setIsLoading(true)
+    const { token } = state
+    try {
+      await UpdatePayload({ value, StartupId, token })
+      console.log('Payload updated successfully!')
+    } catch (error) {
+      console.error(error.message)
+    }
+    // setIsLoading(false)
+  }
   return (
     <MaterialReactTable
       data={data}
@@ -64,7 +78,7 @@ const StartupsTable = ({ data }) => {
       enableMultiRowSelection={true}
       positionToolbarAlertBanner="bottom"
       initialState={{ density: 'compact' }}
-      muiTableContainerProps={{ sx: { maxHeight: '35%' } }}
+      muiTableContainerProps={{ sx: { height: '45vh' } }}
       renderTopToolbarCustomActions={({ table }) => (
         <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
           <button className={btnStyl} onClick={handleExportData}>
@@ -89,11 +103,38 @@ const StartupsTable = ({ data }) => {
         </Box>
       )}
       renderRowActionMenuItems={({ row }) => [
-        <MenuItem key="edit" onClick={() => console.info('Edit', row.original.aadhar)}>
-          Edit
+        <MenuItem
+          key="pending"
+          onClick={() =>
+            handleClickPayload({
+              value: 'pending',
+              StartupId: row.original.StartupId,
+            })
+          }
+        >
+          Pending
         </MenuItem>,
-        <MenuItem key="delete" onClick={() => console.info('Delete', row.original.aadhar)}>
-          Delete
+        <MenuItem
+          key="verified"
+          onClick={() =>
+            handleClickPayload({
+              value: 'verified',
+              StartupId: row.original.StartupId,
+            })
+          }
+        >
+          Verify
+        </MenuItem>,
+        <MenuItem
+          key="rejected"
+          onClick={() =>
+            handleClickPayload({
+              value: 'rejected',
+              StartupId: row.original.StartupId,
+            })
+          }
+        >
+          Reject
         </MenuItem>,
       ]}
       muiTablePaperProps={{
