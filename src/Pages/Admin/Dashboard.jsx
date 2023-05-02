@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Spinner from '../../components/Layout/Spinner'
-
-import SidebarRight from './components/SidebarRight'
 import AdminApplicationSection from './components/AdminApplicationSection'
 import Drawer from './components/Drawer'
 import { useNavigate } from 'react-router-dom'
@@ -33,7 +31,7 @@ const Dashboard = ({ page }) => {
   return (
     <>
       {isLoading ? (
-        <div className="h-screen bg-black opacity-40 w-screen flex justify-center items-center z-50">
+        <div className="h-screen bg-white opacity-40 w-screen flex justify-center items-center z-50">
           <Spinner />
         </div>
       ) : state.role === ROLES.ADMIN || state.role === ROLES.MASTER_ADMIN ? (
@@ -45,9 +43,6 @@ const Dashboard = ({ page }) => {
             <div className="col-span-10">
               <AdminApplicationSection page={page} />
             </div>{' '}
-            {/* <div className="col-span-3">
-              <SidebarRight />
-            </div> */}
           </div>
         </div>
       ) : (
