@@ -1,9 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { adminAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
 import { API } from '../../../Api/Post'
+import Chip from '@mui/material/Chip'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
 
 const initialValues = {
   firstName: '',
@@ -11,34 +14,25 @@ const initialValues = {
   email: '',
   password: '',
   phoneNumber: '',
-  branch: '',
 }
 
-const AdminAddForm = ({ data, setTableData }) => {
+const AdminAddForm = ({ data, setTableData, submitAdminData }) => {
+  const options = ['Valsad Startup Studio', 'Rajkot Startup Studio', 'Ahemdabad Startup Studio', 'Surat Startup Studio']
+  const [branch, setBranch] = useState([options[0]])
   const { state } = useContext(AuthContext)
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: adminAddSchema,
     onSubmit: (values) => {
-      const body = { ...values, branch: [values.branch] }
-
+      console.log(branch)
+      const body = { ...values, branch }
       //POST REQUEST
-      API('post', 'admin/create-admin', body, state.token)
-        .then((res) => {
-          // setOpen(true)
-          const dataCopy = [...data, values]
-          setTableData(dataCopy)
-          resetForm({ values: initialValues })
-        })
-        .catch((error) => {
-          console.error(error.message)
-          console.error(error)
-          //console.log(error.response)
-          // alert(error.response.data.message)
-        })
+      submitAdminData(body, resetForm)
     },
   })
+
+  console.log(values, branch)
 
   return (
     <div className="admin-add">
@@ -112,24 +106,23 @@ const AdminAddForm = ({ data, setTableData }) => {
             />
             {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}
           </div>
+          <div></div>
           <div className="input__container">
-            <label htmlFor="branch">Branch</label>
-            <select
-              name="branch"
-              id="branch"
-              className="input-block_input--dropdown"
-              value={values.branch}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            >
-              <option value="" disabled defaultValue hidden>
-                VSS, RSS, AHSS, or Surat Branch
-              </option>
-              <option value="Valsad Startup Studio">VSS</option>
-              <option value="Rajkot Startup Studio">RSS</option>
-              <option value="Ahemdabad Startup Studio">AHSS</option>
-              <option value="Surat Startup Studio">Surat Branch</option>
-            </select>
+            <label htmlFor="tags-filled">Branches</label>
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={options}
+              defaultValue={[options[0]]}
+              freeSolo
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
+              }
+              renderInput={(params) => (
+                <TextField name="branch" {...params} variant="filled" label="" placeholder="Branches" />
+              )}
+              onChange={(event, value) => setBranch(value)}
+            />
           </div>
         </div>
         <button className="admin-add__submit" type="submit">

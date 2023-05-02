@@ -41,7 +41,7 @@ const DataTable = ({ data, handleDelete }) => {
     headers: columns.map((c) => c.header),
   }
   const csvExporter = new ExportToCsv(csvOptions)
-  console.table(data)
+
   const handleExportRows = (rows) => {
     csvExporter.generateCsv(rows.map((row) => row.original))
   }
@@ -59,7 +59,7 @@ const DataTable = ({ data, handleDelete }) => {
       enableRowActions
       enableRowSelection
       positionActionsColumn="last"
-      enableMultiRowSelection={false}
+      enableMultiRowSelection={true}
       positionToolbarAlertBanner="bottom"
       initialState={{ density: 'compact' }}
       muiTableContainerProps={{ sx: { maxHeight: '35%' } }}

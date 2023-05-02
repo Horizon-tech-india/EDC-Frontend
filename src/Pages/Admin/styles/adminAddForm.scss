@@ -38,16 +38,15 @@
   flex-direction: column;
   margin: 1rem;
 
-  & input,
-  & select {
+  & input {
     background-color: rgb(243, 235, 235);
     border-radius: 5px;
     padding: 0.3rem 0.5rem;
     outline: none;
     max-width: 200px;
   }
+}
 
-  & select {
-    width: 200px;
-  }
+.chips-input {
+  width: 100%;
 }
