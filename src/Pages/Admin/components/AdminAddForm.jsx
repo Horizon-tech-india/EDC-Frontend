@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { adminAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
-import axios from 'axios'
+import { API } from '../../../Api/Post'
 
 const initialValues = {
   firstName: '',
@@ -13,30 +14,28 @@ const initialValues = {
   branch: '',
 }
 
-const AdminAddForm = ({ data, setData }) => {
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    resetForm,
-  } = useFormik({
+const AdminAddForm = ({ data, setTableData }) => {
+  const { state } = useContext(AuthContext)
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: adminAddSchema,
     onSubmit: (values) => {
-      const body = values
-      const dataCopy = [...data, values]
-      setData(dataCopy)
-      resetForm({ values: initialValues })
+      const body = { ...values, branch: [values.branch] }
+
       //POST REQUEST
-      axios
-        .post('http://localhost:9000/', body)
-        .then((response) => {})
+      API('post', 'admin/create-admin', body, state.token)
+        .then((res) => {
+          // setOpen(true)
+          const dataCopy = [...data, values]
+          setTableData(dataCopy)
+          resetForm({ values: initialValues })
+        })
         .catch((error) => {
+          console.error(error.message)
           console.error(error)
+          //console.log(error.response)
+          // alert(error.response.data.message)
         })
     },
   })
@@ -56,9 +55,7 @@ const AdminAddForm = ({ data, setData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.firstName && touched.firstName ? (
-              <p className="input-block__error">{errors.firstName}</p>
-            ) : null}
+            {errors.firstName && touched.firstName ? <p className="input-block__error">{errors.firstName}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="lastName">Last Name</label>
@@ -71,9 +68,7 @@ const AdminAddForm = ({ data, setData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.lastName && touched.lastName ? (
-              <p className="input-block__error">{errors.lastName}</p>
-            ) : null}
+            {errors.lastName && touched.lastName ? <p className="input-block__error">{errors.lastName}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="email">Email</label>
@@ -86,9 +81,7 @@ const AdminAddForm = ({ data, setData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.email && touched.email ? (
-              <p className="input-block__error">{errors.email}</p>
-            ) : null}
+            {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="phoneNumber">Phone Number</label>
@@ -117,9 +110,7 @@ const AdminAddForm = ({ data, setData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.password && touched.password ? (
-              <p className="input-block__error">{errors.password}</p>
-            ) : null}
+            {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="branch">Branch</label>
@@ -134,10 +125,10 @@ const AdminAddForm = ({ data, setData }) => {
               <option value="" disabled defaultValue hidden>
                 VSS, RSS, AHSS, or Surat Branch
               </option>
-              <option value="VSS">VSS</option>
-              <option value="RSS">RSS</option>
-              <option value="AHSS">AHSS</option>
-              <option value="Surat Branch">Surat Branch</option>
+              <option value="Valsad Startup Studio">VSS</option>
+              <option value="Rajkot Startup Studio">RSS</option>
+              <option value="Ahemdabad Startup Studio">AHSS</option>
+              <option value="Surat Startup Studio">Surat Branch</option>
             </select>
           </div>
         </div>

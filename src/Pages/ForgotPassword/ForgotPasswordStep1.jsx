@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import axios from 'axios'
+import { API } from '../../Api/Post'
 import { forgotPasswordSchemaStep1 } from '../../validation/formSchema'
 import '../../styles/login.scss'
 import '../../styles/signup.scss'
@@ -29,8 +29,8 @@ const SignUpStep1 = ({ setEmail }) => {
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
       //POST REQUEST
-      axios
-        .post('http://localhost:9000/users/resend-otp', body)
+
+      API('post', '/users/resend-otp', body, '')
         .then((response) => {
           setTimeout(() => {
             navigate('/forgot-password/2')
@@ -80,13 +80,13 @@ const SignUpStep1 = ({ setEmail }) => {
         </div>
         <div className="input-block">
           <button disabled={isLoading} className="submit-btn" type="submit">
-          {isLoading ? (
-                  <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
-                  </div>
-                ) : (
-                  'Next'
-                )}
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Next'
+            )}
           </button>
         </div>
       </form>

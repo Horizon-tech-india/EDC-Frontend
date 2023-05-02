@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../styles/login.scss'
 import '../../styles/signup.scss'
-import axios from 'axios'
+import { API } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
@@ -27,8 +27,7 @@ const SignUpStep2 = ({ email }) => {
     event.preventDefault()
     const body = { email, otp: otp.join(''), isForgotPassword: true }
     //POST REQUEST
-    axios
-      .post('http://localhost:9000/users/verify-mail-otp', body)
+    API('post', '/users/verify-mail-otp', body, '')
       .then((response) => {
         setTimeout(() => {
           // If successful, redirect to dashboard

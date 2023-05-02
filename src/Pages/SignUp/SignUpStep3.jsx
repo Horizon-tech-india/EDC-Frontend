@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../styles/login.scss'
 import '../../styles/signup.scss'
-import axios from 'axios'
+import { API } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
@@ -40,8 +40,7 @@ const SignUpStep3 = ({ email }) => {
     event.preventDefault()
     const body = { email: email, otp: otp.join(''), isForgotPassword: false }
     //POST REQUEST
-    axios
-      .post('http://localhost:9000/users/verify-mail-otp', body)
+    API('post', '/users/verify-mail-otp', body, '')
       .then((response) => {
         setTimeout(() => {
           // If successful, redirect to dashboard
@@ -61,8 +60,7 @@ const SignUpStep3 = ({ email }) => {
 
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false }
-    axios
-      .post('http://localhost:9000/users/resend-otp', body)
+    API('post', '/users/resend-otp', body, '')
       .then((response) => {
         setError('Code sent')
         setOpen(true)

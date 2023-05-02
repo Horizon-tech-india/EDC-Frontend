@@ -1,97 +1,56 @@
-import React, { useState, useEffect } from 'react'
-import searchIcon from '../../../assets/search-normal.svg'
-import FilterStartupsButton from './FilterStartupsButton'
-import AdminDetailsTable from './AdminDetailsTable'
+import React, { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import AdminAddForm from './AdminAddForm'
+import DataTable from './DataTable'
+import { API } from '../../../Api/Post'
+import Spinner from '../../../components/Layout/Spinner'
 
 const AdminAddSection = () => {
-  const initialData = [
-    {
-      firstName: 'sam',
-      lastName: 'sss',
-      email: 'sam@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'sam@123',
-      branch: 'RSS',
-    },
-    {
-      firstName: 'anjal',
-      lastName: 'sss',
-      email: 'anjal@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'anjal@123',
-      branch: 'AHSS',
-    },
-    {
-      firstName: 'ram',
-      lastName: 'sss',
-      email: 'ram@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'ram@123',
-      branch: 'Surat Branch',
-    },
-    {
-      firstName: 'nikhil',
-      lastName: 'sss',
-      email: 'nikhil@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'nikhil@123',
-      branch: 'VSS',
-    },
-    {
-      firstName: 'parul',
-      lastName: 'sss',
-      email: 'parul@gmail.com',
-      phoneNumber: '5563278335',
-      password: 'parul@123',
-      branch: 'RSS',
-    },
-  ]
-  const [data, setData] = useState(initialData)
+  const { state } = useContext(AuthContext)
+  const [tableData, setTableData] = useState(null)
 
   const handleDelete = (email) => {
-    const filteredData = data.filter((admin) => admin.email !== email)
-    setData(filteredData)
+    API('get', `admin/delete-admin?email=${email}`, {}, state.token)
+      .then((res) => {
+        //console.log(res.data.data)
+        setTableData(res.data.data)
+        //console.log('application data', tabledata)
+        // setOpen(true)
+        const filteredData = tableData.filter((admin) => admin.email !== email)
+        setTableData(filteredData)
+      })
+      .catch((error) => {
+        console.error(error.message)
+        console.error(error)
+        //console.log(error.response)
+        // alert(error.response.data.message)
+      })
   }
 
-  const [query2, setQuery2] = useState('')
+  useEffect(() => {
+    API('get', 'admin/get-all-admin', {}, state.token)
+      .then((res) => {
+        //console.log(res.data.data)
+        setTableData(res.data.data)
+        //console.log('application data', tabledata)
+        // setOpen(true)
+      })
+      .catch((error) => {
+        console.error(error.message)
+        console.error(error)
+      })
+  }, [])
 
   return (
     <div>
-      <AdminAddForm data={data} setData={setData} />
+      <AdminAddForm data={tableData} setTableData={setTableData} />
       <div className="all-applications-wrapper">
         <div className="all-applications-header">
-          <div className="all-applications-header-left">
-            <h2>All Admin</h2>
-          </div>
-          <div className="all-applications-header-right">
-            <div className="all-applications-header-search">
-              <div className="search-bar">
-                <div className="search-wrapper">
-                  <img src={searchIcon} className="search-icon" />
-                  <input
-                    className="search-input"
-                    type="text"
-                    placeholder="Search admin"
-                    // onChange={props.onChange}
-                    onChange={(e) => setQuery2(e.target.value)}
-                    value={query2}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="all-applications-header-filter">
-              <FilterStartupsButton />
-            </div>
-          </div>
+          <h2>All Admin</h2>
         </div>
 
         <div className="all-applications-body">
-          <AdminDetailsTable
-            companies={data}
-            data={data}
-            handleDelete={handleDelete}
-          />
+          {tableData ? <DataTable data={tableData} handleDelete={handleDelete} /> : <Spinner />}
         </div>
       </div>
     </div>
