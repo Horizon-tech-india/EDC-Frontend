@@ -15,7 +15,7 @@ const StatsComponent = (props) => {
 
 const Last30Days = () => {
   return (
-    <div className=" flex flex-col justify-center items-center w-full px-5 ">
+    <div className=" flex flex-col justify-center items-center w-full ">
       <div className="flex justify-start items-start w-full py-2">
         <p>In the last 30 days</p>
       </div>

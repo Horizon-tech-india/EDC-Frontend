@@ -64,7 +64,7 @@ const StartupsTable = ({ data }) => {
       enableMultiRowSelection={true}
       positionToolbarAlertBanner="bottom"
       initialState={{ density: 'compact' }}
-      muiTableContainerProps={{ sx: { maxHeight: '35%' } }}
+      muiTableContainerProps={{ sx: { height: '45vh' } }}
       renderTopToolbarCustomActions={({ table }) => (
         <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
           <button className={btnStyl} onClick={handleExportData}>

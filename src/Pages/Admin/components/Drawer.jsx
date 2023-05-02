@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { NavLink, useLocation } from 'react-router-dom'
 import AdminLogo from '../../../assets/icons/svg/AdminLogo.svg'
@@ -6,70 +6,95 @@ import category from '../../../assets/icons/svg/category.svg'
 import gallery from '../../../assets/icons/svg/gallery.svg'
 import logoutIcon from '../../../assets/icons/svg/logout.svg'
 import profile from '../../../assets/icons/svg/profile.svg'
+import notification from '../../../assets/icons/svg/notification.svg'
+import avatar from '../../../assets/icons/svg/avatar.svg'
 import receipt from '../../../assets/icons/svg/receipt-2.svg'
 import setting from '../../../assets/icons/svg/setting-2.svg'
-import '../styles/drawer.css'
+// import '../styles/drawer.css'
+import DateTime from './DateTime'
+const UserProfile = () => {
+  const { state } = useContext(AuthContext)
 
+  return (
+    <section className="flex flex-row justify-center items-center w-full max-w-xs  rounded-md px-2">
+      <img className="user-profile__avatar" src={avatar} alt="avatar" />
+      <div className="user-profile__info">
+        <p className="user-profile__info-name">{state.firstName + ' ' + state?.lastName}</p>
+        <p className="user-profile__info-type">{state?.role}</p>
+      </div>
+      <button className="user-profile__notification">
+        <img className="user-profile__notification-image" src={notification} alt="notification" />
+      </button>
+    </section>
+  )
+}
 const Drawer = () => {
   const { logout } = useContext(AuthContext)
   const { pathname } = useLocation()
+  const Styles = {
+    li: 'flex flex-row justify-start px-2 rounded-md my-1 py-2 hover:bg-gray-100  items-start',
+    liActive: 'flex flex-row bg-[#b4cd93] my-1 py-2  rounded-md justify-start px-2 items-start',
+    btn: 'flex flex-row',
+  }
   console.log(pathname)
   const handleLogout = async () => {
     await logout()
   }
   return (
-    <div className="drawer__container h-full w-full">
-      <div className="drawer__logo">
+    <div className="h-screen max-w-xs flex flex-col justify-between w-full bg-[#e5e5e5]">
+      <div className="p-2 h-40 flex flex-col justify-between items-center w-full">
         <img src={AdminLogo} alt="" />
+        <div className="w-60">
+          <UserProfile />
+        </div>
       </div>
       <div>
-        <ul className="drawer__list">
-          <li className={pathname === '/admin/dashboard' ? 'drawer__item drawer__item--active' : 'drawer__item'}>
-            <NavLink to="/admin/dashboard">
+        <ul className="h-full p-2 grid grid-cols-1 w-full">
+          <li className={pathname === '/admin/dashboard' ? Styles.liActive : Styles.li}>
+            <NavLink className={Styles.btn} to="/admin/dashboard">
               <img src={category} alt="" />
-              <span>Dashboard</span>
+              <span className="ml-4">Dashboard</span>
             </NavLink>
           </li>
-          <li className="drawer__item">
-            <NavLink to="/admin/dashboard">
+          <li className={Styles.li}>
+            <NavLink className={Styles.btn} to="/admin/dashboard">
               <img src={profile} alt="" />
-              <span>Filters</span>
+              <span className="ml-4">Filters</span>
             </NavLink>
           </li>
-          <li className={pathname === '/admin/meetings' ? 'drawer__item drawer__item--active' : 'drawer__item'}>
-            <NavLink to="/admin/meetings">
+          <li className={pathname === '/admin/meetings' ? Styles.liActive : Styles.li}>
+            <NavLink className={Styles.btn} to="/admin/meetings">
               <img src={gallery} alt="" />
-              <span>Meeting</span>
+              <span className="ml-4">Meeting</span>
             </NavLink>
           </li>
-          <li className={pathname === '/admin/events' ? 'drawer__item drawer__item--active' : 'drawer__item'}>
-            <NavLink to="/admin/events">
+          <li className={pathname === '/admin/events' ? Styles.liActive : Styles.li}>
+            <NavLink className={Styles.btn} to="/admin/events">
               <img src={receipt} alt="" />
-              <span>Schedule Events</span>
+              <span className="ml-4">Schedule Events</span>
             </NavLink>
           </li>
-          <li
-            className={pathname === '/admin/manage-coordinators' ? 'drawer__item drawer__item--active' : 'drawer__item'}
-          >
-            <NavLink to="/admin/manage-coordinators">
+          <li className={pathname === '/admin/manage-coordinators' ? Styles.liActive : Styles.li}>
+            <NavLink className={Styles.btn} to="/admin/manage-coordinators">
               <img src={profile} alt="" />
-              <span>Manage Coordinators</span>
+              <span className="ml-4">Manage Coordinators</span>
             </NavLink>
           </li>
-          <li className="drawer__item">
-            <NavLink to="/admin/dashboard">
+          <li className={Styles.li}>
+            <NavLink className={Styles.btn} to="/admin/dashboard">
               <img src={setting} alt="" />
-              <span>Settings</span>
+              <span className="ml-4">Settings</span>
             </NavLink>
           </li>
-          <li className="flex flex-row justify-start px-6 items-start">
-            <button className="flex flex-row p-2 gap-2" onClick={handleLogout}>
+          <li className={Styles.li}>
+            <button className={Styles.btn} onClick={handleLogout}>
               <img src={logoutIcon} alt="" />
-              <span>Logout</span>
+              <span className="ml-4">Logout</span>
             </button>
           </li>
         </ul>
       </div>
+      <DateTime />
     </div>
   )
 }

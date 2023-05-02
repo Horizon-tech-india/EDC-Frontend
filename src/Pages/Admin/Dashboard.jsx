@@ -42,12 +42,12 @@ const Dashboard = ({ page }) => {
             <div className="col-span-2">
               <Drawer />
             </div>
-            <div className="col-span-7">
+            <div className="col-span-10">
               <AdminApplicationSection page={page} />
             </div>{' '}
-            <div className="col-span-3">
+            {/* <div className="col-span-3">
               <SidebarRight />
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (

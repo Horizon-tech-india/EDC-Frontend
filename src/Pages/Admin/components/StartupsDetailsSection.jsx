@@ -34,7 +34,7 @@ export const StartupsDetailsSection = () => {
 
   return (
     <>
-      <div className="h-80 w-full">
+      <div className="grid grid-cols-1 w-full h-full grid-rows-1">
         <StartupsTable data={search(tabledata)} />
       </div>
     </>
