@@ -6,7 +6,7 @@ import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import { UpdatePayload } from '../../../Api/updatePayload' //or use your library of choice here
 import { Alert } from 'react-bootstrap'
 
-const StartupsTable = ({ data }) => {
+const StartupsTable = ({ data,refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -81,6 +81,9 @@ const StartupsTable = ({ data }) => {
   const handleExportData = () => {
     csvExporter.generateCsv(data)
   }
+  const handleRefresh = () => {
+    refetch()
+  }
   const handleClickPayload = async ({ value, StartupId }) => {
     console.log(value, StartupId)
 
@@ -90,6 +93,7 @@ const StartupsTable = ({ data }) => {
       if (res.status === 200) {
         setOpenMsg(res.data.message)
         setOpen(true)
+        handleRefresh()
       }
     } catch (error) {
       setOpenMsg(error.message)
