@@ -27,10 +27,11 @@ const AdminAddForm = ({ data, setTableData }) => {
       //POST REQUEST
       API('post', 'admin/create-admin', body, state.token)
         .then((res) => {
-          console.log(res.data.data)
-          console.log('application data', tabledata)
+          //console.log(res.data.data)
+          //console.log('application data', tabledata)
           // setOpen(true)
           const dataCopy = [...data, values]
+          console.log(values)
           setTableData(dataCopy)
           resetForm({ values: initialValues })
         })

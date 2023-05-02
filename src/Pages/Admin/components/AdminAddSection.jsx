@@ -58,7 +58,7 @@ const AdminAddSection = () => {
       .then((res) => {
         console.log(res.data.data)
         setTableData(res.data.data)
-        console.log('application data', tabledata)
+        //console.log('application data', tabledata)
         // setOpen(true)
         const filteredData = tableData.filter((admin) => admin.email !== email)
         setTableData(filteredData)
@@ -89,7 +89,7 @@ const AdminAddSection = () => {
 
   return (
     <div>
-      <AdminAddForm data={tableData} setData={setTableData} />
+      <AdminAddForm data={tableData} setTableData={setTableData} />
       <div className="all-applications-wrapper">
         <div className="all-applications-header">
           <h2>All Admin</h2>
