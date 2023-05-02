@@ -6,7 +6,7 @@ import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import { UpdatePayload } from '../../../Api/updatePayload' //or use your library of choice here
 import { Alert } from 'react-bootstrap'
 
-const StartupsTable = ({ data,refetch }) => {
+const StartupsTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -107,10 +107,21 @@ const StartupsTable = ({ data,refetch }) => {
 
     setOpen(false)
   }
+  const statusMenuItems = {
+    pending: { label: 'Pending', value: 'pending' },
+    verified: { label: 'Verify', value: 'verified' },
+    rejected: { label: 'Reject', value: 'rejected' },
+  }
   return (
     <>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert variant="filled" className='bg-[#b4cd93] p-5 rounded-md' onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert
+          variant="filled"
+          className="bg-[#b4cd93] p-5 rounded-md"
+          onClose={handleClose}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
           {openMsg && openMsg}
         </Alert>
       </Snackbar>
@@ -126,6 +137,17 @@ const StartupsTable = ({ data,refetch }) => {
         positionToolbarAlertBanner="bottom"
         initialState={{ density: 'compact' }}
         muiTableContainerProps={{ sx: { height: '45vh' } }}
+        muiTableHeadCellProps={{
+          sx: {
+            fontSize: {
+              xs: '8px',
+              sm: '11px',
+              md: '12px',
+              lg: '13px',
+              xl: '14px',
+            },
+          },
+        }}
         renderTopToolbarCustomActions={({ table }) => (
           <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
             <button className={btnStyl} onClick={handleExportData}>
@@ -157,47 +179,25 @@ const StartupsTable = ({ data,refetch }) => {
             </button>
           </Box>
         )}
-        renderRowActionMenuItems={({ row }) => [
-          row?.original.status !== 'pending' && (
-            <MenuItem
-              key="pending"
-              onClick={() =>
-                handleClickPayload({
-                  value: 'pending',
-                  StartupId: row.original.startupId,
-                })
-              }
-            >
-              Pending
-            </MenuItem>
-          ),
-          row?.original.status !== 'verified' && (
-            <MenuItem
-              key="verified"
-              onClick={() =>
-                handleClickPayload({
-                  value: 'verified',
-                  StartupId: row.original.startupId,
-                })
-              }
-            >
-              Verify
-            </MenuItem>
-          ),
-          row?.original.status !== 'rejected' && (
-            <MenuItem
-              key="rejected"
-              onClick={() =>
-                handleClickPayload({
-                  value: 'rejected',
-                  StartupId: row.original.startupId,
-                })
-              }
-            >
-              Reject
-            </MenuItem>
-          ),
-        ]}
+        renderRowActionMenuItems={({ row }) => {
+          const menuItems = Object.values(statusMenuItems)
+            .filter((item) => item.value !== row.original.status)
+            .map((item) => (
+              <MenuItem
+                key={item.value}
+                onClick={() =>
+                  handleClickPayload({
+                    value: item.value,
+                    StartupId: row.original.startupId,
+                  })
+                }
+              >
+                {item.label}
+              </MenuItem>
+            ))
+
+          return menuItems
+        }}
         muiTablePaperProps={{
           elevation: 0, //change the mui box shadow
           //customize paper styles
@@ -207,107 +207,15 @@ const StartupsTable = ({ data,refetch }) => {
           },
         }}
         renderDetailPanel={({ row }) => (
-          <Box className="grid grid-cols-3 gap-1 w-auto">
-            <Typography className="text-xs  ">
-              <span className={liStyl}> aadhar:</span>
-              <span className="text-xs  ">{row.original.aadhar || 'N/A'} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> branch:</span>
-              <span className="text-xs  ">{row.original.branch} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> category:</span>
-              <span className="text-xs  ">{row.original.category} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> categoryOther:</span>
-              <span className="text-xs  ">{row.original.categoryOther} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> contact:</span>
-              <span className="text-xs  ">{row.original.contact} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> currentStage:</span>
-              <span className="text-xs  ">{row.original.currentStage} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> designation:</span>
-              <span className="text-xs  ">{row.original.designation} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> email:</span>
-              <span className="text-xs  ">{row.original.email} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> enrollmentNum:</span>
-              <span className="text-xs  ">{row.original.enrollmentNum} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> institute:</span>
-              <span className="text-xs  ">{row.original.institute} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> location:</span>
-              <span className="text-xs  ">{row.original.location} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> name:</span>
-              <span className="text-xs  ">{row.original.name} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> otherInstitute:</span>
-              <span className="text-xs  ">{row.original.otherInstitute} </span>
-            </Typography>
-
-            <Typography className="text-xs  ">
-              <span className={liStyl}> otherOrganisation:</span>
-              <span className="text-xs  ">{row.original.otherOrganisation} </span>
-            </Typography>
-
-            <Typography className="text-xs  ">
-              <span className={liStyl}> otherUniversity:</span>
-              <span className="text-xs  ">{row.original.otherUniversity} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> startupId:</span>
-              <span className="text-xs  ">{row.original.startupId} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> status:</span>
-              <span className="text-xs  ">{row.original.status} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> teamMembers:</span>
-              <span className="text-xs  ">{row.original.teamMembers} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> teamSize:</span>
-              <span className="text-xs  ">{row.original.teamSize} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> title:</span>
-              <span className="text-xs  ">{row.original.title} </span>
-            </Typography>
-            <Typography className="text-xs  ">
-              <span className={liStyl}> uniqueFeatures:</span>
-              <span className="text-xs  ">{row.original.uniqueFeature}</span>
-            </Typography>
+          <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
+            {Object.entries(row.original).map(([key, value]) => (
+              <Typography key={key} className="text-sm">
+                <span className={liStyl}>{key}:</span>
+                <span className="text-sm  ">{value || 'N/A'}</span>
+              </Typography>
+            ))}
           </Box>
         )}
-        muiTableHeadCellProps={{
-          //easier way to create media queries, no useMediaQuery hook needed.
-          sx: {
-            fontSize: {
-              xs: '8px',
-              sm: '11px',
-              md: '12px',
-              lg: '13px',
-              xl: '14px',
-            },
-          },
-        }}
       />
     </>
   )
