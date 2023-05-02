@@ -22,16 +22,12 @@ const AdminAddForm = ({ data, setTableData }) => {
     validationSchema: adminAddSchema,
     onSubmit: (values) => {
       const body = { ...values, branch: [values.branch] }
-      console.log(body)
 
       //POST REQUEST
       API('post', 'admin/create-admin', body, state.token)
         .then((res) => {
-          //console.log(res.data.data)
-          //console.log('application data', tabledata)
           // setOpen(true)
           const dataCopy = [...data, values]
-          console.log(values)
           setTableData(dataCopy)
           resetForm({ values: initialValues })
         })
