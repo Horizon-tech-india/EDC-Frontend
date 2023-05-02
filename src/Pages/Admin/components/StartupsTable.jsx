@@ -1,40 +1,42 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
-import { Box, MenuItem, Snackbar, Typography } from '@mui/material'
+import { Alert, Box, MenuItem, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import { UpdatePayload } from '../../../Api/updatePayload' //or use your library of choice here
-import { Alert } from 'react-bootstrap'
+import EditIcon from '@mui/icons-material/Edit'
 
 const StartupsTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
-
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
   const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
   const columns = [
     {
       accessorKey: 'name',
       header: 'Company',
+      Cell: ({ cell }) => (
+        <Box component="span" className="capitalize">
+          <span className="font-light text-black"> {cell.getValue()}</span>
+        </Box>
+      ),
     },
 
     {
       accessorKey: 'status',
-      // filterVariant: 'range', //if not using filter modes feature, use this instead of filterFn
       filterFn: 'between',
       header: 'Status',
       size: 100,
-      //custom conditional format and styling
       Cell: ({ cell }) => (
         <Box
           component="span"
           className="capitalize"
           sx={(theme) => ({
             backgroundColor:
-              (cell.getValue() === 'verified' && '#b4cd93') ||
-              (cell.getValue() === 'rejected' && '#bd2219') ||
-              (cell.getValue() === 'pending' && '#1f6feb'),
+              (cell.getValue() === 'verified' && '#BBF7D0') ||
+              (cell.getValue() === 'rejected' && '#FCA5A5') ||
+              (cell.getValue() === 'pending' && '#fdf8ce'),
 
             borderRadius: '0.25rem',
             color: '#fff',
@@ -42,27 +44,40 @@ const StartupsTable = ({ data, refetch }) => {
             p: '0.35rem',
           })}
         >
-          {cell.getValue()}
+          <span className="font-light text-black"> {cell.getValue()}</span>
         </Box>
       ),
     },
     {
       accessorKey: 'changeAmount',
       header: 'Account Status',
+      Cell: ({ cell }) => (
+        <Box component="span" className="capitalize">
+          <span className="font-light text-black"> {cell.getValue()}</span>
+        </Box>
+      ),
     },
     {
       accessorKey: 'branch',
       header: 'Branch',
+      Cell: ({ cell }) => (
+        <Box component="span" className="capitalize">
+          <span className="font-light text-black"> {cell.getValue()}</span>
+        </Box>
+      ),
       size: 100,
     },
     {
       accessorKey: 'valuation',
       header: 'Company Valuation',
+      Cell: ({ cell }) => (
+        <Box component="span" className="capitalize">
+          <span className="font-light text-black"> {cell.getValue()}</span>
+        </Box>
+      ),
       size: 100,
     },
   ]
-  // const [isLoading, setIsLoading] = useState(false)
-
   const csvOptions = {
     fieldSeparator: ',',
     quoteStrings: '"',
@@ -115,13 +130,7 @@ const StartupsTable = ({ data, refetch }) => {
   return (
     <>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert
-          variant="filled"
-          className="bg-[#b4cd93] p-5 rounded-md"
-          onClose={handleClose}
-          severity="success"
-          sx={{ width: '100%' }}
-        >
+        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           {openMsg && openMsg}
         </Alert>
       </Snackbar>
@@ -222,27 +231,3 @@ const StartupsTable = ({ data, refetch }) => {
 }
 
 export default StartupsTable
-
-// const newRow = {
-//   aadhar: row.original.aadhar,
-//   branch: row.original.branch,
-//   category: row.original.category,
-//   categoryOther: row.original.categoryOther,
-//   contact: row.original.contact,
-//   currentStage: row.original.currentStage,
-//   designation: row.original.designation,
-//   email: row.original.email,
-//   enrollmentNum: row.original.enrollmentNum,
-//   institute: row.original.institute,
-//   location: row.original.location,
-//   name: row.original.name,
-//   otherInstitute: row.original.otherInstitute,
-//   otherOrganisation: row.original.otherOrganisation,
-//   otherUniversity: row.original.otherUniversity,
-//   startupId: row.original.startupId,
-//   status: row.original.status,
-//   teamMembers: row.original.teamMembers,
-//   teamSize: row.original.teamSize,
-//   title: row.original.title,
-//   uniqueFeatures: row.original.uniqueFeatures,
-// }
