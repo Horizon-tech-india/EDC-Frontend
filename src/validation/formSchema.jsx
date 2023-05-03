@@ -53,19 +53,10 @@ export const adminAddSchema = Yup.object({
   email: Yup.string().email().required('Please enter an Email'),
   password: Yup.string()
     .min(8, 'Password must be atleast 8 characters')
-    .matches(
-      /^(?=.*[a-z])/,
-      'Password must contain at least 1 lower case letter',
-    )
-    .matches(
-      /^(?=.*[A-Z])/,
-      'Password must contain at least 1 upper case letter',
-    )
+    .matches(/^(?=.*[a-z])/, 'Password must contain at least 1 lower case letter')
+    .matches(/^(?=.*[A-Z])/, 'Password must contain at least 1 upper case letter')
     .matches(/^(?=.*[0-9])/, 'Password must contain at least 1 number')
-    .matches(
-      /^(?=.*[!@#\$%\^&\*])/,
-      'Password must contain at least 1 special case character',
-    )
+    .matches(/^(?=.*[!@#\$%\^&\*])/, 'Password must contain at least 1 special case character')
     .required('Please enter a password'),
   phoneNumber: Yup.string()
     .matches(/^[0-9]\d{9}$/, {
@@ -73,7 +64,6 @@ export const adminAddSchema = Yup.object({
       excludeEmptyString: false,
     })
     .required('Please enter a Phone number'),
-  branch: Yup.string(),
 })
 
 export const meetingAddSchema = Yup.object({

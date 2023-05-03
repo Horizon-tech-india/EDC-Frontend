@@ -8,9 +8,14 @@ import AdminAddSection from './AdminAddSection'
 import MeetingAddSection from './MeetingAddSection'
 import EventAddSection from './EventAddSection'
 import SidebarRight from './SidebarRight'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 const AdminApplicationSection = ({ page }) => {
   const [query, setQuery] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   return (
     <div className="bg-white flex flex-col justify-start h-screen">
@@ -19,6 +24,11 @@ const AdminApplicationSection = ({ page }) => {
           <div className="col-span-8">
             <SearchBar query={query} setQuery={setQuery} />
             <Last30Days />
+            <Box sx={{ textAlign: 'center', mt: 5 }}>
+              <Button variant="contained" onClick={handleOpen} className="add-admin-btn">
+                ADD ADMIN
+              </Button>
+            </Box>
           </div>
           <div className="col-span-4">
             <SidebarRight />
@@ -33,7 +43,7 @@ const AdminApplicationSection = ({ page }) => {
         ) : page === 'events' ? (
           <EventAddSection />
         ) : (
-          <AdminAddSection />
+          <AdminAddSection open={open} handleOpen={handleOpen} handleClose={handleClose} />
         )}
       </section>
     </div>
