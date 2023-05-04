@@ -1,85 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import MeetingAddForm from './MeetingAddForm'
-import DataTable from './DataTable'
+import React, { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
+import { GetAllMeeting } from '../../../Api/adminMeeting'
+import MeetingManageTable from './MeetingManageTable'
 import Spinner from '../../../components/Layout/Spinner'
-import Modal from '@mui/material/Modal'
-import Box from '@mui/material/Box'
 
-const MeetingAddSection = ({ open, handleClose }) => {
-  const initialData = [
-    {
-      title: 'meet',
-      time: '13:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example1.com',
-    },
-    {
-      title: 'Tuesday meet',
-      time: '11:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example2.com',
-    },
-    {
-      title: 'Important meet',
-      time: '11:00',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example3.com',
-    },
-    {
-      title: 'Daily meet',
-      time: '11:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example4.com',
-    },
-    {
-      title: 'Daily meet',
-      time: '11:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example5.com',
-    },
-    {
-      title: 'Daily meet',
-      time: '11:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example6.com',
-    },
-    {
-      title: 'Daily meet',
-      time: '11:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example7.com',
-    },
-    {
-      title: 'Daily meet',
-      time: '11:15',
-      members: 'Raj, rohit, atul',
-      link: 'https://www.example8.com',
-    },
-  ]
-  const [data, setData] = useState(initialData)
-  const columns = [
-    {
-      accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-      header: 'Name',
-      Cell: ({ renderedCellValue }) => <span>{renderedCellValue}</span>,
-      size: 150,
-    },
-    {
-      accessorKey: 'email',
-      header: 'Email',
-      size: 200,
-    },
-    {
-      accessorKey: 'phoneNumber',
-      header: 'Phone no.',
-      size: 100,
-    },
-    {
-      accessorKey: 'branch',
-      header: 'Branch',
-      size: 100,
-    },
-  ]
+const MeetingAddSection = () => {
+  const { state } = useContext(AuthContext)
+  const [tableData, setTableData] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const style = {
     position: 'absolute',
@@ -93,28 +21,36 @@ const MeetingAddSection = ({ open, handleClose }) => {
     p: 4,
   }
 
-  const handleDelete = () => {}
+  const getAllMeeting = async () => {
+    const token = state.token
+    try {
+      setLoading(true)
+      const res = await GetAllMeeting({ token })
+      if (res.status === 200) {
+        setTableData(res.data.meetings)
+        //handleClose()
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getAllMeeting()
+  }, [])
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <MeetingAddForm data={data} setData={setData} />
-        </Box>
-      </Modal>
-
       <div className="all-applications-wrapper">
-        <div className="all-applications-header">
-          <h2>All Meetings</h2>
-        </div>
-
         <div className="all-applications-body">
-          {data ? <DataTable data={data} columns={columns} handleDelete={handleDelete} /> : <Spinner />}
+          {loading ? (
+            <Spinner />
+          ) : tableData ? (
+            <MeetingManageTable data={tableData} refetch={getAllMeeting} />
+          ) : (
+            <div>No data found</div>
+          )}
         </div>
       </div>
     </div>

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { GetAllAdmin, CreateNewAdmin, DeleteAdmin } from '../../../Api/manageCoordinators'
 import AdminAddForm from './AdminAddForm'
-import DataTable from './DataTable'
+import AdminManageTable from './AdminManageTable'
 import Spinner from '../../../components/Layout/Spinner'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 
-const AdminAddSection = ({ open, handleClose }) => {
+const AdminAddSection = () => {
   const { state } = useContext(AuthContext)
   const [tableData, setTableData] = useState(null)
 
@@ -66,7 +66,7 @@ const AdminAddSection = ({ open, handleClose }) => {
       const res = await CreateNewAdmin({ body, token })
       if (res.status === 200) {
         setTableData([...tableData, body])
-        handleClose()
+        //handleClose()
       }
     } catch (error) {
       console.error(error.message)
@@ -79,7 +79,7 @@ const AdminAddSection = ({ open, handleClose }) => {
       const res = await GetAllAdmin({ token })
       if (res.status === 200) {
         setTableData(res.data.data)
-        handleClose()
+        //handleClose()
       }
     } catch (error) {
       console.error(error.message)
@@ -92,23 +92,9 @@ const AdminAddSection = ({ open, handleClose }) => {
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <AdminAddForm data={tableData} setTableData={setTableData} submitAdminData={submitAdminData} />
-        </Box>
-      </Modal>
       <div className="all-applications-wrapper">
-        <div className="all-applications-header">
-          <h2>All Admin</h2>
-        </div>
-
         <div className="all-applications-body">
-          {tableData ? <DataTable data={tableData} columns={columns} handleDelete={handleDelete} /> : <Spinner />}
+          {tableData ? <AdminManageTable data={tableData} refetch={getAllAdmin} /> : <Spinner />}
         </div>
       </div>
     </div>
