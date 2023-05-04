@@ -57,12 +57,6 @@ const Drawer = () => {
               <span className="ml-4">Dashboard</span>
             </li>
           </NavLink>
-          <NavLink className={Styles.btn} to="/admin/dashboard">
-            <li className={Styles.li}>
-              <img src={profile} alt="" />
-              <span className="ml-4">Filters</span>
-            </li>
-          </NavLink>
           <NavLink className={Styles.btn} to="/admin/meetings">
             <li className={pathname === '/admin/meetings' ? Styles.liActive : Styles.li}>
               <img src={gallery} alt="" />
