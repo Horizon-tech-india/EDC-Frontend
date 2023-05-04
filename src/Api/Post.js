@@ -13,3 +13,19 @@ export function API(method, endpoint, payload, token) {
     },
   })
 }
+
+export function GetAllStartup(token){
+  return new Promise((resolve, reject) => {
+    fetch('http://localhost:9000/admin/all-startup-details' , { 
+      method: 'get', 
+      headers: new Headers({
+          'Authorization': 'Bearer '+ token, 
+      })
+    }).then(res =>{
+      resolve(res.json()) 
+    }
+    ).catch(err => {
+      reject(err)
+    })
+  });
+}
