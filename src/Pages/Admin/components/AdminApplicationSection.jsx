@@ -39,7 +39,7 @@ const AdminApplicationSection = ({ page }) => {
         {page === 'dashboard' ? (
           <StartupsDetailsSection />
         ) : page === 'meetings' ? (
-          <MeetingAddSection />
+          <MeetingAddSection open={open} handleOpen={handleOpen} handleClose={handleClose} />
         ) : page === 'events' ? (
           <EventAddSection />
         ) : (

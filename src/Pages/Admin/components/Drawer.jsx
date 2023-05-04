@@ -36,7 +36,7 @@ const Drawer = () => {
     liActive: 'flex flex-row bg-[#b4cd93] my-1 py-2  rounded-md justify-start px-2 items-start',
     btn: 'flex flex-row',
   }
-  console.log(pathname)
+  //console.log(pathname)
   const handleLogout = async () => {
     await logout()
   }

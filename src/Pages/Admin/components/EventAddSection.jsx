@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import searchIcon from '../../../assets/search-normal.svg'
 import FilterStartupsButton from './FilterStartupsButton'
-import MeetingDetailsTable from './MeetingDetailsTable'
 import MeetingAddForm from './MeetingAddForm'
 
 const EventAddSection = () => {
@@ -88,9 +87,7 @@ const EventAddSection = () => {
           </div>
         </div>
 
-        <div className="all-applications-body">
-          <MeetingDetailsTable data={data} />
-        </div>
+        <div className="all-applications-body"></div>
       </div>
     </div>
   )

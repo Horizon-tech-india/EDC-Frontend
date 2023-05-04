@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
+import { GetAllAdmin, CreateNewAdmin, DeleteAdmin } from '../../../Api/manageCoordinators'
 import AdminAddForm from './AdminAddForm'
 import DataTable from './DataTable'
-import { API } from '../../../Api/Post'
 import Spinner from '../../../components/Layout/Spinner'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
@@ -23,39 +23,71 @@ const AdminAddSection = ({ open, handleClose }) => {
     p: 4,
   }
 
-  const handleDelete = (email) => {
-    API('get', `admin/delete-admin?email=${email}`, {}, state.token)
-      .then((res) => {
-        setTableData(res.data.data)
+  const columns = [
+    {
+      accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+      header: 'Name',
+      Cell: ({ renderedCellValue }) => <span>{renderedCellValue}</span>,
+      size: 150,
+    },
+    {
+      accessorKey: 'email',
+      header: 'Email',
+      size: 200,
+    },
+    {
+      accessorKey: 'phoneNumber',
+      header: 'Phone no.',
+      size: 100,
+    },
+    {
+      accessorKey: 'branch',
+      header: 'Branch',
+      size: 100,
+    },
+  ]
+
+  const handleDelete = async (email) => {
+    const token = state.token
+    try {
+      const res = await DeleteAdmin({ email, token })
+      if (res.status === 200) {
         const filteredData = tableData.filter((admin) => admin.email !== email)
         setTableData(filteredData)
-      })
-      .catch((error) => {
-        console.error(error.message)
-      })
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
   }
 
-  const submitAdminData = (body) => {
-    console.log(body, tableData)
-    API('post', 'admin/create-admin', body, state.token)
-      .then((res) => {
+  const submitAdminData = async (body) => {
+    const token = state.token
+    try {
+      const res = await CreateNewAdmin({ body, token })
+      if (res.status === 200) {
         setTableData([...tableData, body])
         handleClose()
-      })
-      .catch((error) => {
-        console.error(error.message)
-      })
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  const getAllAdmin = async () => {
+    const token = state.token
+    try {
+      const res = await GetAllAdmin({ token })
+      if (res.status === 200) {
+        setTableData(res.data.data)
+        handleClose()
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
   }
 
   useEffect(() => {
-    API('get', 'admin/get-all-admin', {}, state.token)
-      .then((res) => {
-        setTableData(res.data.data)
-      })
-      .catch((error) => {
-        console.error(error.message)
-        console.error(error)
-      })
+    getAllAdmin()
   }, [])
 
   return (
@@ -76,7 +108,7 @@ const AdminAddSection = ({ open, handleClose }) => {
         </div>
 
         <div className="all-applications-body">
-          {tableData ? <DataTable data={tableData} handleDelete={handleDelete} /> : <Spinner />}
+          {tableData ? <DataTable data={tableData} columns={columns} handleDelete={handleDelete} /> : <Spinner />}
         </div>
       </div>
     </div>

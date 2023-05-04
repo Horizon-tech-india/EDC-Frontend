@@ -3,7 +3,6 @@ import { AuthContext } from '../../../context/AuthContext'
 import { adminAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
-import { API } from '../../../Api/Post'
 import Chip from '@mui/material/Chip'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -19,13 +18,11 @@ const initialValues = {
 const AdminAddForm = ({ data, setTableData, submitAdminData }) => {
   const options = ['Valsad Startup Studio', 'Rajkot Startup Studio', 'Ahemdabad Startup Studio', 'Surat Startup Studio']
   const [branch, setBranch] = useState([options[0]])
-  const { state } = useContext(AuthContext)
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: adminAddSchema,
     onSubmit: (values) => {
-      console.log(branch)
       const body = { ...values, branch }
       //POST REQUEST
       submitAdminData(body, resetForm)

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import searchIcon from '../../../assets/search-normal.svg'
-import FilterStartupsButton from './FilterStartupsButton'
-import MeetingDetailsTable from './MeetingDetailsTable'
 import MeetingAddForm from './MeetingAddForm'
+import DataTable from './DataTable'
+import Spinner from '../../../components/Layout/Spinner'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
 
-const MeetingAddSection = () => {
+const MeetingAddSection = ({ open, handleClose }) => {
   const initialData = [
     {
       title: 'meet',
@@ -56,42 +57,64 @@ const MeetingAddSection = () => {
     },
   ]
   const [data, setData] = useState(initialData)
-  const [query2, setQuery2] = useState('')
+  const columns = [
+    {
+      accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+      header: 'Name',
+      Cell: ({ renderedCellValue }) => <span>{renderedCellValue}</span>,
+      size: 150,
+    },
+    {
+      accessorKey: 'email',
+      header: 'Email',
+      size: 200,
+    },
+    {
+      accessorKey: 'phoneNumber',
+      header: 'Phone no.',
+      size: 100,
+    },
+    {
+      accessorKey: 'branch',
+      header: 'Branch',
+      size: 100,
+    },
+  ]
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 800,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  }
+
+  const handleDelete = () => {}
 
   return (
     <div>
-      <MeetingAddForm data={data} setData={setData} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <MeetingAddForm data={data} setData={setData} />
+        </Box>
+      </Modal>
+
       <div className="all-applications-wrapper">
         <div className="all-applications-header">
-          <div className="all-applications-header-left">
-            <h2>All Meetings</h2>
-          </div>
-          <div className="all-applications-header-right">
-            <div className="all-applications-header-search">
-              <div className="search-bar">
-                <div className="search-wrapper">
-                  <img src={searchIcon} className="search-icon" />
-                  <input
-                    className="search-input"
-                    type="text"
-                    placeholder="Search meetings"
-                    // onChange={props.onChange}
-                    onChange={(e) => setQuery2(e.target.value)}
-                    value={query2}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="all-applications-header-filter">
-              <FilterStartupsButton />
-            </div>
-          </div>
+          <h2>All Meetings</h2>
         </div>
 
         <div className="all-applications-body">
-          <MeetingDetailsTable
-            data={data}
-          />
+          {data ? <DataTable data={data} columns={columns} handleDelete={handleDelete} /> : <Spinner />}
         </div>
       </div>
     </div>

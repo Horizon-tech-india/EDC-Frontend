@@ -68,6 +68,7 @@ export const adminAddSchema = Yup.object({
 
 export const meetingAddSchema = Yup.object({
   title: Yup.string().required('Please enter a title'),
+  date: Yup.string().required('Please choose a date'),
   time: Yup.string().required('Please choose a time'),
   members: Yup.string().required('Please enter member names'),
   link: Yup.string().required('Please enter a link'),

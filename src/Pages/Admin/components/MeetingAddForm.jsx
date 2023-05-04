@@ -2,25 +2,20 @@ import React from 'react'
 import { meetingAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
-import axios from 'axios'
+import Chip from '@mui/material/Chip'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
 
 const initialValues = {
   title: '',
+  date: '',
   time: '',
   members: '',
   link: '',
 }
 
 const MeetingAddForm = ({ data, setData }) => {
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    resetForm,
-  } = useFormik({
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: meetingAddSchema,
@@ -31,12 +26,6 @@ const MeetingAddForm = ({ data, setData }) => {
       setData(dataCopy)
       resetForm({ values: initialValues })
       //POST REQUEST
-      axios
-        .post('http://localhost:9000/', body)
-        .then((response) => {})
-        .catch((error) => {
-          console.error(error)
-        })
     },
   })
 
@@ -57,23 +46,17 @@ const MeetingAddForm = ({ data, setData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.title && touched.title ? (
-              <p className="input-block__error">{errors.title}</p>
-            ) : null}
+            {errors.title && touched.title ? <p className="input-block__error">{errors.title}</p> : null}
+          </div>
+          <div className="input__container">
+            <label htmlFor="time">Date</label>
+            <input type="date" name="date" id="date" value={values.date} onChange={handleChange} onBlur={handleBlur} />
+            {errors.date && touched.date ? <p className="input-block__error">{errors.date}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="time">Time</label>
-            <input
-              type="time"
-              name="time"
-              id="time"
-              value={values.time}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.time && touched.time ? (
-              <p className="input-block__error">{errors.time}</p>
-            ) : null}
+            <input type="time" name="time" id="time" value={values.time} onChange={handleChange} onBlur={handleBlur} />
+            {errors.time && touched.time ? <p className="input-block__error">{errors.time}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="members">Members</label>
@@ -86,9 +69,7 @@ const MeetingAddForm = ({ data, setData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.members && touched.members ? (
-              <p className="input-block__error">{errors.members}</p>
-            ) : null}
+            {errors.members && touched.members ? <p className="input-block__error">{errors.members}</p> : null}
           </div>
           <div className="input__container">
             <label htmlFor="link">Meeting Link</label>
@@ -101,9 +82,7 @@ const MeetingAddForm = ({ data, setData }) => {
               onBlur={handleBlur}
               placeholder="https://www.example.com"
             />
-            {errors.link && touched.link ? (
-              <p className="input-block__error">{errors.link}</p>
-            ) : null}
+            {errors.link && touched.link ? <p className="input-block__error">{errors.link}</p> : null}
           </div>
         </div>
         <button className="admin-add__submit" type="submit">
