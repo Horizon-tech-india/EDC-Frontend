@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { meetingAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
@@ -6,6 +6,23 @@ import Chip from '@mui/material/Chip'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 
+const options = [
+  {
+    firstName: 'first1',
+    lastName: 'last',
+    email: 'fewfewf1@gmail.com',
+  },
+  {
+    firstName: 'first2',
+    lastName: 'last',
+    email: 'fewfewf2@gmail.com',
+  },
+  {
+    firstName: 'first3',
+    lastName: 'last',
+    email: 'fewfewf3@gmail.com',
+  },
+]
 const initialValues = {
   title: '',
   date: '',
@@ -15,6 +32,17 @@ const initialValues = {
 }
 
 const MeetingAddForm = ({ data, setData }) => {
+  const [membersData, setMembersData] = useState(null)
+
+  const handleMembersData = (value) => {
+    console.log(value)
+    const newData = value.map((member) => {
+      const membersObj = options.find((option) => `${option.firstName} ${option.lastName}` === member)
+      return membersObj.email
+    })
+    setMembersData(newData)
+    console.log(newData)
+  }
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
@@ -24,7 +52,6 @@ const MeetingAddForm = ({ data, setData }) => {
       const body = values
       const dataCopy = [...data, values]
       setData(dataCopy)
-      resetForm({ values: initialValues })
       //POST REQUEST
     },
   })
@@ -70,6 +97,23 @@ const MeetingAddForm = ({ data, setData }) => {
               onBlur={handleBlur}
             />
             {errors.members && touched.members ? <p className="input-block__error">{errors.members}</p> : null}
+          </div>
+          <div className="input__container">
+            <label htmlFor="tags-filled">Branches</label>
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={options.map((option, index) => `${option.firstName} ${option.lastName}`)}
+              defaultValue={[]}
+              freeSolo
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
+              }
+              renderInput={(params) => {
+                return <TextField name="branch" {...params} variant="filled" label="" placeholder="Branches" />
+              }}
+              onChange={(event, value) => handleMembersData(value)}
+            />
           </div>
           <div className="input__container">
             <label htmlFor="link">Meeting Link</label>
