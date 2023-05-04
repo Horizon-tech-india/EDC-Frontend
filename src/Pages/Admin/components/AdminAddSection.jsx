@@ -23,30 +23,6 @@ const AdminAddSection = () => {
     p: 4,
   }
 
-  const columns = [
-    {
-      accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-      header: 'Name',
-      Cell: ({ renderedCellValue }) => <span>{renderedCellValue}</span>,
-      size: 150,
-    },
-    {
-      accessorKey: 'email',
-      header: 'Email',
-      size: 200,
-    },
-    {
-      accessorKey: 'phoneNumber',
-      header: 'Phone no.',
-      size: 100,
-    },
-    {
-      accessorKey: 'branch',
-      header: 'Branch',
-      size: 100,
-    },
-  ]
-
   const handleDelete = async (email) => {
     const token = state.token
     try {
