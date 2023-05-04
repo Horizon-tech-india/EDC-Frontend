@@ -1,9 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { adminAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
 import { API } from '../../../Api/Post'
+import Chip from '@mui/material/Chip'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
 
 const initialValues = {
   firstName: '',
@@ -11,42 +14,52 @@ const initialValues = {
   email: '',
   password: '',
   phoneNumber: '',
-  branch: '',
 }
 
-const AdminAddForm = ({ data, setTableData }) => {
-  const { state } = useContext(AuthContext)
+const AdminAddForm = ({ submitAdminData }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const options = ['Valsad Startup Studio', 'Rajkot Startup Studio', 'Ahemdabad Startup Studio', 'Surat Startup Studio']
+  const [branch, setBranch] = useState([options[0]])
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: adminAddSchema,
-    onSubmit: (values) => {
-      const body = { ...values, branch: [values.branch] }
-
+    onSubmit: async (values) => {
+      setIsLoading(true)
+      const body = { ...values, branch }
       //POST REQUEST
-      API('post', 'admin/create-admin', body, state.token)
-        .then((res) => {
-          // setOpen(true)
-          const dataCopy = [...data, values]
-          setTableData(dataCopy)
-          resetForm({ values: initialValues })
-        })
-        .catch((error) => {
-          console.error(error.message)
-          console.error(error)
-          //console.log(error.response)
-          // alert(error.response.data.message)
-        })
+      try {
+        const res = await submitAdminData(body, resetForm)
+        resetForm()
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 1000)
+        console.log(res.data) // success message from server
+      } catch (error) {
+        console.error(error)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 1000)
+      }
     },
   })
+
+  console.log(values, branch)
 
   return (
     <div className="admin-add">
       <form onSubmit={handleSubmit} className="admin-add__form">
-        <div className="admin-add__form-wrapper--admin-add">
-          <div className="input__container">
+        <h1
+          className="w-full text-2xl text-center font-light
+        "
+        >
+          Add New Admin
+        </h1>
+        <div className="grid cols-span-12 w-full max-w-3xl">
+          <div className="input__container col-span-6">
             <label htmlFor="firstName">First Name</label>
             <input
+              className="border border-gray-400"
               type="text"
               name="firstName"
               id="firstName"
@@ -57,9 +70,10 @@ const AdminAddForm = ({ data, setTableData }) => {
             />
             {errors.firstName && touched.firstName ? <p className="input-block__error">{errors.firstName}</p> : null}
           </div>
-          <div className="input__container">
+          <div className="input__container col-span-6">
             <label htmlFor="lastName">Last Name</label>
             <input
+              className="border border-gray-400"
               type="text"
               name="lastName"
               id="lastName"
@@ -70,9 +84,10 @@ const AdminAddForm = ({ data, setTableData }) => {
             />
             {errors.lastName && touched.lastName ? <p className="input-block__error">{errors.lastName}</p> : null}
           </div>
-          <div className="input__container">
+          <div className="input__container col-span-6">
             <label htmlFor="email">Email</label>
             <input
+              className="border border-gray-400"
               type="text"
               name="email"
               id="email"
@@ -83,15 +98,15 @@ const AdminAddForm = ({ data, setTableData }) => {
             />
             {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
           </div>
-          <div className="input__container">
+          <div className="input__container col-span-6">
             <label htmlFor="phoneNumber">Phone Number</label>
             <input
+              className="border border-gray-400"
               type="tel"
               id="phoneNumber"
               name="phoneNumber"
               value={values.phoneNumber}
               onChange={handleChange}
-              onBlur={handleBlur}
               onBlur={handleBlur}
               placeholder="(+123) 9876543210"
             />
@@ -99,9 +114,10 @@ const AdminAddForm = ({ data, setTableData }) => {
               <p className="input-block__error">{errors.phoneNumber}</p>
             ) : null}
           </div>
-          <div className="input__container">
+          <div className="input__container col-span-6">
             <label htmlFor="password">Password</label>
             <input
+              className="border border-gray-400"
               type="text"
               name="password"
               id="password"
@@ -112,29 +128,44 @@ const AdminAddForm = ({ data, setTableData }) => {
             />
             {errors.password && touched.password ? <p className="input-block__error">{errors.password}</p> : null}
           </div>
-          <div className="input__container">
-            <label htmlFor="branch">Branch</label>
-            <select
-              name="branch"
-              id="branch"
-              className="input-block_input--dropdown"
-              value={values.branch}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            >
-              <option value="" disabled defaultValue hidden>
-                VSS, RSS, AHSS, or Surat Branch
-              </option>
-              <option value="Valsad Startup Studio">VSS</option>
-              <option value="Rajkot Startup Studio">RSS</option>
-              <option value="Ahemdabad Startup Studio">AHSS</option>
-              <option value="Surat Startup Studio">Surat Branch</option>
-            </select>
+          <div className="col-span-12 px-4 mb-5">
+            <label htmlFor="tags-filled">Branches</label>
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={options}
+              defaultValue={[options[0]]}
+              freeSolo
+              className="bg-white "
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
+              }
+              renderInput={(params) => (
+                <TextField
+                  className="bg-[#f3ebeb] max-w-md"
+                  name="branch"
+                  {...params}
+                  variant="outlined"
+                  label=""
+                  placeholder="Branches"
+                  sx={{
+                    outline: 'none',
+                  }}
+                />
+              )}
+              onChange={(event, value) => setBranch(value)}
+            />
           </div>
         </div>
-        <button className="admin-add__submit" type="submit">
-          Add
-        </button>
+        {isLoading ? (
+          <button className="admin-add__submit" type="button" disabled>
+            Submitting...
+          </button>
+        ) : (
+          <button className="admin-add__submit" type="submit">
+            Add Admin
+          </button>
+        )}
       </form>
     </div>
   )
