@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useQuery } from 'react-query'
 
 export function API(method, endpoint, payload, token) {
   const url = 'http://localhost:9000'
@@ -14,18 +15,8 @@ export function API(method, endpoint, payload, token) {
   })
 }
 
-export function GetAllStartup(token){
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:9000/admin/all-startup-details' , { 
-      method: 'get', 
-      headers: new Headers({
-          'Authorization': 'Bearer '+ token, 
-      })
-    }).then(res =>{
-      resolve(res.json()) 
-    }
-    ).catch(err => {
-      reject(err)
-    })
-  });
+export function GetAllStartup(token) {
+  return useQuery('allStartUp', () => API('get', '/admin/all-startup-details', {}, token),{
+    cacheTime: 10 * 60 * 1000, // cache for 10 minutes
+  })
 }
