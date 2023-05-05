@@ -4,13 +4,18 @@ import '../src/styles/index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { AuthProvider } from '../src/context/AuthContext'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
+const queryClient= new QueryClient()
 root.render(
   <React.StrictMode>
-    <AuthProvider>
+      <AuthProvider>
+      <QueryClientProvider client={queryClient}>
       <App />
+      </QueryClientProvider>
     </AuthProvider>
+    
   </React.StrictMode>,
 )
 
