@@ -15,9 +15,9 @@ export const StartupsDetailsSection = () => {
   const fetchData = () => {
     API('get', '/admin/all-startup-details', {}, state.token)
       .then((res) => {
-        console.log(res.data.data)
+        //console.log(res.data.data)
         setTabledata(res.data.data)
-        console.log('application data', tabledata)
+        //console.log('application data', tabledata)
       })
       .catch((error) => {
         console.error(error.message)

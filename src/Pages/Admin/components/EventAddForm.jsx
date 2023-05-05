@@ -31,7 +31,7 @@ const initialValues = {
   link: '',
 }
 
-const MeetingAddForm = ({ submitMeetingData }) => {
+const EventAddForm = ({ submitEventData }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [membersData, setMembersData] = useState(null)
 
@@ -43,13 +43,20 @@ const MeetingAddForm = ({ submitMeetingData }) => {
       const body = {
         title: values.title,
         link: values.link,
-        type: 'meeting',
+        type: 'event',
         dateAndTime: values.date + ' ' + values.time,
-        members: membersData,
+        filters: [
+          {
+            branch: 'PA',
+          },
+          {
+            title: 'test..',
+          },
+        ],
       }
       //POST REQUEST
       try {
-        const res = await submitMeetingData(body)
+        const res = await submitEventData(body)
         resetForm()
         setTimeout(() => {
           setIsLoading(false)
@@ -83,7 +90,7 @@ const MeetingAddForm = ({ submitMeetingData }) => {
           className="w-full text-2xl text-center font-light
         "
         >
-          Add New Meeting
+          Add New Event
         </h1>
         <div className="grid cols-span-12 w-full max-w-3xl">
           <div className="input__container col-span-6">
@@ -127,7 +134,7 @@ const MeetingAddForm = ({ submitMeetingData }) => {
             {errors.time && touched.time ? <p className="input-block__error">{errors.time}</p> : null}
           </div>
           <div className="input__container col-span-6">
-            <label htmlFor="link">Meeting Link</label>
+            <label htmlFor="link">Event Link</label>
             <input
               className="border border-gray-400"
               type="tel"
@@ -141,7 +148,7 @@ const MeetingAddForm = ({ submitMeetingData }) => {
           </div>
 
           <div className="col-span-12 px-4 mb-5">
-            <label htmlFor="tags-filled">Members</label>
+            <label htmlFor="tags-filled">Filters</label>
             <Autocomplete
               multiple
               id="tags-filled"
@@ -159,7 +166,7 @@ const MeetingAddForm = ({ submitMeetingData }) => {
                   {...params}
                   variant="outlined"
                   label=""
-                  placeholder="Members"
+                  placeholder="Choose Filters"
                   sx={{
                     outline: 'none',
                   }}
@@ -175,7 +182,7 @@ const MeetingAddForm = ({ submitMeetingData }) => {
           </button>
         ) : (
           <button className="admin-add__submit" type="submit">
-            Schedule Meeting
+            Schedule Event
           </button>
         )}
       </form>
@@ -183,4 +190,4 @@ const MeetingAddForm = ({ submitMeetingData }) => {
   )
 }
 
-export default MeetingAddForm
+export default EventAddForm

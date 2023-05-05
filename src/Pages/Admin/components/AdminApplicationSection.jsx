@@ -11,6 +11,10 @@ import SidebarRight from './SidebarRight'
 
 const AdminApplicationSection = ({ page }) => {
   const [query, setQuery] = useState('')
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   return (
     <div className="bg-white flex flex-col justify-start h-screen">
       <div className="h-[35vh] w-full">
@@ -28,7 +32,7 @@ const AdminApplicationSection = ({ page }) => {
         {page === 'dashboard' ? (
           <StartupsDetailsSection />
         ) : page === 'meetings' ? (
-          <MeetingAddSection />
+          <MeetingAddSection open={open} handleOpen={handleOpen} handleClose={handleClose} />
         ) : page === 'events' ? (
           <EventAddSection />
         ) : (

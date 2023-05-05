@@ -32,11 +32,11 @@ const Drawer = () => {
   const { logout } = useContext(AuthContext)
   const { pathname } = useLocation()
   const Styles = {
-    li: 'flex flex-row justify-start px-2 rounded-md my-1 py-2 hover:bg-gray-100  items-start',
-    liActive: 'flex flex-row bg-[#b4cd93] my-1 py-2  rounded-md justify-start px-2 items-start',
+    li: 'flex flex-row justify-start px-2 rounded-md my-1 py-2 hover:bg-gray-100  items-start w-full',
+    liActive: 'flex flex-row bg-[#b4cd93] my-1 py-2  rounded-md justify-start px-2 items-start w-full',
     btn: 'flex flex-row',
   }
-  console.log(pathname)
+  //console.log(pathname)
   const handleLogout = async () => {
     await logout()
   }
@@ -51,36 +51,36 @@ const Drawer = () => {
       </div>
       <div>
         <ul className="h-full p-2 grid grid-cols-1 w-full">
-          <li className={pathname === '/admin/dashboard' ? Styles.liActive : Styles.li}>
-            <NavLink className={Styles.btn} to="/admin/dashboard">
+          <NavLink className={Styles.btn} to="/admin/dashboard">
+            <li className={pathname === '/admin/dashboard' ? Styles.liActive : Styles.li}>
               <img src={category} alt="" />
               <span className="ml-4">Dashboard</span>
-            </NavLink>
-          </li>
-          <li className={pathname === '/admin/meetings' ? Styles.liActive : Styles.li}>
-            <NavLink className={Styles.btn} to="/admin/meetings">
+            </li>
+          </NavLink>
+          <NavLink className={Styles.btn} to="/admin/meetings">
+            <li className={pathname === '/admin/meetings' ? Styles.liActive : Styles.li}>
               <img src={gallery} alt="" />
               <span className="ml-4">Meeting</span>
-            </NavLink>
-          </li>
-          <li className={pathname === '/admin/events' ? Styles.liActive : Styles.li}>
-            <NavLink className={Styles.btn} to="/admin/events">
+            </li>
+          </NavLink>
+          <NavLink className={Styles.btn} to="/admin/events">
+            <li className={pathname === '/admin/events' ? Styles.liActive : Styles.li}>
               <img src={receipt} alt="" />
               <span className="ml-4">Schedule Events</span>
-            </NavLink>
-          </li>
-          <li className={pathname === '/admin/manage-coordinators' ? Styles.liActive : Styles.li}>
-            <NavLink className={Styles.btn} to="/admin/manage-coordinators">
+            </li>
+          </NavLink>
+          <NavLink className={Styles.btn} to="/admin/manage-coordinators">
+            <li className={pathname === '/admin/manage-coordinators' ? Styles.liActive : Styles.li}>
               <img src={profile} alt="" />
               <span className="ml-4">Manage Coordinators</span>
-            </NavLink>
-          </li>
-          <li className={Styles.li}>
-            <NavLink className={Styles.btn} to="/admin/dashboard">
+            </li>
+          </NavLink>
+          <NavLink className={Styles.btn} to="/admin/dashboard">
+            <li className={Styles.li}>
               <img src={setting} alt="" />
               <span className="ml-4">Settings</span>
-            </NavLink>
-          </li>
+            </li>
+          </NavLink>
           <li className={Styles.li}>
             <button className={Styles.btn} onClick={handleLogout}>
               <img src={logoutIcon} alt="" />
