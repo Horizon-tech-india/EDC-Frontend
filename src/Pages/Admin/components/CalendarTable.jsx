@@ -6,14 +6,64 @@ import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import { DeleteAdmin } from '../../../Api/deleteAdmin' //or use your library of choice here
 import EventAddModal from './EventAddModal'
 
-const EventManageTable = ({ data, refetch }) => {
+const CalendarTable = ({ refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  console.log(data)
+
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
   const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
+
+  const data = [
+    {
+      title: 'Event 1',
+      link: 'https://www.example.com',
+      members: [
+        'aspp775@gmail.com',
+        'guptashrestha7@gmail.com',
+        'xeyeham833@larland.com',
+        'the.shubham045@gmail.com',
+        'haxon98536@jobbrett.com',
+      ],
+      dateAndTime: '2023-05-21T13:06:00.000Z',
+      type: 'event',
+      filters: [
+        {
+          branch: 'PA',
+        },
+        {
+          title: 'test..',
+        },
+      ],
+      createdAt: '2023-05-04T13:03:03.137Z',
+      updatedAt: '2023-05-04T13:03:03.137Z',
+    },
+    {
+      title: 'Event 2',
+      link: 'https://www.example.com',
+      members: [
+        'aspp775@gmail.com',
+        'guptashrestha7@gmail.com',
+        'xeyeham833@larland.com',
+        'the.shubham045@gmail.com',
+        'haxon98536@jobbrett.com',
+      ],
+      dateAndTime: '2023-05-12T13:09:00.000Z',
+      type: 'event',
+      filters: [
+        {
+          branch: 'PA',
+        },
+        {
+          title: 'test..',
+        },
+      ],
+      createdAt: '2023-05-04T13:08:04.105Z',
+      updatedAt: '2023-05-04T13:08:04.105Z',
+    },
+  ]
+
   const columns = [
     {
       accessorKey: 'title',
@@ -23,25 +73,7 @@ const EventManageTable = ({ data, refetch }) => {
           <span className="font-light text-black"> {cell.getValue()}</span>
         </Box>
       ),
-      size: 150,
-    },
-    {
-      accessorFn: (row) => {
-        const date = new Date(row.dateAndTime)
-        return date.toLocaleDateString('en-US', {
-          weekday: 'short',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })
-      },
-      header: 'Date',
-      Cell: ({ cell }) => (
-        <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
-        </Box>
-      ),
-      size: 150,
+      size: 100,
     },
     {
       accessorFn: (row) => {
@@ -62,16 +94,6 @@ const EventManageTable = ({ data, refetch }) => {
     {
       accessorKey: 'link',
       header: 'Meeting Link',
-      Cell: ({ cell }) => (
-        <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
-        </Box>
-      ),
-      size: 100,
-    },
-    {
-      accessorKey: 'members',
-      header: 'Members',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
           <span className="font-light text-black"> {cell.getValue()}</span>
@@ -125,11 +147,9 @@ const EventManageTable = ({ data, refetch }) => {
         columns={columns}
         enableStickyHeader
         enableStickyFooter
-        enableRowSelection
-        enableMultiRowSelection={true}
         positionToolbarAlertBanner="bottom"
         initialState={{ density: 'compact' }}
-        muiTableContainerProps={{ sx: { height: '45vh' } }}
+        muiTableContainerProps={{ sx: { height: '35vh' } }}
         muiTableHeadCellProps={{
           sx: {
             fontSize: {
@@ -141,39 +161,6 @@ const EventManageTable = ({ data, refetch }) => {
             },
           },
         }}
-        renderTopToolbarCustomActions={({ table }) => (
-          <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
-            <button className={btnStyl} onClick={handleExportData}>
-              Export All Data
-            </button>
-            <button
-              className={btnStyl}
-              disabled={table.getPrePaginationRowModel().rows.length === 0}
-              //export all rows, including from the next page, (still respects filtering and sorting)
-              onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
-            >
-              Export All Rows
-            </button>
-            <button
-              className={btnStyl}
-              disabled={table.getRowModel().rows.length === 0}
-              //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-              onClick={() => handleExportRows(table.getRowModel().rows)}
-            >
-              Export Page Rows
-            </button>
-            <button
-              className={btnStyl}
-              disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
-              onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-            >
-              Export Selected Rows
-            </button>
-            <button className={btnStyl} onClick={() => toggleOpen()}>
-              Add New Event
-            </button>
-          </Box>
-        )}
         muiTablePaperProps={{
           elevation: 0, //change the mui box shadow
           //customize paper styles
@@ -182,19 +169,9 @@ const EventManageTable = ({ data, refetch }) => {
             border: '0px',
           },
         }}
-        renderDetailPanel={({ row }) => (
-          <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
-            {Object.entries(row.original).map(([key, value]) => (
-              <Typography key={key} className="text-sm">
-                <span className={liStyl}>{key}:</span>
-                <span className="text-sm  ">{value || 'N/A'}</span>
-              </Typography>
-            ))}
-          </Box>
-        )}
       />
     </>
   )
 }
 
-export default EventManageTable
+export default CalendarTable
