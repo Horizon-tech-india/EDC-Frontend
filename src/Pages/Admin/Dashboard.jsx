@@ -3,6 +3,7 @@ import { AuthContext } from '../../context/AuthContext'
 import Spinner from '../../components/Layout/Spinner'
 import AdminApplicationSection from './components/AdminApplicationSection'
 import Drawer from './components/Drawer'
+import Calendar from './components/Calendar'
 import { useNavigate } from 'react-router-dom'
 
 import './styles/dashboard.css'
@@ -41,7 +42,7 @@ const Dashboard = ({ page }) => {
               <Drawer />
             </div>
             <div className="col-span-10">
-              <AdminApplicationSection page={page} />
+              {page === 'calendar' ? <Calendar /> : <AdminApplicationSection page={page} />}
             </div>{' '}
           </div>
         </div>

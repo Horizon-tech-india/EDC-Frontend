@@ -46,6 +46,10 @@ const App = () => {
               path="/admin/events"
               element={<DashboardAdmin page={'events'} />}
             />
+            <Route
+              path="/admin/calendar"
+              element={<DashboardAdmin page={'calendar'} />}
+            />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup/1" element={<SignUp step={1} />} />
             <Route exact path="/signup/2" element={<SignUp step={2} />} />

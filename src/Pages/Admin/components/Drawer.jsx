@@ -10,6 +10,7 @@ import notification from '../../../assets/icons/svg/notification.svg'
 import avatar from '../../../assets/icons/svg/avatar.svg'
 import receipt from '../../../assets/icons/svg/receipt-2.svg'
 import setting from '../../../assets/icons/svg/setting-2.svg'
+import calendar from '../../../assets/icons/svg/calendar.svg'
 // import '../styles/drawer.css'
 import DateTime from './DateTime'
 const UserProfile = () => {
@@ -73,6 +74,12 @@ const Drawer = () => {
             <li className={pathname === '/admin/manage-coordinators' ? Styles.liActive : Styles.li}>
               <img src={profile} alt="" />
               <span className="ml-4">Manage Coordinators</span>
+            </li>
+          </NavLink>
+          <NavLink className={Styles.btn} to="/admin/calendar">
+            <li className={pathname === '/admin/calendar' ? Styles.liActive : Styles.li}>
+              <img src={calendar} alt="" />
+              <span className="ml-4">Calendar</span>
             </li>
           </NavLink>
           <NavLink className={Styles.btn} to="/admin/dashboard">
