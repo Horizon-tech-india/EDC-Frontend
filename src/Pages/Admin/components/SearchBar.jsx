@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
+import { Divider } from '@mui/material'
 
 function SearchBar() {
   const [allStartups, setAllStartups] = useState([])
@@ -71,7 +72,7 @@ function SearchBar() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    width: 400,
     bgcolor: 'background.paper',
     boxShadow: '24px',
     p: 4,
@@ -113,40 +114,73 @@ function SearchBar() {
   }
   return (
     <>
-      <div className=" search-bar w-full">
-        <div className="search-wrapper">
-          <img src={searchIcon} alt="searchbar" className="search-icon" />
-          <input
-            className="search-input  "
-            type="text"
-            placeholder="Search startups"
-            onChange={handleInputChange}
-            value={inputValue}
-          />
+      <div>
+        <div className=" search-bar w-full">
+          <div className="search-wrapper">
+            <img src={searchIcon} alt="searchbar" className="search-icon" />
+            <input
+              className="search-input  "
+              type="text"
+              placeholder="Search startups"
+              onChange={handleInputChange}
+              value={inputValue}
+            />
+          </div>
+
+          <div
+            className={`fixed ${
+              open ? 'hidden' : 'block'
+            }  h-auto w-full max-w-3xl top-16 z-50 p-2 bg-[#fafafa] border border-gray-200  rounded-md`}
+            id="filter-results"
+          >
+            {filteredData.map((item) => (
+              <div
+                className="bg-white text-xs capitalize font-light border border-gray-200 p-2 w-full rounded-md my-1"
+                key={item.startupId}
+                onClick={() => handleClick(item)}
+              >
+                <ul className="grid grid-cols-12 cursor-pointer">
+                  <li className="col-span-2"> {item.name}</li>
+                  <li className="col-span-3"> {item.email}</li>
+                  <li className="col-span-2"> {item.location}</li>
+                  <li className="col-span-1"> {item.branch}</li>
+                  <li className="col-span-2"> {item.startupId}</li>
+                  <li className="col-span-2"> {item.title}</li>
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div
-          className={`fixed ${
-            open ? 'hidden' : 'block'
-          }  h-auto w-full max-w-3xl top-16 z-50 p-2 bg-[#fafafa] border border-gray-200  rounded-md`}
-          id="filter-results"
-        >
-          {filteredData.map((item) => (
-            <div
-              className="bg-white text-xs capitalize font-light border border-gray-200 p-2 w-full rounded-md my-1"
-              key={item.startupId}
-              onClick={() => handleClick(item)}
-            >
-              <ul className="grid grid-cols-12 cursor-pointer">
-                <li className="col-span-2"> {item.name}</li>
-                <li className="col-span-3"> {item.email}</li>
-                <li className="col-span-2"> {item.location}</li>
-                <li className="col-span-1"> {item.branch}</li>
-                <li className="col-span-2"> {item.startupId}</li>
-                <li className="col-span-2"> {item.title}</li>
-              </ul>
-            </div>
-          ))}
+        <div>
+          <Modal
+            open={modalState}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title justify-items-center" variant="h6" component="h5">
+                Company Details
+              </Typography>
+              {Object.keys(userData).map((item) => {
+                return (
+                  <Typography
+                    key={item.startupId}
+                    id="modal-modal-title justify-items-center"
+                    variant="p"
+                    component="p"
+                  >
+                    <span className="capitalize text-green-600 m-3"> {item} </span> - {userData[item]}
+                  </Typography>
+                )
+              })}
+
+              <Button onClick={handleClose} size="large" variant="contained" color="success">
+                Close
+              </Button>
+            </Box>
+          </Modal>
         </div>
       </div>
 
@@ -158,18 +192,26 @@ function SearchBar() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title justify-items-center" variant="h6" component="h5">
+            <Typography id="modal-modal-title justify-items-center" classes="text-xs">
               Company Details
             </Typography>
-            {Object.keys(userData).map((item) => {
-              return (
-                <Typography key={item.startupId} id="modal-modal-title justify-items-center" variant="p" component="p">
-                  <span className="capitalize text-green-600 m-3"> {item} </span> - {userData[item]}
-                </Typography>
-              )
-            })}
+            <Typography id="modal-modal-title justify-items-center" variant="p" component="p">
+              <span className="capitalize text-green-600 m-3 text-xs"> Name </span> :{' '}
+              <span className="text-xs">{userData.name} </span>
+            </Typography>
+            <Divider />
+            <Typography id="modal-modal-title justify-items-center" variant="p" component="p">
+              <span className="capitalize text-green-600 m-3 text-xs"> Branch </span> :{' '}
+              <span className="text-xs">{userData.branch} </span>
+            </Typography>
+            <Divider />
+            <Typography id="modal-modal-title justify-items-center" variant="p" component="p">
+              <span className="capitalize text-green-600 m-3 text-xs"> Email </span> :{' '}
+              <span className="text-xs"> {userData.email} </span>
+            </Typography>
+            <Divider />
 
-            <Button onClick={handleClose} size="large" variant="contained" color="success">
+            <Button onClick={handleClose} size="sm" variant="contained" color="success">
               Close
             </Button>
           </Box>
