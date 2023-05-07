@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { GetAllAdmin, CreateNewAdmin, DeleteAdmin } from '../../../Api/manageCoordinators'
 import AdminAddForm from './AdminAddForm'
 import AdminManageTable from './AdminManageTable'
 import Spinner from '../../../components/Layout/Spinner'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
+import { CreateNewAdmin, DeleteAdmin, GetAllAdmin } from '../../../Api/Post'
 
 const AdminAddSection = () => {
   const { state } = useContext(AuthContext)
@@ -49,28 +49,30 @@ const AdminAddSection = () => {
     }
   }
 
-  const getAllAdmin = async () => {
-    const token = state.token
-    try {
-      const res = await GetAllAdmin({ token })
-      if (res.status === 200) {
-        setTableData(res.data.data)
-        //handleClose()
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
+  // const getAllAdmin = async () => {
+  //   const token = state.token
+  //   try {
+  //     const res = await GetAllAdmin({ token })
+  //     if (res.status === 200) {
+  //       setTableData(res.data.data)
+  //       //handleClose()
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message)
+  //   }
+  // }
 
-  useEffect(() => {
-    getAllAdmin()
-  }, [])
-
+  // useEffect(() => {
+  //   // getAllAdmin()
+  // }, [])
+  
+  const { data, isError, isLoading, refetch} = GetAllAdmin(state.token)
+console.log(data)
   return (
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {tableData ? <AdminManageTable data={tableData} refetch={getAllAdmin} /> : <Spinner />}
+          {data ? <AdminManageTable data={data?.data?.data} refetch={refetch} /> : <Spinner />}
         </div>
       </div>
     </div>

@@ -3,8 +3,9 @@ import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
 import { Alert, Box, IconButton, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
-import { DeleteAdmin } from '../../../Api/deleteAdmin' //or use your library of choice here
+// import { DeleteAdmin } from '../../../Api/deleteAdmin' //or use your library of choice here
 import AdminAddModal from './AdminAddModal'
+import { DeleteAdmin } from '../../../Api/Post'
 const AdminManageTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
