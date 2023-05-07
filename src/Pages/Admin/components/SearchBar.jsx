@@ -2,19 +2,17 @@ import searchIcon from '../../../assets/search-normal.svg'
 import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { API } from '../../../Api/Post'
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { Divider } from '@mui/material';
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+// import div from '@mui/material/div'
+import Modal from '@mui/material/Modal'
+// import { Divider } from '@mui/material'
 
 function SearchBar() {
   const [allStartups, setAllStartups] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [open, setOpen] = useState(true)
-  const [modalState, setModalState] = useState(false)
-  const [userData, setUserData] = useState({
   const [modalState, setModalState] = useState(false)
   const [userData, setUserData] = useState({
     aadhar: '',
@@ -100,8 +98,6 @@ function SearchBar() {
     p: 4,
   }
   const handleClick = (data) => {
-  }
-  const handleClick = (data) => {
     setModalState(true)
 
     setUserData((prev) => {
@@ -131,37 +127,8 @@ function SearchBar() {
         updatedAt: data.updatedAt,
       }
     })
-    setUserData((prev) => {
-      return {
-        ...prev,
-        aadhar: data.aadhar,
-        branch: data.branch,
-        category: data.category,
-        categoryOther: data.categoryOther,
-        contact: data.contact,
-        currentStage: data.currentStage,
-        designation: data.designation,
-        email: data.email,
-        enrollmentNum: data.enrollmentNum,
-        institute: data.institute,
-        location: data.location,
-        name: data.name,
-        otherInstitute: data.otherInstitute,
-        otherOrganisation: data.otherOrganisation,
-        otherUniversity: data.otherUniversity,
-        startupId: data.startupId,
-        status: data.status,
-        teamMembers: data.teamMembers,
-        teamSize: data.teamSize,
-        title: data.title,
-        uniqueFeatures: data.uniqueFeatures,
-        updatedAt: data.updatedAt,
-      }
-    })
   }
 
-  const handleClose = () => {
-    setModalState(false)
   const handleClose = () => {
     setModalState(false)
   }
