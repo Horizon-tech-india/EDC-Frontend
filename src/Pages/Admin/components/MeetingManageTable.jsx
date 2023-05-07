@@ -1,16 +1,17 @@
 import React, { useContext, useState } from 'react'
-import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
 import { Alert, Box, IconButton, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
-import { DeleteAdmin } from '../../../Api/deleteAdmin' //or use your library of choice here
 import MeetingAddModal from './MeetingAddModal'
+import ModalEventMeeting from './ModalEventMeeting'
+import { Preview as PreviewIcon } from '@mui/icons-material'
 
 const MeetingManageTable = ({ data, refetch }) => {
-  const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalData, setModalData] = useState(data[0])
 
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
   const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
@@ -104,13 +105,15 @@ const MeetingManageTable = ({ data, refetch }) => {
     if (reason === 'clickaway') {
       return
     }
-
     setOpen(false)
   }
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen)
+  const handlePreview = (rowData) => {
+    //console.log(rowData)
+    setModalData(rowData)
+    setModalOpen(!modalOpen)
   }
+
   return (
     <>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -118,7 +121,20 @@ const MeetingManageTable = ({ data, refetch }) => {
           {openMsg && openMsg}
         </Alert>
       </Snackbar>
-      <MeetingAddModal isOpen={isOpen} refetch={refetch} onClose={toggleOpen} />
+      <MeetingAddModal
+        isOpen={isOpen}
+        refetch={refetch}
+        onClose={() => {
+          setIsOpen(!isOpen)
+        }}
+      />
+      <ModalEventMeeting
+        isOpen={modalOpen}
+        data={modalData}
+        onClose={() => {
+          setModalOpen(!modalOpen)
+        }}
+      />
       <MaterialReactTable
         data={data}
         columns={columns}
@@ -140,6 +156,14 @@ const MeetingManageTable = ({ data, refetch }) => {
             },
           },
         }}
+        enableRowActions
+        renderRowActions={({ row, table }) => (
+          <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+            <IconButton color="primary" onClick={() => handlePreview(row.original)}>
+              <PreviewIcon />
+            </IconButton>
+          </Box>
+        )}
         renderTopToolbarCustomActions={({ table }) => (
           <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
             <button className={btnStyl} onClick={handleExportData}>
@@ -168,7 +192,12 @@ const MeetingManageTable = ({ data, refetch }) => {
             >
               Export Selected Rows
             </button>
-            <button className={btnStyl} onClick={() => toggleOpen()}>
+            <button
+              className={btnStyl}
+              onClick={() => {
+                setIsOpen(!isOpen)
+              }}
+            >
               Add New Meeting
             </button>
           </Box>
@@ -181,16 +210,6 @@ const MeetingManageTable = ({ data, refetch }) => {
             border: '0px',
           },
         }}
-        renderDetailPanel={({ row }) => (
-          <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
-            {Object.entries(row.original).map(([key, value]) => (
-              <Typography key={key} className="text-sm">
-                <span className={liStyl}>{key}:</span>
-                <span className="text-sm  ">{value || 'N/A'}</span>
-              </Typography>
-            ))}
-          </Box>
-        )}
       />
     </>
   )

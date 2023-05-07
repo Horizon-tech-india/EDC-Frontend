@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { Alert, Snackbar } from '@mui/material'
 import { useState } from 'react'
+
 const AdminAddModal = ({ isOpen, onClose, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
