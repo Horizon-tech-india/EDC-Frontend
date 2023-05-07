@@ -1,23 +1,21 @@
+import { useQuery } from '@tanstack/react-query'
 import { API } from './Post'
 
-export async function GetAllAdmin({ token }) {
-  return API('get', 'admin/get-all-admin', {}, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
+export  function GetAllAdmin( token ) {
+  return useQuery(['all-admin'], () => API('get', 'admin/get-all-admin', {}, token),{
+    cacheTime: 10 * 60 * 1000, // cache for 10 minutes
+  })
 }
 
-export async function CreateNewAdmin({ body, token }) {
-  return API('post', 'admin/create-admin', body, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
+export  function CreateNewAdmin({ body, token }) {
+  // return API('post', 'admin/create-admin', body, token)
+  //   .then((res) => {
+  //     return res
+  //   })
+  //   .catch((error) => {
+  //     return error
+  //   })
+  
 }
 
 export async function DeleteAdmin({ email, token }) {

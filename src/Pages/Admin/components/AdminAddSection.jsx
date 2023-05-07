@@ -6,6 +6,7 @@ import AdminManageTable from './AdminManageTable'
 import Spinner from '../../../components/Layout/Spinner'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
+import { useQuery } from '@tanstack/react-query'
 
 const AdminAddSection = () => {
   const { state } = useContext(AuthContext)
@@ -48,29 +49,20 @@ const AdminAddSection = () => {
       console.error(error.message)
     }
   }
+  
 
-  const getAllAdmin = async () => {
-    const token = state.token
-    try {
-      const res = await GetAllAdmin({ token })
-      if (res.status === 200) {
-        setTableData(res.data.data)
-        //handleClose()
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
 
-  useEffect(() => {
-    getAllAdmin()
-  }, [])
-
+  const {data, isLoading ,error}= GetAllAdmin(state.token)
+  console.log(isLoading,data)
+  const getAllAdmin=()=>{}
   return (
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {tableData ? <AdminManageTable data={tableData} refetch={getAllAdmin} /> : <Spinner />}
+        {isLoading ? (
+        <Spinner />
+      ) : (
+          <AdminManageTable data={data?.data?.data} refetch={getAllAdmin} /> )}
         </div>
       </div>
     </div>

@@ -21,33 +21,36 @@ const EventAddSection = () => {
     p: 4,
   }
 
-  const getAllEvent = async () => {
-    const token = state.token
-    try {
-      setLoading(true)
-      const res = await GetAllEvent({ token })
-      if (res.status === 200) {
-        setTableData(res.data.events)
-        //handleClose()
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
-    setLoading(false)
-  }
+  // const getAllEvent = async () => {
+  //   const token = state.token
+  //   try {
+  //     setLoading(true)
+  //     const res = await GetAllEvent({ token })
+  //     if (res.status === 200) {
+  //       setTableData(res.data.events)
+  //       //handleClose()
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message)
+  //   }
+  //   setLoading(false)
+  // }
 
-  useEffect(() => {
-    getAllEvent()
-  }, [])
 
+  // useEffect(() => {
+  //   getAllEvent()
+  // }, [])
+const getAllEvent = ()=>{}
+  const { isLoading, error, data } = GetAllEvent(state.token)
+console.log(data?.data)
   return (
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {loading ? (
+          {isLoading ? (
             <Spinner />
-          ) : tableData ? (
-            <EventManageTable data={tableData} refetch={getAllEvent} />
+          ) : data ? (
+            <EventManageTable data={data?.data?.events} refetch={getAllEvent} />
           ) : (
             <div>No data found</div>
           )}

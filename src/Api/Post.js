@@ -1,5 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { useQuery } from 'react-query'
+
 
 export function API(method, endpoint, payload, token) {
   const url = 'http://localhost:9000'
@@ -16,7 +17,8 @@ export function API(method, endpoint, payload, token) {
 }
 
 export function GetAllStartup(token) {
-  return useQuery('allStartUp', () => API('get', '/admin/all-startup-details', {}, token),{
+  console.log("sdf")
+  return useQuery(['allStartUp'], () => API('get', '/admin/all-startup-details', {}, token),{
     cacheTime: 10 * 60 * 1000, // cache for 10 minutes
   })
 }

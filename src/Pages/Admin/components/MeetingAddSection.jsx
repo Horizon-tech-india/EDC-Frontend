@@ -22,38 +22,42 @@ const MeetingAddSection = () => {
   }
 
   const getAllMeeting = async () => {
-    const token = state.token
-    try {
-      setLoading(true)
-      const res = await GetAllMeeting({ token })
-      if (res.status === 200) {
-        setTableData(res.data.meetings)
-        //handleClose()
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
-    setLoading(false)
+  //   const token = state.token
+  //  try {
+  //     setLoading(true)
+  //     const res = await GetAllMeeting({ token })
+  //     if (res.status === 200) {
+  //       setTableData(res.data.meetings)
+  //       //handleClose()
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message)
+  //   }
+  //   setLoading(false) 
   }
 
-  useEffect(() => {
-    getAllMeeting()
-  }, [])
+  // useEffect(() => {
+  //   console.log("df",state.token)
+  //   // getAllMeeting()
+  // }, [])
+
+  const {data, isLoading , error} =  GetAllMeeting(state.token);
 
   return (
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {loading ? (
+          {isLoading ? (
             <Spinner />
-          ) : tableData ? (
-            <MeetingManageTable data={tableData} refetch={getAllMeeting} />
+          ) : data?.data ? (
+            <MeetingManageTable data={data?.data?.meetings} refetch={getAllMeeting} />
           ) : (
             <div>No data found</div>
           )}
         </div>
       </div>
     </div>
+   
   )
 }
 
