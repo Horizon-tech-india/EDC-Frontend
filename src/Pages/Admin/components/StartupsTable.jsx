@@ -5,11 +5,14 @@ import { Alert, Box, MenuItem, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import { UpdatePayload } from '../../../Api/updatePayload' //or use your library of choice here
 import EditIcon from '@mui/icons-material/Edit'
+import AdminDashboardModal from './AdminDashboardModal'
 
 const StartupsTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalData, setModalData] = useState(data[0])
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
   const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
   const columns = [
@@ -127,6 +130,11 @@ const StartupsTable = ({ data, refetch }) => {
     verified: { label: 'Verify', value: 'verified' },
     rejected: { label: 'Reject', value: 'rejected' },
   }
+  const handlePreview = (rowData) => {
+    //console.log(rowData)
+    setModalData(rowData)
+    setModalOpen(!modalOpen)
+  }
   return (
     <>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -134,6 +142,13 @@ const StartupsTable = ({ data, refetch }) => {
           {openMsg && openMsg}
         </Alert>
       </Snackbar>
+      <AdminDashboardModal
+        isOpen={modalOpen}
+        data={modalData}
+        onClose={() => {
+          setModalOpen(!modalOpen)
+        }}
+      />
       <MaterialReactTable
         data={data}
         columns={columns}
@@ -188,43 +203,56 @@ const StartupsTable = ({ data, refetch }) => {
             </button>
           </Box>
         )}
-        renderRowActionMenuItems={({ row }) => {
-          const menuItems = Object.values(statusMenuItems)
-            .filter((item) => item.value !== row.original.status)
-            .map((item) => (
-              <MenuItem
-                key={item.value}
-                onClick={() =>
-                  handleClickPayload({
-                    value: item.value,
-                    StartupId: row.original.startupId,
-                  })
-                }
-              >
-                {item.label}
-              </MenuItem>
-            ))
-
-          return menuItems
-        }}
+        renderRowActions={({ row, table }) => (
+          <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+            {Object?.values(statusMenuItems)
+              .filter((item) => item?.value !== row?.original.status)
+              .map((item) => (
+                <button
+                  className={
+                    (item?.value === 'pending' &&
+                      'bg-[#fdf8ce] hover:bg-[#fcf290] ml-2 text-xs  font-light h-6 w-14 rounded-md ') ||
+                    (item?.value === 'verified' &&
+                      'bg-[#b4cd93] hover:bg-[#6b9239] ml-2 text-xs  font-light h-6 w-14 rounded-md ') ||
+                    (item?.value === 'rejected' &&
+                      'bg-[#FCA5A5] hover:bg-[#e95c5c] ml-2 text-xs  font-light h-6 w-14 rounded-md ')
+                  }
+                  key={item?.value}
+                  onClick={() =>
+                    handleClickPayload({
+                      value: item?.value,
+                      StartupId: row?.original.startupId,
+                    })
+                  }
+                >
+                  {item?.label}
+                </button>
+              ))}
+            <button
+              className="bg-[#b4cd93] ml-2 text-xs  font-light h-6 w-10 rounded-md hover:bg-[#6b9239]"
+              onClick={() => handlePreview(row.original)}
+            >
+              View
+            </button>
+          </Box>
+        )}
         muiTablePaperProps={{
-          elevation: 0, //change the mui box shadow
-          //customize paper styles
+          elevation: 0,
           sx: {
             borderRadius: '12px',
             border: '0px',
           },
         }}
-        renderDetailPanel={({ row }) => (
-          <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
-            {Object.entries(row.original).map(([key, value]) => (
-              <Typography key={key} className="text-sm">
-                <span className={liStyl}>{key}:</span>
-                <span className="text-sm  ">{value || 'N/A'}</span>
-              </Typography>
-            ))}
-          </Box>
-        )}
+        // renderDetailPanel={({ row }) => (
+        //   <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
+        //     {Object.entries(row.original).map(([key, value]) => (
+        //       <Typography key={key} className="text-sm">
+        //         <span className={liStyl}>{key}:</span>
+        //         <span className="text-sm  ">{value || 'N/A'}</span>
+        //       </Typography>
+        //     ))}
+        //   </Box>
+        // )}
       />
     </>
   )

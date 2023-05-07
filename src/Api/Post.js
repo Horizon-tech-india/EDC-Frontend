@@ -15,13 +15,39 @@ export function API(method, endpoint, payload, token) {
   })
 }
 
+///  HOW TO USE   const { data, isLoading, isError, refetch } = fnc('your-token');
+
 export function GetAllStartup(token) {
-  return useQuery('allStartUp', () => API('get', '/admin/all-startup-details', {}, token),{
-    cacheTime: 10 * 60 * 1000, // cache for 10 minutes
-  })
+  const queryKey = 'allStartUp'
+  const queryFn = () => API('get', '/admin/all-startup-details', {}, token)
+  const queryConfig = {
+    cacheTime: 10 * 60 * 10000,
+    refetchOnWindowFocus: false, // disable refetching when the window gains focus
+    refetchOnMount: false, // disable refetching on initial mount
+  }
+  const { refetch, ...queryResult } = useQuery(queryKey, queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
 }
 export function GetStatsNumber(token) {
-  return useQuery('statsKey', () => API('get', '/admin/get-lastmonth-startups?days=7', {}, token),{
-    cacheTime: 10 * 60 * 1000, // cache for 10 minutes
-  })
+  const queryKey = 'statsKey'
+  const queryFn = () => API('get', '/admin/get-lastmonth-startups?days=60', {}, token)
+  const queryConfig = {
+    cacheTime: 10 * 60 * 10000,
+    refetchOnWindowFocus: false, // disable refetching when the window gains focus
+    refetchOnMount: false, // disable refetching on initial mount
+  }
+  const { refetch, ...queryResult } = useQuery(queryKey, queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
 }

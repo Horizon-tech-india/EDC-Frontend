@@ -70,7 +70,6 @@ const MeetingManageTable = ({ data, refetch }) => {
       ),
       size: 300,
     },
-   
   ]
   const csvOptions = {
     fieldSeparator: ',',
@@ -82,7 +81,7 @@ const MeetingManageTable = ({ data, refetch }) => {
     headers: columns.map((c) => c.header),
   }
   const csvExporter = new ExportToCsv(csvOptions)
-  // console.table(data)
+
   const handleExportRows = (rows) => {
     csvExporter.generateCsv(rows.map((row) => row.original))
   }
@@ -128,12 +127,14 @@ const MeetingManageTable = ({ data, refetch }) => {
       />
       <MaterialReactTable
         data={data}
+        enableRowActions
         columns={columns}
         enableStickyHeader
         enableStickyFooter
         enableRowSelection
+        positionActionsColumn="last"
         enableMultiRowSelection={true}
-        positionToolbarAlertBanner="bottom"
+        // positionToolbarAlertBanner="bottom"
         initialState={{ density: 'compact' }}
         muiTableContainerProps={{ sx: { height: '45vh' } }}
         muiTableHeadCellProps={{
@@ -147,11 +148,16 @@ const MeetingManageTable = ({ data, refetch }) => {
             },
           },
         }}
-        enableRowActions
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-            <button className='bg-[#b4cd93] ml-2   font-light h-6 w-10 rounded-md hover:bg-[#6b9239]' onClick={() => handlePreview(row.original)}>
-              View 
+            <button
+              className="bg-[#b4cd93] ml-2   font-light h-6 w-10 rounded-md hover:bg-[#6b9239]"
+              onClick={() => handlePreview(row.original)}
+            >
+              View
+            </button>
+            <button className="bg-[#b4cd93] ml-2   font-light h-6 w-28 rounded-md hover:bg-[#6b9239]">
+              <a href={row.original.link} target='_blank'>Open Meeting</a>
             </button>
           </Box>
         )}

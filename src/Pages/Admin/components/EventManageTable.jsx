@@ -134,6 +134,7 @@ const EventManageTable = ({ data, refetch }) => {
         enableRowSelection
         enableMultiRowSelection={true}
         positionToolbarAlertBanner="bottom"
+        positionActionsColumn="last"
         initialState={{ density: 'compact' }}
         muiTableContainerProps={{ sx: { height: '45vh' } }}
         muiTableHeadCellProps={{

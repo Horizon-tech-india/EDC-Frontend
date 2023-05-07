@@ -85,6 +85,9 @@ function SearchBar() {
       }
     }, 200)
   }
+  const toDate = (date) => {
+    return new Date(date)
+  }
 
   const style = {
     position: 'absolute',
@@ -124,7 +127,12 @@ function SearchBar() {
         teamSize: data.teamSize,
         title: data.title,
         uniqueFeatures: data.uniqueFeatures,
-        updatedAt: data.updatedAt,
+        updatedAt: toDate(data.updatedAt).toLocaleDateString('en-US', {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        }),
       }
     })
   }
@@ -186,88 +194,96 @@ function SearchBar() {
             <div className="text-xl py-2 w-full text-center">Company Details</div>
             <div className="grid grid-cols-2	">
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs">Company Name </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs">Company Name </span> :{' '}
                 <span className="text-xs">{userData.title} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Name </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Name </span> :{' '}
                 <span className="text-xs">{userData.name} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Branch </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Branch </span> :{' '}
                 <span className="text-xs">{userData.branch} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Category </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Category </span> :{' '}
                 <span className="text-xs"> {userData.category} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Email </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Email </span> :{' '}
                 <span className="text-xs"> {userData.email} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Category Other </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Category Other </span> :{' '}
                 <span className="text-xs"> {userData.categoryOther} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Contact </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Contact </span> :{' '}
                 <span className="text-xs"> {userData.contact} </span>
               </div>
 
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Designation </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Designation </span> :{' '}
                 <span className="text-xs"> {userData.designation} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Enrollment Num </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Enrollment Num </span> :{' '}
                 <span className="text-xs"> {userData.enrollmentNum} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Institute </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Institute </span> :{' '}
                 <span className="text-xs"> {userData.institute} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Location </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Location </span> :{' '}
                 <span className="text-xs"> {userData.location} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Other Institute </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Other Institute </span> :{' '}
                 <span className="text-xs"> {userData.otherInstitute} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Other Organisation </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Other Organisation </span> :{' '}
                 <span className="text-xs"> {userData.otherOrganisation} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Other University </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Other University </span> :{' '}
                 <span className="text-xs"> {userData.otherUniversity} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Startup Id </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Startup Id </span> :{' '}
                 <span className="text-xs"> {userData.startupId} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Status </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Status </span> :{' '}
                 <span className="text-xs"> {userData.status} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Team Members </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Team Members </span> :{' '}
                 <span className="text-xs"> {userData.teamMembers} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Team Size </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Team Size </span> :{' '}
                 <span className="text-xs"> {userData.teamSize} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> Unique Features </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Unique Features </span> :{' '}
                 <span className="text-xs"> {userData.uniqueFeatures} </span>
               </div>
               <div className="justify-items-center">
-                <span className="capitalize text-green-600 m-3 text-xs"> updated at </span> :{' '}
-                <span className="text-xs"> {userData.updatedAt} </span>
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> updated at </span> :{' '}
+                <span className="text-xs">
+                  {' '}
+                  {toDate(userData.updatedAt).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}{' '}
+                </span>
               </div>
               <div className="justify-items-center col-span-2 ">
-                <span className="capitalize text-green-600 m-3 text-xs"> Current Stage </span> :{' '}
+                <span className="capitalize text-[#b4cd93] m-3 text-xs"> Current Stage </span> :{' '}
                 <span className="text-xs max-w-xs  "> {userData.currentStage} </span>
               </div>
             </div>
