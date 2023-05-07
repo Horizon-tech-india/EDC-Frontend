@@ -1,28 +1,42 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import dayjs from 'dayjs'
+import { AuthContext } from '../../../context/AuthContext'
+import { GetAllMeetingsEventsData } from '../../../Api/calendarMeetingsEvents'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import CalendarTable from './CalendarTable'
+import Spinner from '../../../components/Layout/Spinner'
 
 const Calendar = () => {
+  const { state } = useContext(AuthContext)
   const currentDate = new Date()
   const [date, setDate] = useState(dayjs(currentDate))
-  const [scale, setScale] = useState(2)
-  const [width, setWidth] = useState(window.innerWidth)
+  const [data, setData] = useState(null)
+  //console.log(date.toDate())
+
+  const getAllMeetingsEventsData = async () => {
+    const token = state.token
+    const currentDate = date.toDate().toISOString().split('T')[0]
+    //console.log(currentDate)
+    try {
+      const res = await GetAllMeetingsEventsData({ currentDate, token })
+      if (res.status === 200) {
+        setData(res.data)
+        //handleClose()
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth))
-    return () => window.removeEventListener('resize', setWidth(window.innerWidth))
-  }, [])
-
-  useEffect(() => {
-    setScale(width * 0.00115)
-  }, [width])
+    getAllMeetingsEventsData()
+  }, [date])
 
   return (
-    <div>
-      <div className="calendar-container" style={{ transform: `scale(${scale})` }}>
+    <div className="calendar-container">
+      <div className="calendar">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateCalendar
             showDaysOutsideCurrentMonth
@@ -32,10 +46,7 @@ const Calendar = () => {
           />
         </LocalizationProvider>
       </div>
-      <div className="tables-container">
-        <CalendarTable />
-        <CalendarTable />
-      </div>
+      <div className="calendar-table">{data && <CalendarTable data={[...data.events, ...data.meetings]} />}</div>
     </div>
   )
 }
