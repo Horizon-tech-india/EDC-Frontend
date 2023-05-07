@@ -24,7 +24,7 @@ const EventManageTable = ({ data, refetch }) => {
           <span className="font-light text-black"> {cell.getValue()}</span>
         </Box>
       ),
-      size: 150,
+      size: 200,
     },
     {
       accessorFn: (row) => {
@@ -68,17 +68,7 @@ const EventManageTable = ({ data, refetch }) => {
           <span className="font-light text-black"> {cell.getValue()}</span>
         </Box>
       ),
-      size: 100,
-    },
-    {
-      accessorKey: 'members',
-      header: 'Members',
-      Cell: ({ cell }) => (
-        <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
-        </Box>
-      ),
-      size: 100,
+      size: 300,
     },
   ]
   const csvOptions = {
@@ -160,9 +150,12 @@ const EventManageTable = ({ data, refetch }) => {
         enableRowActions
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-            <IconButton color="primary" onClick={() => handlePreview(row.original)}>
-              <PreviewIcon />
-            </IconButton>
+            <button
+              className="bg-[#b4cd93] ml-2   font-light h-6 w-10 rounded-md hover:bg-[#6b9239]"
+              onClick={() => handlePreview(row.original)}
+            >
+              View
+            </button>
           </Box>
         )}
         renderTopToolbarCustomActions={({ table }) => (
