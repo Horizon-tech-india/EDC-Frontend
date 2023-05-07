@@ -20,3 +20,8 @@ export function GetAllStartup(token) {
     cacheTime: 10 * 60 * 1000, // cache for 10 minutes
   })
 }
+export function GetStatsNumber(token) {
+  return useQuery('statsKey', () => API('get', '/admin/get-lastmonth-startups?days=7', {}, token),{
+    cacheTime: 10 * 60 * 1000, // cache for 10 minutes
+  })
+}
