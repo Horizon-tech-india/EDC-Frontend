@@ -84,16 +84,13 @@ const EventAddForm = ({ submitEventData }) => {
   }
 
   return (
-    <div className="admin-add">
-      <form onSubmit={handleSubmit} className="admin-add__form">
-        <h1
-          className="w-full text-2xl text-center font-light
-        "
-        >
+    <div className="  w-full">
+      <form onSubmit={handleSubmit} className=" ">
+        <h1 className="w-full text-2xl text-center font-light" >
           Add New Event
         </h1>
-        <div className="grid cols-span-12 w-full max-w-3xl">
-          <div className="input__container col-span-6">
+        <div className="grid cols-span-12 my-2 gap-1 w-full max-w-5xl">
+          <div className="input__container w-48  col-span-4">
             <label htmlFor="firstName">Title</label>
             <input
               className="border border-gray-400"
@@ -107,7 +104,7 @@ const EventAddForm = ({ submitEventData }) => {
             />
             {errors.title && touched.title ? <p className="input-block__error">{errors.title}</p> : null}
           </div>
-          <div className="input__container col-span-6">
+          <div className="input__container w-48  col-span-4">
             <label htmlFor="date">Date</label>
             <input
               className="border border-gray-400"
@@ -120,7 +117,7 @@ const EventAddForm = ({ submitEventData }) => {
             />
             {errors.date && touched.date ? <p className="input-block__error">{errors.date}</p> : null}
           </div>
-          <div className="input__container col-span-6">
+          <div className="input__container w-48  col-span-4">
             <label htmlFor="time">Time</label>
             <input
               className="border border-gray-400"
@@ -133,10 +130,10 @@ const EventAddForm = ({ submitEventData }) => {
             />
             {errors.time && touched.time ? <p className="input-block__error">{errors.time}</p> : null}
           </div>
-          <div className="input__container col-span-6">
-            <label htmlFor="link">Event Link</label>
-            <input
-              className="border border-gray-400"
+          <div className="input__container w-full px-1  col-span-12">
+            <label htmlFor="link">Event Details</label>
+            <textarea
+              className="border rounded-md bg-[#f3ebeb] w-full  border-gray-400"
               type="tel"
               id="link"
               name="link"
@@ -146,22 +143,21 @@ const EventAddForm = ({ submitEventData }) => {
             />
             {errors.link && touched.link ? <p className="input-block__error">{errors.link}</p> : null}
           </div>
-
-          <div className="col-span-12 px-4 mb-5">
-            <label htmlFor="tags-filled">Filters</label>
+          <div className="input__container w-full px-1  col-span-12">
+            <label htmlFor="tags-filled">Add Members</label>
             <Autocomplete
               multiple
               id="tags-filled"
               options={options.map((option) => `${option.firstName} ${option.lastName}`)}
               defaultValue={[]}
               freeSolo
-              className="bg-white "
+              className="w-full"
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
               }
               renderInput={(params) => (
                 <TextField
-                  className="bg-[#f3ebeb] max-w-md"
+                className="border rounded-md bg-[#f3ebeb] w-full  border-gray-400"
                   name="branch"
                   {...params}
                   variant="outlined"
@@ -177,11 +173,11 @@ const EventAddForm = ({ submitEventData }) => {
           </div>
         </div>
         {isLoading ? (
-          <button className="admin-add__submit" type="button" disabled>
+          <button className="admin-add__submit my-5" type="button" disabled>
             Submitting...
           </button>
         ) : (
-          <button className="admin-add__submit" type="submit">
+          <button className="admin-add__submit my-5" type="submit">
             Schedule Event
           </button>
         )}
