@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Divider } from '@mui/material';
 
 function SearchBar() {
   const [allStartups, setAllStartups] = useState([])
@@ -75,7 +76,7 @@ function SearchBar() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    width: 400,
     bgcolor: 'background.paper',
     boxShadow: '24px',
     p: 4,
@@ -164,18 +165,24 @@ setUserData((prev)=>{
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title justify-items-center"  variant="h6" component="h5">
+        
+          <Typography id="modal-modal-title justify-items-center"  classes='text-xs'>
           Company Details
           </Typography>
-          {Object.keys(userData).map((item) => {
-          return (
           <Typography id="modal-modal-title justify-items-center" variant="p" component="p">
-          <span  className='capitalize text-green-600 m-3'> {item} </span> - {userData[item]}
+          <span  className='capitalize text-green-600 m-3 text-xs'> Name </span> : <span className='text-xs'>{userData.name} </span>
           </Typography>
-          )
-        })}
-          
-          <Button onClick={handleClose} size='large' variant='contained' color='success'>Close</Button>
+          <Divider />
+          <Typography id="modal-modal-title justify-items-center" variant="p" component="p">
+          <span  className='capitalize text-green-600 m-3 text-xs'> Branch </span> : <span className='text-xs'>{userData.branch} </span>
+          </Typography>
+          <Divider />
+          <Typography id="modal-modal-title justify-items-center" variant="p" component="p">
+          <span  className='capitalize text-green-600 m-3 text-xs'> Email   </span> : <span className='text-xs'> {userData.email} </span>
+          </Typography>
+          <Divider />
+                    
+          <Button onClick={handleClose} size='sm' variant='contained' color='success'>Close</Button>
         </Box>
       </Modal>
     </div>
