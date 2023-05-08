@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import EventManageTable from './EventManageTable'
-import { GetAllEvent, CreateNewEvent } from '../../../Api/adminEvent'
 import Spinner from '../../../components/Layout/Spinner'
+import { GetAllEvent } from '../../../Api/Post'
 
 const EventAddSection = () => {
   const { state } = useContext(AuthContext)
@@ -21,24 +21,26 @@ const EventAddSection = () => {
     p: 4,
   }
 
-  const getAllEvent = async () => {
-    const token = state.token
-    try {
-      setLoading(true)
-      const res = await GetAllEvent({ token })
-      if (res.status === 200) {
-        setTableData(res.data.events)
-        //handleClose()
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
-    setLoading(false)
-  }
+  // const getAllEvent = async () => {
+  //   const token = state.token
+  //   try {
+  //     setLoading(true)
+  //     const res = await GetAllEvent({ token })
+  //     if (res.status === 200) {
+  //       setTableData(res.data.events)
+  //       //handleClose()
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message)
+  //   }
+  //   setLoading(false)
+  // }
 
-  useEffect(() => {
-    getAllEvent()
-  }, [])
+  // useEffect(() => {
+  //   getAllEvent()
+  // }, [])
+
+  const {data,isLoading ,error,refetch} = GetAllEvent(state.token);
 
   return (
     <div>
@@ -46,8 +48,8 @@ const EventAddSection = () => {
         <div className="all-applications-body">
           {loading ? (
             <Spinner />
-          ) : tableData ? (
-            <EventManageTable data={tableData} refetch={getAllEvent} />
+          ) : data ? (
+            <EventManageTable data={data?.data?.events} refetch={refetch} />
           ) : (
             <div>No data found</div>
           )}

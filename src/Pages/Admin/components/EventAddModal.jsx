@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { CreateNewEvent } from '../../../Api/adminEvent'
 import EventAddForm from './EventAddForm'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { Alert, Snackbar } from '@mui/material'
 import { useState } from 'react'
+import { CreateNewEvent } from '../../../Api/Post'
 
 const EventAddModal = ({ isOpen, onClose, refetch }) => {
   const { state } = useContext(AuthContext)

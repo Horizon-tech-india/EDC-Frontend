@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { CreateNewMeeting } from '../../../Api/adminMeeting'
 import MeetingAddForm from './MeetingAddForm'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { Alert, Snackbar } from '@mui/material'
 import { useState } from 'react'
+import { CreateNewEvent } from '../../../Api/Post'
 
 const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   const { state } = useContext(AuthContext)
@@ -28,7 +28,7 @@ const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   const submitMeetingData = async (body) => {
     const token = state.token
     try {
-      const res = await CreateNewMeeting({ body, token })
+      const res = await CreateNewEvent({ body, token })
       handleClose()
       setOpenMsg(res.data.message)
       setOpen(true)

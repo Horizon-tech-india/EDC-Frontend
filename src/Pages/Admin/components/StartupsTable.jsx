@@ -3,9 +3,9 @@ import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
 import { Alert, Box, MenuItem, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
-import { UpdatePayload } from '../../../Api/updatePayload' //or use your library of choice here
 import EditIcon from '@mui/icons-material/Edit'
 import AdminDashboardModal from './AdminDashboardModal'
+import { UpdatePayload } from '../../../Api/Post' //or use your library of choice here
 
 const StartupsTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
