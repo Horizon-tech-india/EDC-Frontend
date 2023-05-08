@@ -37,13 +37,11 @@ const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialAuthState)
   const [isLoading, setIsLoading] = useState(false)
-  console.log(state)
+  console.info(`User Authenticated:`, state.isAuthenticated)
   const login = async (values) => {
     setIsLoading(true)
     try {
       const res = await API('post', '/users/login', values)
-      console.log(`LOGIN RESPONSE`, res?.data?.data)
-
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res?.data?.data,

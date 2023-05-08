@@ -6,7 +6,6 @@ import { Button } from '@mui/material'
 
 const AdminDashboardModal = ({ data, isOpen, onClose }) => {
   const handleClose = () => onClose()
-  console.log(data)
   const style = {
     position: 'absolute',
     top: '50%',
@@ -72,9 +71,9 @@ const AdminDashboardModal = ({ data, isOpen, onClose }) => {
               {modalData?.title} Details
             </Typography>
             <div className="grid grid-cols-2	">
-              {Object?.entries(modalData).map((entry) => {
+              {Object?.entries(modalData).map((entry, index) => {
                 return (
-                  <div key={modalData?.title} className="grid py-1 grid-cols-12">
+                  <div key={modalData?.title + index} className="grid py-1 grid-cols-12">
                     <span className="capitalize font-semibold text-xs col-span-3 text-[#b4cd93] m-0"> {entry[0]} </span>
                     <span className="capitalize text-xs col-span-9 h-auto ">{entry[1]} </span>
                   </div>
