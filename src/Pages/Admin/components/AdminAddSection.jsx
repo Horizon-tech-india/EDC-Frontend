@@ -9,20 +9,12 @@ import { CreateNewAdmin, DeleteAdmin, GetAllAdmin } from '../../../Api/Post'
 
 const AdminAddSection = () => {
   const { state } = useContext(AuthContext)
-
   const { data, isLoading, refetch } = GetAllAdmin(state.token)
-  console.log(data)
   return (
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {isLoading ? (
-            <Spinner />
-          ) : data ? (
-            <AdminManageTable data={data?.data?.data} refetch={refetch} />
-          ) : (
-            <div>No data found</div>
-          )}
+          <AdminManageTable data={data?.data?.data} refetch={refetch} />
         </div>
       </div>
     </div>
