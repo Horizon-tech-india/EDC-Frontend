@@ -6,7 +6,6 @@ import { Button } from '@mui/material'
 
 const AdminDashboardModal = ({ data, isOpen, onClose }) => {
   const handleClose = () => onClose()
-  console.log(data)
   const style = {
     position: 'absolute',
     top: '50%',
