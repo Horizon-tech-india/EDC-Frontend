@@ -6,7 +6,6 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 // import div from '@mui/material/div'
 import Modal from '@mui/material/Modal'
-// import { Divider } from '@mui/material'
 
 function SearchBar() {
   const [allStartups, setAllStartups] = useState([])

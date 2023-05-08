@@ -23,7 +23,6 @@ const AdminDashboardModal = ({ data, isOpen, onClose }) => {
     return new Date(date)
   }
 
-   
   const modalData = {
     title: data?.title,
     aadhar: data?.aadhar,
@@ -64,20 +63,25 @@ const AdminDashboardModal = ({ data, isOpen, onClose }) => {
       >
         <Box sx={style}>
           <div className="w-full ">
-            <Typography className='capitalize pb-5 w-full text-center' id="modal-modal-title " variant="h6" component="h5">
+            <Typography
+              className="capitalize pb-5 w-full text-center"
+              id="modal-modal-title "
+              variant="h6"
+              component="h5"
+            >
               {modalData?.title} Details
             </Typography>
             <div className="grid grid-cols-2	">
-            {Object?.entries(modalData).map((entry) => {
-              return (
-                <div key={modalData?.title} className="grid py-1 grid-cols-12">
-                  <span className="capitalize font-semibold text-xs col-span-3 text-[#b4cd93] m-0"> {entry[0]} </span>
-                  <span className="capitalize text-xs col-span-9 h-auto ">{entry[1]} </span>
-                </div>
-              )
-            })}
-          </div>
-           <div className="w-full flex my-2 justify-center items-center">
+              {Object?.entries(modalData).map((entry) => {
+                return (
+                  <div key={modalData?.title} className="grid py-1 grid-cols-12">
+                    <span className="capitalize font-semibold text-xs col-span-3 text-[#b4cd93] m-0"> {entry[0]} </span>
+                    <span className="capitalize text-xs col-span-9 h-auto ">{entry[1]} </span>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="w-full flex my-2 justify-center items-center">
               <Button onClick={handleClose} size="sm" variant="contained" color="success">
                 Close
               </Button>

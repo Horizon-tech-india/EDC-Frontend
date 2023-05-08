@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import MeetingManageTable from './MeetingManageTable'
 import Spinner from '../../../components/Layout/Spinner'
@@ -6,8 +6,7 @@ import { GetAllEvent } from '../../../Api/Post'
 
 const MeetingAddSection = () => {
   const { state } = useContext(AuthContext)
-
-const {data,isLoading ,error, refetch} = GetAllEvent(state.token)
+  const { data, isLoading, refetch } = GetAllEvent(state.token)
   return (
     <div>
       <div className="all-applications-wrapper">

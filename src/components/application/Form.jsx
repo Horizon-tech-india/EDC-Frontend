@@ -175,7 +175,7 @@ const Form = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     console.log(formData)
-    API('post', '/users/startup-details', formData,state.token)
+    API('post', '/users/startup-details', formData, state.token)
       .then((res) => {
         console.log(res.data)
         setOpen(true)

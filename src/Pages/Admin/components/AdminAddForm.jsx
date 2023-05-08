@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { AuthContext } from '../../../context/AuthContext'
 import { adminAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'

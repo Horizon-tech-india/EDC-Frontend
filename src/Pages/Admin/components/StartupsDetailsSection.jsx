@@ -6,17 +6,15 @@ import { Spinner } from 'react-bootstrap'
 
 export const StartupsDetailsSection = () => {
   const { state } = useContext(AuthContext)
-
-  const { data, isError, isLoading, refetch } = GetAllStartup(state.token)
+  const { data, isLoading, refetch } = GetAllStartup(state.token)
   return (
     <>
       {isLoading ? (
         <Spinner />
+      ) : data ? (
+        <StartupsTable data={data?.data?.data} refetch={refetch} />
       ) : (
-        <div className="grid grid-cols-1 w-full h-full grid-rows-1">
-          {data && data.data && <StartupsTable data={data?.data?.data} refetch={refetch} />}
-          {isError && isError}
-        </div>
+        <div>No data found</div>
       )}
     </>
   )

@@ -86,9 +86,7 @@ const EventAddForm = ({ submitEventData }) => {
   return (
     <div className="  w-full">
       <form onSubmit={handleSubmit} className=" ">
-        <h1 className="w-full text-2xl text-center font-light" >
-          Add New Event
-        </h1>
+        <h1 className="w-full text-2xl text-center font-light">Add New Event</h1>
         <div className="grid cols-span-12 my-2 gap-1 w-full max-w-5xl">
           <div className="input__container w-48  col-span-4">
             <label htmlFor="firstName">Title</label>
@@ -157,7 +155,7 @@ const EventAddForm = ({ submitEventData }) => {
               }
               renderInput={(params) => (
                 <TextField
-                className="border rounded-md bg-[#f3ebeb] w-full  border-gray-400"
+                  className="border rounded-md bg-[#f3ebeb] w-full  border-gray-400"
                   name="branch"
                   {...params}
                   variant="outlined"
