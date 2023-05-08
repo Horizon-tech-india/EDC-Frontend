@@ -29,17 +29,17 @@ const SignUpStep2 = () => {
       // .then((response) => {
       //   setTimeout(() => {
       //     // If successful, redirect to dashboard
-   
+
       //     navigate('/login')
       //     setIsLoading(false)
       //   }, 2000)
       // })
       // .catch((error) => {
       //   console.error(error)
- 
+
       //   setTimeout(() => {
       //     // If successful, redirect to dashboard
-      
+
       //     setIsLoading(false)
       //   }, 2000)
       // })
@@ -128,13 +128,13 @@ const SignUpStep2 = () => {
         </div>
         <div className="input-block">
           <button disabled={isLoading} className="submit-btn" type="submit">
-          {isLoading ? (
-                  <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
-                  </div>
-                ) : (
-                  'Continue'
-                )}     
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
+              </div>
+            ) : (
+              'Continue'
+            )}
           </button>
         </div>
       </form>

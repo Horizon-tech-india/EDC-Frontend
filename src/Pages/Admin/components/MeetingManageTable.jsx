@@ -157,7 +157,9 @@ const MeetingManageTable = ({ data, refetch }) => {
               View
             </button>
             <button className="bg-[#b4cd93] ml-2   font-light h-6 w-28 rounded-md hover:bg-[#6b9239]">
-              <a href={row.original.link} target='_blank'>Open Meeting</a>
+              <a href={row.original.link} target="_blank">
+                Open Meeting
+              </a>
             </button>
           </Box>
         )}

@@ -34,8 +34,8 @@ const Calendar = () => {
   //   getAllMeetingsEventsData()
   // }, [date])
   const currentDateIs = date.toDate().toISOString().split('T')[0]
-  const {data , isLoading, error} =GetAllMeetingsEventsData(currentDateIs, state.token)
-console.log(data)
+  const { data, isLoading, error } = GetAllMeetingsEventsData(currentDateIs, state.token)
+  console.log(data)
   return (
     <div className="calendar-container">
       <div className="calendar">
@@ -48,7 +48,9 @@ console.log(data)
           />
         </LocalizationProvider>
       </div>
-      <div className="calendar-table">{data && <CalendarTable data={[...data.data.events, ...data.data.meetings]} />}</div>
+      <div className="calendar-table">
+        {data && <CalendarTable data={[...data.data.events, ...data.data.meetings]} />}
+      </div>
     </div>
   )
 }

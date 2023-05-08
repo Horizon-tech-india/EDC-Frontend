@@ -9,7 +9,6 @@ import left from '../../assets/icons/svg/left.svg'
 const SignUp = ({ step }) => {
   const [email, setEmail] = useState('')
 
-
   return (
     <div className="wrapper">
       <div className="banner">

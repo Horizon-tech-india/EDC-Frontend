@@ -7,13 +7,11 @@ import Calendar from './components/Calendar'
 import { useNavigate } from 'react-router-dom'
 
 import './styles/dashboard.css'
-
 const ROLES = {
   ADMIN: 'admin',
   MASTER_ADMIN: 'master admin',
   STUDENT: 'student',
 }
-
 const Dashboard = ({ page }) => {
   const navigate = useNavigate()
 
@@ -21,14 +19,11 @@ const Dashboard = ({ page }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // simulate an API call to check state's role
-
     setIsLoading(false)
     if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN) {
       navigate('/')
     }
   }, [state])
-
   return (
     <>
       {isLoading ? (

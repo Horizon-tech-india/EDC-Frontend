@@ -30,7 +30,7 @@ const Navigation = () => {
         </li>
         <li className="">
           <NavLink to="/application" className={activePage === '/application' ? styles.activeClass : styles.class}>
-          Apply Now
+            Apply Now
           </NavLink>
         </li>
 
