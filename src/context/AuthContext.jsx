@@ -50,6 +50,7 @@ const AuthProvider = ({ children }) => {
       })
       return res
     } catch (err) {
+      console.log(err)
       dispatch({ type: SET_ERROR, payload: err.response.data.message })
     } finally {
       setIsLoading(false)
