@@ -26,8 +26,7 @@ const options = [
 
 const initialValues = {
   title: '',
-  date: '',
-  time: '',
+  dateTime: '',
   link: '',
 }
 
@@ -44,7 +43,7 @@ const MeetingAddForm = ({ submitMeetingData }) => {
         title: values.title,
         link: values.link,
         type: 'meeting',
-        dateAndTime: values.date + ' ' + values.time,
+        dateAndTime: values.dateTime,
         members: membersData,
       }
       //POST REQUEST
@@ -101,32 +100,6 @@ const MeetingAddForm = ({ submitMeetingData }) => {
             {errors.title && touched.title ? <p className="input-block__error">{errors.title}</p> : null}
           </div>
           <div className="input__container col-span-6">
-            <label htmlFor="date">Date</label>
-            <input
-              className="border border-gray-400"
-              type="date"
-              name="date"
-              id="date"
-              value={values.date}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.date && touched.date ? <p className="input-block__error">{errors.date}</p> : null}
-          </div>
-          <div className="input__container col-span-6">
-            <label htmlFor="time">Time</label>
-            <input
-              className="border border-gray-400"
-              type="time"
-              name="time"
-              id="time"
-              value={values.time}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.time && touched.time ? <p className="input-block__error">{errors.time}</p> : null}
-          </div>
-          <div className="input__container col-span-6">
             <label htmlFor="link">Meeting Link</label>
             <input
               className="border border-gray-400"
@@ -138,6 +111,20 @@ const MeetingAddForm = ({ submitMeetingData }) => {
               onBlur={handleBlur}
             />
             {errors.link && touched.link ? <p className="input-block__error">{errors.link}</p> : null}
+          </div>
+
+          <div className="input__container col-span-6">
+            <label htmlFor="dateTime">Date and Time</label>
+            <input
+              className="border border-gray-400"
+              type="datetime-local"
+              name="dateTime"
+              id="dateTime"
+              value={values.dateTime}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.dateTime && touched.dateTime ? <p className="input-block__error">{errors.dateTime}</p> : null}
           </div>
 
           <div className="col-span-12 px-4 mb-5">
