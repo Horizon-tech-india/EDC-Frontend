@@ -9,7 +9,8 @@ import { CreateNewAdmin, DeleteAdmin, GetAllAdmin } from '../../../Api/Post'
 
 const AdminAddSection = () => {
   const { state } = useContext(AuthContext)
-  const { data, isLoading, refetch } = GetAllAdmin(state.token)
+  const { data, isLoading, error, refetch } = GetAllAdmin(state.token)
+  console.log(data, error)
   return (
     <div>
       <div className="all-applications-wrapper">

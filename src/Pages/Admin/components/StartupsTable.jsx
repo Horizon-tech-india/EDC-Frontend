@@ -150,7 +150,7 @@ const StartupsTable = ({ data, refetch }) => {
         }}
       />
       <MaterialReactTable
-        data={data ? data : []}
+        data={data}
         columns={columns}
         enableStickyHeader
         enableStickyFooter

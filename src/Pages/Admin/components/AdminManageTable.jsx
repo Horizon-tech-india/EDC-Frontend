@@ -50,7 +50,7 @@ const AdminManageTable = ({ data, refetch }) => {
       header: 'Branch',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
+          <span className="font-light text-black"> {cell?.getValue()}</span>
         </Box>
       ),
       size: 100,
@@ -110,7 +110,7 @@ const AdminManageTable = ({ data, refetch }) => {
       </Snackbar>
       <AdminAddModal isOpen={isOpen} refetch={refetch} onClose={toggleOpen} />
       <MaterialReactTable
-        data={data ? data : []}
+        data={data}
         columns={columns}
         enableStickyHeader
         enableStickyFooter
@@ -191,7 +191,7 @@ const AdminManageTable = ({ data, refetch }) => {
         }}
         renderDetailPanel={({ row }) => (
           <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
-            {Object.entries(row.original).map(([key, value]) => (
+            {Object?.entries(row.original).map(([key, value]) => (
               <Typography key={key} className="text-sm">
                 <span className={liStyl}>{key}:</span>
                 <span className="text-sm  ">{value || 'N/A'}</span>

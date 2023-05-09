@@ -3,7 +3,7 @@ import axios from 'axios'
 const BASE_URL = process.env.REACT_APP_API_URL
 ///  HOW TO USE   const { data, isLoading, isError, refetch } = fnc('your-token');
 const queryConfig = {
-  cacheTime: 10 * 60 * 10000,
+  cacheTime: 10 * 60 * 1000,
   refetchOnWindowFocus: true,
   refetchOnMount: true,
   staleTime: Infinity,
@@ -15,7 +15,7 @@ const url = {
   statsKey: '/admin/get-lastmonth-startups?days=30',
   allMeetingEvents: '/admin/get-all-meeting-and-events',
   scheduleEvent: '/admin/schedule-event-meeting',
-  allMeetingsEventsData: 'admin/get-all-meeting-and-events?date',
+  allMeetingsEventsData: '/admin/get-all-meeting-and-events?date',
   deleteAdmin: '/admin/delete-admin?email',
   getAllAdmin: '/admin/get-all-admin',
   createNewAdmin: 'admin/create-admin',
