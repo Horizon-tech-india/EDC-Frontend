@@ -36,7 +36,7 @@ const SignUpStep3 = ({ email }) => {
         confirmNewPassword: values.confirm_password,
       }
       //POST REQUEST
-      API('post', '/users/set-new-password', body, '')
+      API('post', '/api/users/set-new-password', body, '')
         .then((response) => {
           setTimeout(() => {
             // If successful, redirect to dashboard

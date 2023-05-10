@@ -27,7 +27,7 @@ const SignUpStep2 = ({ email }) => {
     event.preventDefault()
     const body = { email, otp: otp.join(''), isForgotPassword: true }
     //POST REQUEST
-    API('post', '/users/verify-mail-otp', body, '')
+    API('post', '/api/users/verify-mail-otp', body, '')
       .then((response) => {
         setTimeout(() => {
           // If successful, redirect to dashboard

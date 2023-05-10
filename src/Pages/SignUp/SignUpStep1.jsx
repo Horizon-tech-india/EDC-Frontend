@@ -36,7 +36,7 @@ const SignUpStep1 = ({ setEmail }) => {
 
       setEmail(values.email)
       //POST REQUEST
-      API('post', '/users/signup', values, '')
+      API('post', '/api/users/signup', values, '')
         .then((response) => {
           setTimeout(() => {
             // If successful, redirect to dashboard

@@ -40,7 +40,7 @@ const SignUpStep3 = ({ email }) => {
     event.preventDefault()
     const body = { email: email, otp: otp.join(''), isForgotPassword: false }
     //POST REQUEST
-    API('post', '/users/verify-mail-otp', body, '')
+    API('post', '/api/users/verify-mail-otp', body, '')
       .then((response) => {
         setTimeout(() => {
           // If successful, redirect to dashboard
@@ -60,7 +60,7 @@ const SignUpStep3 = ({ email }) => {
 
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false }
-    API('post', '/users/resend-otp', body, '')
+    API('post', '/api/users/resend-otp', body, '')
       .then((response) => {
         setError('Code sent')
         setOpen(true)
