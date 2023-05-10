@@ -1,7 +1,7 @@
 import { API } from './Post'
 
 export async function DeleteAdmin({ email, token }) {
-  return API('get', `admin/delete-admin?email=${email}`, {}, token)
+  return API('get', `/api/admin/delete-admin?email=${email}`, {}, token)
     .then((res) => {
       return res
     })

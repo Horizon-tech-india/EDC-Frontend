@@ -7,6 +7,7 @@ import { Spinner } from 'react-bootstrap'
 export const StartupsDetailsSection = () => {
   const { state } = useContext(AuthContext)
   const { data, isLoading, refetch } = GetAllStartup(state.token)
+
   return (
     <>
       {isLoading ? (

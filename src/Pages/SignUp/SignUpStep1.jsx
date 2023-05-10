@@ -46,28 +46,7 @@ const SignUpStep1 = ({ setEmail }) => {
       setIsLoading(true)
 
       setEmail(values.email)
-      //POST REQUEST
-      // API('post', '/users/signup', values, '')
-      //   .then((response) => {
-      //     setTimeout(() => {
-      //       // If successful, redirect to dashboard
-
-      //       navigate('/signup/2')
-      //       setIsLoading(false)
-      //     }, 1000)
-      //   })
-        // .catch((error) => {
-        //   setOpen(true)
-        //   console.error(error)
-        //   setTimeout(() => {
-        //     // If successful, redirect to dashboard
-
-        //     setIsLoading(false)
-        //   }, 1000)
-        //   setError(error.response.data.message)
-        //   setOpen(true)
-        // })
-        console.log(mutation)
+      
         mutation.mutate(values)
         
 
