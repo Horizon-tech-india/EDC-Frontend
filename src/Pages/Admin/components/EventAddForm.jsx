@@ -26,8 +26,7 @@ const options = [
 
 const initialValues = {
   title: '',
-  date: '',
-  time: '',
+  dateTime: '',
   link: '',
 }
 
@@ -42,9 +41,9 @@ const EventAddForm = ({ submitEventData }) => {
       setIsLoading(true)
       const body = {
         title: values.title,
-        link: values.link,
+        description: values.link,
         type: 'event',
-        dateAndTime: values.date + ' ' + values.time,
+        dateAndTime: values.dateTime,
         filters: [
           {
             branch: 'PA',
@@ -103,30 +102,17 @@ const EventAddForm = ({ submitEventData }) => {
             {errors.title && touched.title ? <p className="input-block__error">{errors.title}</p> : null}
           </div>
           <div className="input__container w-48  col-span-4">
-            <label htmlFor="date">Date</label>
+            <label htmlFor="dateTime">Date and Time</label>
             <input
               className="border border-gray-400"
-              type="date"
-              name="date"
-              id="date"
-              value={values.date}
+              type="datetime-local"
+              name="dateTime"
+              id="dateTime"
+              value={values.dateTime}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.date && touched.date ? <p className="input-block__error">{errors.date}</p> : null}
-          </div>
-          <div className="input__container w-48  col-span-4">
-            <label htmlFor="time">Time</label>
-            <input
-              className="border border-gray-400"
-              type="time"
-              name="time"
-              id="time"
-              value={values.time}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.time && touched.time ? <p className="input-block__error">{errors.time}</p> : null}
+            {errors.dateTime && touched.dateTime ? <p className="input-block__error">{errors.dateTime}</p> : null}
           </div>
           <div className="input__container w-full px-1  col-span-12">
             <label htmlFor="link">Event Details</label>
