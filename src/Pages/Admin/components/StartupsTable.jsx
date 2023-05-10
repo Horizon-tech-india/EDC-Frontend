@@ -174,33 +174,39 @@ const StartupsTable = ({ data, refetch }) => {
         }}
         renderTopToolbarCustomActions={({ table }) => (
           <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
-            <button className={btnStyl} onClick={handleExportData}>
-              Export All Data
-            </button>
-            <button
-              className={btnStyl}
-              disabled={table.getPrePaginationRowModel().rows.length === 0}
-              //export all rows, including from the next page, (still respects filtering and sorting)
-              onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
-            >
-              Export All Rows
-            </button>
-            <button
-              className={btnStyl}
-              disabled={table.getRowModel().rows.length === 0}
-              //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-              onClick={() => handleExportRows(table.getRowModel().rows)}
-            >
-              Export Page Rows
-            </button>
-            <button
-              className={btnStyl}
-              disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
-              //only export selected rows
-              onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-            >
-              Export Selected Rows
-            </button>
+            {data?.length !== 0 ? (
+              <>
+                <button className={btnStyl} onClick={handleExportData}>
+                  Export All Data
+                </button>
+                <button
+                  className={btnStyl}
+                  disabled={table.getPrePaginationRowModel().rows.length === 0}
+                  //export all rows, including from the next page, (still respects filtering and sorting)
+                  onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
+                >
+                  Export All Rows
+                </button>
+                <button
+                  className={btnStyl}
+                  disabled={table.getRowModel().rows.length === 0}
+                  //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+                  onClick={() => handleExportRows(table.getRowModel().rows)}
+                >
+                  Export Page Rows
+                </button>
+                <button
+                  className={btnStyl}
+                  disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
+                  //only export selected rows
+                  onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
+                >
+                  Export Selected Rows
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
           </Box>
         )}
         renderRowActions={({ row, table }) => (

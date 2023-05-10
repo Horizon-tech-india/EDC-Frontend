@@ -22,7 +22,6 @@ const url = {
   updatePayload: '/admin/update-startup-details',
 }
 export function API(method, endpoint, payload, token) {
-  console.log(BASE_URL)
   const encrypted = '' || token
   return axios({
     method: method.toLowerCase(),
