@@ -20,7 +20,7 @@ const AdminManageTable = ({ data, refetch }) => {
       header: 'Name',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell?.getValue()}</span>
+          <span className="font-light truncate  text-black"> {cell?.getValue()}</span>
         </Box>
       ),
       size: 150,
@@ -30,7 +30,7 @@ const AdminManageTable = ({ data, refetch }) => {
       header: 'Email',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell?.getValue()}</span>
+          <span className="font-light truncate  text-black"> {cell?.getValue()}</span>
         </Box>
       ),
       size: 200,
@@ -40,7 +40,7 @@ const AdminManageTable = ({ data, refetch }) => {
       header: 'Phone no.',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell?.getValue()}</span>
+          <span className="font-light truncate  text-black"> {cell?.getValue()}</span>
         </Box>
       ),
       size: 100,
@@ -50,7 +50,7 @@ const AdminManageTable = ({ data, refetch }) => {
       header: 'Branch',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell?.getValue()}</span>
+          <span className="font-light truncate text-black"> {cell?.getValue()}</span>
         </Box>
       ),
       size: 100,

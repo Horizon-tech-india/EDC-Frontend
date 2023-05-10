@@ -8,7 +8,6 @@ import { GetAllEvent } from '../../../Api/Post'
 const SidebarRight = () => {
   const { state } = useContext(AuthContext)
   const { data, isLoading, refetch } = GetAllEvent(state.token)
-  const upcomingMeetingData = data?.data?.meetings?.slice(0, 3) || []
 
   const DATE = (val) => {
     const date = new Date(val)
@@ -28,16 +27,16 @@ const SidebarRight = () => {
   }
   return (
     <SidebarCard title="Upcoming Scheduled meetings">
-      {upcomingMeetingData == null ? (
+      {data !== null ? (
         <ul className="grid gap-4 w-72   py-4 h-full">
-          {upcomingMeetingData.map((meeting, index) => {
+          {data?.data?.meetings?.splice(0, 3).map((meeting, index) => {
             return (
               <li key={index} className="flex justify-center flex-row gap-2">
                 <div className="flex flex-row w-32 text-left  ">
                   <div className="h-6 w-6">
                     <img src={meeting.img || avatar} alt="avatar" />
                   </div>
-                  <p className="text-xs font-normal">{meeting.title} </p>
+                  <p className="text-xs font-normal truncate">{meeting.title} </p>
                 </div>
                 <div className="flex flex-row w-40  text-left ">
                   <p className="text-xs font-light">{DATE(meeting.dateAndTime)}</p>
