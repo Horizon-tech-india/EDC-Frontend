@@ -2,11 +2,20 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../styles/login.scss'
 import '../../styles/signup.scss'
-import { API } from '../../Api/Post'
+import { API, ResendOtp, Signup2, VerifyOtp } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import { useMutation } from '@tanstack/react-query'
 
-const SignUpStep3 = ({ email }) => {
+const SignUpStep3 = ( email ) => {
+  const verifyMutation = useMutation({
+    mutationFn:  (values ) => VerifyOtp(values),
+    onSuccess: ()=>console.log("sss")
+  })
+  const resendMutation = useMutation({
+    mutationFn:  (values ) => ResendOtp(values),
+    onSuccess: ()=>console.log("sss")
+  })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -39,35 +48,17 @@ const SignUpStep3 = ({ email }) => {
 
     event.preventDefault()
     const body = { email: email, otp: otp.join(''), isForgotPassword: false }
-    //POST REQUEST
-    API('post', '/users/verify-mail-otp', body, '')
-      .then((response) => {
-        setTimeout(() => {
-          // If successful, redirect to dashboard
-          setIsLoading(false)
-          navigate('/login')
-        }, 1000)
-      })
-      .catch((error) => {
-        console.error(error)
-        setError(error.response.data.message)
-        setOpen(true)
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 1000)
-      })
+  
+    verifyMutation.mutate(body);
+    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false); navigate('/login');
   }
 
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false }
-    API('post', '/users/resend-otp', body, '')
-      .then((response) => {
-        setError('Code sent')
-        setOpen(true)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+ 
+    resendMutation.mutate(body);
+    setOpen(true);
+    setError('code sent');
   }
   return (
     <>
@@ -152,7 +143,7 @@ const SignUpStep3 = ({ email }) => {
         </div>
         <div className="input-block">
           <button disabled={isLoading} className="submit-btn" type="submit">
-            {isLoading ? (
+            {verifyMutation.isLoading ? (
               <div className="flex justify-center items-center">
                 <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
               </div>

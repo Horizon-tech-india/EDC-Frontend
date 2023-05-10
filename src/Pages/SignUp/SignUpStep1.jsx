@@ -8,9 +8,11 @@ import lock from '../../assets/icons/svg/lock.svg'
 import mail from '../../assets/icons/svg/mail.svg'
 import eyeOff from '../../assets/icons/svg/eye-off.svg'
 import phone from '../../assets/icons/svg/phone.svg'
-import { API } from '../../Api/Post'
+import {  signup1  } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+
+import { useMutation } from '@tanstack/react-query'
 
 const initialValues = {
   firstName: '',
@@ -21,6 +23,15 @@ const initialValues = {
 }
 
 const SignUpStep1 = ({ setEmail }) => {
+   let token = ''; 
+    
+  const mutation = useMutation({
+    mutationFn:  (values ) => signup1(values),
+    onSuccess: ()=>console.log("sss")
+  })
+
+
+  
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
@@ -36,28 +47,34 @@ const SignUpStep1 = ({ setEmail }) => {
 
       setEmail(values.email)
       //POST REQUEST
-      API('post', '/users/signup', values, '')
-        .then((response) => {
-          setTimeout(() => {
-            // If successful, redirect to dashboard
+      // API('post', '/users/signup', values, '')
+      //   .then((response) => {
+      //     setTimeout(() => {
+      //       // If successful, redirect to dashboard
 
-            navigate('/signup/2')
-            setIsLoading(false)
-          }, 1000)
-        })
-        .catch((error) => {
-          setOpen(true)
-          console.error(error)
-          setTimeout(() => {
-            // If successful, redirect to dashboard
+      //       navigate('/signup/2')
+      //       setIsLoading(false)
+      //     }, 1000)
+      //   })
+        // .catch((error) => {
+        //   setOpen(true)
+        //   console.error(error)
+        //   setTimeout(() => {
+        //     // If successful, redirect to dashboard
 
-            setIsLoading(false)
-          }, 1000)
-          setError(error.response.data.message)
-          setOpen(true)
-        })
+        //     setIsLoading(false)
+        //   }, 1000)
+        //   setError(error.response.data.message)
+        //   setOpen(true)
+        // })
+        console.log(mutation)
+        mutation.mutate(values)
+        
+
+        (mutation.isError ? setOpen(true):setTimeout(()=>{ navigate('/signup/2'); setIsLoading(false)},1000));
     },
   })
+  console.log(mutation ? 'true' :'false', mutation,)
   return (
     <>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
