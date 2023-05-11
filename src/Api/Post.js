@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 const BASE_URL = process.env.REACT_APP_API_URL
 ///  HOW TO USE   const { data, isLoading, isError, refetch } = fnc('your-token');
@@ -180,4 +180,25 @@ export async function UpdatePayload({ value, StartupId, token }) {
       console.error(error.message)
       return error
     })
+}
+
+// Signup1 Api
+
+export const signup1 = (values) => {
+  API('post', '/users/signup', values, '')
+}
+
+// verifyOtp APi
+export const VerifyOtp = (values) => {
+  API('post', '/users/verify-mail-otp', values, '')
+};
+
+// Resend Otp Api
+export const ResendOtp = (body) => {
+  API('post', '/users/resend-otp', body, '')
+};
+
+// ForgotPAssword Api
+export const ForgotPassword = (body) => {
+  API('post', '/users/set-new-password', body, '')
 }

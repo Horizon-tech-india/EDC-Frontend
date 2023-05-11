@@ -6,9 +6,10 @@ import '../../styles/login.scss'
 import '../../styles/signup.scss'
 import lock from '../../assets/icons/svg/lock.svg'
 import eyeOff from '../../assets/icons/svg/eye-off.svg'
-import { API } from '../../Api/Post'
+import { API, ForgotPassword } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import { useMutation } from '@tanstack/react-query'
 
 const initialValues = {
   new_password: '',
@@ -16,6 +17,10 @@ const initialValues = {
 }
 
 const SignUpStep3 = ({ email }) => {
+  const forgotPasswordMutation = useMutation({
+    mutationFn:  (values ) => ForgotPassword(values),
+    
+  })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -35,26 +40,10 @@ const SignUpStep3 = ({ email }) => {
         newPassword: values.new_password,
         confirmNewPassword: values.confirm_password,
       }
-      //POST REQUEST
-      API('post', '/api/users/set-new-password', body, '')
-        .then((response) => {
-          setTimeout(() => {
-            // If successful, redirect to dashboard
-
-            navigate('/login')
-            setIsLoading(false)
-          }, 1000)
-        })
-        .catch((error) => {
-          console.error(error)
-          setError(error.response.data.message)
-          setOpen(true)
-          setTimeout(() => {
-            // If successful, redirect to dashboard
-
-            setIsLoading(false)
-          }, 1000)
-        })
+      forgotPasswordMutation.mutate(body)
+      forgotPasswordMutation.isSuccess ? setTimeout(() => {
+        setIsLoading(false); navigate('/login')
+      }, 1000) : setIsLoading(true)
     },
   })
   const navigate = useNavigate()
