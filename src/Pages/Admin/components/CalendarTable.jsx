@@ -3,15 +3,15 @@ import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
 import { Alert, Box, IconButton, Snackbar, Typography } from '@mui/material'
 import EventAddModal from './EventAddModal'
+import ModalEventMeeting from './ModalEventMeeting'
+
 import { Preview as PreviewIcon } from '@mui/icons-material'
 
 const CalendarTable = ({ data, refetch }) => {
-  const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-
-  const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
-  const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalData, setModalData] = useState(data[0])
 
   const columns = [
     {
@@ -62,38 +62,39 @@ const CalendarTable = ({ data, refetch }) => {
     },
   ]
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-    setOpen(false)
+  const handlePreview = (rowData) => {
+    //console.log(rowData)
+    setModalData(rowData)
+    setModalOpen(!modalOpen)
   }
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen)
-  }
   return (
     <>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {openMsg && openMsg}
-        </Alert>
-      </Snackbar>
-      <EventAddModal isOpen={isOpen} refetch={refetch} onClose={toggleOpen} />
+      <ModalEventMeeting
+        isOpen={modalOpen}
+        data={modalData}
+        onClose={() => {
+          setModalOpen(!modalOpen)
+        }}
+      />
       <MaterialReactTable
         data={data}
         columns={columns}
         enableStickyHeader
         enableStickyFooter
+        positionActionsColumn="last"
         positionToolbarAlertBanner="bottom"
         initialState={{ density: 'compact' }}
         muiTableContainerProps={{ sx: { height: '90vh' } }}
         enableRowActions
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-            <IconButton color="primary" onClick={() => console.log(row.original)}>
-              <PreviewIcon />
-            </IconButton>
+            <button
+              className="bg-[#b4cd93] ml-2   font-light h-6 w-10 rounded-md hover:bg-[#6b9239]"
+              onClick={() => handlePreview(row.original)}
+            >
+              View
+            </button>
           </Box>
         )}
         muiTableHeadCellProps={{
