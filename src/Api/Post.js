@@ -3,10 +3,10 @@ import axios from 'axios'
 const BASE_URL = process.env.REACT_APP_API_URL
 ///  HOW TO USE   const { data, isLoading, isError, refetch } = fnc('your-token');
 const queryConfig = {
-  cacheTime: 10 * 60 * 1000,
+  // cacheTime: 10 * 60 * 1000,
   refetchOnWindowFocus: true,
   refetchOnMount: true,
-  staleTime: Infinity,
+  // staleTime: Infinity,
 }
 
 // ALL GET URLS
@@ -191,12 +191,12 @@ export const signup1 = (values) => {
 // verifyOtp APi
 export const VerifyOtp = (values) => {
   API('post', '/users/verify-mail-otp', values, '')
-};
+}
 
 // Resend Otp Api
 export const ResendOtp = (body) => {
   API('post', '/users/resend-otp', body, '')
-};
+}
 
 // ForgotPAssword Api
 export const ForgotPassword = (body) => {

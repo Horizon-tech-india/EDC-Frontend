@@ -5,12 +5,13 @@ import { Alert, Box, MenuItem, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import EditIcon from '@mui/icons-material/Edit'
 import AdminDashboardModal from './AdminDashboardModal'
-import { UpdatePayload } from '../../../Api/Post' //or use your library of choice here
+import { GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
 
 const StartupsTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
+  const { refetch: myRefetchh } = GetStatsNumber(state.token)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState(data[0])
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
@@ -100,12 +101,14 @@ const StartupsTable = ({ data, refetch }) => {
     csvExporter.generateCsv(data)
   }
   const handleRefresh = () => {
+    myRefetchh()
     refetch()
   }
   const handleClickPayload = async ({ value, StartupId }) => {
-    console.log(value, StartupId)
+    // console.log(value, StartupId)
 
     const { token } = state
+
     try {
       const res = await UpdatePayload({ value, StartupId, token })
       if (res.status === 200) {

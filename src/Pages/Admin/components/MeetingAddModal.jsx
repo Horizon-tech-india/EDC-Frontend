@@ -1,23 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import MeetingAddForm from './MeetingAddForm'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { Alert, Snackbar } from '@mui/material'
-import { useState } from 'react'
-import { CreateNewEvent } from '../../../Api/Post'
+import { CreateNewEvent, GetAllEvent } from '../../../Api/Post'
 
 const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
-  const handleClose = () => onClose()
+  const { refetch: GetAllEventFetch } = GetAllEvent(state.token)
+
+  const handleClose = () => {
+    onClose()
+  }
+
   const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
   }
+
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
       return
@@ -31,7 +36,9 @@ const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
       const res = await CreateNewEvent({ body, token })
       handleClose()
       setOpenMsg(res.data.message)
+
       setOpen(true)
+      GetAllEventFetch()
       refetch()
       return res
     } catch (error) {
@@ -42,7 +49,7 @@ const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   return (
     <div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
-        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert variant="filled" onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
           {openMsg && openMsg}
         </Alert>
       </Snackbar>

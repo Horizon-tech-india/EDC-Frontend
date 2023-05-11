@@ -18,8 +18,7 @@ const initialValues = {
 
 const SignUpStep3 = ({ email }) => {
   const forgotPasswordMutation = useMutation({
-    mutationFn:  (values ) => ForgotPassword(values),
-    
+    mutationFn: (values) => ForgotPassword(values),
   })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
@@ -41,9 +40,12 @@ const SignUpStep3 = ({ email }) => {
         confirmNewPassword: values.confirm_password,
       }
       forgotPasswordMutation.mutate(body)
-      forgotPasswordMutation.isSuccess ? setTimeout(() => {
-        setIsLoading(false); navigate('/login')
-      }, 1000) : setIsLoading(true)
+      forgotPasswordMutation.isSuccess
+        ? setTimeout(() => {
+            setIsLoading(false)
+            navigate('/login')
+          }, 1000)
+        : setIsLoading(true)
     },
   })
   const navigate = useNavigate()

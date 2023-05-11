@@ -7,14 +7,14 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { useMutation } from '@tanstack/react-query'
 
-const SignUpStep3 = ( email ) => {
+const SignUpStep3 = (email) => {
   const verifyMutation = useMutation({
-    mutationFn:  (values ) => VerifyOtp(values),
-    onSuccess: ()=>console.log("sss")
+    mutationFn: (values) => VerifyOtp(values),
+    onSuccess: () => console.log('sss'),
   })
   const resendMutation = useMutation({
-    mutationFn:  (values ) => ResendOtp(values),
-    onSuccess: ()=>console.log("sss")
+    mutationFn: (values) => ResendOtp(values),
+    onSuccess: () => console.log('sss'),
   })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
@@ -48,17 +48,18 @@ const SignUpStep3 = ( email ) => {
 
     event.preventDefault()
     const body = { email: email, otp: otp.join(''), isForgotPassword: false }
-  
-    verifyMutation.mutate(body);
-    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false); navigate('/login');
+
+    verifyMutation.mutate(body)
+    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
+    navigate('/login')
   }
 
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false }
- 
-    resendMutation.mutate(body);
-    setOpen(true);
-    setError('code sent');
+
+    resendMutation.mutate(body)
+    setOpen(true)
+    setError('code sent')
   }
   return (
     <>

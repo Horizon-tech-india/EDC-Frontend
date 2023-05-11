@@ -25,26 +25,34 @@ const SidebarRight = () => {
       minute: '2-digit',
     })
   }
+  const firstThreeMeetings = data?.data?.meetings?.slice(0, 3)
   return (
     <SidebarCard title="Upcoming Scheduled meetings">
       {data !== null ? (
         <ul className="grid gap-4 w-72   py-4 h-full">
-          {data?.data?.meetings?.splice(0, 3).map((meeting, index) => {
-            return (
-              <li key={index} className="flex justify-center flex-row gap-2">
-                <div className="flex flex-row w-32 text-left  ">
-                  <div className="h-6 w-6">
-                    <img src={meeting.img || avatar} alt="avatar" />
+          {firstThreeMeetings
+            ?.sort((a, b) => {
+              // Sort by date in ascending order
+              const dateA = new Date(a.dateAndTime)
+              const dateB = new Date(b.dateAndTime)
+              return dateB - dateA
+            })
+            .map((meeting, index) => {
+              return (
+                <li key={index} className="flex justify-center flex-row gap-2">
+                  <div className="flex flex-row w-32 text-left  ">
+                    <div className="h-6 w-6">
+                      <img src={meeting.img || avatar} alt="avatar" />
+                    </div>
+                    <p className="text-xs font-normal truncate">{meeting.title} </p>
                   </div>
-                  <p className="text-xs font-normal truncate">{meeting.title} </p>
-                </div>
-                <div className="flex flex-row w-40  text-left ">
-                  <p className="text-xs font-light">{DATE(meeting.dateAndTime)}</p>
-                  <p className="text-xs px-0.5 text-[#b4cd93] font-semibold">{TIME(meeting.dateAndTime)}</p>
-                </div>
-              </li>
-            )
-          })}
+                  <div className="flex flex-row w-40  text-left ">
+                    <p className="text-xs font-light">{DATE(meeting.dateAndTime)}</p>
+                    <p className="text-xs px-0.5 text-[#b4cd93] font-semibold">{TIME(meeting.dateAndTime)}</p>
+                  </div>
+                </li>
+              )
+            })}
         </ul>
       ) : (
         <div className="flex h-full w-full   justify-center items-center">No meeting created...</div>

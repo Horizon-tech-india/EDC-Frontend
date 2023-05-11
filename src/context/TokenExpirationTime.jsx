@@ -9,13 +9,14 @@ function TokenExpirationTime({ state, dispatch }) {
   if (remainingTime < 0) {
     console.log('Token has expired')
     dispatch({ type: LOGOUT_SUCCESS })
-  } else {
-    const hours = Math.floor(remainingTime / (1000 * 60 * 60))
-    const minutes = Math.floor((remainingTime / (1000 * 60)) % 60)
-    const seconds = Math.floor((remainingTime / 1000) % 60)
-
-    console.info(`Token expires ${hours}h ${minutes}m ${seconds}s`)
   }
+  // else {
+  //   const hours = Math.floor(remainingTime / (1000 * 60 * 60))
+  //   const minutes = Math.floor((remainingTime / (1000 * 60)) % 60)
+  //   const seconds = Math.floor((remainingTime / 1000) % 60)
+
+  //   console.info(`Token expires ${hours}h ${minutes}m ${seconds}s`)
+  // }
 }
 
 export default TokenExpirationTime
