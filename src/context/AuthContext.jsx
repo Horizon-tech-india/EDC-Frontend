@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
   const login = async (values) => {
     setIsLoading(true)
     try {
-      const res = await API('post', '/users/login', values, '')
+      const res = await API('post', '/api/users/login', values, '')
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res?.data?.data,
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     setIsLoading(true)
     try {
-      const res = await API('get', '/users/logout', {}, state.token)
+      const res = await API('get', '/api/users/logout', {}, state.token)
       console.log(`LOGOUT RESPONSE`, res.data)
       dispatch({ type: LOGOUT_SUCCESS })
     } catch (err) {

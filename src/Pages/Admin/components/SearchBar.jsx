@@ -45,7 +45,7 @@ function SearchBar() {
     debounceTimeout = setTimeout(callback, delay)
   }
   useEffect(() => {
-    API('get', '/admin/all-startup-details', {}, state.token)
+    API('get', '/api/admin/all-startup-details', {}, state.token)
       // .then((data) => console.log(`SEARCH BAR FILTER`, data?.data?.data))
       .then((data) => setAllStartups(data?.data?.data))
       .catch((error) => console.error(error))
