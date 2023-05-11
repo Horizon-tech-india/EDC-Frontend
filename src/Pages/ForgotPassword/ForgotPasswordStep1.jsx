@@ -30,7 +30,7 @@ const SignUpStep1 = ({ setEmail }) => {
       const body = { email: values.email, isForgotPassword: true }
       //POST REQUEST
 
-      API('post', '/api/users/resend-otp', body, '')
+      API('post', '/users/resend-otp', body, '')
         .then((response) => {
           setTimeout(() => {
             navigate('/forgot-password/2')
