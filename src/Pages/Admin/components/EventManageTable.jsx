@@ -4,7 +4,6 @@ import { Alert, Box, IconButton, Snackbar } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import EventAddModal from './EventAddModal'
 import ModalEventMeeting from './ModalEventMeeting'
-import { Preview as PreviewIcon } from '@mui/icons-material'
 
 const EventManageTable = ({ data, refetch }) => {
   const [openMsg, setOpenMsg] = useState('')

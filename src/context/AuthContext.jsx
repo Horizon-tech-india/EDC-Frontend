@@ -46,6 +46,10 @@ const AuthProvider = ({ children }) => {
         type: LOGIN_SUCCESS,
         payload: res?.data?.data,
       })
+      dispatch({
+        type: SET_ERROR,
+        payload: null,
+      })
       return res
     } catch (err) {
       console.error(err.response.data.message)

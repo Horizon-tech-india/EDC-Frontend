@@ -30,11 +30,11 @@ const Calendar = () => {
   //   }
   // }
 
-  // useEffect(() => {
-  //   getAllMeetingsEventsData()
-  // }, [date])
   const currentDateIs = date.toDate().toISOString().split('T')[0]
-  const { data, isLoading, error } = GetAllMeetingsEventsData(currentDateIs, state.token)
+  const { data, isLoading, error, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
+  useEffect(() => {
+    refetch()
+  }, [date])
   console.log(data)
   return (
     <div className="calendar-container">
@@ -47,6 +47,9 @@ const Calendar = () => {
         >
           Calendar
         </Typography>
+        <p className="calendar-section-description">
+          Click on a particular date in the calendar to see the meetings and events of that date
+        </p>
         <div className="calendar">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
