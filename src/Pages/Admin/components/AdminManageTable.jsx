@@ -120,7 +120,7 @@ const AdminManageTable = ({ data, refetch }) => {
         enableMultiRowSelection={true}
         positionToolbarAlertBanner="bottom"
         initialState={{ density: 'compact' }}
-        muiTableContainerProps={{ sx: { height: '45vh' } }}
+        muiTableContainerProps={{ sx: { height: '75vh' } }}
         muiTableHeadCellProps={{
           sx: {
             fontSize: {

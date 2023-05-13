@@ -135,7 +135,7 @@ const EventManageTable = ({ data, refetch }) => {
         positionToolbarAlertBanner="bottom"
         positionActionsColumn="last"
         initialState={{ density: 'compact' }}
-        muiTableContainerProps={{ sx: { height: '45vh' } }}
+        muiTableContainerProps={{ sx: { height: '75vh' } }}
         muiTableHeadCellProps={{
           sx: {
             fontSize: {

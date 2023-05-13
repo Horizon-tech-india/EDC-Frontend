@@ -8,14 +8,10 @@ import Gallery from '../components/home/Gallery'
 import Footer from '../components/Layout/Footer'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Layout/Spinner'
-
+import { ROLES } from '../constant/ROLES'
 const App = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const ROLES = {
-    ADMIN: 'admin',
-    MASTER_ADMIN: 'master admin',
-    STUDENT: 'student',
-  }
+
   const navigate = useNavigate()
   const { state } = useContext(AuthContext)
   useEffect(() => {
