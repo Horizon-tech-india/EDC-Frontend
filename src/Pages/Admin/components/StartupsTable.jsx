@@ -53,8 +53,22 @@ const StartupsTable = ({ data, refetch }) => {
       ),
     },
     {
-      accessorKey: 'changeAmount',
-      header: 'Account Status',
+      accessorFn: (row) => {
+        const date = new Date(row.createdAt)
+        const date2 = date.toLocaleDateString('en-US', {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })
+        const time = date.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+        return time + ' ' + date2
+      },
+
+      header: 'Create Date and Time',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
           <span className="font-light text-black"> {cell.getValue()}</span>
@@ -137,6 +151,9 @@ const StartupsTable = ({ data, refetch }) => {
     //console.log(rowData)
     setModalData(rowData)
     setModalOpen(!modalOpen)
+  }
+  const handleDelete = (rowData) => {
+    //console.log(rowData)
   }
   return (
     <>
@@ -242,6 +259,12 @@ const StartupsTable = ({ data, refetch }) => {
               onClick={() => handlePreview(row.original)}
             >
               View
+            </button>
+            <button
+              className="bg-[#ff9494] ml-2 text-xs  font-light h-6 w-10 rounded-md hover:bg-[#923939]"
+              onClick={() => handleDelete(row.original.email)}
+            >
+              Delete
             </button>
           </Box>
         )}

@@ -11,16 +11,16 @@ const queryConfig = {
 
 // ALL GET URLS
 const url = {
-  allStartUp: '/api/admin/all-startup-details',
-  statsKey: '/api/admin/get-lastmonth-startups?days=30',
-  allMeetingEvents: '/api/admin/get-all-meeting-and-events',
-  scheduleEvent: '/api/admin/schedule-event-meeting',
-  allMeetingsEventsData: '/api/admin/get-all-meeting-and-events?date',
-  deleteAdmin: '/api/admin/delete-admin?email',
-  getAllAdmin: '/api/admin/get-all-admin',
-  createNewAdmin: '/api/admin/create-admin',
-  updatePayload: '/api/admin/update-startup-details',
-  submitApplicationForm: '/api/users/startup-details',
+  allStartUp: '/admin/all-startup-details',
+  statsKey: '/admin/get-lastmonth-startups?days=30',
+  allMeetingEvents: '/admin/get-all-meeting-and-events',
+  scheduleEvent: '/admin/schedule-event-meeting',
+  allMeetingsEventsData: '/admin/get-all-meeting-and-events?date',
+  deleteAdmin: '/admin/delete-admin?email',
+  getAllAdmin: '/admin/get-all-admin',
+  createNewAdmin: '/admin/create-admin',
+  updatePayload: '/admin/update-startup-details',
+  submitApplicationForm: '/users/startup-details',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -76,7 +76,7 @@ export function GetAllEvent(token) {
 }
 
 export function CreateNewEvent({ body, token }) {
-  return API('post', '/api/admin/schedule-event-meeting', body, token)
+  return API('post', '/admin/schedule-event-meeting', body, token)
     .then((res) => {
       return res
     })
@@ -101,7 +101,7 @@ export function GetAllMeeting(token) {
 }
 
 export async function CreateNewMeeting({ body, token }) {
-  return API('post', '/api/admin/schedule-event-meeting', body, token)
+  return API('post', '/admin/schedule-event-meeting', body, token)
     .then((res) => {
       return res
     })
