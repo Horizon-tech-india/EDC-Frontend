@@ -2,131 +2,69 @@ import React, { useState } from 'react'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { UploadFile } from '@mui/icons-material'
-import { useSelector, useDispatch } from 'react-redux'
 import { Button, styled, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import '../../styles/form.scss'
-import {
-  setName,
-  setEmail,
-  setContact,
-  setLocation,
-  setInstitute,
-  setOtherInstitute,
-  setAadhar,
-  setCategory,
-  setCategoryOther,
-  setOtherUniversity,
-  setOtherOrganisation,
-  setOtherDesignation,
-  setEnrollment,
-  setTeamSize,
-  setTeamMembers,
-  setTitle,
-  setUniqueFeatures,
-  setCurrentStage,
-  formInputs,
-} from '../slices/formSlice'
 import { API } from '../../Api/Post'
+import { userCommonApplicationFormSchema } from '../../validation/formSchema'
+import { useFormik } from 'formik'
+import { SubmitApplicationForm } from '../../Api/Post'
+
+const initialValues = {
+  name: '',
+  email: '',
+  contact: '',
+  location: '', // applying from - PU, VSS, ASS, RSS, SSS
+  institute: '',
+  otherInstitute: '',
+  aadhar: '',
+  category: '', // application category - student,staff,alumni,other
+  categoryOther: '', //
+  otherUniversity: '',
+  otherOrganisation: '',
+  designation: '',
+  enrollmentNum: '',
+  teamSize: '',
+  teamMembers: '',
+  title: '',
+  uniqueFeatures: '',
+  currentStage: '',
+}
+
 const Form = () => {
   const { state } = useContext(AuthContext)
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: userCommonApplicationFormSchema,
+    onSubmit: async (values) => {
+      console.log(values)
+      const token = state.token
+      try {
+        const res = await SubmitApplicationForm({ values, token })
+        console.log(res.message)
+        handleOpen()
+      } catch (error) {
+        console.error(error)
+      }
+      // setIsLoading(true)
+
+      // setEmail(values.email)
+
+      // mutation.mutate(values)(
+      //   mutation.isError
+      //     ? setOpen(true)
+      //     : setTimeout(() => {
+      //         navigate('/signup/2')
+      //         setIsLoading(false)
+      //       }, 1000),
+      //)
+    },
+  })
+
   const companyName = (state.isAuthenticated && `Hi, ${state?.firstName} ${state?.lastName}`) || `Welcome please Login`
-
-  const formData = useSelector(formInputs)
-  const dispatch = useDispatch()
-
-  const handleNameChange = (e) => {
-    dispatch(setName(e.target.value))
-  }
-
-  const handleEmailChange = (e) => {
-    dispatch(setEmail(e.target.value))
-  }
-
-  const handleContactChange = (e) => {
-    dispatch(setContact(e.target.value))
-  }
-
-  const handleLocationChange = (e) => {
-    dispatch(setLocation(e.target.value))
-  }
-
-  const handleInstituteChange = (e) => {
-    dispatch(setInstitute(e.target.value))
-  }
-
-  const handleOtherInstituteChange = (e) => {
-    dispatch(setOtherInstitute(e.target.value))
-  }
-
-  const handleAadharChange = (e) => {
-    dispatch(setAadhar(e.target.value))
-  }
-
-  const handleCategoryChange = (e) => {
-    dispatch(setCategory(e.target.value))
-  }
-
-  const handleCategoryOtherChange = (e) => {
-    dispatch(setCategoryOther(e.target.value))
-  }
-
-  const handleOtherUniversityChange = (e) => {
-    dispatch(setOtherUniversity(e.target.value))
-  }
-
-  const handleOtherOrganisationChange = (e) => {
-    dispatch(setOtherOrganisation(e.target.value))
-  }
-
-  const handleOtherDesignationChange = (e) => {
-    dispatch(setOtherDesignation(e.target.value))
-  }
-
-  const handleEnrollmentChange = (e) => {
-    dispatch(setEnrollment(e.target.value))
-  }
-
-  const handleTeamSizeChange = (e) => {
-    dispatch(setTeamSize(e.target.value))
-  }
-
-  const handleTeamMembersChange = (e) => {
-    dispatch(setTeamMembers(e.target.value))
-  }
-
-  const handleTitleChange = (e) => {
-    dispatch(setTitle(e.target.value))
-  }
-
-  const handleUniqueFeaturesChange = (e) => {
-    dispatch(setUniqueFeatures(e.target.value))
-  }
-
-  const handleCurrentStageChange = (e) => {
-    dispatch(setCurrentStage(e.target.value))
-  }
-
-  // const [formData, setFormData] = useState({
-  //   name: '',
-  //   email: '',
-  //   contact: '',
-  //   location: '',
-  //   institute: '',
-  //   aadhar: '',
-  //   category: '',
-  //   teamSize: '',
-  //   enrollmentNum: '',
-  //   teamMembers: '',
-  //   title: '',
-  //   uniqueFeatures: '',
-  //   currentStage: '',
-  //   categoryOther: '',
-  //   otherUniversity: '',
-  //   designation: '',
-  //   otherOrganisation: '',
-  //   otherInstitute: '',
-  // })`
-
   const [selectedFile, setSelectedFile] = useState(null)
 
   const handleFileChange = (event) => {
@@ -154,60 +92,22 @@ const Form = () => {
     borderRadius: 7,
   })
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     [name]: value,
-  //   }))
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   console.log(values)
+  //   API('post', '/api/users/startup-details', values, state.token)
+  //     .then((res) => {
+  //       console.log(res.data)
+  //       setOpen(true)
+  //     })
+  //     .catch((error) => {
+  //       console.error(error.message)
+  //       console.error(error)
+  //       alert(error.response.data.message)
+  //     })
+  //   handleClickOpen()
+  //   // reset()
   // }
-
-  // const handleLocationChange = (event) => {
-  //   const { value } = event.target
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     location: value,
-  //     institute: '',
-  //     aadhar: '',
-  //   }))
-  // }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    console.log(formData)
-    API('post', '/api/users/startup-details', formData, state.token)
-      .then((res) => {
-        console.log(res.data)
-        setOpen(true)
-      })
-      .catch((error) => {
-        console.error(error.message)
-        console.error(error)
-        alert(error.response.data.message)
-      })
-    handleClickOpen()
-    // reset()
-  }
-
-  // const reset = () => {
-  //   setFormData((prevState) => {
-  //     const resetState = {}
-  //     for (const key in prevState) {
-  //       resetState[key] = ''
-  //     }
-  //     return resetState
-  //   })
-  // }
-
-  const [open, setOpen] = useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   return (
     <div className="form-section">
@@ -220,7 +120,8 @@ const Form = () => {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <label htmlFor="name">Name:</label>
-              <input type="text" id="name" value={formData.name} onChange={handleNameChange} required />
+              <input type="text" id="name" value={values.name} onChange={handleChange} onBlur={handleBlur} required />
+              {errors.name && touched.name ? <p className="form-row__error">{errors.name}</p> : null}
             </div>
 
             <div className="form-row">
@@ -229,10 +130,12 @@ const Form = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleEmailChange}
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 required
               />
+              {errors.email && touched.email ? <p className="form-row__error">{errors.email}</p> : null}
             </div>
 
             <div className="form-row">
@@ -241,15 +144,24 @@ const Form = () => {
                 type="tel"
                 id="contact"
                 name="contact"
-                value={formData.contact}
-                onChange={handleContactChange}
+                value={values.contact}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 required
               />
+              {errors.contact && touched.contact ? <p className="form-row__error">{errors.contact}</p> : null}
             </div>
 
             <div className="form-row">
               <label htmlFor="location">Location:</label>
-              <select id="location" name="location" value={formData.location} onChange={handleLocationChange} required>
+              <select
+                id="location"
+                name="location"
+                value={values.location}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+              >
                 <option value="">Select location</option>
                 <option value="Parul University">Parul University</option>
                 <option value="Vadodra Startup Studio">Vadodra Startup Studio</option>
@@ -257,17 +169,19 @@ const Form = () => {
                 <option value="Rajkot Startup Studio">Rajkot Startup Studio</option>
                 <option value="Surat Startup Studio">Surat Startup Studio</option>
               </select>
+              {errors.location && touched.location ? <p className="form-row__error">{errors.location}</p> : null}
             </div>
 
-            {formData.location === 'Parul University' && (
+            {values.location === 'Parul University' && (
               <div className=" additional-input show">
                 <div className="form-row">
                   <label htmlFor="institute">Applicant Institute/Organization Name</label>
                   <select
                     id="institute"
                     name="institute"
-                    value={formData.institute}
-                    onChange={handleInstituteChange}
+                    value={values.institute}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   >
                     <option value="">Select</option>
@@ -333,19 +247,24 @@ const Form = () => {
                     <option value="Parul Institute of Physiotherapy">Parul Institute of Physiotherapy</option>
                     <option value="other">other</option>
                   </select>
+                  {errors.institute && touched.institute ? <p className="form-row__error">{errors.institute}</p> : null}
                 </div>
 
-                {formData.institute === 'other' && (
+                {values.institute === 'other' && (
                   <div className="form-row additional-input show">
                     <label htmlFor="otherInstitute">Specify Other:</label>
                     <input
                       type="text"
                       id="otherInstitute"
                       name="otherInstitute"
-                      value={formData.otherInstitute}
-                      onChange={handleOtherInstituteChange}
+                      value={values.otherInstitute}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                     />
+                    {errors.otherInstitute && touched.otherInstitute ? (
+                      <p className="form-row__error">{errors.otherInstitute}</p>
+                    ) : null}
                   </div>
                 )}
 
@@ -354,8 +273,9 @@ const Form = () => {
                   <select
                     id="category"
                     name="category"
-                    value={formData.category}
-                    onChange={handleCategoryChange}
+                    value={values.category}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   >
                     <option value="">Select location</option>
@@ -364,32 +284,41 @@ const Form = () => {
                     <option value="Parul University Alumni">Parul University Alumni</option>
                     <option value="Other">Other</option>
                   </select>
+                  {errors.category && touched.category ? <p className="form-row__error">{errors.category}</p> : null}
                 </div>
 
-                {formData.category === 'Other' && (
+                {values.category === 'Other' && (
                   <div className="form-row additional-input show">
                     <label htmlFor="categoryOther">Specify Other:</label>
                     <input
                       type="text"
                       id="categoryOther"
                       name="categoryOther"
-                      value={formData.categoryOther}
-                      onChange={handleCategoryOtherChange}
+                      value={values.categoryOther}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                     />
+                    {errors.categoryOther && touched.categoryOther ? (
+                      <p className="form-row__error">{errors.categoryOther}</p>
+                    ) : null}
                   </div>
                 )}
 
                 <div className="form-row">
                   <label htmlFor="enrollmentNum">Applicant Enrollment Number/Employee ID/Alumini ID number</label>
                   <input
-                    type="number"
+                    type="text"
                     id="enrollmentNum"
                     name="enrollmentNum"
-                    value={formData.enrollmentNum}
-                    onChange={handleEnrollmentChange}
+                    value={values.enrollmentNum}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.enrollmentNum && touched.enrollmentNum ? (
+                    <p className="form-row__error">{errors.enrollmentNum}</p>
+                  ) : null}
                 </div>
 
                 <div className="form-row">
@@ -400,10 +329,14 @@ const Form = () => {
                     type="text"
                     id="teamMembers"
                     name="teamMembers"
-                    value={formData.teamMembers}
-                    onChange={handleTeamMembersChange}
+                    value={values.teamMembers}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.teamMembers && touched.teamMembers ? (
+                    <p className="form-row__error">{errors.teamMembers}</p>
+                  ) : null}
                 </div>
 
                 <div className="form-row">
@@ -412,10 +345,12 @@ const Form = () => {
                     type="text"
                     id="title"
                     name="title"
-                    value={formData.title}
-                    onChange={handleTitleChange}
+                    value={values.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.title && touched.title ? <p className="form-row__error">{errors.title}</p> : null}
                 </div>
 
                 <div className="form-row">
@@ -426,10 +361,14 @@ const Form = () => {
                     type="text"
                     id="uniqueFeatures"
                     name="uniqueFeatures"
-                    value={formData.uniqueFeatures}
-                    onChange={handleUniqueFeaturesChange}
+                    value={values.uniqueFeatures}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.uniqueFeatures && touched.uniqueFeatures ? (
+                    <p className="form-row__error">{errors.uniqueFeatures}</p>
+                  ) : null}
                 </div>
 
                 <div className="form-row">
@@ -437,8 +376,9 @@ const Form = () => {
                   <select
                     id="currentStage"
                     name="currentStage"
-                    value={formData.currentStage}
-                    onChange={handleCurrentStageChange}
+                    value={values.currentStage}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   >
                     <option value="">Select</option>
@@ -450,6 +390,9 @@ const Form = () => {
                       Startup Stage (If you have developed a final marketable product/service platform)
                     </option>
                   </select>
+                  {errors.currentStage && touched.currentStage ? (
+                    <p className="form-row__error">{errors.currentStage}</p>
+                  ) : null}
                 </div>
 
                 <div className="uploadFiles">
@@ -478,10 +421,10 @@ const Form = () => {
               </div>
             )}
 
-            {(formData.location === 'Vadodra Startup Studio' ||
-              formData.location === 'Surat Startup Studio' ||
-              formData.location === 'Rajkot Startup Studio' ||
-              formData.location === 'Ahmedabad Startup Studio') && (
+            {(values.location === 'Vadodra Startup Studio' ||
+              values.location === 'Surat Startup Studio' ||
+              values.location === 'Rajkot Startup Studio' ||
+              values.location === 'Ahmedabad Startup Studio') && (
               <div className="additional-input show">
                 <div className="form-row">
                   <label htmlFor="aadhar">Aadhar:</label>
@@ -489,10 +432,12 @@ const Form = () => {
                     type="number"
                     id="aadhar"
                     name="aadhar"
-                    value={formData.aadhar}
-                    onChange={handleAadharChange}
+                    value={values.aadhar}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.aadhar && touched.aadhar ? <p className="form-row__error">{errors.aadhar}</p> : null}
                 </div>
 
                 <div className="form-row">
@@ -500,8 +445,9 @@ const Form = () => {
                   <select
                     id="category"
                     name="category"
-                    value={formData.category}
-                    onChange={handleCategoryChange}
+                    value={values.category}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   >
                     <option value="">Select Category</option>
@@ -509,34 +455,40 @@ const Form = () => {
                     <option value="Other University Staff member">Other University Staff member</option>
                     <option value="Organisation">Organisation</option>
                   </select>
+                  {errors.category && touched.category ? <p className="form-row__error">{errors.category}</p> : null}
                 </div>
 
-                {(formData.category === 'Other University Student' ||
-                  formData.category === 'Other University Staff') && (
+                {(values.category === 'Other University Student' || values.category === 'Other University Staff') && (
                   <div className="form-row additional_input show">
                     <label htmlFor="otherUniversity">University name:</label>
                     <input
                       type="text"
                       id="otherUniversity"
                       name="otherUniversity"
-                      value={formData.otherUniversity}
-                      onChange={handleOtherUniversityChange}
+                      value={values.otherUniversity}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                     />
+                    {errors.otherUniversity && touched.name ? <p className="form-row__error">{errors.name}</p> : null}
                   </div>
                 )}
-                {formData.category === 'Organisation' && (
+                {values.category === 'Organisation' && (
                   <div className="additional_input show">
                     <div className="form-row">
-                      <label htmlFor="otherUniversity">Organisation name:</label>
+                      <label htmlFor="otherOrganisation">Organisation name:</label>
                       <input
                         type="text"
-                        id="otherUniversity"
-                        name="otherUniversity"
-                        value={formData.otherOrganisation}
-                        onChange={handleOtherOrganisationChange}
+                        id="otherOrganisation"
+                        name="otherOrganisation"
+                        value={values.otherOrganisation}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         required
                       />
+                      {errors.otherOrganisation && touched.otherOrganisation ? (
+                        <p className="form-row__error">{errors.otherOrganisation}</p>
+                      ) : null}
                     </div>
                     <div className="form-row">
                       <label htmlFor="designation">Your Designation:</label>
@@ -544,25 +496,32 @@ const Form = () => {
                         type="text"
                         id="designation"
                         name="designation"
-                        value={formData.designation}
-                        onChange={handleOtherDesignationChange}
+                        value={values.designation}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         required
                       />
+                      {errors.designation && touched.designation ? (
+                        <p className="form-row__error">{errors.designation}</p>
+                      ) : null}
                     </div>
                   </div>
                 )}
 
                 <div className="form-row">
-                  <label htmlFor="tem_size">No. of other team members</label>
+                  <label htmlFor="temSize">No. of other team members</label>
                   <input
                     type="number"
                     id="teamSize"
                     name="teamSize"
-                    value={formData.teamSize}
-                    onChange={handleTeamSizeChange}
+                    value={values.teamSize}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.teamSize && touched.teamSize ? <p className="form-row__error">{errors.teamSize}</p> : null}
                 </div>
+
                 <div className="form-row">
                   <label htmlFor="teamMembers">
                     Name of Team Members <span>Separated by comma</span>
@@ -571,10 +530,14 @@ const Form = () => {
                     type="text"
                     id="teamMembers"
                     name="teamMembers"
-                    value={formData.teamMembers}
-                    onChange={handleTeamMembersChange}
+                    value={values.teamMembers}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.teamMembers && touched.teamMembers ? (
+                    <p className="form-row__error">{errors.teamMembers}</p>
+                  ) : null}
                 </div>
 
                 <div className="form-row">
@@ -583,10 +546,12 @@ const Form = () => {
                     type="text"
                     id="title"
                     name="title"
-                    value={formData.title}
-                    onChange={handleTitleChange}
+                    value={values.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.title && touched.title ? <p className="form-row__error">{errors.title}</p> : null}
                 </div>
 
                 <div className="form-row">
@@ -597,10 +562,14 @@ const Form = () => {
                     type="text"
                     id="uniqueFeatures"
                     name="uniqueFeatures"
-                    value={formData.uniqueFeatures}
-                    onChange={handleUniqueFeaturesChange}
+                    value={values.uniqueFeatures}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.uniqueFeatures && touched.uniqueFeatures ? (
+                    <p className="form-row__error">{errors.uniqueFeatures}</p>
+                  ) : null}
                 </div>
 
                 <div className="form-row">
@@ -608,8 +577,9 @@ const Form = () => {
                   <select
                     id="currentStage"
                     name="currentStage"
-                    value={formData.currentStage}
-                    onChange={handleCurrentStageChange}
+                    value={values.currentStage}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   >
                     <option value="">Select</option>
@@ -621,7 +591,11 @@ const Form = () => {
                       Startup Stage (If you have developed a final marketable product/service platform)
                     </option>
                   </select>
+                  {errors.currentStage && touched.currentStage ? (
+                    <p className="form-row__error">{errors.currentStage}</p>
+                  ) : null}
                 </div>
+
                 <div className="uploadFiles">
                   <div className="file-upload-text">
                     <p>Proposal Idea / PPT</p>

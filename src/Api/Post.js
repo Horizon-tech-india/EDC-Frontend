@@ -20,6 +20,7 @@ const url = {
   getAllAdmin: '/api/admin/get-all-admin',
   createNewAdmin: '/api/admin/create-admin',
   updatePayload: '/api/admin/update-startup-details',
+  submitApplicationForm: '/api/users/startup-details',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -178,6 +179,17 @@ export async function UpdatePayload({ value, StartupId, token }) {
     })
     .catch((error) => {
       console.error(error.message)
+      return error
+    })
+}
+
+// submit user common application form
+export async function SubmitApplicationForm({ values, token }) {
+  return API('post', url.submitApplicationForm, values, token)
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
       return error
     })
 }
