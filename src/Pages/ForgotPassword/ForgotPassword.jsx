@@ -1,14 +1,29 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ForgotPasswordStep1 from './ForgotPasswordStep1'
 import ForgotPasswordStep2 from './ForgotPasswordStep2'
 import ForgotPasswordStep3 from './ForgotPasswordStep3'
 import '../../styles/login.scss'
 import left from '../../assets/icons/svg/left.svg'
-
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
+import { ROLES } from '../../constant/ROLES'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { useEffect } from 'react'
 const ForgotPassword = ({ step }) => {
   const [email, setEmail] = useState('')
-
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
+  const { state, login } = useContext(AuthContext)
+  useEffect(() => {
+    setIsLoading(false)
+    if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
+      navigate('/')
+    } else {
+      navigate('/Admin')
+    }
+  }, [state])
   return (
     <div className="wrapper">
       <div className="banner">

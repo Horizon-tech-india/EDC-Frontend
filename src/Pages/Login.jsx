@@ -11,9 +11,10 @@ import google from '../assets/icons/svg/google.svg'
 import linkedin from '../assets/icons/svg/linkedin.svg'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-
+import { ROLES } from '../constant/ROLES'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
+import { useEffect } from 'react'
 
 const initialValues = {
   email: '',
@@ -48,6 +49,14 @@ const Login = () => {
     },
   })
 
+  useEffect(() => {
+    setIsLoading(false)
+    if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
+      navigate('/')
+    } else {
+      navigate('/Admin')
+    }
+  }, [state])
   return (
     <>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
