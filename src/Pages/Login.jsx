@@ -49,14 +49,14 @@ const Login = () => {
     },
   })
 
-  useEffect(() => {
-    setIsLoading(false)
-    if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
-      navigate('/')
-    } else {
-      navigate('/Admin')
-    }
-  }, [state])
+  // useEffect(() => {
+  //   setIsLoading(false)
+  //   if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
+  //     navigate('/')
+  //   } else {
+  //     navigate('/Admin')
+  //   }
+  // }, [state])
   return (
     <>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
