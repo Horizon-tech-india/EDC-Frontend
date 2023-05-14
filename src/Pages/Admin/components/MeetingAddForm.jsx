@@ -84,8 +84,8 @@ const MeetingAddForm = ({ submitMeetingData }) => {
         >
           Add New Meeting
         </h1>
-        <div className="grid cols-span-12 w-full max-w-3xl">
-          <div className="input__container col-span-6">
+        <div className="grid cols-span-12 w-full gap-3 max-w-3xl">
+          <div className="input__container col-span-5">
             <label htmlFor="firstName">Title</label>
             <input
               className="border border-gray-400"
@@ -99,21 +99,8 @@ const MeetingAddForm = ({ submitMeetingData }) => {
             />
             {errors.title && touched.title ? <p className="input-block__error">{errors.title}</p> : null}
           </div>
-          <div className="input__container col-span-6">
-            <label htmlFor="link">Meeting Link</label>
-            <input
-              className="border border-gray-400"
-              type="tel"
-              id="link"
-              name="link"
-              value={values.link}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.link && touched.link ? <p className="input-block__error">{errors.link}</p> : null}
-          </div>
 
-          <div className="input__container col-span-6">
+          <div className="input__container w-full col-span-6">
             <label htmlFor="dateTime">Date and Time</label>
             <input
               className="border border-gray-400"
@@ -125,6 +112,20 @@ const MeetingAddForm = ({ submitMeetingData }) => {
               onBlur={handleBlur}
             />
             {errors.dateTime && touched.dateTime ? <p className="input-block__error">{errors.dateTime}</p> : null}
+          </div>
+
+          <div className="col-span-12 px-4 mb-5">
+            <label htmlFor="link">Meeting Link</label>
+            <input
+              className="border rounded-md bg-[#f3ebeb] w-full py-2 border-gray-400"
+              type="tel"
+              id="link"
+              name="link"
+              value={values.link}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.link && touched.link ? <p className="input-block__error">{errors.link}</p> : null}
           </div>
 
           <div className="col-span-12 px-4 mb-5">

@@ -8,42 +8,37 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import CalendarTable from './CalendarTable'
-import { GetAllMeetingsEventsData } from '../../../Api/Post'
+import { GetAllMeetingsEventsData, GetAllMeetingsEventsDates } from '../../../Api/Post'
 import Typography from '@mui/material/Typography'
 
 const Calendar = () => {
   const { state } = useContext(AuthContext)
   const currentDate = new Date()
   const [date, setDate] = useState(dayjs(currentDate))
-  const [highlightedDays, setHighlightedDays] = useState([1, 2, 10, 11, 12, 15])
-  // const [data, setData] = useState(null)
-  //console.log(date.toDate())
-
-  // const getAllMeetingsEventsData = async () => {
-  //   const token = state.token
-  //   const currentDate = date.toDate().toISOString().split('T')[0]
-  //   //console.log(currentDate)
-  //   try {
-  //     const res = await GetAllMeetingsEventsData({ currentDate, token })
-  //     if (res.status === 200) {
-  //       setData(res.data)
-  //       //handleClose()
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message)
-  //   }
-  // }
+  const [month, setMonth] = useState(date.toDate().toISOString().slice(0, 7))
+  const [highlightedDays, setHighlightedDays] = useState([])
 
   const currentDateIs = date.toDate().toISOString().split('T')[0]
-  const { data, isLoading, error, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
+  const { data, isLoading, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
   useEffect(() => {
     refetch()
   }, [date])
-  console.log(data)
 
-  const handleMonthChange = (date) => {
-    //setHighlightedDays([])
-    //fetchHighlightedDays(date);
+  const { data: dataDates, refetch: refetchDates } = GetAllMeetingsEventsDates(month, state.token)
+
+  useEffect(() => {
+    setHighlightedDays(
+      dataDates?.data?.eventDates || dataDates?.data?.meetingDates
+        ? [...dataDates?.data?.eventDates, ...dataDates?.data?.meetingDates]
+        : [],
+    )
+  }, [dataDates])
+
+  const handleMonthChange = (monthNew) => {
+    setHighlightedDays([])
+    setMonth(monthNew.toDate().toISOString().slice(0, 7))
+    console.log(month)
+    refetchDates()
   }
 
   function ServerDay(props) {
@@ -52,7 +47,7 @@ const Calendar = () => {
     const isSelected = !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) > 0
 
     return (
-      <Badge key={props.day.toString()} overlap="circular" badgeContent={isSelected ? '🟡' : undefined}>
+      <Badge key={props.day.toString()} overlap="circular" badgeContent={isSelected ? '🔴' : undefined}>
         <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
       </Badge>
     )
@@ -75,8 +70,6 @@ const Calendar = () => {
         <div className="calendar">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
-              showDaysOutsideCurrentMonth
-              fixedWeekNumber={6}
               value={date}
               onChange={(newValue) => setDate(newValue)}
               loading={isLoading}
