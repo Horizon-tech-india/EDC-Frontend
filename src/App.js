@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../src/styles/App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './Pages/Login'
@@ -33,8 +33,8 @@ const App = () => {
             <Route path="/admin/events" element={<DashboardAdmin page={'events'} />} />
             <Route path="/admin/calendar" element={<DashboardAdmin page={'calendar'} />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/signup/1" element={<SignUp step={1} />} />
-            <Route exact path="/signup/2" element={<SignUp step={2} />} />
+            <Route exact path="/signup" element={<SignUp  />} />
+            {/* <Route exact path="/signup/2" element={<SignUp step={step} setStep={setStep} />} /> */}
             <Route exact path="/forgot-password/1" element={<ForgotPassword step={1} />} />
             <Route exact path="/forgot-password/2" element={<ForgotPassword step={2} />} />
             <Route exact path="/forgot-password/3" element={<ForgotPassword step={3} />} />

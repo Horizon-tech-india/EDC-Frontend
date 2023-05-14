@@ -44,13 +44,13 @@ const Form = () => {
     onSubmit: async (values) => {
       console.log(values)
       const token = state.token
-      try {
-        const res = await SubmitApplicationForm({ values, token })
-        console.log(res.message)
-        handleOpen()
-      } catch (error) {
-        console.error(error)
-      }
+      // try {
+      //   const res = await SubmitApplicationForm({ values, token })
+      //   console.log(res.message)
+      //   handleOpen()
+      // } catch (error) {
+      //   console.error(error)
+      // }
       // setIsLoading(true)
 
       // setEmail(values.email)

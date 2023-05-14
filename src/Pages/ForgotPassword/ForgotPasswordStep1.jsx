@@ -50,28 +50,8 @@ const SignUpStep1 = ({ setEmail }) => {
       //     }, 1000)
       //   })
 
-<<<<<<< Updated upstream
-      API('post', '/users/resend-otp', body, '')
-        .then((response) => {
-          setTimeout(() => {
-            navigate('/forgot-password/2')
-            setIsLoading(false)
-          }, 1000)
-        })
-        .catch((error) => {
-          console.error(error)
-          setError(error.response.data.message)
-          setOpen(true)
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 1000)
-        })
-    },
-  })
-=======
       resendMutation.isSuccess ? setIsLoading(false).then(()=> navigate('/forgot-password/2')) : setIsLoading(false);
     }})
->>>>>>> Stashed changes
 
   return (
     <>

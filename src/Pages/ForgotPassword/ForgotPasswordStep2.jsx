@@ -33,17 +33,10 @@ const SignUpStep2 = ({ email }) => {
     event.preventDefault()
     const body = { email, otp: otp.join(''), isForgotPassword: true }
     //POST REQUEST
-<<<<<<< Updated upstream
-    API('post', '/users/verify-mail-otp', body, '')
-      .then((response) => {
-        setTimeout(() => {
-          // If successful, redirect to dashboard
-=======
     // API('post', '/api/users/verify-mail-otp', body, '')
     //   .then((response) => {
     //     setTimeout(() => {
     //       // If successful, redirect to dashboard
->>>>>>> Stashed changes
 
     //       navigate('/forgot-password/3')
     //       setIsLoading(false)

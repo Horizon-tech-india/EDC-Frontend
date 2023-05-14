@@ -16,7 +16,7 @@ const Section1 = () => {
             <div className="w-[456px] h-[342px] shadow-md p-2 flex justify-center items-center  md:mr-10">
               <VideoPlayer className="" />
             </div>
-            <div className="w-[585px] h-[240px ">
+            <div className="w-[585px] h-[240px] ">
               <div className="flex items-center font-sans font-bold text-3xl leading-12 py-2 tracking-tight text-black">
                 Leaders in Entrepreneurship
               </div>

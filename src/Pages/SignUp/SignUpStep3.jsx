@@ -47,24 +47,19 @@ const SignUpStep3 = (email) => {
     setIsLoading(true)
 
     event.preventDefault()
-<<<<<<< Updated upstream
-    const body = { email: email, otp: otp.join(''), isForgotPassword: false }
+    const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
 
-    verifyMutation.mutate(body)
+    verifyMutation.mutate(body ,  {onSuccess: (data, variables, context) => {
+      // I will fire second!
+      console.log(data,"dadadadaddad")
+    },
+    onError:(error) =>{
+      console.log(error,"khjgjhg erro/")
+    }
+  }
+    )
     verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
-    navigate('/login')
-=======
-    const body = {  email:email.email, otp: otp.join(''), isForgotPassword: false }
-  
-    verifyMutation.mutate(body);
-    setOpen(true)
-    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false);
-    //  navigate('/login');
-    setTimeout(()=>{
-     navigate('/login');
-
-    },2000)
->>>>>>> Stashed changes
+    // navigate('/login')
   }
 
   const handleResendCode = () => {
@@ -74,7 +69,7 @@ const SignUpStep3 = (email) => {
     setOpen(true)
     setError('code sent')
   }
-  
+  console.log(verifyMutation)
   return (
     <>
     {verifyMutation.isError && (
@@ -88,7 +83,7 @@ const SignUpStep3 = (email) => {
     {verifyMutation.isSuccess && (
       <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {verifyMutation?.data?.msg || 'Rgister suuceesfuly'}
+          {verifyMutation?.data?.msg || 'Register suuceesfuly'}
         </Alert>
       </Snackbar>
     )}

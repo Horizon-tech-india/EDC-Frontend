@@ -45,14 +45,6 @@ function SearchBar() {
     clearTimeout(debounceTimeout)
     debounceTimeout = setTimeout(callback, delay)
   }
-<<<<<<< Updated upstream
-  useEffect(() => {
-    API('get', '/admin/all-startup-details', {}, state.token)
-      // .then((data) => console.log(`SEARCH BAR FILTER`, data?.data?.data))
-      .then((data) => setAllStartups(data?.data?.data))
-      .catch((error) => console.error(error))
-  }, [])
-=======
   
   // useEffect(() => {
     // API('get', '/api/admin/all-startup-details', {}, state.token)
@@ -60,7 +52,6 @@ function SearchBar() {
     //   .then((data) => setAllStartups(data?.data?.data))
     //   .catch((error) => console.error(error))
   // }, [])        
->>>>>>> Stashed changes
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (event.target.closest('.modal')) {

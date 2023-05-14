@@ -11,7 +11,6 @@ const queryConfig = {
 
 // ALL GET URLS
 const url = {
-<<<<<<< Updated upstream
   allStartUp: '/admin/all-startup-details',
   statsKey: '/admin/get-lastmonth-startups?days=30',
   allMeetingEvents: '/admin/get-all-meeting-and-events',
@@ -22,21 +21,10 @@ const url = {
   createNewAdmin: '/admin/create-admin',
   updatePayload: '/admin/update-startup-details',
   submitApplicationForm: '/users/startup-details',
-=======
-  allStartUp: '/api/admin/all-startup-details',
-  statsKey: '/api/admin/get-lastmonth-startups?days=30',
-  allMeetingEvents: '/api/admin/get-all-meeting-and-events',
-  scheduleEvent: '/api/admin/schedule-event-meeting',
-  allMeetingsEventsData: '/api/admin/get-all-meeting-and-events?date',
-  deleteAdmin: '/api/admin/delete-admin?email',
-  getAllAdmin: '/api/admin/get-all-admin',
-  createNewAdmin: '/api/admin/create-admin',
-  updatePayload: '/api/admin/update-startup-details',
   userSignup:'/users/signup',
   userVerifyMailOtp: '/users/verify-mail-otp',
   userResendOtp:'/users/resend-otp',
   setNewPassword:'/users/set-new-password'
->>>>>>> Stashed changes
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -218,15 +206,6 @@ export const signup1 = (values) => {
 
 // verifyOtp APi
 export const VerifyOtp = (values) => {
-<<<<<<< Updated upstream
-  API('post', '/users/verify-mail-otp', values, '')
-}
-
-// Resend Otp Api
-export const ResendOtp = (body) => {
-  API('post', '/users/resend-otp', body, '')
-}
-=======
   API('post', url.userVerifyMailOtp, values, '')
 };
 
@@ -234,7 +213,6 @@ export const ResendOtp = (body) => {
 export const ResendOtp = (body) => {
   API('post', url.userResendOtp , body, '')
 };
->>>>>>> Stashed changes
 
 // ForgotPAssword Api
 export const ForgotPassword = (body) => {
@@ -243,5 +221,5 @@ export const ForgotPassword = (body) => {
 
 // Startup detail insert
 export const StartupData = (formdata, token) => {
-  API('post', '/api/users/startup-details', formdata, token)
+  API('post', url.submitApplicationForm, formdata, token)
 }

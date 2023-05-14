@@ -90,7 +90,7 @@ const Login = () => {
         <div className="login__container">
           <div className="signup-link">
             <p>Don't have an account?</p>
-            <Link to="/signup/1">Signup</Link>
+            <Link to="/signup/">Signup</Link>
           </div>
           <div className="login__head">
             <h2>Welcome</h2>
