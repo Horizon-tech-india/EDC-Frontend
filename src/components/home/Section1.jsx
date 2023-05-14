@@ -12,11 +12,11 @@ const Section1 = () => {
     <>
       <div className="w-full  bg-white h-[500px] flex justify-center items-center">
         <div className="relative w-[1125px] justify-center flex items-center h-[378px]">
-          <div className="flex flex-row bg-white z-10  justify-center items-center ">
+          <div className="md:flex flex-row bg-white z-10 sm:grid justify-center items-center  ">
             <div className="w-[456px] h-[342px] shadow-md p-2 flex justify-center items-center  md:mr-10">
               <VideoPlayer className="" />
             </div>
-            <div className="w-[585px] h-[240px ">
+            <div className="w-[585px] h-[240px] ">
               <div className="flex items-center font-sans font-bold text-3xl leading-12 py-2 tracking-tight text-black">
                 Leaders in Entrepreneurship
               </div>
