@@ -13,13 +13,11 @@ const EventAddSection = () => {
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {isLoading ? (
-            <Spinner />
-          ) : data ? (
-            <EventManageTable data={data?.data?.events} refetch={refetch} />
-          ) : (
-            <div>No data found</div>
-          )}
+          <EventManageTable
+            isLoading={isLoading}
+            data={data?.data?.events ? data?.data?.events : []}
+            refetch={refetch}
+          />
         </div>
       </div>
     </div>

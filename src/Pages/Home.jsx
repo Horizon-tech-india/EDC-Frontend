@@ -15,6 +15,10 @@ const App = () => {
   const navigate = useNavigate()
   const { state } = useContext(AuthContext)
   useEffect(() => {
+    if (state.isAuthenticated === false) {
+      localStorage.clear() // Clears local storage
+      sessionStorage.clear() // Clears session storage
+    }
     setIsLoading(false)
     if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN) {
       navigate('/')

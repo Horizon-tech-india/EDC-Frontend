@@ -15,6 +15,7 @@ import store from './components/slices/store'
 import TokenExpirationTime from './context/TokenExpirationTime'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
+import NotFound from './Pages/NotFound'
 const App = () => {
   const { dispatch, state } = useContext(AuthContext)
   useEffect(() => {
@@ -42,7 +43,8 @@ const App = () => {
             <Route exact path="/application" element={<ApplicationStatus />} />
             <Route exact path="/dashboard" element={<Dashboard />} />
             <Route exact path="/document" element={<Document />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </Provider>

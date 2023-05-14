@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import AdminDashboardModal from './AdminDashboardModal'
 import { GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
 
-const StartupsTable = ({ data, refetch }) => {
+const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -171,6 +171,7 @@ const StartupsTable = ({ data, refetch }) => {
       />
       <MaterialReactTable
         data={data}
+        state={{ isLoading: isLoading }}
         columns={columns}
         enableStickyHeader
         enableStickyFooter
