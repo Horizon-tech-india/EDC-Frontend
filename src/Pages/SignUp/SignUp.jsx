@@ -5,9 +5,6 @@ import SignUpStep1 from './SignUpStep1'
 import SignUpStep2 from './SignUpStep2'
 import SignUpStep3 from './SignUpStep3'
 import left from '../../assets/icons/svg/left.svg'
-import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
-import { ROLES } from '../../constant/ROLES'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useEffect } from 'react'
@@ -15,13 +12,11 @@ const SignUp = ({ step }) => {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { state, login } = useContext(AuthContext)
+  const { state } = useContext(AuthContext)
   useEffect(() => {
     setIsLoading(false)
-    if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
-      navigate('/')
-    } else {
-      navigate('/Admin')
+    if (state?.isAuthenticated === true) {
+      return navigate('/Admin')
     }
   }, [state])
   return (

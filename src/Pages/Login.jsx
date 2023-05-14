@@ -11,7 +11,6 @@ import google from '../assets/icons/svg/google.svg'
 import linkedin from '../assets/icons/svg/linkedin.svg'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { ROLES } from '../constant/ROLES'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useEffect } from 'react'
@@ -24,44 +23,63 @@ const initialValues = {
 
 const Login = () => {
   const [open, setOpen] = useState(false)
+  const [openMsg, setOpenMsg] = useState('')
   const handleClose = () => setOpen(false)
   const [passwordHidden, setPasswordHidden] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { state, login } = useContext(AuthContext)
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setOpen(false)
+  }
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: loginSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsLoading(true)
-      login(values)
-      if (state.error === null) {
-        setTimeout(() => {
+      try {
+        const res = await login(values)
+        if (res?.data?.status === 200) {
+          setOpenMsg(res?.data?.message)
+          setOpen(true)
           navigate('/Admin')
           setIsLoading(false)
-        }, 1000)
-      } else if (state.error) {
-        setOpen(true)
-        setTimeout(() => {
+        }
+        if (res?.response?.data?.status === 400) {
+          setOpenMsg(res?.response?.data?.message)
+          setOpen(true)
           setIsLoading(false)
-        }, 1000)
+        }
+        if (res?.response?.data?.status === 404) {
+          setOpenMsg(res?.response?.data?.message)
+          setOpen(true)
+          setIsLoading(false)
+        }
+      } catch (error) {
+        setOpenMsg(error?.message)
+        setOpen(true)
+        setIsLoading(false)
       }
     },
   })
 
-  // useEffect(() => {
-  //   setIsLoading(false)
-  //   if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
-  //     navigate('/')
-  //   } else {
-  //     navigate('/Admin')
-  //   }
-  // }, [state])
+  useEffect(() => {
+    setIsLoading(false)
+    if (state?.isAuthenticated === false) {
+      return navigate('/login')
+    }
+    if (state?.isAuthenticated === true) {
+      return navigate('/Admin')
+    }
+  }, [state])
   return (
     <>
-      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {state.error && <p>{state.error}</p>}
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
+        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {openMsg && openMsg}
         </Alert>
       </Snackbar>
       <div className="wrapper">
@@ -130,6 +148,9 @@ const Login = () => {
                 <label htmlFor="rememberMe">Remember Me</label>
               </div>
               <Link to="/forgot-password/1">Forgot Password?</Link>
+            </div>
+            <div className="w-full flex justify-center items-center">
+              <span className="text-xl text-red-500  mx-auto text-center px-2 py-1"> {openMsg && openMsg}</span>
             </div>
             <div className="input-block">
               <button disabled={isLoading} className="submit-btn" type="submit">
