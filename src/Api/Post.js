@@ -16,11 +16,11 @@ const url = {
   allMeetingEvents: '/admin/get-all-meeting-and-events',
   scheduleEvent: '/admin/schedule-event-meeting',
   allMeetingsEventsData: '/admin/get-all-meeting-and-events?date',
+  allMeetingsEventsDates: '/admin/event-meeting-dates?yearAndMonth',
   deleteAdmin: '/admin/delete-admin?email',
   getAllAdmin: '/admin/get-all-admin',
   createNewAdmin: '/admin/create-admin',
   updatePayload: '/admin/update-startup-details',
-  submitApplicationForm: '/users/startup-details',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -125,6 +125,21 @@ export function GetAllMeetingsEventsData(currentDate, token) {
   }
 }
 
+// Calendar Meetings Events Highlighted dates api
+
+export function GetAllMeetingsEventsDates(currentMonth, token) {
+  const queryKey = 'allMeetingsEventsDates'
+  const queryFn = () => API('get', `${url.allMeetingsEventsDates}=${currentMonth}`, {}, token)
+  const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
+}
+
 // Admin Delete Api
 
 export async function DeleteAdmin({ email, token }) {
@@ -185,7 +200,7 @@ export async function UpdatePayload({ value, StartupId, token }) {
 
 // submit user common application form
 export async function SubmitApplicationForm({ values, token }) {
-  return API('post', url.submitApplicationForm, values, token)
+  return API('post', '/users/startup-details', values, token)
     .then((res) => {
       return res
     })
