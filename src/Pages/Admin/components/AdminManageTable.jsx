@@ -3,15 +3,16 @@ import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
 import { Alert, Box, IconButton, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
-// import { DeleteAdmin } from '../../../Api/deleteAdmin' //or use your library of choice here
 import AdminAddModal from './AdminAddModal'
 import { DeleteAdmin } from '../../../Api/Post'
+import AdminViewModal from './AdminViewModal'
 const AdminManageTable = ({ data, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalData, setModalData] = useState(data[0])
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
   const liStyl = 'font-bold px-0.5 capitalize text-xs text-[#b4cd93]'
   const columns = [
@@ -45,16 +46,16 @@ const AdminManageTable = ({ data, refetch }) => {
       ),
       size: 100,
     },
-    {
-      accessorKey: 'branch',
-      header: 'Branch',
-      Cell: ({ cell }) => (
-        <Box component="span" className="capitalize">
-          <span className="font-light truncate text-black"> {cell?.getValue()}</span>
-        </Box>
-      ),
-      size: 100,
-    },
+    // {
+    //   accessorKey: 'branch',
+    //   header: 'Branch',
+    //   Cell: ({ cell }) => (
+    //     <div   className="capitalize w-60">
+    //       <span className="font-light w-60 truncate text-black"> {cell?.getValue()}</span>
+    //     </div>
+    //   ),
+    //   size: 100,
+    // },
   ]
   const csvOptions = {
     fieldSeparator: ',',
@@ -77,14 +78,13 @@ const AdminManageTable = ({ data, refetch }) => {
     refetch()
   }
   const handleClickDelete = async (email) => {
-    console.log(`HANDEL DELETE`, email)
     const { token } = state
     try {
       const res = await DeleteAdmin({ email, token })
       if (res.status === 200) {
         setOpenMsg(res.data.message)
-        setOpen(true)
         handleRefresh()
+        setOpen(true)
       }
     } catch (error) {
       setOpenMsg(error.message)
@@ -101,6 +101,11 @@ const AdminManageTable = ({ data, refetch }) => {
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
+  const handlePreview = (rowData) => {
+    //console.log(rowData)
+    setModalData(rowData)
+    setModalOpen(!modalOpen)
+  }
   return (
     <>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -108,6 +113,13 @@ const AdminManageTable = ({ data, refetch }) => {
           {openMsg && openMsg}
         </Alert>
       </Snackbar>
+      <AdminViewModal
+        isOpen={modalOpen}
+        data={modalData}
+        onClose={() => {
+          setModalOpen(!modalOpen)
+        }}
+      />
       <AdminAddModal isOpen={isOpen} refetch={refetch} onClose={toggleOpen} />
       <MaterialReactTable
         data={data}
@@ -173,12 +185,19 @@ const AdminManageTable = ({ data, refetch }) => {
           </Box>
         )}
         renderRowActions={({ row, table }) => (
-          <Box sx={{ display: 'flex', flexWrap: 'nowrap' }}>
-            <IconButton onClick={() => handleClickDelete(row.original.email)}>
-              <span className="px-2 py-1 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                Delete
-              </span>
-            </IconButton>
+          <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+            <button
+              className="bg-[#b4cd93] ml-2 text-xs  font-light h-6 w-10 rounded-md hover:bg-[#6b9239]"
+              onClick={() => handlePreview(row.original)}
+            >
+              View
+            </button>
+            <button
+              className="bg-[#ff9494] ml-2 text-xs  font-light h-6 w-10 rounded-md hover:bg-[#923939]"
+              onClick={() => handleClickDelete(row.original.email)}
+            >
+              Delete
+            </button>
           </Box>
         )}
         muiTablePaperProps={{
@@ -189,16 +208,16 @@ const AdminManageTable = ({ data, refetch }) => {
             border: '0px',
           },
         }}
-        renderDetailPanel={({ row }) => (
-          <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
-            {Object?.entries(row.original).map(([key, value]) => (
-              <Typography key={key} className="text-sm">
-                <span className={liStyl}>{key}:</span>
-                <span className="text-sm  ">{value || 'N/A'}</span>
-              </Typography>
-            ))}
-          </Box>
-        )}
+        // renderDetailPanel={({ row }) => (
+        //   <Box className="grid grid-cols-4 bg-gray-50 p-2 rounded-md shadow  bg gap-1 w-auto">
+        //     {Object?.entries(row.original).map(([key, value]) => (
+        //       <Typography key={key} className="text-sm">
+        //         <span className={liStyl}>{key}:</span>
+        //         <span className="text-sm  ">{value || 'N/A'}</span>
+        //       </Typography>
+        //     ))}
+        //   </Box>
+        // )}
       />
     </>
   )

@@ -129,7 +129,7 @@ export function GetAllMeetingsEventsData(currentDate, token) {
 
 export async function DeleteAdmin({ email, token }) {
   const payload = {}
-  return API('get', `${url.deleteAdmin}=${email}`, payload, token)
+  return API('DELETE', `${url.deleteAdmin}=${email}`, payload, token)
     .then((res) => {
       console.log(res.data.data)
       return res
@@ -155,7 +155,7 @@ export function GetAllAdmin(token) {
   }
 }
 
-export async function CreateNewAdmin({ body, token }) {
+export async function CreateNewAdmin(body, token) {
   return API('post', url.createNewAdmin, body, token)
     .then((res) => {
       return res
