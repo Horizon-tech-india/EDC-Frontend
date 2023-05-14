@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import AdminLogo from '../../../assets/icons/svg/AdminLogo.svg'
 import category from '../../../assets/icons/svg/category.svg'
 import gallery from '../../../assets/icons/svg/gallery.svg'
@@ -30,6 +30,7 @@ const UserProfile = () => {
   )
 }
 const Drawer = () => {
+  const navigate = useNavigate()
   const { logout } = useContext(AuthContext)
   const { pathname } = useLocation()
   const Styles = {
@@ -40,6 +41,7 @@ const Drawer = () => {
   //console.log(pathname)
   const handleLogout = async () => {
     await logout()
+    navigate('/')
   }
 
   return (
