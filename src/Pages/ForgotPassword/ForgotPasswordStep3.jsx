@@ -16,7 +16,7 @@ const initialValues = {
   confirm_password: '',
 }
 
-const SignUpStep3 = ({ email }) => {
+const SignUpStep3 = ( email ) => {
   const forgotPasswordMutation = useMutation({
     mutationFn: (values) => ForgotPassword(values),
   })
@@ -35,7 +35,7 @@ const SignUpStep3 = ({ email }) => {
       setIsLoading(true)
 
       const body = {
-        email,
+        email: email.email,
         newPassword: values.new_password,
         confirmNewPassword: values.confirm_password,
       }

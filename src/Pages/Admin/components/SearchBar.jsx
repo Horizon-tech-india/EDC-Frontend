@@ -1,7 +1,7 @@
 import searchIcon from '../../../assets/search-normal.svg'
 import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { API } from '../../../Api/Post'
+import { API, GetAllStartup } from '../../../Api/Post'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 // import div from '@mui/material/div'
@@ -38,18 +38,29 @@ function SearchBar() {
     updatedAt: '',
   })
   const { state } = useContext(AuthContext)
+  const { data, isLoading, refetch } = GetAllStartup(state.token)
   let debounceTimeout
 
   const debounce = (callback, delay) => {
     clearTimeout(debounceTimeout)
     debounceTimeout = setTimeout(callback, delay)
   }
+<<<<<<< Updated upstream
   useEffect(() => {
     API('get', '/admin/all-startup-details', {}, state.token)
       // .then((data) => console.log(`SEARCH BAR FILTER`, data?.data?.data))
       .then((data) => setAllStartups(data?.data?.data))
       .catch((error) => console.error(error))
   }, [])
+=======
+  
+  // useEffect(() => {
+    // API('get', '/api/admin/all-startup-details', {}, state.token)
+    //   // .then((data) => console.log(`SEARCH BAR FILTER`, data?.data?.data))
+    //   .then((data) => setAllStartups(data?.data?.data))
+    //   .catch((error) => console.error(error))
+  // }, [])        
+>>>>>>> Stashed changes
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (event.target.closest('.modal')) {
@@ -65,8 +76,8 @@ function SearchBar() {
   }, [])
 
   useEffect(() => {
-    if (Array.isArray(allStartups)) {
-      const filtered = allStartups.filter((item) => item.name.toLowerCase().includes(inputValue.toLowerCase()))
+    if (Array.isArray(data?.data?.data)) {
+      const filtered = data.data.data.filter((item) => item.name.toLowerCase().includes(inputValue.toLowerCase()))
       setFilteredData(filtered)
     } else {
       console.log(`not an array`)
@@ -289,7 +300,7 @@ function SearchBar() {
             <div className="w-full flex my-2 justify-center items-center">
               <Button onClick={handleClose} size="sm" variant="contained" color="success">
                 Close
-              </Button>
+              </Button> 
             </div>
           </Box>
         </Modal>

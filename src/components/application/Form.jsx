@@ -7,7 +7,9 @@ import '../../styles/form.scss'
 import { API } from '../../Api/Post'
 import { userCommonApplicationFormSchema } from '../../validation/formSchema'
 import { useFormik } from 'formik'
-import { SubmitApplicationForm } from '../../Api/Post'
+import { 
+  
+ } from '../../Api/Post'
 
 const initialValues = {
   name: '',

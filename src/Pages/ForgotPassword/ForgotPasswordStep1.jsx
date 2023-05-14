@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { API } from '../../Api/Post'
+import { API, ResendOtp } from '../../Api/Post'
 import { forgotPasswordSchemaStep1 } from '../../validation/formSchema'
 import '../../styles/login.scss'
 import '../../styles/signup.scss'
 import mail from '../../assets/icons/svg/mail.svg'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import { useMutation } from '@tanstack/react-query'
 
 const initialValues = {
   email: '',
@@ -19,7 +20,10 @@ const SignUpStep1 = ({ setEmail }) => {
   const handleClose = () => setOpen(false)
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-
+  const resendMutation = useMutation({
+    mutationFn:  (values ) => ResendOtp(values),
+    onSuccess: ()=>console.log("sss")
+  })
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchemaStep1,
@@ -29,7 +33,24 @@ const SignUpStep1 = ({ setEmail }) => {
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
       //POST REQUEST
+      resendMutation.mutate(body);
+      // API('post', '/api/users/resend-otp', body, '')
+      //   .then((response) => {
+      //     setTimeout(() => {
+      //       navigate('/forgot-password/2')
+      //       setIsLoading(false)
+      //     }, 1000)
+      //   })
+      //   .catch((error) => {
+      //     console.error(error)
+      //     setError(error.response.data.message)
+      //     setOpen(true)
+      //     setTimeout(() => {
+      //       setIsLoading(false)
+      //     }, 1000)
+      //   })
 
+<<<<<<< Updated upstream
       API('post', '/users/resend-otp', body, '')
         .then((response) => {
           setTimeout(() => {
@@ -47,6 +68,10 @@ const SignUpStep1 = ({ setEmail }) => {
         })
     },
   })
+=======
+      resendMutation.isSuccess ? setIsLoading(false).then(()=> navigate('/forgot-password/2')) : setIsLoading(false);
+    }})
+>>>>>>> Stashed changes
 
   return (
     <>

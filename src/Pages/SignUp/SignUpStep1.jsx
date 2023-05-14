@@ -45,6 +45,7 @@ const SignUpStep1 = ({ setEmail }) => {
 
       setEmail(values.email)
 
+<<<<<<< Updated upstream
       mutation.mutate(values)(
         mutation.isError
           ? setOpen(true)
@@ -56,13 +57,34 @@ const SignUpStep1 = ({ setEmail }) => {
     },
   })
   console.log(mutation ? 'true' : 'false', mutation)
+=======
+        (mutation.isError ? setOpen(true):setTimeout(()=>{ navigate('/signup/2'); setIsLoading(false)},1000));
+      
+    },
+  })
+  
+>>>>>>> Stashed changes
   return (
     <>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    {
+      mutation.isError && (
+        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {/* {mutation.error.message} */}
+        Error
         </Alert>
-      </Snackbar>
+      </Snackbar>)
+
+    }
+    {
+      mutation.isSuccess && (
+      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {/* {error} */}
+          Code Sent
+        </Alert>
+      </Snackbar>)
+    }
       <div className="login__head">
         <h2>Register your account</h2>
         <p>Fill the details below to submit register account</p>

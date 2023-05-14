@@ -10,6 +10,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { useEffect } from 'react'
 const SignUp = ({ step }) => {
   const [email, setEmail] = useState('')
+<<<<<<< Updated upstream
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { state } = useContext(AuthContext)
@@ -19,6 +20,9 @@ const SignUp = ({ step }) => {
       return navigate('/Admin')
     }
   }, [state])
+=======
+console.log(step,"llll")
+>>>>>>> Stashed changes
   return (
     <div className="wrapper">
       <div className="banner">

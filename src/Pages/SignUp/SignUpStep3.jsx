@@ -47,11 +47,24 @@ const SignUpStep3 = (email) => {
     setIsLoading(true)
 
     event.preventDefault()
+<<<<<<< Updated upstream
     const body = { email: email, otp: otp.join(''), isForgotPassword: false }
 
     verifyMutation.mutate(body)
     verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
     navigate('/login')
+=======
+    const body = {  email:email.email, otp: otp.join(''), isForgotPassword: false }
+  
+    verifyMutation.mutate(body);
+    setOpen(true)
+    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false);
+    //  navigate('/login');
+    setTimeout(()=>{
+     navigate('/login');
+
+    },2000)
+>>>>>>> Stashed changes
   }
 
   const handleResendCode = () => {
@@ -61,13 +74,24 @@ const SignUpStep3 = (email) => {
     setOpen(true)
     setError('code sent')
   }
+  
   return (
     <>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    {verifyMutation.isError && (
+      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {/* {error} */}
+          {verifyMutation.error.message  || " Error"}
         </Alert>
       </Snackbar>
+    )}
+    {verifyMutation.isSuccess && (
+      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {verifyMutation?.data?.msg || 'Rgister suuceesfuly'}
+        </Alert>
+      </Snackbar>
+    )}
       <div className="login__head">
         <h2>Check your Mail</h2>
         <p>We've sent a 6 digit confirmation code to username@gmail.com. Make sure you enter correct code</p>
