@@ -1,15 +1,9 @@
-import React, { useContext, useState } from 'react'
-import { AuthContext } from '../../../context/AuthContext'
+import React, { useState } from 'react'
 import MaterialReactTable from 'material-react-table'
-import { Alert, Box, IconButton, Snackbar, Typography } from '@mui/material'
-import EventAddModal from './EventAddModal'
+import { Box } from '@mui/material'
 import ModalEventMeeting from './ModalEventMeeting'
 
-import { Preview as PreviewIcon } from '@mui/icons-material'
-
-const CalendarTable = ({ data, refetch }) => {
-  const [open, setOpen] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+const CalendarTable = ({ data, refetch, isLoading }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState(data[0])
 
@@ -63,7 +57,6 @@ const CalendarTable = ({ data, refetch }) => {
   ]
 
   const handlePreview = (rowData) => {
-    //console.log(rowData)
     setModalData(rowData)
     setModalOpen(!modalOpen)
   }
@@ -78,6 +71,7 @@ const CalendarTable = ({ data, refetch }) => {
         }}
       />
       <MaterialReactTable
+        state={{ isLoading: isLoading }}
         data={data}
         columns={columns}
         enableStickyHeader

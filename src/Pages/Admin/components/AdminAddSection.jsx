@@ -11,7 +11,7 @@ const AdminAddSection = () => {
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {isLoading ? <Spinner /> : <AdminManageTable data={data?.data?.data} refetch={refetch} />}
+          <AdminManageTable isLoading={isLoading} data={data?.data?.data ? data?.data?.data : []} refetch={refetch} />
         </div>
       </div>
     </div>

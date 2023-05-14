@@ -86,8 +86,8 @@ const EventAddForm = ({ submitEventData }) => {
     <div className="  w-full">
       <form onSubmit={handleSubmit} className=" ">
         <h1 className="w-full text-2xl text-center font-light">Add New Event</h1>
-        <div className="grid cols-span-12 my-2 gap-1 w-full max-w-5xl">
-          <div className="input__container w-48  col-span-4">
+        <div className="grid cols-span-12 my-2 gap-1 w-full max-w-4xl">
+          <div className="input__container w-70  col-span-5">
             <label htmlFor="firstName">Title</label>
             <input
               className="border border-gray-400"
@@ -101,7 +101,7 @@ const EventAddForm = ({ submitEventData }) => {
             />
             {errors.title && touched.title ? <p className="input-block__error">{errors.title}</p> : null}
           </div>
-          <div className="input__container w-48  col-span-4">
+          <div className="input__container w-70  col-span-5">
             <label htmlFor="dateTime">Date and Time</label>
             <input
               className="border border-gray-400"
