@@ -119,10 +119,7 @@ const StartupsTable = ({ data, refetch }) => {
     refetch()
   }
   const handleClickPayload = async ({ value, StartupId }) => {
-    // console.log(value, StartupId)
-
     const { token } = state
-
     try {
       const res = await UpdatePayload({ value, StartupId, token })
       if (res.status === 200) {

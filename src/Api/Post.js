@@ -3,10 +3,10 @@ import axios from 'axios'
 const BASE_URL = process.env.REACT_APP_API_URL
 ///  HOW TO USE   const { data, isLoading, isError, refetch } = fnc('your-token');
 const queryConfig = {
-  // cacheTime: 10 * 60 * 1000,
-  refetchOnWindowFocus: true,
-  refetchOnMount: true,
-  // staleTime: Infinity,
+  cacheTime: 10 * 60 * 10000,
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+  staleTime: Infinity,
 }
 
 // ALL GET URLS
