@@ -5,7 +5,7 @@ import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import EventAddModal from './EventAddModal'
 import ModalEventMeeting from './ModalEventMeeting'
 
-const EventManageTable = ({ data, refetch }) => {
+const EventManageTable = ({ data, refetch, isLoading }) => {
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -127,6 +127,7 @@ const EventManageTable = ({ data, refetch }) => {
       />
       <MaterialReactTable
         data={data}
+        state={{ isLoading: isLoading }}
         columns={columns}
         enableStickyHeader
         enableStickyFooter

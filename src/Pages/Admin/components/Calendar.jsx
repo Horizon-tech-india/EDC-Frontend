@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import dayjs from 'dayjs'
 import { AuthContext } from '../../../context/AuthContext'
+import Badge from '@mui/material/Badge'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
+import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
+import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import CalendarTable from './CalendarTable'
 import { GetAllMeetingsEventsData } from '../../../Api/Post'
 import Typography from '@mui/material/Typography'
@@ -12,6 +15,7 @@ const Calendar = () => {
   const { state } = useContext(AuthContext)
   const currentDate = new Date()
   const [date, setDate] = useState(dayjs(currentDate))
+  const [highlightedDays, setHighlightedDays] = useState([1, 2, 10, 11, 12, 15])
   // const [data, setData] = useState(null)
   //console.log(date.toDate())
 
@@ -36,6 +40,24 @@ const Calendar = () => {
     refetch()
   }, [date])
   console.log(data)
+
+  const handleMonthChange = (date) => {
+    //setHighlightedDays([])
+    //fetchHighlightedDays(date);
+  }
+
+  function ServerDay(props) {
+    const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props
+
+    const isSelected = !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) > 0
+
+    return (
+      <Badge key={props.day.toString()} overlap="circular" badgeContent={isSelected ? '🟡' : undefined}>
+        <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+      </Badge>
+    )
+  }
+
   return (
     <div className="calendar-container">
       <div className="calendar-section">
@@ -57,12 +79,23 @@ const Calendar = () => {
               fixedWeekNumber={6}
               value={date}
               onChange={(newValue) => setDate(newValue)}
+              loading={isLoading}
+              onMonthChange={handleMonthChange}
+              renderLoading={() => <DayCalendarSkeleton />}
+              slots={{
+                day: ServerDay,
+              }}
+              slotProps={{
+                day: {
+                  highlightedDays,
+                },
+              }}
             />
           </LocalizationProvider>
         </div>
       </div>
       <div className="calendar-table">
-        {data && <CalendarTable data={[...data.data.events, ...data.data.meetings]} />}
+        <CalendarTable isLoading={isLoading} data={data ? [...data?.data?.events, ...data?.data?.meetings] : []} />
       </div>
     </div>
   )

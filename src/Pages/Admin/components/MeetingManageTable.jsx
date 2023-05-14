@@ -6,7 +6,7 @@ import MeetingAddModal from './MeetingAddModal'
 import ModalEventMeeting from './ModalEventMeeting'
 import { Preview as PreviewIcon } from '@mui/icons-material'
 
-const MeetingManageTable = ({ data, refetch }) => {
+const MeetingManageTable = ({ data, refetch, isLoading }) => {
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -127,6 +127,7 @@ const MeetingManageTable = ({ data, refetch }) => {
       />
       <MaterialReactTable
         data={data}
+        state={{ isLoading: isLoading }}
         enableRowActions
         columns={columns}
         enableStickyHeader

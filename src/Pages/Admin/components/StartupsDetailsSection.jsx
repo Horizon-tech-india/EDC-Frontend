@@ -10,13 +10,7 @@ export const StartupsDetailsSection = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Spinner />
-      ) : data ? (
-        <StartupsTable data={data?.data?.data} refetch={refetch} />
-      ) : (
-        <div>No data found</div>
-      )}
+      <StartupsTable isLoading={isLoading} data={data?.data?.data ? data?.data?.data : []} refetch={refetch} />
     </>
   )
 }

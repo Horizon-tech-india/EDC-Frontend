@@ -6,7 +6,8 @@ import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import AdminAddModal from './AdminAddModal'
 import { DeleteAdmin } from '../../../Api/Post'
 import AdminViewModal from './AdminViewModal'
-const AdminManageTable = ({ data, refetch }) => {
+
+const AdminManageTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -123,6 +124,7 @@ const AdminManageTable = ({ data, refetch }) => {
       <AdminAddModal isOpen={isOpen} refetch={refetch} onClose={toggleOpen} />
       <MaterialReactTable
         data={data}
+        state={{ isLoading: isLoading }}
         columns={columns}
         enableStickyHeader
         enableStickyFooter

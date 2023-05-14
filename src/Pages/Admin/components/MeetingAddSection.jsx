@@ -11,13 +11,11 @@ const MeetingAddSection = () => {
     <div>
       <div className="all-applications-wrapper">
         <div className="all-applications-body">
-          {isLoading ? (
-            <Spinner />
-          ) : data ? (
-            <MeetingManageTable data={data?.data?.meetings} refetch={refetch} />
-          ) : (
-            <div>No data found</div>
-          )}
+          <MeetingManageTable
+            isLoading={isLoading}
+            data={data?.data?.meetings ? data?.data?.meetings : []}
+            refetch={refetch}
+          />
         </div>
       </div>
     </div>
