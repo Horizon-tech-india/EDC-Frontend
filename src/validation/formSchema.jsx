@@ -71,3 +71,32 @@ export const meetingAddSchema = Yup.object({
   dateTime: Yup.string().required('Please choose a date'),
   link: Yup.string().required('Please enter a link'),
 })
+
+export const userCommonApplicationFormSchema = Yup.object({
+  name: Yup.string().required('Please enter your name'),
+  email: Yup.string().email().required('Please enter your Email ID'),
+  contact: Yup.string()
+    .matches(/^[0-9]\d{9}$/, {
+      message: 'Please enter a 10 digit valid number.',
+      excludeEmptyString: false,
+    })
+    .required('Please enter your Phone number'),
+  location: Yup.string().required('Please choose a location'), // applying from - PU, VSS, ASS, RSS, SSS
+  institute: Yup.string(),
+  otherInstitute: Yup.string(),
+  aadhar: Yup.string().matches(/^[0-9]\d{9}$/, {
+    message: 'Please enter a 12 digit valid aadhar number.',
+    excludeEmptyString: false,
+  }),
+  category: Yup.string(), // application category - student,staff,alumni,other
+  categoryOther: Yup.string(), //
+  otherUniversity: Yup.string(),
+  otherOrganisation: Yup.string(),
+  designation: Yup.string(),
+  enrollmentNum: Yup.string(),
+  teamSize: Yup.string(),
+  teamMembers: Yup.string(),
+  title: Yup.string(),
+  uniqueFeatures: Yup.string(),
+  currentStage: Yup.string(),
+})

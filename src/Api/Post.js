@@ -20,6 +20,7 @@ const url = {
   getAllAdmin: '/admin/get-all-admin',
   createNewAdmin: '/admin/create-admin',
   updatePayload: '/admin/update-startup-details',
+  submitApplicationForm: '/users/startup-details',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -128,7 +129,7 @@ export function GetAllMeetingsEventsData(currentDate, token) {
 
 export async function DeleteAdmin({ email, token }) {
   const payload = {}
-  return API('get', `${url.deleteAdmin}=${email}`, payload, token)
+  return API('DELETE', `${url.deleteAdmin}=${email}`, payload, token)
     .then((res) => {
       console.log(res.data.data)
       return res
@@ -154,7 +155,7 @@ export function GetAllAdmin(token) {
   }
 }
 
-export async function CreateNewAdmin({ body, token }) {
+export async function CreateNewAdmin(body, token) {
   return API('post', url.createNewAdmin, body, token)
     .then((res) => {
       return res
@@ -178,6 +179,17 @@ export async function UpdatePayload({ value, StartupId, token }) {
     })
     .catch((error) => {
       console.error(error.message)
+      return error
+    })
+}
+
+// submit user common application form
+export async function SubmitApplicationForm({ values, token }) {
+  return API('post', url.submitApplicationForm, values, token)
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
       return error
     })
 }

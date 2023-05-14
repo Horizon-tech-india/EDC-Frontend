@@ -18,10 +18,8 @@ const ForgotPassword = ({ step }) => {
   const { state, login } = useContext(AuthContext)
   useEffect(() => {
     setIsLoading(false)
-    if (state.role !== ROLES.ADMIN && state.role !== ROLES.MASTER_ADMIN && state.role !== ROLES.STUDENT) {
-      navigate('/')
-    } else {
-      navigate('/Admin')
+    if (state?.isAuthenticated === true) {
+      return navigate('/Admin')
     }
   }, [state])
   return (
