@@ -27,6 +27,7 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
 
   const mutation = useMutation({
     mutationFn: (values) => signup1(values),
+    onError:()=>  alert("error"),
     onSuccess: () => console.log('sss'),
   })
 

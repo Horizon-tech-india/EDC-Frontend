@@ -14,7 +14,7 @@ const SignUpStep2 = ({ email }) => {
 
   const verifyMutation = useMutation({
     mutationFn:  (values ) => VerifyOtp(values),
-    onSuccess: ()=>console.log("sss")
+    onSuccess: ()=>navigate('/forgot-password/3')
   })
 
   const handleClose = () => setOpen(false)
@@ -53,7 +53,7 @@ const SignUpStep2 = ({ email }) => {
     //     }, 1000)
     //   })
     verifyMutation.mutate(body)
-    verifyMutation.isSuccess ? navigate('/forgot-password/3') : setIsLoading(false)
+    // verifyMutation.isSuccess ? navigate('/forgot-password/3') : setIsLoading(false)
   }
 
   const inputfocus = (elmnt) => {

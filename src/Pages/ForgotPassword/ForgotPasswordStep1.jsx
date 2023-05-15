@@ -22,7 +22,7 @@ const SignUpStep1 = ({ setEmail }) => {
   const [isLoading, setIsLoading] = useState(false)
   const resendMutation = useMutation({
     mutationFn:  (values ) => ResendOtp(values),
-    onSuccess: ()=>console.log("sss")
+    onSuccess: ()=>  navigate('/forgot-password/2')
   })
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
@@ -33,7 +33,11 @@ const SignUpStep1 = ({ setEmail }) => {
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
       //POST REQUEST
-      resendMutation.mutate(body);
+      resendMutation.mutate(body,
+        {
+          onError:()=>{setIsLoading(false)},
+          onSuccess:()=>{setIsLoading(false); navigate('/forgot-password/2')}
+        });
       // API('post', '/api/users/resend-otp', body, '')
       //   .then((response) => {
       //     setTimeout(() => {
@@ -50,7 +54,7 @@ const SignUpStep1 = ({ setEmail }) => {
       //     }, 1000)
       //   })
 
-      resendMutation.isSuccess ? setIsLoading(false).then(()=> navigate('/forgot-password/2')) : setIsLoading(false);
+      // resendMutation.isSuccess ? setIsLoading(false).then(()=> navigate('/forgot-password/2')) : setIsLoading(false);
     }})
 
   return (

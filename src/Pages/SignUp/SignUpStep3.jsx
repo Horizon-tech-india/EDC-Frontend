@@ -9,12 +9,12 @@ import { useMutation } from '@tanstack/react-query'
 
 const SignUpStep3 = (email) => {
   const verifyMutation = useMutation({
-    mutationFn: (values) => VerifyOtp(values),
-    onSuccess: () => console.log('sss'),
+    mutationFn: (values) => VerifyOtp(values)
+    
   })
   const resendMutation = useMutation({
-    mutationFn: (values) => ResendOtp(values),
-    onSuccess: () => console.log('sss'),
+    mutationFn: (values) => ResendOtp(values)
+  
   })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
@@ -51,22 +51,35 @@ const SignUpStep3 = (email) => {
 
     verifyMutation.mutate(body ,  {onSuccess: (data, variables, context) => {
       // I will fire second!
-      console.log(data,"dadadadaddad")
+      setIsLoading(false);
+      navigate('/login');
     },
     onError:(error) =>{
-      console.log(error,"khjgjhg erro/")
+      setIsLoading(true);
+      console.log(error,"khjgjhg erro")
     }
   }
     )
-    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
+    // verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
     // navigate('/login')
   }
 
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false }
 
-    resendMutation.mutate(body)
-    setOpen(true)
+    resendMutation.mutate(body,{
+      onError:()=>{
+      setOpen(true)
+      setIsLoading(true)
+      console.log("Error")
+    },
+       onSuccess:()=>{
+       setOpen(true)
+       setIsLoading(false);
+       navigate('/login')
+  }
+  })
+    
     setError('code sent')
   }
   console.log(verifyMutation)
