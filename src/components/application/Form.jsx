@@ -7,7 +7,9 @@ import '../../styles/form.scss'
 import { API } from '../../Api/Post'
 import { userCommonApplicationFormSchema } from '../../validation/formSchema'
 import { useFormik } from 'formik'
-import { SubmitApplicationForm } from '../../Api/Post'
+import { 
+  
+ } from '../../Api/Post'
 
 const initialValues = {
   name: '',
@@ -42,13 +44,13 @@ const Form = () => {
     onSubmit: async (values) => {
       console.log(values)
       const token = state.token
-      try {
-        const res = await SubmitApplicationForm({ values, token })
-        console.log(res.message)
-        handleOpen()
-      } catch (error) {
-        console.error(error)
-      }
+      // try {
+      //   const res = await SubmitApplicationForm({ values, token })
+      //   console.log(res.message)
+      //   handleOpen()
+      // } catch (error) {
+      //   console.error(error)
+      // }
       // setIsLoading(true)
 
       // setEmail(values.email)

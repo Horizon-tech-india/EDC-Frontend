@@ -2,14 +2,20 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../styles/login.scss'
 import '../../styles/signup.scss'
-import { API } from '../../Api/Post'
+import { API, VerifyOtp } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import { useMutation } from '@tanstack/react-query'
 
 const SignUpStep2 = ({ email }) => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const verifyMutation = useMutation({
+    mutationFn:  (values ) => VerifyOtp(values),
+    onSuccess: ()=>navigate('/forgot-password/3')
+  })
 
   const handleClose = () => setOpen(false)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
@@ -27,25 +33,27 @@ const SignUpStep2 = ({ email }) => {
     event.preventDefault()
     const body = { email, otp: otp.join(''), isForgotPassword: true }
     //POST REQUEST
-    API('post', '/users/verify-mail-otp', body, '')
-      .then((response) => {
-        setTimeout(() => {
-          // If successful, redirect to dashboard
+    // API('post', '/api/users/verify-mail-otp', body, '')
+    //   .then((response) => {
+    //     setTimeout(() => {
+    //       // If successful, redirect to dashboard
 
-          navigate('/forgot-password/3')
-          setIsLoading(false)
-        }, 1000)
-      })
-      .catch((error) => {
-        console.error(error)
-        setError(error.response.data.message)
-        setOpen(true)
-        setTimeout(() => {
-          // If successful, redirect to dashboard
+    //       navigate('/forgot-password/3')
+    //       setIsLoading(false)
+    //     }, 1000)
+    //   })
+    //   .catch((error) => {
+    //     console.error(error)
+    //     setError(error.response.data.message)
+    //     setOpen(true)
+    //     setTimeout(() => {
+    //       // If successful, redirect to dashboard
 
-          setIsLoading(false)
-        }, 1000)
-      })
+    //       setIsLoading(false)
+    //     }, 1000)
+    //   })
+    verifyMutation.mutate(body)
+    // verifyMutation.isSuccess ? navigate('/forgot-password/3') : setIsLoading(false)
   }
 
   const inputfocus = (elmnt) => {

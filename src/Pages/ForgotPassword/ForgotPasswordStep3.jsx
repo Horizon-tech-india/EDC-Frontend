@@ -16,10 +16,13 @@ const initialValues = {
   confirm_password: '',
 }
 
-const SignUpStep3 = ({ email }) => {
+const SignUpStep3 = ( email ) => {
+  const navigate = useNavigate()
   const forgotPasswordMutation = useMutation({
     mutationFn: (values) => ForgotPassword(values),
+    onSuccess:()=> {setIsLoading(false); navigate('/login')}
   })
+  
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -35,28 +38,35 @@ const SignUpStep3 = ({ email }) => {
       setIsLoading(true)
 
       const body = {
-        email,
+        email: email.email,
         newPassword: values.new_password,
         confirmNewPassword: values.confirm_password,
       }
-      forgotPasswordMutation.mutate(body)
-      forgotPasswordMutation.isSuccess
-        ? setTimeout(() => {
-            setIsLoading(false)
-            navigate('/login')
-          }, 1000)
-        : setIsLoading(true)
+      forgotPasswordMutation.mutate(body,{onSuccess:()=>{setOpen(true)}, onError:()=>{setOpen(true)}})
+      // forgotPasswordMutation.isSuccess
+      //   ? setTimeout(() => {
+      //       setIsLoading(false)
+      //       navigate('/login')
+      //     }, 1000)
+      //   : setIsLoading(true)
     },
   })
-  const navigate = useNavigate()
+  
 
   return (
     <>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    {forgotPasswordMutation.isError && (<Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {/* {error} */}
+          Error
         </Alert>
-      </Snackbar>
+      </Snackbar>)}
+      {forgotPasswordMutation.isSuccess && (<Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Password Changed
+        </Alert>
+      </Snackbar>)}
+      
       <div className="login__head">
         <h2>Create New Password</h2>
         <p>Enter the new password for your account</p>

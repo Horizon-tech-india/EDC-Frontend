@@ -22,11 +22,12 @@ const initialValues = {
   phoneNumber: '',
 }
 
-const SignUpStep1 = ({ setEmail }) => {
+const SignUpStep1 = ({ setEmail, step, setStep }) => {
   let token = ''
 
   const mutation = useMutation({
     mutationFn: (values) => signup1(values),
+    onError:()=>  alert("error"),
     onSuccess: () => console.log('sss'),
   })
 
@@ -49,20 +50,36 @@ const SignUpStep1 = ({ setEmail }) => {
         mutation.isError
           ? setOpen(true)
           : setTimeout(() => {
-              navigate('/signup/2')
-              setIsLoading(false)
-            }, 1000),
+
+            // navigate('/signup/2')
+            setIsLoading(false)
+            setStep(2)
+          }, 2000),
       )
     },
   })
   console.log(mutation ? 'true' : 'false', mutation)
   return (
     <>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
-        </Alert>
-      </Snackbar>
+      {
+        mutation.isError && (
+          <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+              {/* {mutation.error.message} */}
+              Error
+              </Alert>
+          </Snackbar>)
+
+      }
+      {
+        mutation.isSuccess && (
+          <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+              {/* {error} */}
+              Code Sent
+            </Alert>
+          </Snackbar>)
+      }
       <div className="login__head">
         <h2>Register your account</h2>
         <p>Fill the details below to submit register account</p>
