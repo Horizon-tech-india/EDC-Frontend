@@ -45,11 +45,6 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
     },
   })
 
-  useEffect(() => {
-    console.log(values)
-    console.log(membersData)
-    console.log(array)
-  }, [])
   const handleMembersData = (values) => {
     const selectedMembers = data?.filter((email) => values.includes(email))
     setMembersData(selectedMembers)

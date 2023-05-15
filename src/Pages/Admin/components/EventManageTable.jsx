@@ -3,7 +3,7 @@ import MaterialReactTable from 'material-react-table'
 import { Alert, Box, IconButton, Snackbar } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import EventAddModal from './EventAddModal'
-import ModalEventMeeting from './ModalEventMeeting'
+import EventViewModal from './EventViewModal'
 
 const EventManageTable = ({ data, refetch, isLoading }) => {
   const [openMsg, setOpenMsg] = useState('')
@@ -118,7 +118,7 @@ const EventManageTable = ({ data, refetch, isLoading }) => {
           setIsOpen(!isOpen)
         }}
       />
-      <ModalEventMeeting
+      <EventViewModal
         isOpen={modalOpen}
         data={modalData}
         onClose={() => {
