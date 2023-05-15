@@ -15,7 +15,6 @@ import calendar from '../../../assets/icons/svg/calendar.svg'
 import DateTime from './DateTime'
 const UserProfile = () => {
   const { state } = useContext(AuthContext)
-
   return (
     <section className="flex flex-row justify-center items-center w-full max-w-xs  rounded-md px-2">
       <img className="user-profile__avatar" src={avatar} alt="avatar" />
@@ -31,13 +30,14 @@ const UserProfile = () => {
 }
 const Drawer = () => {
   const navigate = useNavigate()
-  const { logout } = useContext(AuthContext)
+  const { state, logout } = useContext(AuthContext)
   const { pathname } = useLocation()
   const Styles = {
     li: 'flex flex-row justify-start px-2 rounded-md my-1 py-2 hover:bg-gray-100  items-start w-full',
     liActive: 'flex flex-row bg-[#b4cd93] my-1 py-2  rounded-md justify-start px-2 items-start w-full',
     btn: 'flex flex-row',
   }
+
   //console.log(pathname)
   const handleLogout = async () => {
     await logout()
@@ -72,12 +72,14 @@ const Drawer = () => {
               <span className="ml-4">Schedule Events</span>
             </li>
           </NavLink>
-          <NavLink className={Styles.btn} to="/admin/manage-coordinators">
-            <li className={pathname === '/admin/manage-coordinators' ? Styles.liActive : Styles.li}>
-              <img src={profile} alt="" />
-              <span className="ml-4">Manage Coordinators</span>
-            </li>
-          </NavLink>
+          {state.role === 'master admin' ? (
+            <NavLink className={Styles.btn} to="/admin/manage-coordinators">
+              <li className={pathname === '/admin/manage-coordinators' ? Styles.liActive : Styles.li}>
+                <img src={profile} alt="" />
+                <span className="ml-4">Manage Coordinators</span>
+              </li>
+            </NavLink>
+          ) : null}
           <NavLink className={Styles.btn} to="/admin/calendar">
             <li className={pathname === '/admin/calendar' ? Styles.liActive : Styles.li}>
               <img src={calendar} alt="" />
