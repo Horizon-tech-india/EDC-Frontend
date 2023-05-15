@@ -37,11 +37,11 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
     },
   })
 
-  useEffect(() => {
-    if (Array.isArray(array)) {
-      values?.members = [...values?.members, ...array]
-    }
-  }, [array])
+  // useEffect(() => {
+  //   if (Array.isArray(array)) {
+  //     values?.members = [...values?.members, ...array]
+  //   }
+  // }, [array])
   return (
     <div className="admin-add">
       <form onSubmit={handleSubmit} className="admin-add__form">
