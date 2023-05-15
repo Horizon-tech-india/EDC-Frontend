@@ -26,6 +26,7 @@ const url = {
   userVerifyMailOtp: '/users/verify-mail-otp',
   userResendOtp: '/users/resend-otp',
   setNewPassword: '/users/set-new-password',
+  getStartupsUserEmail: '/admin/get-startups-user-email',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -42,6 +43,18 @@ export function API(method, endpoint, payload, token) {
 export function GetAllStartup(token) {
   const queryKey = 'allStartUp'
   const queryFn = () => API('get', url.allStartUp, {}, token)
+  const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
+}
+export function GetStartupsUserEmail(token) {
+  const queryKey = 'getStartupsUserEmail'
+  const queryFn = () => API('get', url.getStartupsUserEmail, {}, token)
   const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
   const refetchAllStartup = () => {
     refetch()

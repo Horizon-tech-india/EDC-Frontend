@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { Alert, Snackbar } from '@mui/material'
 import { CreateNewEvent, GetAllEvent } from '../../../Api/Post'
 
-const MeetingAddModal = ({ isOpen, onClose, refetch, array }) => {
+const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -61,7 +61,7 @@ const MeetingAddModal = ({ isOpen, onClose, refetch, array }) => {
       >
         <Box sx={style}>
           <div className="w-full bg-gray-100 shadow-xl rounded-md p-5">
-            <MeetingAddForm submitMeetingData={submitMeetingData} array={array} />
+            <MeetingAddForm submitMeetingData={submitMeetingData} />
           </div>
         </Box>
       </Modal>
