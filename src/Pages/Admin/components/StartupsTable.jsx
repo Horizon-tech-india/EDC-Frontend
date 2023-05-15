@@ -5,7 +5,7 @@ import { Alert, Box, MenuItem, Snackbar, Typography } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import EditIcon from '@mui/icons-material/Edit'
 import AdminDashboardModal from './AdminDashboardModal'
-import { GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
+import { DeleteStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
 
 const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
@@ -149,8 +149,20 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
     setModalData(rowData)
     setModalOpen(!modalOpen)
   }
-  const handleDelete = (rowData) => {
-    //console.log(rowData)
+  const handleDelete = async (rowData) => {
+    console.log(rowData)
+    const { token } = state
+    try {
+      const res = await DeleteStartup(rowData, token)
+      if (res.status === 200) {
+        setOpenMsg(res.data.message)
+        handleRefresh()
+        setOpen(true)
+      }
+    } catch (error) {
+      setOpenMsg(error.message)
+      setOpen(true)
+    }
   }
   return (
     <>
@@ -260,7 +272,7 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
             </button>
             <button
               className="bg-[#ff9494] ml-2 text-xs  font-light h-6 w-10 rounded-md hover:bg-[#923939]"
-              onClick={() => handleDelete(row.original.email)}
+              onClick={() => handleDelete(row?.original?.startupId)}
             >
               Delete
             </button>

@@ -21,6 +21,7 @@ const url = {
   getAllAdmin: '/admin/get-all-admin',
   createNewAdmin: '/admin/create-admin',
   updatePayload: '/admin/update-startup-details',
+  deleteStartup: '/admin/delete-startup?startupId',
   userSignup: '/users/signup',
   userVerifyMailOtp: '/users/verify-mail-otp',
   userResendOtp: '/users/resend-otp',
@@ -149,6 +150,18 @@ export function GetAllMeetingsEventsDates(currentMonth, token) {
 export async function DeleteAdmin({ email, token }) {
   const payload = {}
   return API('DELETE', `${url.deleteAdmin}=${email}`, payload, token)
+    .then((res) => {
+      console.log(res.data.data)
+      return res
+    })
+    .catch((error) => {
+      console.error(error.message)
+      return error
+    })
+}
+export async function DeleteStartup(rowData, token) {
+  const payload = {}
+  return API('DELETE', `${url.deleteStartup}=${rowData}`, payload, token)
     .then((res) => {
       console.log(res.data.data)
       return res
