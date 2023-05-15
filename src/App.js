@@ -26,9 +26,11 @@ const App = () => {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
+            {state.role !== 'master admin' ? null : (
+              <Route path="/admin/manage-coordinators" element={<DashboardAdmin page={'manage-coordinators'} />} />
+            )}
             <Route exact path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="/admin/dashboard" element={<DashboardAdmin page={'dashboard'} />} />
-            <Route path="/admin/manage-coordinators" element={<DashboardAdmin page={'manage-coordinators'} />} />
             <Route path="/admin/meetings" element={<DashboardAdmin page={'meetings'} />} />
             <Route path="/admin/events" element={<DashboardAdmin page={'events'} />} />
             <Route path="/admin/calendar" element={<DashboardAdmin page={'calendar'} />} />
