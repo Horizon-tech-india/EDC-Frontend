@@ -1,28 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { meetingAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
 import Chip from '@mui/material/Chip'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-
-const options = [
-  {
-    firstName: 'first1',
-    lastName: 'last',
-    email: 'fewfewf1@gmail.com',
-  },
-  {
-    firstName: 'first2',
-    lastName: 'last',
-    email: 'fewfewf2@gmail.com',
-  },
-  {
-    firstName: 'first3',
-    lastName: 'last',
-    email: 'fewfewf3@gmail.com',
-  },
-]
+import { GetStartupsUserEmail } from '../../../Api/Post'
+import { useEffect } from 'react'
 
 const initialValues = {
   title: '',
@@ -31,9 +16,12 @@ const initialValues = {
 }
 
 const MeetingAddForm = ({ submitMeetingData, array }) => {
+  const { state } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
   const [membersData, setMembersData] = useState(null)
-
+  const token = state.token
+  const { data: Data } = GetStartupsUserEmail(token)
+  const data = Data?.data?.data
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
     validationSchema: meetingAddSchema,
@@ -50,45 +38,36 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
       try {
         const res = await submitMeetingData(body)
         resetForm()
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 1000)
-        console.log(res.data) // success message from server
+        setIsLoading(false)
       } catch (error) {
-        console.error(error)
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 1000)
+        setIsLoading(false)
       }
     },
   })
 
-  console.log(values)
-
-  const handleMembersData = (value) => {
-    console.log(value)
-    const newData = value.map((member) => {
-      const membersObj = options.find((option) => `${option.firstName} ${option.lastName}` === member)
-      return membersObj.email
-    })
-    setMembersData(newData)
-    console.log(newData)
+  useEffect(() => {
+    console.log(values)
+    console.log(membersData)
+    console.log(array)
+  }, [])
+  const handleMembersData = (values) => {
+    const selectedMembers = data?.filter((email) => values.includes(email))
+    setMembersData(selectedMembers)
   }
-
   return (
     <div className="admin-add">
-      <form onSubmit={handleSubmit} className="admin-add__form">
+      <form onSubmit={handleSubmit} className="admin-add__form overflow-hidden">
         <h1
           className="w-full text-2xl text-center font-light
         "
         >
           Add New Meeting
         </h1>
-        <div className="grid cols-span-12 w-full gap-3 max-w-3xl">
-          <div className="input__container col-span-5">
+        <div className="grid cols-span-12 w-full gap-3 max-w-5xl">
+          <div className="input__container col-span-6 w-full">
             <label htmlFor="firstName">Title</label>
             <input
-              className="border border-gray-400"
+              className="border border-gray-400 w-full"
               type="text"
               name="title"
               id="title"
@@ -114,7 +93,7 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
             {errors.dateTime && touched.dateTime ? <p className="input-block__error">{errors.dateTime}</p> : null}
           </div>
 
-          <div className="col-span-12 px-4 mb-5">
+          <div className="col-span-12   mb-5">
             <label htmlFor="link">Meeting Link</label>
             <input
               className="border rounded-md bg-[#f3ebeb] w-full py-2 border-gray-400"
@@ -128,21 +107,23 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
             {errors.link && touched.link ? <p className="input-block__error">{errors.link}</p> : null}
           </div>
 
-          <div className="col-span-12 px-4 mb-5">
+          <div className="col-span-12  mb-5">
             <label htmlFor="tags-filled">Members</label>
             <Autocomplete
               multiple
               id="tags-filled"
-              options={options.map((option) => `${option.firstName} ${option.lastName}`)}
+              options={data?.map((option) => option)}
               defaultValue={[]}
               freeSolo
               className="bg-white "
               renderTags={(value, getTagProps) =>
-                value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
+                value.map((option, index) => (
+                  <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
+                ))
               }
               renderInput={(params) => (
                 <TextField
-                  className="bg-[#f3ebeb] max-w-md"
+                  className="bg-[#f3ebeb] max-w-xl max-h-60 overflow-auto"
                   name="branch"
                   {...params}
                   variant="outlined"
