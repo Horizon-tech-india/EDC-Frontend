@@ -45,10 +45,8 @@ const SignUpStep3 = (email) => {
 
   const handleSubmit = (event) => {
     setIsLoading(true)
-
     event.preventDefault()
-    const body = { email: email, otp: otp.join(''), isForgotPassword: false }
-
+    const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
     verifyMutation.mutate(body)
     verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
     navigate('/login')
