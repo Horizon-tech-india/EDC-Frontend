@@ -51,7 +51,7 @@ const ModalEventMeeting = ({ data, isOpen, onClose }) => {
         <Box sx={style}>
           <div className="w-full overflow-hidden bg-gray-100 shadow-2xl rounded-2xl p-5">
             <Typography id="modal-modal-title justify-items-center" variant="h6" component="h5">
-              Meeting Details
+              Details
             </Typography>
             {Object.entries(modalData).map((entry) => {
               return (
