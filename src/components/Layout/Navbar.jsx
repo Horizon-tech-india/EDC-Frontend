@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/UI/parul-logo.svg'
 import { AuthContext } from '../../context/AuthContext'
@@ -9,7 +9,7 @@ const Navigation = () => {
   const { state, logout, isLoading } = useContext(AuthContext)
   const location = useLocation()
   const activePage = location.pathname
-
+  const [open, setOpen] =useState(false)
   const styles = {
     header: 'fixed z-50 h-[88px] px-5 w-full bg-[#101524] flex flex-row items-center justify-between',
     class: 'hover:text-white pb-2 text-gray-400 transition duration-200 mr-0',
@@ -87,20 +87,20 @@ const Navigation = () => {
           <img className="h-[53px] p-1 w-[251px]" src={logo} alt="" />
 
         </a>
-        <button data-collapse-toggle="navbar-dropdown" onClick={()=>console.log("dfsjd")} type="button" className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
+        <button data-collapse-toggle="navbar-dropdown" onClick={()=>setOpen(!open)} type="button" className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
           <span className="sr-only">Open main menu</span>
           <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+        <div className={`hidden ${open ? 'sm:block' :''} w-full md:block md:w-auto`} id="navbar-dropdown">
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
+            <li className='mt-3'>
             
               <NavLink to="/" className={activePage === '/' ? styles.activeClass : styles.class}>
                 Home
               </NavLink>
             
             </li>
-            <li>
+            <li className='mt-3'>
               <NavLink to="/application" className={activePage === '/application' ? styles.activeClass : styles.class}>
                 Apply Now
               </NavLink>
@@ -109,17 +109,17 @@ const Navigation = () => {
               <></>
             ) : (
               <>
-                <li className="">
+                <li className='mt-3'>
                   <NavLink to="/document" className={activePage === '/document' ? styles.activeClass : styles.class}>
                     Document
                   </NavLink>
                 </li>
-                <li className="">
+                <li className='mt-2'>
                   <NavLink to="/dashboard" className={activePage === '/dashboard' ? styles.activeClass : styles.class}>
                     Dashboard
                   </NavLink>
                 </li>
-                <li className="">
+                <li className='mt-2'>
                   <NavLink to="/report" className={activePage === '/report' ? styles.activeClass : styles.class}>
                     Report
                   </NavLink>
@@ -127,7 +127,7 @@ const Navigation = () => {
               </>
             )}
 
-            <li className="">
+            <li className='mt-2'>
               {isLoading ? (
                 <button className={styles.button}>Loading...</button>
               ) : (

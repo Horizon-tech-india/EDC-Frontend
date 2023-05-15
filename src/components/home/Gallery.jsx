@@ -27,8 +27,8 @@ const Gallery = () => {
             <h2 className="font-bold text-2xl text-black">{text}</h2>
           </div>
           <div className="flex flex-col justify-center items-center">
-            <div className="mx-auto max-w-5xl">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+            <div className="mx-auto max-w-5xl sm:justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <GalleryCard image={image1} />
                 <GalleryCard image={image2} />
                 <GalleryCard image={image3} />
