@@ -6,10 +6,13 @@ import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
 import EditIcon from '@mui/icons-material/Edit'
 import AdminDashboardModal from './AdminDashboardModal'
 import { DeleteStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
+import MeetingAddModal from './MeetingAddModal'
 
 const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [array, setArray] = useState([])
   const [open, setOpen] = useState(false)
   const { refetch: myRefetchh } = GetStatsNumber(state.token)
   const [modalOpen, setModalOpen] = useState(false)
@@ -85,16 +88,16 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
       ),
       size: 100,
     },
-    {
-      accessorKey: 'valuation',
-      header: 'Company Valuation',
-      Cell: ({ cell }) => (
-        <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
-        </Box>
-      ),
-      size: 100,
-    },
+    // {
+    //   accessorKey: 'valuation',
+    //   header: 'Company Valuation',
+    //   Cell: ({ cell }) => (
+    //     <Box component="span" className="capitalize">
+    //       <span className="font-light text-black"> {cell.getValue()}</span>
+    //     </Box>
+    //   ),
+    //   size: 100,
+    // },
   ]
   const csvOptions = {
     fieldSeparator: ',',
@@ -149,6 +152,11 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
     setModalData(rowData)
     setModalOpen(!modalOpen)
   }
+  const handleAddToMeeting = (rows) => {
+    const newArray = rows.map((row) => row.original.email)
+    setArray((prevArray) => [...prevArray, ...newArray])
+    setIsOpen(true)
+  }
   const handleDelete = async (rowData) => {
     console.log(rowData)
     const { token } = state
@@ -178,12 +186,21 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
           setModalOpen(!modalOpen)
         }}
       />
+      <MeetingAddModal
+        isOpen={isOpen}
+        refetch={refetch}
+        array={array}
+        onClose={() => {
+          setIsOpen(!isOpen)
+        }}
+      />
       <MaterialReactTable
         data={data}
         state={{ isLoading: isLoading }}
         columns={columns}
         enableStickyHeader
         enableStickyFooter
+        enableColumnOrdering
         enableRowActions
         enableRowSelection
         positionActionsColumn="last"
@@ -224,6 +241,13 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
                   onClick={() => handleExportRows(table.getRowModel().rows)}
                 >
                   Export Page Rows
+                </button>{' '}
+                <button
+                  className={btnStyl}
+                  disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
+                  onClick={() => handleAddToMeeting(table.getSelectedRowModel().rows)}
+                >
+                  Add to Meeting
                 </button>
                 <button
                   className={btnStyl}
