@@ -85,6 +85,7 @@ const MeetingManageTable = ({ data, refetch, isLoading }) => {
   const handleExportRows = (rows) => {
     csvExporter.generateCsv(rows.map((row) => row.original))
   }
+
   const handleExportData = () => {
     csvExporter.generateCsv(data)
   }
@@ -133,6 +134,7 @@ const MeetingManageTable = ({ data, refetch, isLoading }) => {
         enableStickyHeader
         enableStickyFooter
         enableRowSelection
+        enableColumnOrdering
         positionActionsColumn="last"
         enableMultiRowSelection={true}
         positionToolbarAlertBanner="bottom"

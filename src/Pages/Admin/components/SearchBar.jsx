@@ -45,13 +45,13 @@ function SearchBar() {
     clearTimeout(debounceTimeout)
     debounceTimeout = setTimeout(callback, delay)
   }
-  
+
   // useEffect(() => {
-    // API('get', '/api/admin/all-startup-details', {}, state.token)
-    //   // .then((data) => console.log(`SEARCH BAR FILTER`, data?.data?.data))
-    //   .then((data) => setAllStartups(data?.data?.data))
-    //   .catch((error) => console.error(error))
-  // }, [])        
+  // API('get', '/api/admin/all-startup-details', {}, state.token)
+  //   // .then((data) => console.log(`SEARCH BAR FILTER`, data?.data?.data))
+  //   .then((data) => setAllStartups(data?.data?.data))
+  //   .catch((error) => console.error(error))
+  // }, [])
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (event.target.closest('.modal')) {
@@ -70,8 +70,6 @@ function SearchBar() {
     if (Array.isArray(data?.data?.data)) {
       const filtered = data.data.data.filter((item) => item.name.toLowerCase().includes(inputValue.toLowerCase()))
       setFilteredData(filtered)
-    } else {
-      console.log(`not an array`)
     }
   }, [allStartups, inputValue])
 
@@ -291,7 +289,7 @@ function SearchBar() {
             <div className="w-full flex my-2 justify-center items-center">
               <Button onClick={handleClose} size="sm" variant="contained" color="success">
                 Close
-              </Button> 
+              </Button>
             </div>
           </Box>
         </Modal>

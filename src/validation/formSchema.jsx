@@ -71,6 +71,11 @@ export const meetingAddSchema = Yup.object({
   dateTime: Yup.string().required('Please choose a date'),
   link: Yup.string().required('Please enter a link'),
 })
+export const eventAddSchema = Yup.object({
+  title: Yup.string().required('Please enter a title'),
+  dateTime: Yup.string().required('Please choose a date'),
+  description: Yup.string().required('Please enter description'),
+})
 
 export const userCommonApplicationFormSchema = Yup.object({
   name: Yup.string().required('Please enter your name'),

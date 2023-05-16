@@ -9,12 +9,10 @@ import { useMutation } from '@tanstack/react-query'
 
 const SignUpStep3 = (email) => {
   const verifyMutation = useMutation({
-    mutationFn: (values) => VerifyOtp(values)
-    
+    mutationFn: (values) => VerifyOtp(values),
   })
   const resendMutation = useMutation({
-    mutationFn: (values) => ResendOtp(values)
-  
+    mutationFn: (values) => ResendOtp(values),
   })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
@@ -45,61 +43,49 @@ const SignUpStep3 = (email) => {
 
   const handleSubmit = (event) => {
     setIsLoading(true)
-
     event.preventDefault()
     const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
-
-    verifyMutation.mutate(body ,  {onSuccess: (data, variables, context) => {
-      // I will fire second!
-      setIsLoading(false);
-      navigate('/login');
-    },
-    onError:(error) =>{
-      setIsLoading(true);
-      console.log(error,"khjgjhg erro")
-    }
-  }
-    )
-    // verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
-    // navigate('/login')
+    verifyMutation.mutate(body)
+    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
+    navigate('/login')
   }
 
   const handleResendCode = () => {
     const body = { email: email, isForgotPassword: false }
 
-    resendMutation.mutate(body,{
-      onError:()=>{
-      setOpen(true)
-      setIsLoading(true)
-      console.log("Error")
-    },
-       onSuccess:()=>{
-       setOpen(true)
-       setIsLoading(false);
-       navigate('/login')
-  }
-  })
-    
+    resendMutation.mutate(body, {
+      onError: () => {
+        setOpen(true)
+        setIsLoading(true)
+        console.log('Error')
+      },
+      onSuccess: () => {
+        setOpen(true)
+        setIsLoading(false)
+        navigate('/login')
+      },
+    })
+
     setError('code sent')
   }
   console.log(verifyMutation)
   return (
     <>
-    {verifyMutation.isError && (
-      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {/* {error} */}
-          {verifyMutation.error.message  || " Error"}
-        </Alert>
-      </Snackbar>
-    )}
-    {verifyMutation.isSuccess && (
-      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {verifyMutation?.data?.msg || 'Register suuceesfuly'}
-        </Alert>
-      </Snackbar>
-    )}
+      {verifyMutation.isError && (
+        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {/* {error} */}
+            {verifyMutation.error.message || ' Error'}
+          </Alert>
+        </Snackbar>
+      )}
+      {verifyMutation.isSuccess && (
+        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+            {verifyMutation?.data?.msg || 'Register suuceesfuly'}
+          </Alert>
+        </Snackbar>
+      )}
       <div className="login__head">
         <h2>Check your Mail</h2>
         <p>We've sent a 6 digit confirmation code to username@gmail.com. Make sure you enter correct code</p>
