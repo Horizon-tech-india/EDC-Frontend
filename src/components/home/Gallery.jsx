@@ -21,14 +21,14 @@ const Gallery = () => {
 
   return (
     <>
-      <div className="min-h-screen my-10 w-full">
-        <div className="w-full">
-          <div className="w-[1040px] flex justify-start mx-auto p-5 items-start">
+      <div className="min-h-screen my-10 md:w-full sm:w-auto">
+        <div className="w-full sm:w-auto">
+          <div className="w-[1040px] flex justify-start sm:justify-center mx-auto p-5 items-start">
             <h2 className="font-bold text-2xl text-black">{text}</h2>
           </div>
           <div className="flex flex-col justify-center items-center">
             <div className="mx-auto max-w-5xl sm:justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-5 sm:justify-center">
                 <GalleryCard image={image1} />
                 <GalleryCard image={image2} />
                 <GalleryCard image={image3} />

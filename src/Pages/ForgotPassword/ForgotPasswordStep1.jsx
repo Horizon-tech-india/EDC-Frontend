@@ -20,24 +20,32 @@ const SignUpStep1 = ({ setEmail }) => {
   const handleClose = () => setOpen(false)
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const resendMutation = useMutation({
-    mutationFn:  (values ) => ResendOtp(values),
-    onSuccess: ()=>  navigate('/forgot-password/2')
-  })
+  const resendMutation =  ResendOtp();
+   
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchemaStep1,
     onSubmit: (values) => {
+      
       setIsLoading(true)
 
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
       //POST REQUEST
-      resendMutation.mutate(body,
-        {
-          onError:()=>{setIsLoading(false)},
-          onSuccess:()=>{setIsLoading(false); navigate('/forgot-password/2')}
-        });
+      // resendMutation.mutate(body,
+      //   {
+      //     onError:()=>{setIsLoading(false)},
+      //     onSuccess:()=>{setIsLoading(false); navigate('/forgot-password/2')}
+      //   });
+      resendMutation.mutate(body)
+    
+      setOpen(true)
+    resendMutation.isSuccess ? setTimeout(()=>{
+      
+      setIsLoading(false);
+      navigate('/forgot-password/2')
+    },10000)  : setIsLoading(false)
+    
       // API('post', '/api/users/resend-otp', body, '')
       //   .then((response) => {
       //     setTimeout(() => {
@@ -59,11 +67,20 @@ const SignUpStep1 = ({ setEmail }) => {
 
   return (
     <>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    { resendMutation.isError &&
+      (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {resendMutation.error.message}
         </Alert>
-      </Snackbar>
+      </Snackbar>)
+    }
+    { resendMutation.isSuccess && 
+      (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {resendMutation.data.message}
+        </Alert>
+      </Snackbar>)
+    }
       <div className="login__head">
         <h2>Forgot Password</h2>
         <p>Enter the email of your account and we will send the email to reset your password</p>

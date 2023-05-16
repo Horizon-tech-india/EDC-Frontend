@@ -241,23 +241,49 @@ export async function SubmitApplicationForm({ values, token }) {
 
 // Signup1 Api
 
-export const signup1 = (values) => {
-  API('post', url.userSignup, values, '')
+export const Signup1 = (values) => {
+      
+    return useMutation(async (formData) => {
+        
+        const response = await API('post', url.userSignup, formData, '')
+        return response.data}, 
+        
+        );
 }
 
 // verifyOtp APi
-export const VerifyOtp = (values) => {
-  API('post', url.userVerifyMailOtp, values, '')
+export const VerifyOtp = () => {
+
+  return useMutation(async (values) => {
+        
+    const response = await  API('post', url.userVerifyMailOtp, values, '')
+    return response.data}, 
+    
+    );
+ 
 }
 
 // Resend Otp Api
-export const ResendOtp = (body) => {
-  API('post', url.userResendOtp, body, '')
+export const ResendOtp = () => {
+
+  return useMutation(async (formData) => {
+    
+    const response = await  API('post', url.userResendOtp, formData, '')
+    return response.data}, 
+    
+    );
+ 
 }
 
 // ForgotPAssword Api
-export const ForgotPassword = (body) => {
-  API('post', url.setNewPassword, body, '')
+export const ForgotPassword = () => {
+  return useMutation(async (body) => {
+    
+    const response = await  API('post', url.setNewPassword, body, '')
+    return response.data}, 
+    
+    );
+  
 }
 
 // Startup detail insert
