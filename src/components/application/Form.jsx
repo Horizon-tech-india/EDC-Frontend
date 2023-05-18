@@ -7,9 +7,7 @@ import '../../styles/form.scss'
 import { API } from '../../Api/Post'
 import { userCommonApplicationFormSchema } from '../../validation/formSchema'
 import { useFormik } from 'formik'
-import { 
-  
- } from '../../Api/Post'
+import { SubmitApplicationForm } from '../../Api/Post'
 
 const initialValues = {
   name: '',
@@ -44,13 +42,13 @@ const Form = () => {
     onSubmit: async (values) => {
       console.log(values)
       const token = state.token
-      // try {
-      //   const res = await SubmitApplicationForm({ values, token })
-      //   console.log(res.message)
-      //   handleOpen()
-      // } catch (error) {
-      //   console.error(error)
-      // }
+      try {
+        const res = await SubmitApplicationForm({ values, token })
+        console.log(res.message)
+        handleOpen()
+      } catch (error) {
+        console.error(error)
+      }
       // setIsLoading(true)
 
       // setEmail(values.email)
@@ -109,7 +107,7 @@ const Form = () => {
   //     })
   //   handleClickOpen()
   //   // reset()
-  // }
+  //
 
   return (
     <div className="form-section">
@@ -404,21 +402,34 @@ const Form = () => {
                       Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
                     </p>
                   </div>
-                  <UploadBtn
-                    className="uploadFiles-btn"
-                    variant="contained"
-                    component="label"
-                    endIcon={<UploadFile sx={{ color: 'white' }} />}
-                  >
-                    Upload File
-                    <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
-                  </UploadBtn>
+                  {!state.isAuthenticated ? (
+                    <UploadBtn
+                      variant="contained"
+                      component="label"
+                      disabled
+                      endIcon={<UploadFile sx={{ color: 'white' }} />}
+                    >
+                      Upload File
+                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
+                    </UploadBtn>
+                  ) : (
+                    <UploadBtn variant="contained" component="label" endIcon={<UploadFile sx={{ color: 'white' }} />}>
+                      Upload File
+                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
+                    </UploadBtn>
+                  )}
                 </div>
 
                 <div className="submitButton">
-                  <SubmitBtn variant="contained" type="submit">
-                    Submit
-                  </SubmitBtn>
+                  {!state.isAuthenticated ? (
+                    <SubmitBtn variant="contained" type="submit" disabled>
+                      Submit
+                    </SubmitBtn>
+                  ) : (
+                    <SubmitBtn variant="contained" type="submit">
+                      Submit
+                    </SubmitBtn>
+                  )}
                 </div>
               </div>
             )}
@@ -605,17 +616,34 @@ const Form = () => {
                       Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
                     </p>
                   </div>
-
-                  <UploadBtn variant="contained" component="label" endIcon={<UploadFile sx={{ color: 'white' }} />}>
-                    Upload File
-                    <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
-                  </UploadBtn>
+                  {!state.isAuthenticated ? (
+                    <UploadBtn
+                      variant="contained"
+                      component="label"
+                      disabled
+                      endIcon={<UploadFile sx={{ color: 'white' }} />}
+                    >
+                      Upload File
+                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
+                    </UploadBtn>
+                  ) : (
+                    <UploadBtn variant="contained" component="label" endIcon={<UploadFile sx={{ color: 'white' }} />}>
+                      Upload File
+                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
+                    </UploadBtn>
+                  )}
                 </div>
 
                 <div className="submitButton">
-                  <SubmitBtn variant="contained" type="submit">
-                    Submit
-                  </SubmitBtn>
+                  {!state.isAuthenticated ? (
+                    <SubmitBtn variant="contained" type="submit" disabled>
+                      Submit
+                    </SubmitBtn>
+                  ) : (
+                    <SubmitBtn variant="contained" type="submit">
+                      Submit
+                    </SubmitBtn>
+                  )}
                 </div>
               </div>
             )}

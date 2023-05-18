@@ -27,6 +27,7 @@ const url = {
   userResendOtp: '/users/resend-otp',
   setNewPassword: '/users/set-new-password',
   getStartupsUserEmail: '/admin/get-startups-user-email',
+  userStartupStatus: '/users/startup-status',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -237,6 +238,19 @@ export async function SubmitApplicationForm({ values, token }) {
     .catch((error) => {
       return error
     })
+}
+
+export function GetUserStartupStatus(token) {
+  const queryKey = 'userStartupStatus'
+  const queryFn = () => API('get', url.userStartupStatus, {}, token)
+  const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
 }
 
 // Signup1 Api
