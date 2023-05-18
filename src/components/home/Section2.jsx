@@ -32,8 +32,8 @@ const Card = (props) => {
 const Section2 = () => {
   return (
     <>
-      {/* <div className="w-full h-[620px]"> */}
-      <div className="w-full h-full sm:w-auto">
+      
+      <div className='w-[auto] h-[auto]'>
         <div className="">
           <div className="md:flex justify-center  sm:grid items-center flex-row">
             <div className="w-[450px] h-[450px] border-r-2 mr-10 flex justify-center text-left items-start flex-col">
@@ -50,7 +50,7 @@ const Section2 = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-2  sm:grid-cols-1 gap-10">
+            <div className="grid  md:grid-cols-2  sm:grid-cols-1 items-center justify-center  gap-10">
               <Card
                 image={logo1}
                 alt="img"
