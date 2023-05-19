@@ -22,9 +22,9 @@ const UserProfile = () => {
         <p className="user-profile__info-name">{state.firstName + ' ' + state?.lastName}</p>
         <p className="user-profile__info-type">{state?.role}</p>
       </div>
-      <button className="user-profile__notification">
+      <NavLink className="user-profile__notification" to="/admin/notifications">
         <img className="user-profile__notification-image" src={notification} alt="notification" />
-      </button>
+      </NavLink>
     </section>
   )
 }

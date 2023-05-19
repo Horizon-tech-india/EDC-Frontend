@@ -34,8 +34,9 @@ const App = () => {
             <Route path="/admin/meetings" element={<DashboardAdmin page={'meetings'} />} />
             <Route path="/admin/events" element={<DashboardAdmin page={'events'} />} />
             <Route path="/admin/calendar" element={<DashboardAdmin page={'calendar'} />} />
+            <Route path="/admin/notifications" element={<DashboardAdmin page={'notifications'} />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/signup" element={<SignUp  />} />
+            <Route exact path="/signup" element={<SignUp />} />
             {/* <Route exact path="/signup/2" element={<SignUp step={step} setStep={setStep} />} /> */}
             <Route exact path="/forgot-password/1" element={<ForgotPassword step={1} />} />
             <Route exact path="/forgot-password/2" element={<ForgotPassword step={2} />} />
