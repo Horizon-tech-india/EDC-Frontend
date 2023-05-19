@@ -8,7 +8,7 @@ import lock from '../../assets/icons/svg/lock.svg'
 import mail from '../../assets/icons/svg/mail.svg'
 import eyeOff from '../../assets/icons/svg/eye-off.svg'
 import phone from '../../assets/icons/svg/phone.svg'
-import { signup1 } from '../../Api/Post'
+import { Signup1 } from '../../Api/Post'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
@@ -25,11 +25,12 @@ const initialValues = {
 const SignUpStep1 = ({ setEmail, step, setStep }) => {
   let token = ''
 
-  const mutation = useMutation({
-    mutationFn: (values) => signup1(values),
-    onError:()=>  alert("error"),
-    onSuccess: () => console.log('sss'),
-  })
+  // const mutation = useMutation({
+  //   mutationFn: (values) => Signup1(values),
+  //   onError:()=>  alert("error"),
+  //   onSuccess: () => console.log('sss'),
+  // })
+  const mutation= Signup1();
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -46,24 +47,18 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
 
       setEmail(values.email)
 
-      mutation.mutate(values)(
-        mutation.isError
-          ? setOpen(true)
-          : setTimeout(() => {
-
-            // navigate('/signup/2')
-            setIsLoading(false)
-            setStep(2)
-          }, 2000),
-      )
+      mutation.mutate(values)
+      setOpen(true)
+      mutation.isLoading ?   setIsLoading(true):setTimeout(()=>{setStep(2)},10000);
+      
     },
   })
-  console.log(mutation ? 'true' : 'false', mutation)
+  
   return (
     <>
       {
         mutation.isError && (
-          <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
               {/* {mutation.error.message} */}
               Error
@@ -73,10 +68,10 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
       }
       {
         mutation.isSuccess && (
-          <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
               {/* {error} */}
-              Code Sent
+              {mutation?.data?.message}
             </Alert>
           </Snackbar>)
       }

@@ -8,12 +8,9 @@ import Alert from '@mui/material/Alert'
 import { useMutation } from '@tanstack/react-query'
 
 const SignUpStep3 = (email) => {
-  const verifyMutation = useMutation({
-    mutationFn: (values) => VerifyOtp(values),
-  })
-  const resendMutation = useMutation({
-    mutationFn: (values) => ResendOtp(values),
-  })
+  const verifyMutation = VerifyOtp();
+  
+  const resendMutation = ResendOtp();
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -45,44 +42,35 @@ const SignUpStep3 = (email) => {
     setIsLoading(true)
     event.preventDefault()
     const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
-    verifyMutation.mutate(body)
-    verifyMutation.isSuccess ? setIsLoading(false) : setIsLoading(false)
-    navigate('/login')
+    verifyMutation.mutate(body);
+    setOpen(true)
+    verifyMutation.isSuccess ? setTimeout(()=>{setIsLoading(false); navigate('/login')},7000) : setIsLoading(false)
+    // navigate('/login')
   }
 
   const handleResendCode = () => {
-    const body = { email: email, isForgotPassword: false }
+    const body = { email: email.email, isForgotPassword: false }
 
-    resendMutation.mutate(body, {
-      onError: () => {
-        setOpen(true)
-        setIsLoading(true)
-        console.log('Error')
-      },
-      onSuccess: () => {
-        setOpen(true)
-        setIsLoading(false)
-        navigate('/login')
-      },
-    })
-
-    setError('code sent')
+    resendMutation.mutate(body)
+    
+    setOpen(true)
+    resendMutation.isSuccess ? setIsLoading(true) : setIsLoading(false)
   }
   console.log(verifyMutation)
   return (
     <>
-      {verifyMutation.isError && (
-        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+      {(verifyMutation.isError  || resendMutation.isError ) && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
             {/* {error} */}
-            {verifyMutation.error.message || ' Error'}
+            {verifyMutation.error.message || resendMutation.error.message || ' Error'}
           </Alert>
         </Snackbar>
       )}
-      {verifyMutation.isSuccess && (
-        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+      {(verifyMutation.isSuccess || resendMutation.isSuccess) && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-            {verifyMutation?.data?.msg || 'Register suuceesfuly'}
+            {verifyMutation?.data?.message || resendMutation?.data?.message ||'Register suuceesfuly'}
           </Alert>
         </Snackbar>
       )}
