@@ -10,6 +10,7 @@ import MeetingAddModal from './MeetingAddModal'
 
 const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
+  const deleteStartupMutation = DeleteStartup();
   const [openMsg, setOpenMsg] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [array, setArray] = useState([])
@@ -160,25 +161,38 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
   const handleDelete = async (rowData) => {
     console.log(rowData)
     const { token } = state
-    try {
-      const res = await DeleteStartup(rowData, token)
-      if (res.status === 200) {
-        setOpenMsg(res.data.message)
-        handleRefresh()
-        setOpen(true)
-      }
-    } catch (error) {
-      setOpenMsg(error.message)
-      setOpen(true)
-    }
+    // try {
+    //   const res = await DeleteStartup(rowData, token)
+    //   if (res.status === 200) {
+    //     setOpenMsg(res.data.message)
+    //     handleRefresh()
+    //     setOpen(true)
+    //   }
+    // } catch (error) {
+    //   setOpenMsg(error.message)
+    //   setOpen(true)
+    // }
+
+    deleteStartupMutation.mutate(rowData, token);
+    handleRefresh();
+    setOpen(true);
   }
   return (
     <>
+    {  deleteStartupMutation.isError && (
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {openMsg && openMsg}
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {deleteStartupMutation.error.message}
         </Alert>
       </Snackbar>
+      )}
+      {  deleteStartupMutation.isSuccess && (
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {deleteStartupMutation.data.message}
+        </Alert>
+      </Snackbar>
+      )}
       <AdminDashboardModal
         isOpen={modalOpen}
         data={modalData}

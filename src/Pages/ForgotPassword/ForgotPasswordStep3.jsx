@@ -49,10 +49,12 @@ const SignUpStep3 = ( email ) => {
       //   : setIsLoading(true)
       forgotPasswordMutation.mutate(body);
       setOpen(true)
-      forgotPasswordMutation.isSuccess ? setTimeout(()=>{ navigate('/login')},5000) : setIsLoading(true);
+      
 
     },
   })
+  
+  forgotPasswordMutation.isSuccess ? setTimeout(()=>{ navigate('/login')},5000) : setIsLoading(true);
   
 
   return (

@@ -9,6 +9,7 @@ import AdminViewModal from './AdminViewModal'
 
 const AdminManageTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
+  const deleteMutation = DeleteAdmin();
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -80,16 +81,19 @@ const AdminManageTable = ({ data, refetch, isLoading }) => {
   }
   const handleClickDelete = async (email) => {
     const { token } = state
-    try {
-      const res = await DeleteAdmin({ email, token })
-      if (res.status === 200) {
-        setOpenMsg(res.data.message)
-        handleRefresh()
-        setOpen(true)
-      }
-    } catch (error) {
-      setOpenMsg(error.message)
-    }
+    // try {
+    //   const res = await DeleteAdmin({ email, token })
+    //   if (res.status === 200) {
+    //     setOpenMsg(res.data.message)
+    //     handleRefresh()
+    //     setOpen(true)
+    //   }
+    // } catch (error) {
+    //   setOpenMsg(error.message)
+    // }
+    deleteMutation.mututate(email,token);
+    handleRefresh();
+    setOpen(true);
   }
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -109,11 +113,22 @@ const AdminManageTable = ({ data, refetch, isLoading }) => {
   }
   return (
     <>
+    {deleteMutation.isError && (
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {openMsg && openMsg}
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {deleteMutation.error.message}
         </Alert>
       </Snackbar>
+    )}
+    {deleteMutation.isSuccess && (
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {deleteMutation.data.message}
+        </Alert>
+      </Snackbar>
+    )}
+     
+     
       <AdminViewModal
         isOpen={modalOpen}
         data={modalData}

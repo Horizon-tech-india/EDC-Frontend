@@ -1,5 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 const BASE_URL = process.env.REACT_APP_API_URL
 ///  HOW TO USE   const { data, isLoading, isError, refetch } = fnc('your-token');
 const queryConfig = {
@@ -28,6 +30,7 @@ const url = {
   setNewPassword: '/users/set-new-password',
   getStartupsUserEmail: '/admin/get-startups-user-email',
   userStartupStatus: '/users/startup-status',
+  submitApplicationForm:'/users/startup-details'
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -94,14 +97,17 @@ export function GetAllEvent(token) {
   }
 }
 
-export function CreateNewEvent({ body, token }) {
-  return API('post', '/admin/schedule-event-meeting', body, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
+export function CreateNewEvent() {
+
+  
+  return useMutation(async (body,token)=>{
+    console.log(token,body)
+    const response = await API('post', url.scheduleEvent, body, token);
+    return response;
+    
+  })
+  
+
 }
 
 //Meeting api
@@ -119,14 +125,20 @@ export function GetAllMeeting(token) {
   }
 }
 
+// CreateNewMeeting API
 export async function CreateNewMeeting({ body, token }) {
-  return API('post', '/admin/schedule-event-meeting', body, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
+
+  return useMutation(async(body, token)=>{
+    const response = await API('post', '/admin/schedule-event-meeting', body , token)
+ return response.data;
+  })
+  // return API('post', '/admin/schedule-event-meeting', body, token)
+  //   .then((res) => {
+  //     return res
+  //   })
+  //   .catch((error) => {
+  //     return error
+  //   })
 }
 
 // Calender Meeting Events Api
@@ -162,28 +174,41 @@ export function GetAllMeetingsEventsDates(currentMonth, token) {
 // Admin Delete Api
 
 export async function DeleteAdmin({ email, token }) {
-  const payload = {}
-  return API('DELETE', `${url.deleteAdmin}=${email}`, payload, token)
-    .then((res) => {
-      console.log(res.data.data)
-      return res
-    })
-    .catch((error) => {
-      console.error(error.message)
-      return error
-    })
+  const payload = {};
+
+  return useMutation(async(email,token)=>{
+    const response = await API('DELETE', `${url.deleteAdmin}=${email}`, payload, token)
+    return response.data
+  
+  });
+  
+  // return API('DELETE', `${url.deleteAdmin}=${email}`, payload, token)
+  //   .then((res) => {
+  //     console.log(res.data.data)
+  //     return res
+  //   })
+  //   .catch((error) => {
+  //     console.error(error.message)
+  //     return error
+  //   })
 }
-export async function DeleteStartup(rowData, token) {
+export async function DeleteStartup() {
   const payload = {}
-  return API('DELETE', `${url.deleteStartup}=${rowData}`, payload, token)
-    .then((res) => {
-      console.log(res.data.data)
-      return res
-    })
-    .catch((error) => {
-      console.error(error.message)
-      return error
-    })
+
+
+  return useMutation(async(rowData,token)=>{
+    const response = await API('DELETE', `${url.deleteStartup}=${rowData}`, payload, token)
+    return response.data;
+  })
+  // return API('DELETE', `${url.deleteStartup}=${rowData}`, payload, token)
+  //   .then((res) => {
+  //     console.log(res.data.data)
+  //     return res
+  //   })
+  //   .catch((error) => {
+  //     console.error(error.message)
+  //     return error
+  //   })
 }
 
 //Manage and Cordinate Api
@@ -201,14 +226,15 @@ export function GetAllAdmin(token) {
   }
 }
 
-export async function CreateNewAdmin(body, token) {
-  return API('post', url.createNewAdmin, body, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
+export async function CreateNewAdmin() {
+
+  return useMutation(async (body ,token) => {
+        console.log( body,"ApI")
+    const response = await API('post', url.createNewAdmin, body, token)
+    return response.data}, 
+    
+    );
+ 
 }
 
 // Upload Payload Api
@@ -230,14 +256,20 @@ export async function UpdatePayload({ value, StartupId, token }) {
 }
 
 // submit user common application form
-export async function SubmitApplicationForm({ values, token }) {
-  return API('post', '/users/startup-details', values, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
+export async function SubmitApplicationForm() {
+ 
+ return useMutation(async(values, token )=>{
+  const response = await API('post', url.submitApplicationForm, values, token);
+  return response.data;
+ })
+ 
+  // return API('post', url.submitApplicationForm, values, token)
+  //   .then((res) => {
+  //     return res
+  //   })
+  //   .catch((error) => {
+  //     return error
+  //   })
 }
 
 export function GetUserStartupStatus(token) {
@@ -301,6 +333,12 @@ export const ForgotPassword = () => {
 }
 
 // Startup detail insert
-export const StartupData = (formdata, token) => {
-  API('post', url.submitApplicationForm, formdata, token)
+export const StartupData = () => {
+  return  useMutation(async (formdata , token) => {
+    
+    const response = await  API('post', url.submitApplicationForm, formdata, token)
+    return response.data}, 
+    
+    );
+  // API('post', url.submitApplicationForm, formdata, token)
 }

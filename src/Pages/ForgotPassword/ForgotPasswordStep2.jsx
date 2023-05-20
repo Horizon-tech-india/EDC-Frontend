@@ -12,11 +12,11 @@ const SignUpStep2 = ({ email }) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const verifyMutation = useMutation({
-    mutationFn:  (values ) => VerifyOtp(values),
-    onSuccess: ()=>navigate('/forgot-password/3')
-  })
-
+  // const verifyMutation = useMutation({
+  //   mutationFn:  (values ) => VerifyOtp(values),
+  //   onSuccess: ()=>navigate('/forgot-password/3')
+  // })
+const verifyMutation =VerifyOtp();
   const handleClose = () => setOpen(false)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const navigate = useNavigate()
@@ -53,7 +53,7 @@ const SignUpStep2 = ({ email }) => {
     //     }, 1000)
     //   })
     verifyMutation.mutate(body)
-    // verifyMutation.isSuccess ? navigate('/forgot-password/3') : setIsLoading(false)
+    verifyMutation.isSuccess ? navigate('/forgot-password/3') : setIsLoading(false)
   }
 
   const inputfocus = (elmnt) => {

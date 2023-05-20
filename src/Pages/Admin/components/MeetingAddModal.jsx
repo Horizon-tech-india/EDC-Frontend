@@ -11,7 +11,7 @@ const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const { refetch: GetAllEventFetch } = GetAllEvent(state.token)
-
+  const createNewEventMutation = CreateNewEvent();
   const handleClose = () => {
     onClose()
   }
@@ -31,28 +31,45 @@ const MeetingAddModal = ({ isOpen, onClose, refetch }) => {
   }
 
   const submitMeetingData = async (body) => {
-    const token = state.token
-    try {
-      const res = await CreateNewEvent({ body, token })
-      handleClose()
-      setOpenMsg(res.data.message)
+    const token = state.token;
+    // try {
+    //   const res = await CreateNewEvent({ body, token })
+    //   handleClose()
+    //   setOpenMsg(res.data.message)
 
-      setOpen(true)
-      GetAllEventFetch()
-      refetch()
-      return res
-    } catch (error) {
-      setOpenMsg(error.message)
-    }
+    //   setOpen(true)
+    //   GetAllEventFetch()
+    //   refetch()
+    //   return res
+    // } catch (error) {
+    //   setOpenMsg(error.message)
+    // }
+console.log(body)
+
+createNewEventMutation.mutate(body, token)
+    
+    handleClose();
+    setOpen(true);
+    GetAllEventFetch();
+    refetch();
+    // return data;
+    console.log("all Submitted meeting data", createNewEventMutation)
+   
   }
 
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
-        <Alert variant="filled" onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
-          {openMsg && openMsg}
+      { createNewEventMutation.isError && (<Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
+        <Alert variant="filled" onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+          { createNewEventMutation.error.message}
         </Alert>
-      </Snackbar>
+      </Snackbar>)}
+
+      { createNewEventMutation.isSuccess && (<Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
+        <Alert variant="filled" onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+          {createNewEventMutation.data.message}
+        </Alert>
+      </Snackbar>)}
       <Modal
         open={isOpen}
         onClose={handleClose}

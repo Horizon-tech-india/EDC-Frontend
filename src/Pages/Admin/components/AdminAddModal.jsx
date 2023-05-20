@@ -21,6 +21,7 @@ const AdminAddModal = ({ isOpen, onClose }) => {
   }
   const { state } = useContext(AuthContext)
   const { refetch } = GetAllAdmin(state.token)
+  const createnewAdmin =CreateNewAdmin();
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -50,35 +51,51 @@ const AdminAddModal = ({ isOpen, onClose }) => {
     onSubmit: async (values) => {
       setIsLoading(true)
       const body = { ...values, branch }
-      try {
-        const res = await CreateNewAdmin(body, state.token)
-        console.log(`first`, res)
-        if (res?.response?.status === 400) {
-          setIsLoading(false)
-          setOpenMsg(res?.response?.data?.message)
-        }
-        if (res?.status === 200) {
-          setOpenMsg(res?.data?.message)
-          setOpen(true)
-          resetForm()
-          handleClose()
-          handleRefresh()
-        }
-      } catch (error) {
-        setOpenMsg(error?.message)
-        resetForm()
-        setIsLoading(false)
-      }
+      // try {
+      //   const res = await CreateNewAdmin(body, state.token)
+      //   console.log(`first`, res)
+      //   if (res?.response?.status === 400) {
+      //     setIsLoading(false)
+      //     setOpenMsg(res?.response?.data?.message)
+      //   }
+      //   if (res?.status === 200) {
+      //     setOpenMsg(res?.data?.message)
+      //     setOpen(true)
+      //     resetForm()
+      //     handleClose()
+      //     handleRefresh()
+      //   }
+      // } catch (error) {
+      //   setOpenMsg(error?.message)
+      //   resetForm()
+      //   setIsLoading(false)
+      // }
+
+      createnewAdmin.mutate(body, state.token);
+      setOpen(true);
+      resetForm();
+      handleClose();
+      handleRefresh();
+
     },
   })
 
   return (
     <div>
+    { createnewAdmin.isError && (
       <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
-        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {openMsg && openMsg}
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {createnewAdmin.error.message || 'Error'}
         </Alert>
       </Snackbar>
+    )}
+    { createnewAdmin.isSuccess && (
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
+        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {createnewAdmin.data.message || "Admin Created"}
+        </Alert>
+      </Snackbar>
+    )}
       <Modal
         open={isOpen}
         onClose={handleClose}

@@ -35,20 +35,20 @@ const Form = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
+  const submitApplicationFormMutation = SubmitApplicationForm();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: userCommonApplicationFormSchema,
     onSubmit: async (values) => {
       console.log(values)
       const token = state.token
-      try {
-        const res = await SubmitApplicationForm({ values, token })
-        console.log(res.message)
-        handleOpen()
-      } catch (error) {
-        console.error(error)
-      }
+      // try {
+      //   const res = await SubmitApplicationForm({ values, token })
+      //   console.log(res.message)
+      //   handleOpen()
+      // } catch (error) {
+      //   console.error(error)
+      // }
       // setIsLoading(true)
 
       // setEmail(values.email)
@@ -61,9 +61,13 @@ const Form = () => {
       //         setIsLoading(false)
       //       }, 1000),
       //)
+
+      submitApplicationFormMutation.mutate(values,token);
+      handleOpen();
+      
     },
   })
-
+  submitApplicationFormMutation.isError ? console.log("Error",submitApplicationFormMutation) : console.log("Success",submitApplicationFormMutation);
   const companyName = (state.isAuthenticated && `Hi, ${state?.firstName} ${state?.lastName}`) || `Welcome please Login`
   const [selectedFile, setSelectedFile] = useState(null)
 
