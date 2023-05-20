@@ -11,12 +11,42 @@ import CalendarTable from './CalendarTable'
 import { GetAllMeetingsEventsData, GetAllMeetingsEventsDates } from '../../../Api/Post'
 import Typography from '@mui/material/Typography'
 
+function ServerDay(props) {
+  const { highlightedEventDays = [], highlightedMeetingDays = [], day, outsideCurrentMonth, ...other } = props
+
+  const isEventSelected = !outsideCurrentMonth && highlightedEventDays.includes(day.date())
+  const isMeetingSelected = !outsideCurrentMonth && highlightedMeetingDays.includes(day.date())
+
+  if (isEventSelected && isMeetingSelected) {
+    return (
+      <Badge key={props.day.toString()} overlap="circular" color="info" variant="dot">
+        <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+      </Badge>
+    )
+  } else if (isEventSelected) {
+    return (
+      <Badge key={props.day.toString()} overlap="circular" color="success" variant="dot">
+        <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+      </Badge>
+    )
+  } else if (isMeetingSelected) {
+    return (
+      <Badge key={props.day.toString()} overlap="circular" color="error" variant="dot">
+        <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+      </Badge>
+    )
+  } else {
+    return <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+  }
+}
+
 const Calendar = () => {
   const { state } = useContext(AuthContext)
   const currentDate = new Date()
   const [date, setDate] = useState(dayjs(currentDate))
   const [month, setMonth] = useState(date.toDate().toISOString().slice(0, 7))
-  const [highlightedDays, setHighlightedDays] = useState([])
+  const [highlightedEventDays, setHighlightedEventDays] = useState([])
+  const [highlightedMeetingDays, setHighlightedMeetingDays] = useState([])
 
   const currentDateIs = date.toDate().toISOString().split('T')[0]
   const { data, isLoading, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
@@ -27,30 +57,16 @@ const Calendar = () => {
   const { data: dataDates, refetch: refetchDates } = GetAllMeetingsEventsDates(month, state.token)
 
   useEffect(() => {
-    setHighlightedDays(
-      dataDates?.data?.eventDates || dataDates?.data?.meetingDates
-        ? [...dataDates?.data?.eventDates, ...dataDates?.data?.meetingDates]
-        : [],
-    )
+    setHighlightedEventDays(dataDates?.data?.eventDates)
+    setHighlightedMeetingDays(dataDates?.data?.meetingDates)
   }, [dataDates])
 
   const handleMonthChange = (monthNew) => {
-    setHighlightedDays([])
+    setHighlightedEventDays([])
+    setHighlightedMeetingDays([])
     setMonth(monthNew.toDate().toISOString().slice(0, 7))
     console.log(month)
     refetchDates()
-  }
-
-  function ServerDay(props) {
-    const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props
-
-    const isSelected = !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) > 0
-
-    return (
-      <Badge key={props.day.toString()} overlap="circular" badgeContent={isSelected ? '🔴' : undefined}>
-        <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
-      </Badge>
-    )
   }
 
   return (
@@ -67,6 +83,16 @@ const Calendar = () => {
         <p className="calendar-section-description">
           Click on a particular date in the calendar to see the meetings and events of that date
         </p>
+
+        <div className="mx-2 mt-10 flex items-center justify-between">
+          <span className="w-3 h-3 rounded-full bg-[#4caf50]" />
+          <span className="mr-2">Event</span>
+          <span className="w-3 h-3 rounded-full bg-[#f44336]" />
+          <span className="mr-2">Meeting</span>
+          <span className="w-3 h-3 rounded-full bg-[#2196f3]" />
+          <span className="mr-2">Event & Meeting</span>
+        </div>
+
         <div className="calendar">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
@@ -80,7 +106,8 @@ const Calendar = () => {
               }}
               slotProps={{
                 day: {
-                  highlightedDays,
+                  highlightedEventDays,
+                  highlightedMeetingDays,
                 },
               }}
             />
