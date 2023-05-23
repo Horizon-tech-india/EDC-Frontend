@@ -19,6 +19,7 @@ const url = {
   allMeetingsEventsDates: '/admin/event-meeting-dates?yearAndMonth',
   deleteAdmin: '/admin/delete-admin?email',
   getAllAdmin: '/admin/get-all-admin',
+  getAdminNotifications: '/admin/notifications',
   createNewAdmin: '/admin/create-admin',
   updatePayload: '/admin/update-startup-details',
   deleteStartup: '/admin/delete-startup?startupId',
@@ -28,6 +29,7 @@ const url = {
   setNewPassword: '/users/set-new-password',
   getStartupsUserEmail: '/admin/get-startups-user-email',
   userStartupStatus: '/users/startup-status',
+  clearNotifications: '/admin/clear-notifications?',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -173,6 +175,7 @@ export async function DeleteAdmin({ email, token }) {
       return error
     })
 }
+
 export async function DeleteStartup(rowData, token) {
   const payload = {}
   return API('DELETE', `${url.deleteStartup}=${rowData}`, payload, token)
@@ -199,6 +202,32 @@ export function GetAllAdmin(token) {
     refetch: refetchAllStartup,
     ...queryResult,
   }
+}
+
+export function GetAdminNotifications(token) {
+  const queryKey = 'getAdminNotifications'
+  const queryFn = () => API('get', url.getAdminNotifications, {}, token)
+  const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
+}
+
+export async function ClearAdminNotifications({ query, token }) {
+  const payload = {}
+  return API('DELETE', `${url.clearNotifications}${query}`, payload, token)
+    .then((res) => {
+      console.log(res.data.data)
+      return res
+    })
+    .catch((error) => {
+      console.error(error.message)
+      return error
+    })
 }
 
 export async function CreateNewAdmin(body, token) {

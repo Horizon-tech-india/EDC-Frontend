@@ -11,9 +11,10 @@ import avatar from '../../../assets/icons/svg/avatar.svg'
 import receipt from '../../../assets/icons/svg/receipt-2.svg'
 import setting from '../../../assets/icons/svg/setting-2.svg'
 import calendar from '../../../assets/icons/svg/calendar.svg'
-// import '../styles/drawer.css'
+import Badge from '@mui/material/Badge'
 import DateTime from './DateTime'
-const UserProfile = () => {
+
+const UserProfile = ({ notificationsCount }) => {
   const { state } = useContext(AuthContext)
   return (
     <section className="flex flex-row justify-center items-center w-full max-w-xs  rounded-md px-2">
@@ -22,13 +23,16 @@ const UserProfile = () => {
         <p className="user-profile__info-name">{state.firstName + ' ' + state?.lastName}</p>
         <p className="user-profile__info-type">{state?.role}</p>
       </div>
-      <button className="user-profile__notification">
-        <img className="user-profile__notification-image" src={notification} alt="notification" />
-      </button>
+      <Badge badgeContent={notificationsCount} color="primary" className="ml-2">
+        <NavLink className="user-profile__notification" to="/admin/notifications">
+          <img className="user-profile__notification-image" src={notification} alt="notification" />
+        </NavLink>
+      </Badge>
     </section>
   )
 }
-const Drawer = () => {
+
+const Drawer = ({ notificationsCount }) => {
   const navigate = useNavigate()
   const { state, logout } = useContext(AuthContext)
   const { pathname } = useLocation()
@@ -49,7 +53,7 @@ const Drawer = () => {
       <div className="p-2 h-40 flex flex-col justify-between items-center w-full">
         <img src={AdminLogo} alt="" />
         <div className="w-60">
-          <UserProfile />
+          <UserProfile notificationsCount={notificationsCount} />
         </div>
       </div>
       <div>
