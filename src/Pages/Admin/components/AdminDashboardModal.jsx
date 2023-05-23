@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { Alert, Button, Snackbar } from '@mui/material'
 import { GetAllStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post'
 
-const AdminDashboardModal = ({ data, isOpen, onClose }) => {
+const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -132,32 +132,34 @@ const AdminDashboardModal = ({ data, isOpen, onClose }) => {
               })}
             </div>
             <div className="w-full flex my-2 justify-center gap-5 items-center">
-              {Object?.values(statusMenuItems)
-                .filter((item) => item?.value !== modalData?.status)
-                .map((item) => (
-                  <Button
-                    size="sm"
-                    variant="contained"
-                    color={
-                      (item?.value === 'pending' && 'info') ||
-                      (item?.value === 'verified' && 'success') ||
-                      (item?.value === 'rejected' && 'error')
-                    }
-                    key={item?.value}
-                    onClick={() =>
-                      handleClickPayload({
-                        value: item?.value,
-                        StartupId: modalData?.startupId,
-                      })
-                    }
-                  >
-                    {item?.label}
-                  </Button>
-                ))}
-
-              <Button onClick={() => handleDelete()} size="sm" variant="contained" color="error">
-                Delete
-              </Button>
+              {!hideActions &&
+                Object?.values(statusMenuItems)
+                  .filter((item) => item?.value !== modalData?.status)
+                  .map((item) => (
+                    <Button
+                      size="sm"
+                      variant="contained"
+                      color={
+                        (item?.value === 'pending' && 'info') ||
+                        (item?.value === 'verified' && 'success') ||
+                        (item?.value === 'rejected' && 'error')
+                      }
+                      key={item?.value}
+                      onClick={() =>
+                        handleClickPayload({
+                          value: item?.value,
+                          StartupId: modalData?.startupId,
+                        })
+                      }
+                    >
+                      {item?.label}
+                    </Button>
+                  ))}
+              {!hideActions && (
+                <Button onClick={() => handleDelete()} size="sm" variant="contained" color="error">
+                  Delete
+                </Button>
+              )}
               <Button onClick={handleClose} size="sm" variant="contained" color="info">
                 Close
               </Button>

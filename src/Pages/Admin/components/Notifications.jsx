@@ -1,39 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import MaterialReactTable from 'material-react-table'
 import { Box } from '@mui/material'
 import ModalEventMeeting from './ModalEventMeeting'
+import { AuthContext } from '../../../context/AuthContext'
+import { GetAdminNotifications, ClearAdminNotifications } from '../../../Api/Post'
+import AdminDashboardModal from './AdminDashboardModal'
 
-const Notifications = () => {
-  const data = [
-    {
-      title: 'Event 1',
-      members: ['anitin@mailinator.com'],
-      dateAndTime: '2023-05-16T04:07:00.000Z',
-      type: 'event',
-      filters: [],
-      createdByName: 'Admin',
-      createdByEmail: 'shrikant.nemiwal1@gmail.com',
-      description:
-        'vewv www gjig ging gingirngig grgnrignring grngorngelrg gnrig lergnrng ernginrig  gerigg rngerig rierngirn',
-      createdAt: '2023-05-16T04:07:36.778Z',
-      updatedAt: '2023-05-16T04:07:36.778Z',
-    },
-    {
-        "title": "Meet 1",
-        "link": "https://www.example.com",
-        "members": [],
-        "dateAndTime": "2023-05-20T04:08:00.000Z",
-        "type": "meeting",
-        "filters": [],
-        "createdByName": "Admin",
-        "createdByEmail": "shrikant.nemiwal1@gmail.com",
-        "createdAt": "2023-05-16T04:08:31.249Z",
-        "updatedAt": "2023-05-16T04:08:31.249Z"
-    }
-  ]
-
+const Notifications = ({ setNotificationsCount }) => {
+  const { state } = useContext(AuthContext)
+  const { data, isLoading, refetch } = GetAdminNotifications(state.token)
   const [modalOpen, setModalOpen] = useState(false)
-  const [modalData, setModalData] = useState(data[0])
+  const [modalData, setModalData] = useState(null)
+  const [modalOpenStartup, setModalOpenStartup] = useState(false)
+  const [modalDataStartup, setModalDataStartup] = useState(null)
+
+  useEffect(() => {
+    setNotificationsCount(data?.data?.notificationCount)
+  }, [data?.data?.notificationCount])
+
+  const CLEAR_NOTIFICATION_TYPES = {
+    ALL: 'all',
+    EVENT_AND_MEETING: 'eventAndMeeting',
+    STARTUP: 'startup',
+  }
+  const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
 
   const columns = [
     {
@@ -51,7 +41,7 @@ const Notifications = () => {
       header: 'Type',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
+          <span className="font-light text-black"> {cell.getValue() || 'startup'}</span>
         </Box>
       ),
       size: 50,
@@ -79,24 +69,33 @@ const Notifications = () => {
       ),
       size: 50,
     },
-    {
-      accessorKey: 'link',
-      header: 'Link',
-      Cell: ({ cell }) => (
-        <Box component="span" className="capitalize">
-          <span className="font-light text-black"> {cell.getValue()}</span>
-        </Box>
-      ),
-      size: 100,
-    },
   ]
 
   const handlePreview = (rowData) => {
-    setModalData(rowData)
-    setModalOpen(!modalOpen)
+    if (rowData.type) {
+      setModalData(rowData)
+      setModalOpen(!modalOpen)
+    } else {
+      setModalDataStartup(rowData)
+      setModalOpenStartup(!modalOpenStartup)
+    }
   }
 
-  const handleClear = (rowData) => {}
+  const handleClear = (rowData) => {
+    const token = state.token
+    const query = rowData.type
+      ? `id=${rowData.id}&type=${CLEAR_NOTIFICATION_TYPES.EVENT_AND_MEETING}`
+      : `id=${rowData.id}&type=${CLEAR_NOTIFICATION_TYPES.STARTUP}`
+    ClearAdminNotifications({ query, token })
+    refetch()
+  }
+
+  const handleClearAll = () => {
+    const token = state.token
+    const query = `type=${CLEAR_NOTIFICATION_TYPES.ALL}`
+    ClearAdminNotifications({ query, token })
+    refetch()
+  }
 
   return (
     <>
@@ -107,9 +106,17 @@ const Notifications = () => {
           setModalOpen(!modalOpen)
         }}
       />
+      <AdminDashboardModal
+        isOpen={modalOpenStartup}
+        data={modalDataStartup}
+        hideActions={true}
+        onClose={() => {
+          setModalOpenStartup(!modalOpenStartup)
+        }}
+      />
       <MaterialReactTable
-        // state={{ isLoading: isLoading }}
-        data={data}
+        state={{ isLoading: isLoading }}
+        data={data?.data?.notifications || []}
         columns={columns}
         enableStickyHeader
         enableStickyFooter
@@ -117,6 +124,19 @@ const Notifications = () => {
         positionToolbarAlertBanner="bottom"
         initialState={{ density: 'compact' }}
         muiTableContainerProps={{ sx: { height: '75vh' } }}
+        renderTopToolbarCustomActions={({ table }) => (
+          <Box sx={{ display: 'flex', gap: '0.1rem', p: '0.5rem', flexWrap: 'wrap' }}>
+            {data?.length !== 0 ? (
+              <>
+                <button className={btnStyl} onClick={handleClearAll}>
+                  Clear All
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
+          </Box>
+        )}
         enableRowActions
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
