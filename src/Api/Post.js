@@ -219,7 +219,7 @@ export function GetAdminNotifications(token) {
 
 export async function ClearAdminNotifications({ query, token }) {
   const payload = {}
-  return API('DELETE', `${url.clearNotifications}${query}`, payload, token)
+  return API('get', `${url.clearNotifications}${query}`, payload, token)
     .then((res) => {
       console.log(res.data.data)
       return res
@@ -285,48 +285,34 @@ export function GetUserStartupStatus(token) {
 // Signup1 Api
 
 export const Signup1 = (values) => {
-      
-    return useMutation(async (formData) => {
-        
-        const response = await API('post', url.userSignup, formData, '')
-        return response.data}, 
-        
-        );
+  return useMutation(async (formData) => {
+    const response = await API('post', url.userSignup, formData, '')
+    return response.data
+  })
 }
 
 // verifyOtp APi
 export const VerifyOtp = () => {
-
   return useMutation(async (values) => {
-        
-    const response = await  API('post', url.userVerifyMailOtp, values, '')
-    return response.data}, 
-    
-    );
- 
+    const response = await API('post', url.userVerifyMailOtp, values, '')
+    return response.data
+  })
 }
 
 // Resend Otp Api
 export const ResendOtp = () => {
-
   return useMutation(async (formData) => {
-    
-    const response = await  API('post', url.userResendOtp, formData, '')
-    return response.data}, 
-    
-    );
- 
+    const response = await API('post', url.userResendOtp, formData, '')
+    return response.data
+  })
 }
 
 // ForgotPAssword Api
 export const ForgotPassword = () => {
   return useMutation(async (body) => {
-    
-    const response = await  API('post', url.setNewPassword, body, '')
-    return response.data}, 
-    
-    );
-  
+    const response = await API('post', url.setNewPassword, body, '')
+    return response.data
+  })
 }
 
 // Startup detail insert
