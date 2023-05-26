@@ -43,11 +43,7 @@ const Dashboard = ({ page }) => {
               <Drawer notificationsCount={notificationsCount} />
             </div>
             <div className="col-span-10">
-              {page === 'calendar' ? (
-                <Calendar />
-              ) : (
-                <AdminApplicationSection page={page} setNotificationsCount={setNotificationsCount} />
-              )}
+              <AdminApplicationSection page={page} setNotificationsCount={setNotificationsCount} />
             </div>{' '}
           </div>
         </div>
