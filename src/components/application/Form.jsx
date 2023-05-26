@@ -30,11 +30,14 @@ const initialValues = {
   currentStage: '',
 }
 
-const Form = () => {
+const Form = ({ refetchStartupStatus }) => {
   const { state } = useContext(AuthContext)
   const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const [formSuccess, setFormSuccess] = useState(false)
+  const handleClose= () => {
+    setOpen(false)
+    refetchStartupStatus()
+  }
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
@@ -45,9 +48,12 @@ const Form = () => {
       try {
         const res = await SubmitApplicationForm({ values, token })
         console.log(res.message)
-        handleOpen()
+        setFormSuccess(true)
+        setOpen(true)
       } catch (error) {
         console.error(error)
+        setFormSuccess(true)
+        setOpen(true)
       }
       // setIsLoading(true)
 
@@ -164,7 +170,7 @@ const Form = () => {
               >
                 <option value="">Select location</option>
                 <option value="Parul University">Parul University</option>
-                <option value="Vadodra Startup Studio">Vadodra Startup Studio</option>
+                <option value="Vadodara Startup Studio">Vadodara Startup Studio</option>
                 <option value="Ahmedabad Startup Studio">Ahmedabad Startup Studio</option>
                 <option value="Rajkot Startup Studio">Rajkot Startup Studio</option>
                 <option value="Surat Startup Studio">Surat Startup Studio</option>
@@ -383,10 +389,10 @@ const Form = () => {
                   >
                     <option value="">Select</option>
                     <option value="Idea">Idea</option>
-                    <option value="Prototype stage (If you have developed any working prototype of a solution proposed)">
+                    <option value="Prototype stage">
                       Prototype stage (If you have developed any working prototype of a solution proposed)
                     </option>
-                    <option value="Startup Stage (If you have developed a final marketable product/service platform)">
+                    <option value="Startup Stage">
                       Startup Stage (If you have developed a final marketable product/service platform)
                     </option>
                   </select>
@@ -434,7 +440,7 @@ const Form = () => {
               </div>
             )}
 
-            {(values.location === 'Vadodra Startup Studio' ||
+            {(values.location === 'Vadodara Startup Studio' ||
               values.location === 'Surat Startup Studio' ||
               values.location === 'Rajkot Startup Studio' ||
               values.location === 'Ahmedabad Startup Studio') && (
@@ -442,7 +448,7 @@ const Form = () => {
                 <div className="form-row">
                   <label htmlFor="aadhar">Aadhar:</label>
                   <input
-                    type="number"
+                    type="text"
                     id="aadhar"
                     name="aadhar"
                     value={values.aadhar}
@@ -524,7 +530,7 @@ const Form = () => {
                 <div className="form-row">
                   <label htmlFor="temSize">No. of other team members</label>
                   <input
-                    type="number"
+                    type="text"
                     id="teamSize"
                     name="teamSize"
                     value={values.teamSize}
@@ -597,10 +603,10 @@ const Form = () => {
                   >
                     <option value="">Select</option>
                     <option value="Idea">Idea</option>
-                    <option value="Prototype stage (If you have developed any working prototype of a solution proposed)">
+                    <option value="Prototype stage">
                       Prototype stage (If you have developed any working prototype of a solution proposed)
                     </option>
-                    <option value="Startup Stage (If you have developed a final marketable product/service platform)">
+                    <option value="Startup Stage">
                       Startup Stage (If you have developed a final marketable product/service platform)
                     </option>
                   </select>
@@ -658,9 +664,11 @@ const Form = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{'Form submitted successfully!'}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{formSuccess ? 'Form submitted successfully!' : 'Error!'}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">Your details have been submitted.</DialogContentText>
+            <DialogContentText id="alert-dialog-description">
+              {formSuccess ? 'Your aplication has been submitted successfully.' : 'Check form details again.'}
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus>

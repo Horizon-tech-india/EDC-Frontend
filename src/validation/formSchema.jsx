@@ -89,7 +89,7 @@ export const userCommonApplicationFormSchema = Yup.object({
   location: Yup.string().required('Please choose a location'), // applying from - PU, VSS, ASS, RSS, SSS
   institute: Yup.string(),
   otherInstitute: Yup.string(),
-  aadhar: Yup.string().matches(/^[0-9]\d{9}$/, {
+  aadhar: Yup.string().matches(/^[0-9]\d{11}$/, {
     message: 'Please enter a 12 digit valid aadhar number.',
     excludeEmptyString: false,
   }),

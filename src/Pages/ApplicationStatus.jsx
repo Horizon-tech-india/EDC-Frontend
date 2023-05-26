@@ -10,7 +10,7 @@ import Spinner from '../components/Layout/Spinner'
 const ApplicationStatus = () => {
   const { state } = useContext(AuthContext)
 
-  const { data, isLoading } = GetUserStartupStatus(state.token)
+  const { data, refetch, isLoading } = GetUserStartupStatus(state.token)
 
   const status = data?.data?.startupStatus
   const textBodyWaitSec1 =
@@ -28,7 +28,7 @@ const ApplicationStatus = () => {
               <Spinner />
             </div>
           ) : status === 'pending' || status === 'rejected' ? (
-            <div className="waiting-sec-content mx-auto my-10">
+            <div className="waiting-sec-content mx-auto mt-20 mb-40">
               {status === 'pending' ? (
                 <div className="waiting-sec-content-row1 bg-indigo-500">
                   <h1> Application Status : Pending </h1>
@@ -48,11 +48,11 @@ const ApplicationStatus = () => {
               </div>
             </div>
           ) : (
-            <Form />
+            <Form refetchStartupStatus={refetch} />
           )}
         </>
       ) : (
-        <Form />
+        <Form refetchStartupStatus={refetch} />
       )}
 
       <Footer />
