@@ -30,6 +30,7 @@ const url = {
   getStartupsUserEmail: '/admin/get-startups-user-email',
   userStartupStatus: '/users/startup-status',
   clearNotifications: '/admin/clear-notifications?',
+  finance: '/admin/finance',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -318,4 +319,19 @@ export const ForgotPassword = () => {
 // Startup detail insert
 export const StartupData = (formdata, token) => {
   API('post', url.submitApplicationForm, formdata, token)
+}
+
+// export async function SubmitFinance() {
+ 
+//   return useMutation(async(values )=>{
+//    const response = await API('post', url.finance, values, '');
+//    return response.data;
+//   })
+// }
+
+export const SubmitFinance = () => {
+  return useMutation(async (formData) => {
+    const response = await API('post', url.finance, formData, '')
+    return response.data
+  })
 }

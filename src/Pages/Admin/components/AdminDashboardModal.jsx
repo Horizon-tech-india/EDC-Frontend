@@ -3,6 +3,7 @@ import { AuthContext } from '../../../context/AuthContext'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import {  useNavigate } from 'react-router-dom';
 import { Alert, Button, Snackbar } from '@mui/material'
 import { GetAllStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post'
 
@@ -12,6 +13,7 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
   const [open, setOpen] = useState(false)
   const { refetch } = GetAllStartup(state.token)
   const { refetch: myRefetchh } = GetStatsNumber(state.token)
+  const navigation = useNavigate();
 
   const style = {
     position: 'absolute',
@@ -94,7 +96,9 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
     verified: { label: 'Verify', value: 'verified' },
     rejected: { label: 'Reject', value: 'rejected' },
   }
-
+ const handleFinance =()=>{
+  navigation("/admin/finance", {state: { startupId: modalData.startupId}})
+ }
   return (
     <div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -163,6 +167,14 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
               <Button onClick={handleClose} size="sm" variant="contained" color="info">
                 Close
               </Button>
+              {
+                !hideActions && (
+                  <Button onClick={() => handleFinance()} size="sm" variant="contained" color="success">
+                  Finance
+                </Button>
+
+                )
+              }
             </div>
           </div>
         </Box>
