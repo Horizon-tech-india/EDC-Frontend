@@ -9,6 +9,8 @@ import MeetingAddSection from './MeetingAddSection'
 import EventAddSection from './EventAddSection'
 import SidebarRight from './SidebarRight'
 import Notifications from './Notifications'
+import Calendar from './Calendar'
+import StageTwoForm from './StageTwoForm'
 
 const AdminApplicationSection = ({ page, setNotificationsCount }) => {
   return (
@@ -29,6 +31,10 @@ const AdminApplicationSection = ({ page, setNotificationsCount }) => {
             </div>
 
             <StartupsDetailsSection />
+          </>
+        ) : page === 'calendar' ? (
+          <>
+            <Calendar />
           </>
         ) : page === 'meetings' ? (
           <>
@@ -52,6 +58,11 @@ const AdminApplicationSection = ({ page, setNotificationsCount }) => {
               <h1 className="text-3xl font-bold">Notifications </h1>
             </div>
             <Notifications setNotificationsCount={setNotificationsCount} />
+          </>
+        ) : page === 'stageTwoForm' ? (
+          <>
+            {' '}
+            <StageTwoForm />
           </>
         ) : (
           <>
