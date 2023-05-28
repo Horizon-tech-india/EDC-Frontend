@@ -30,7 +30,8 @@ const url = {
   getStartupsUserEmail: '/admin/get-startups-user-email',
   userStartupStatus: '/users/startup-status',
   clearNotifications: '/admin/clear-notifications?',
-  finance: '/admin/finance',
+  finance: '/admin/finance-details',
+  
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -321,17 +322,16 @@ export const StartupData = (formdata, token) => {
   API('post', url.submitApplicationForm, formdata, token)
 }
 
-// export async function SubmitFinance() {
- 
-//   return useMutation(async(values )=>{
-//    const response = await API('post', url.finance, values, '');
-//    return response.data;
-//   })
-// }
 
 export const SubmitFinance = () => {
-  return useMutation(async (formData) => {
-    const response = await API('post', url.finance, formData, '')
+  return useMutation(async (formData, token) => {
+    const response = await API('post', url.finance, formData, token)
     return response.data
   })
+}
+
+
+export function GetFinanceDetails (startupId,token){
+  const res= API('get', `${url.finance}?startupId=${startupId}`,{},token);
+  return res;
 }

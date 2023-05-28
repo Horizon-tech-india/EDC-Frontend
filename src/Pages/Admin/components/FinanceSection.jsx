@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useFormik } from 'formik';
 import { useLocation } from 'react-router-dom';
 import { SubmitFinance } from '../../../Api/Post';
+import { AuthContext } from '../../../context/AuthContext';
 const FinanceSection = () => {
-
+  const { state } = useContext(AuthContext)
   const mutation = SubmitFinance();
   const location = useLocation();
   let startupId = location.state.startupId;
@@ -47,8 +48,8 @@ const FinanceSection = () => {
         }
       }
       //POST REQUEST
-
-      mutation.mutate(body);
+      console.log(body)
+      mutation.mutate(body,state.token);
       mutation.isSuccess ? console.log("success") : console.log("Error")
     },
 
