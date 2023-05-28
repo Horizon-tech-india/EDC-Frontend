@@ -21,7 +21,7 @@ jobs:
       - name: Build the Docker image
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: shivamsinghgslab/edc-frontend
+          image: devops3238/edc-frontend
           registry: docker.io
           dockerfile: Dockerfile
           tags: |
@@ -44,5 +44,5 @@ jobs:
             image_id=$(docker images -a -q)
             echo $image_id
             docker rmi -f $image_id | echo true
-            docker run -d -p 80:80 --name edc-frontend shivamsinghgslab/edc-frontend:latest 
+            docker run -d -p 80:80 --name edc-frontend devops3238/edc-frontend:latest 
           '
