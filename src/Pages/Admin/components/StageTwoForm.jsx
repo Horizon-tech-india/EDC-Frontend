@@ -1,8 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../context/AuthContext'
+import { SubmitStage2Form } from '../../../Api/Post'
 import { useFormik } from 'formik'
 import { adminStageTwoForm } from '../../../validation/formSchema'
+import Chip from '@mui/material/Chip'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+import { Button, styled, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 
 const initialValues = {
   incubationId: '',
@@ -26,70 +31,103 @@ const initialValues = {
   teamLeaderCategory: '',
   teamLeaderId: '',
   organisationName: '',
-  teamMembers: '',
   teamMemberCategory: '',
   spoc: '',
   externalMentor: '',
   incubationDate: '',
   graduationDate: '',
-  receivedFunding: '',
+  receivedFunding: false,
   fundingAgency: '',
   fundSanctionDate: '',
-  fundingAmount: '',
-  registeredCompany: '',
+  fundingAmount: 0,
+  registeredCompany: false,
   companyType: '',
   cinUdhyamRegistrationNo: '',
   companyRegistrationDate: '',
-  dpiitRecognised: '',
+  dpiitRecognised: false,
   dpiitCertificateNo: '',
   incubatedAt: '',
-  ipFilledGranted: '',
-  ipTypes: '',
+  ipFilledGranted: false,
   ipDetails: '',
-  revenueGeneration: '',
-  numOfEmployees: '',
+  revenueGeneration: 0,
+  numOfEmployees: 0,
   folderLink: '',
 }
 
+const ipOptions = ['Patent', 'Trademark', 'Copyright', 'Design']
+
 const StageTwoForm = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const startupDetails = location.state
   const { state } = useContext(AuthContext)
+  const [ipTypesInput, setIpTypesInput] = useState([])
+  const [membersInput, setMembersInput] = useState([])
+
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [formSuccess, setFormSuccess] = useState(false)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: adminStageTwoForm,
     onSubmit: async (values) => {
-      console.log(values)
-      // setIsLoading(true)
-      // const body = { ...values, branch }
-      // try {
-      //   const res = await CreateNewAdmin(body, state.token)
-      //   console.log(`first`, res)
-      //   if (res?.response?.status === 400) {
-      //     setIsLoading(false)
-      //     setOpenMsg(res?.response?.data?.message)
-      //   }
-      //   if (res?.status === 200) {
-      //     setOpenMsg(res?.data?.message)
-      //     setOpen(true)
-      //     resetForm()
-      //     handleClose()
-      //     handleRefresh()
-      //   }
-      // } catch (error) {
-      //   setOpenMsg(error?.message)
-      //   resetForm()
-      //   setIsLoading(false)
-      // }
+      console.log(values, ipTypesInput, membersInput)
+      setIsLoading(true)
+      const body = {
+        ...values,
+        ipTypes: ipTypesInput,
+        teamMembers: membersInput,
+        startupId: startupDetails.startupId,
+        receivedFunding: values.receivedFundinf === 'true',
+        registeredCompany: values.registeredCompany === 'true',
+        dpiitRecognised: values.dpiitRecognised === 'true',
+        ipFilledGranted: values.ipFilledGranted === 'true',
+      }
+      try {
+        const res = await SubmitStage2Form(body, state.token)
+        console.log(`first`, res)
+        if (res?.status === 200) {
+          setFormSuccess(true)
+          setOpen(true)
+        }
+        setIsLoading(false)
+      } catch (error) {
+        setFormSuccess(false)
+        setOpen(true)
+        setIsLoading(false)
+      }
     },
   })
 
+  const handleClose = () => {
+    setOpen(false)
+    if (formSuccess) {
+      navigate('/Admin')
+    }
+  }
+
   return (
     <div className="max-h-[100vh] overflow-y-scroll">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{formSuccess ? 'Form submitted successfully!' : 'Error!'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {formSuccess ? 'Form has been submitted successfully.' : 'Check form details again.'}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
       <form onSubmit={handleSubmit} className="admin-add__form mx-10 mb-20">
         <h1 className="w-full text-2xl text-center mt-10 mb-6">{startupDetails.name}'s Stage 2 Form</h1>
         <div className="m-auto w-full max-w-xl">
@@ -544,26 +582,39 @@ const StageTwoForm = () => {
           </div>
         </div>
 
-        <div className="m-auto w-full max-w-xl">
+        <div className="m-auto w-full max-w-xl mb-3">
           <div className="input__container">
             <label htmlFor="teamMembers">
-              Write the names and contact number of all the other team members separated by commas
+              Write the names and contact number separated by comma of all the other team members (e.g. Rahul,
+              9999999999 )
             </label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="teamMembers"
+            <Autocomplete
+              multiple
               id="teamMembers"
-              placeholder="Enter Team members' data"
-              value={values.teamMembers}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              options={[]?.map((option) => option)}
+              defaultValue={[]}
+              freeSolo
+              className="w-full"
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  className="bg-[#f3ebeb] w-full max-h-60 overflow-auto"
+                  name="branch"
+                  {...params}
+                  variant="outlined"
+                  label=""
+                  placeholder="Enter Team member names with phone number"
+                  sx={{
+                    outline: 'none',
+                  }}
+                />
+              )}
+              onChange={(event, value) => setMembersInput(value)}
             />
-            <div className="h-3 mb-2">
-              {errors.teamMembers && touched.teamMembers ? (
-                <p className="input-block__error">{errors.teamMembers}</p>
-              ) : null}
-            </div>
           </div>
         </div>
 
@@ -682,11 +733,8 @@ const StageTwoForm = () => {
               onBlur={handleBlur}
               required
             >
-              <option value="" hidden disabled>
-                Received Funding?
-              </option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
             </select>
             <div className="h-3 mb-2">
               {errors.receivedFunding && touched.receivedFunding ? (
@@ -743,7 +791,7 @@ const StageTwoForm = () => {
             <label htmlFor="fundingAmount">Funding Amount (If applicable)</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="number"
               name="fundingAmount"
               id="fundingAmount"
               placeholder="Enter Funding Amount"
@@ -771,11 +819,8 @@ const StageTwoForm = () => {
               onBlur={handleBlur}
               required
             >
-              <option value="" hidden disabled>
-                Company registered?
-              </option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
             </select>
             <div className="h-3 mb-2">
               {errors.registeredCompany && touched.registeredCompany ? (
@@ -816,7 +861,7 @@ const StageTwoForm = () => {
               type="text"
               name="cinUdhyamRegistrationNo"
               id="cinUdhyamRegistrationNo"
-              placeholder="First Name"
+              placeholder="Enter CIN No."
               value={values.cinUdhyamRegistrationNo}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -862,11 +907,8 @@ const StageTwoForm = () => {
               onBlur={handleBlur}
               required
             >
-              <option value="" hidden disabled>
-                Recognised by DPIIT?
-              </option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
             </select>
             <div className="h-3 mb-2">
               {errors.dpiitRecognised && touched.dpiitRecognised ? (
@@ -938,11 +980,8 @@ const StageTwoForm = () => {
               onBlur={handleBlur}
               required
             >
-              <option value="" hidden disabled>
-                IP filled/granted?
-              </option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
             </select>
             <div className="h-3 mb-2">
               {errors.ipFilledGranted && touched.ipFilledGranted ? (
@@ -952,29 +991,36 @@ const StageTwoForm = () => {
           </div>
         </div>
 
-        <div className="m-auto w-full max-w-xl">
+        <div className="m-auto w-full max-w-xl mb-3">
           <div className="input__container">
             <label htmlFor="ipTypes">IP Types (Patent, Trademark, Copyrights, Design, etc)</label>
-            <select
-              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
+            <Autocomplete
+              multiple
               id="ipTypes"
-              name="ipTypes"
-              value={values.ipTypes}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required
-            >
-              <option value="" hidden disabled>
-                Select IP Types
-              </option>
-              <option value="Patent">Patent</option>
-              <option value="Trademark">Trademark</option>
-              <option value="Copyrights">Copyrights</option>
-              <option value="Design">Design</option>
-            </select>
-            <div className="h-3 mb-2">
-              {errors.ipTypes && touched.ipTypes ? <p className="input-block__error">{errors.ipTypes}</p> : null}
-            </div>
+              options={ipOptions?.map((option) => option)}
+              defaultValue={[]}
+              freeSolo
+              className="w-full"
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  className="bg-[#f3ebeb] w-full max-h-60 overflow-auto"
+                  name="branch"
+                  {...params}
+                  variant="outlined"
+                  label=""
+                  placeholder="Choose IP"
+                  sx={{
+                    outline: 'none',
+                  }}
+                />
+              )}
+              onChange={(event, value) => setIpTypesInput(value)}
+            />
           </div>
         </div>
 
@@ -1002,7 +1048,7 @@ const StageTwoForm = () => {
             <label htmlFor="revenueGeneration">Revenue Generation (Annualy)</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="number"
               name="revenueGeneration"
               id="revenueGeneration"
               placeholder="Revenue Generation"
@@ -1023,7 +1069,7 @@ const StageTwoForm = () => {
             <label htmlFor="numOfEmployees">No. of employees</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="number"
               name="numOfEmployees"
               id="numOfEmployees"
               placeholder="Enter No. of employees"
@@ -1060,9 +1106,6 @@ const StageTwoForm = () => {
           </div>
         </div>
 
-        <div className="w-full flex justify-center items-center">
-          <span className="text-xl text-red-500  mx-auto text-center px-2 py-2"> {openMsg && openMsg}</span>
-        </div>
         {isLoading ? (
           <button className="admin-add__submit" type="button" disabled>
             Submitting...
