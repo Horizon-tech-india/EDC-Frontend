@@ -187,7 +187,7 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
           setModalOpen(!modalOpen)
         }}
       />
-      
+
       <MaterialReactTable
         data={data}
         state={{ isLoading: isLoading }}
@@ -259,39 +259,36 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
         )}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-            {row?.original.status === 'verified' ? (
+            {row?.original.status === 'verified' && (
               <NavLink to={`/admin/stageTwoForm/${row.original.startupId}`} state={row.original}>
                 <button className="bg-[#ff9494] ml-2 text-xs  font-light h-6 w-14 rounded-md hover:bg-[#923939]">
                   Stage 2
                 </button>
               </NavLink>
-            ) : (
-              <>
-                {Object?.values(statusMenuItems)
-                  .filter((item) => item?.value !== row?.original.status)
-                  .map((item) => (
-                    <button
-                      className={
-                        (item?.value === 'pending' &&
-                          'bg-[#fdf8ce] hover:bg-[#fcf290] ml-2 text-xs  font-light h-6 w-14 rounded-md ') ||
-                        (item?.value === 'verified' &&
-                          'bg-[#b4cd93] hover:bg-[#6b9239] ml-2 text-xs  font-light h-6 w-14 rounded-md ') ||
-                        (item?.value === 'rejected' &&
-                          'bg-[#FCA5A5] hover:bg-[#e95c5c] ml-2 text-xs  font-light h-6 w-14 rounded-md ')
-                      }
-                      key={item?.value}
-                      onClick={() =>
-                        handleClickPayload({
-                          value: item?.value,
-                          StartupId: row?.original.startupId,
-                        })
-                      }
-                    >
-                      {item?.label}
-                    </button>
-                  ))}
-              </>
             )}
+            {Object?.values(statusMenuItems)
+              .filter((item) => item?.value !== row?.original.status)
+              .map((item) => (
+                <button
+                  className={
+                    (item?.value === 'pending' &&
+                      'bg-[#fdf8ce] hover:bg-[#fcf290] ml-2 text-xs  font-light h-6 w-14 rounded-md ') ||
+                    (item?.value === 'verified' &&
+                      'bg-[#b4cd93] hover:bg-[#6b9239] ml-2 text-xs  font-light h-6 w-14 rounded-md ') ||
+                    (item?.value === 'rejected' &&
+                      'bg-[#FCA5A5] hover:bg-[#e95c5c] ml-2 text-xs  font-light h-6 w-14 rounded-md ')
+                  }
+                  key={item?.value}
+                  onClick={() =>
+                    handleClickPayload({
+                      value: item?.value,
+                      StartupId: row?.original.startupId,
+                    })
+                  }
+                >
+                  {item?.label}
+                </button>
+              ))}
             <button
               className="bg-[#b4cd93] ml-2 text-xs  font-light h-6 w-10 rounded-md hover:bg-[#6b9239]"
               onClick={() => handlePreview(row.original)}
