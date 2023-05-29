@@ -36,6 +36,7 @@ const App = () => {
             <Route path="/admin/calendar" element={<DashboardAdmin page={'calendar'} />} />
             <Route path="/admin/notifications" element={<DashboardAdmin page={'notifications'} />} />
             <Route path="/admin/stageTwoForm/:startupId" element={<DashboardAdmin page={'stageTwoForm'} />} />
+            <Route path="/admin/finance" element={<DashboardAdmin page={'finance'} />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<SignUp />} />
             {/* <Route exact path="/signup/2" element={<SignUp step={step} setStep={setStep} />} /> */}

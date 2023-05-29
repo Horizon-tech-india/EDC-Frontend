@@ -11,6 +11,7 @@ import SidebarRight from './SidebarRight'
 import Notifications from './Notifications'
 import Calendar from './Calendar'
 import StageTwoForm from './StageTwoForm'
+import FinanceSection from './FinanceSection'
 
 const AdminApplicationSection = ({ page, setNotificationsCount }) => {
   return (
@@ -64,13 +65,21 @@ const AdminApplicationSection = ({ page, setNotificationsCount }) => {
             {' '}
             <StageTwoForm />
           </>
-        ) : (
+        ) : page === 'notifications' ? (
           <>
             {' '}
             <div className="w-full h-10 p-5 flex justify-start items-center">
               <h1 className="text-3xl font-bold">Manage Coordinate </h1>
             </div>
             <AdminAddSection />
+          </>
+        ) : (
+          <>
+            <div className="w-full h-10 p-5 flex justify-start items-center">
+              <h1 className="text-3xl font-bold">Manage Finance </h1>
+            </div>
+
+            <FinanceSection />
           </>
         )}
       </section>

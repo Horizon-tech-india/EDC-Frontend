@@ -31,6 +31,8 @@ const url = {
   userStartupStatus: '/users/startup-status',
   clearNotifications: '/admin/clear-notifications?',
   submitStage2Form: '/admin/sec-stage-startup-support'
+  finance: '/admin/finance-details',
+  
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -330,4 +332,18 @@ export const ForgotPassword = () => {
 // Startup detail insert
 export const StartupData = (formdata, token) => {
   API('post', url.submitApplicationForm, formdata, token)
+}
+
+
+export const SubmitFinance = () => {
+  return useMutation(async (formData, token) => {
+    const response = await API('post', url.finance, formData, token)
+    return response.data
+  })
+}
+
+
+export function GetFinanceDetails (startupId,token){
+  const res= API('get', `${url.finance}?startupId=${startupId}`,{},token);
+  return res;
 }
