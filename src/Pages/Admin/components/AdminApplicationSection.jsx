@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState } from 'react'
 import '../../../styles/adminApplication.css'
 import SearchBar from './SearchBar'
 import Last30Days from './Last30Days'
