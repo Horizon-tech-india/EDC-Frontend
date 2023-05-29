@@ -187,14 +187,7 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
           setModalOpen(!modalOpen)
         }}
       />
-      <MeetingAddModal
-        isOpen={isOpen}
-        refetch={refetch}
-        array={array}
-        onClose={() => {
-          setIsOpen(!isOpen)
-        }}
-      />
+      
       <MaterialReactTable
         data={data}
         state={{ isLoading: isLoading }}

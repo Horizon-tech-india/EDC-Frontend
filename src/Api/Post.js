@@ -30,6 +30,7 @@ const url = {
   getStartupsUserEmail: '/admin/get-startups-user-email',
   userStartupStatus: '/users/startup-status',
   clearNotifications: '/admin/clear-notifications?',
+  submitStage2Form: '/admin/sec-stage-startup-support'
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -261,6 +262,17 @@ export async function UpdatePayload({ value, StartupId, token }) {
 // submit user common application form
 export async function SubmitApplicationForm({ values, token }) {
   return API('post', '/users/startup-details', values, token)
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
+// submit stage 2 form
+export async function SubmitStage2Form(body, token) {
+  return API('post', url.submitStage2Form, body, token)
     .then((res) => {
       return res
     })

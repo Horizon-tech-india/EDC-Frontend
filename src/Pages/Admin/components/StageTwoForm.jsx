@@ -1,8 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../context/AuthContext'
+import { SubmitStage2Form } from '../../../Api/Post'
 import { useFormik } from 'formik'
 import { adminStageTwoForm } from '../../../validation/formSchema'
+import Chip from '@mui/material/Chip'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+import { Button, styled, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 
 const initialValues = {
   incubationId: '',
@@ -26,70 +31,103 @@ const initialValues = {
   teamLeaderCategory: '',
   teamLeaderId: '',
   organisationName: '',
-  teamMembers: '',
   teamMemberCategory: '',
   spoc: '',
   externalMentor: '',
   incubationDate: '',
   graduationDate: '',
-  receivedFunding: '',
+  receivedFunding: false,
   fundingAgency: '',
   fundSanctionDate: '',
-  fundingAmount: '',
-  registeredCompany: '',
+  fundingAmount: 0,
+  registeredCompany: false,
   companyType: '',
   cinUdhyamRegistrationNo: '',
   companyRegistrationDate: '',
-  dpiitRecognised: '',
+  dpiitRecognised: false,
   dpiitCertificateNo: '',
   incubatedAt: '',
-  ipFilledGranted: '',
-  ipTypes: '',
+  ipFilledGranted: false,
   ipDetails: '',
-  revenueGeneration: '',
-  numOfEmployees: '',
+  revenueGeneration: 0,
+  numOfEmployees: 0,
   folderLink: '',
 }
 
+const ipOptions = ['Patent', 'Trademark', 'Copyright', 'Design']
+
 const StageTwoForm = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const startupDetails = location.state
   const { state } = useContext(AuthContext)
+  const [ipTypesInput, setIpTypesInput] = useState([])
+  const [membersInput, setMembersInput] = useState([])
+
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [formSuccess, setFormSuccess] = useState(false)
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: adminStageTwoForm,
     onSubmit: async (values) => {
-      console.log(values)
-      // setIsLoading(true)
-      // const body = { ...values, branch }
-      // try {
-      //   const res = await CreateNewAdmin(body, state.token)
-      //   console.log(`first`, res)
-      //   if (res?.response?.status === 400) {
-      //     setIsLoading(false)
-      //     setOpenMsg(res?.response?.data?.message)
-      //   }
-      //   if (res?.status === 200) {
-      //     setOpenMsg(res?.data?.message)
-      //     setOpen(true)
-      //     resetForm()
-      //     handleClose()
-      //     handleRefresh()
-      //   }
-      // } catch (error) {
-      //   setOpenMsg(error?.message)
-      //   resetForm()
-      //   setIsLoading(false)
-      // }
+      console.log(values, ipTypesInput, membersInput)
+      setIsLoading(true)
+      const body = {
+        ...values,
+        ipTypes: ipTypesInput,
+        teamMembers: membersInput,
+        startupId: startupDetails.startupId,
+        receivedFunding: values.receivedFundinf === 'true',
+        registeredCompany: values.registeredCompany === 'true',
+        dpiitRecognised: values.dpiitRecognised === 'true',
+        ipFilledGranted: values.ipFilledGranted === 'true',
+      }
+      try {
+        const res = await SubmitStage2Form(body, state.token)
+        console.log(`first`, res)
+        if (res?.status === 200) {
+          setFormSuccess(true)
+          setOpen(true)
+        }
+        setIsLoading(false)
+      } catch (error) {
+        setFormSuccess(false)
+        setOpen(true)
+        setIsLoading(false)
+      }
     },
   })
 
+  const handleClose = () => {
+    setOpen(false)
+    if (formSuccess) {
+      navigate('/Admin')
+    }
+  }
+
   return (
     <div className="max-h-[100vh] overflow-y-scroll">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{formSuccess ? 'Form submitted successfully!' : 'Error!'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {formSuccess ? 'Form has been submitted successfully.' : 'Check form details again.'}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
       <form onSubmit={handleSubmit} className="admin-add__form mx-10 mb-20">
         <h1 className="w-full text-2xl text-center mt-10 mb-6">{startupDetails.name}'s Stage 2 Form</h1>
         <div className="m-auto w-full max-w-xl">
@@ -112,9 +150,10 @@ const StageTwoForm = () => {
             </div>
           </div>
         </div>
+
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Title of the Startup/Idea/Innovation</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -130,9 +169,10 @@ const StageTwoForm = () => {
             </div>
           </div>
         </div>
+
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="problemDescription">Problem Description</label>
+            <label htmlFor="problemDescription">Define the problem that your startup is solving</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -150,9 +190,10 @@ const StageTwoForm = () => {
             </div>
           </div>
         </div>
+
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="solutionDescription">Solution Description</label>
+            <label htmlFor="solutionDescription">Describe the solution</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -170,9 +211,12 @@ const StageTwoForm = () => {
             </div>
           </div>
         </div>
+
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="uniquenessDescription">Uniqueness Description</label>
+            <label htmlFor="uniquenessDescription">
+              Explain the uniqueness and distinctive features of the (product/process/service) solution
+            </label>
             <input
               className="border border-gray-400"
               type="text"
@@ -190,41 +234,23 @@ const StageTwoForm = () => {
             </div>
           </div>
         </div>
-        <div className="m-auto w-full max-w-xl">
-          <div className="input__container">
-            <label htmlFor="firstName">First Name</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="firstName"
-              id="firstName"
-              placeholder="First Name"
-              value={values.firstName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <div className="h-3 mb-2">
-              {errors.firstName && touched.firstName ? <p className="input-block__error">{errors.firstName}</p> : null}
-            </div>
-          </div>
-        </div>
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="stertupSector">Startup Sector</label>
+            <label htmlFor="startupSector">Startup Sector</label>
             <input
               className="border border-gray-400"
               type="text"
-              name="stertupSector"
-              id="stertupSector"
+              name="startupSector"
+              id="startupSector"
               placeholder="Enter Startup Sector"
-              value={values.stertupSector}
+              value={values.startupSector}
               onChange={handleChange}
               onBlur={handleBlur}
             />
             <div className="h-3 mb-2">
-              {errors.stertupSector && touched.stertupSector ? (
-                <p className="input-block__error">{errors.stertupSector}</p>
+              {errors.startupSector && touched.startupSector ? (
+                <p className="input-block__error">{errors.startupSector}</p>
               ) : null}
             </div>
           </div>
@@ -253,7 +279,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="currentStage">Current Stage</label>
+            <label htmlFor="currentStage">Current Stage of Startup</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -316,7 +342,9 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="startupGrade">Startup Grade</label>
+            <label htmlFor="startupGrade">
+              Startup Grade (Depending on how active and passionate are the founders to take their Startup Forward)
+            </label>
             <input
               className="border border-gray-400"
               type="text"
@@ -337,10 +365,10 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="programStartDate">Enter Program Start Date</label>
+            <label htmlFor="programStartDate">Program Start Date</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="date"
               name="programStartDate"
               id="programStartDate"
               placeholder="Enter Program Start Date"
@@ -421,7 +449,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="teamLeaderName">Team Leader name</label>
+            <label htmlFor="teamLeaderName">Team Leader's name</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -442,7 +470,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="teamLeaderEmail">Team Leader email</label>
+            <label htmlFor="teamLeaderEmail">Team Leader's email address</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -463,7 +491,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="teamLeaderContact">Team Leader Contact</label>
+            <label htmlFor="teamLeaderContact">Team Leader's Contact Number</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -484,17 +512,24 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="teamLeaderCategory">Team Leader Category</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="teamLeaderCategory"
+            <label htmlFor="teamLeaderCategory">Team Leader's Category (PU Student, PU Alumni, PU Staff, other)</label>
+            <select
+              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
               id="teamLeaderCategory"
-              placeholder="Enter Team Leader Category"
+              name="teamLeaderCategory"
               value={values.teamLeaderCategory}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+              required
+            >
+              <option value="" hidden disabled>
+                Select Team Leader's Category
+              </option>
+              <option value="PU Student">PU Student</option>
+              <option value="PU Alumni">PU Alumni</option>
+              <option value="PU Staff">PU Staff</option>
+              <option value="other">other</option>
+            </select>
             <div className="h-3 mb-2">
               {errors.teamLeaderCategory && touched.teamLeaderCategory ? (
                 <p className="input-block__error">{errors.teamLeaderCategory}</p>
@@ -505,7 +540,9 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="teamLeaderId">Team Leader ID</label>
+            <label htmlFor="teamLeaderId">
+              Team Leader's Enrollment Number/Employee ID/Alumni ID number(If Applicable)
+            </label>
             <input
               className="border border-gray-400"
               type="text"
@@ -526,7 +563,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="organisationName">Organistion Name</label>
+            <label htmlFor="organisationName">Organisation Name (Write 'NA' if not applicable)</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -545,36 +582,53 @@ const StageTwoForm = () => {
           </div>
         </div>
 
-        <div className="m-auto w-full max-w-xl">
+        <div className="m-auto w-full max-w-xl mb-3">
           <div className="input__container">
-            <label htmlFor="teamMembers">Team Members</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="teamMembers"
+            <label htmlFor="teamMembers">
+              Write the names and contact number separated by comma of all the other team members (e.g. Rahul,
+              9999999999 )
+            </label>
+            <Autocomplete
+              multiple
               id="teamMembers"
-              placeholder="Enter Team members"
-              value={values.teamMembers}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              options={[]?.map((option) => option)}
+              defaultValue={[]}
+              freeSolo
+              className="w-full"
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  className="bg-[#f3ebeb] w-full max-h-60 overflow-auto"
+                  name="branch"
+                  {...params}
+                  variant="outlined"
+                  label=""
+                  placeholder="Enter Team member names with phone number"
+                  sx={{
+                    outline: 'none',
+                  }}
+                />
+              )}
+              onChange={(event, value) => setMembersInput(value)}
             />
-            <div className="h-3 mb-2">
-              {errors.teamMembers && touched.teamMembers ? (
-                <p className="input-block__error">{errors.teamMembers}</p>
-              ) : null}
-            </div>
           </div>
         </div>
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="teamMemberCategory">Team Member Category</label>
+            <label htmlFor="teamMemberCategory">
+              Is any member of the team belong to OBC/SC/ST? If Yes, then mention the name and category
+            </label>
             <input
               className="border border-gray-400"
               type="text"
               name="teamMemberCategory"
               id="teamMemberCategory"
-              placeholder="Enter Team Member Category"
+              placeholder="Enter Team Member's Category"
               value={values.teamMemberCategory}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -589,13 +643,13 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="spoc">SPOC</label>
+            <label htmlFor="spoc">Internal team Member assigned as a SPOC (Mentor)</label>
             <input
               className="border border-gray-400"
               type="text"
               name="spoc"
               id="spoc"
-              placeholder="Enter SPOC"
+              placeholder="Enter Mentor"
               value={values.spoc}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -608,7 +662,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="externalMentor">External Mentor</label>
+            <label htmlFor="externalMentor">Mentor assigned from PIERC External Mentor Board</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -629,13 +683,12 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="incubationDate">Incubation Date</label>
+            <label htmlFor="incubationDate">Date of Incubation</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="date"
               name="incubationDate"
               id="incubationDate"
-              placeholder="Enter Incubation Date"
               value={values.incubationDate}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -650,13 +703,12 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="graduationDate">Graduation Date</label>
+            <label htmlFor="graduationDate">Date of Graduation</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="date"
               name="graduationDate"
               id="graduationDate"
-              placeholder="Enter Graduation Date"
               value={values.graduationDate}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -671,17 +723,19 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="receivedFunding">Received Funding</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="receivedFunding"
+            <label htmlFor="receivedFunding">Received Funding(Yes/No)</label>
+            <select
+              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
               id="receivedFunding"
-              placeholder="Enter Received Funding"
+              name="receivedFunding"
               value={values.receivedFunding}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+              required
+            >
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
+            </select>
             <div className="h-3 mb-2">
               {errors.receivedFunding && touched.receivedFunding ? (
                 <p className="input-block__error">{errors.receivedFunding}</p>
@@ -692,7 +746,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="fundingAgency">Funding Agency</label>
+            <label htmlFor="fundingAgency">Funding Agency (if applicable)</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -713,10 +767,10 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="fundSanctionDate">Fund Sanction Date</label>
+            <label htmlFor="fundSanctionDate">Date of fund sanction (If applicable)</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="date"
               name="fundSanctionDate"
               id="fundSanctionDate"
               placeholder="Enter Fund Sanction Date"
@@ -734,10 +788,10 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="fundingAmount">Funding Amount</label>
+            <label htmlFor="fundingAmount">Funding Amount (If applicable)</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="number"
               name="fundingAmount"
               id="fundingAmount"
               placeholder="Enter Funding Amount"
@@ -755,17 +809,19 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="registeredCompany">Registered Company</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="registeredCompany"
+            <label htmlFor="registeredCompany">Registered a company? (Yes/No)</label>
+            <select
+              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
               id="registeredCompany"
-              placeholder="Enter Registered Company"
+              name="registeredCompany"
               value={values.registeredCompany}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+              required
+            >
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
+            </select>
             <div className="h-3 mb-2">
               {errors.registeredCompany && touched.registeredCompany ? (
                 <p className="input-block__error">{errors.registeredCompany}</p>
@@ -797,13 +853,15 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="cinUdhyamRegistrationNo">First Name</label>
+            <label htmlFor="cinUdhyamRegistrationNo">
+              Corporate Identification No (CIN)/Udhyam Registration No. (If applicable)
+            </label>
             <input
               className="border border-gray-400"
               type="text"
               name="cinUdhyamRegistrationNo"
               id="cinUdhyamRegistrationNo"
-              placeholder="First Name"
+              placeholder="Enter CIN No."
               value={values.cinUdhyamRegistrationNo}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -818,10 +876,10 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="companyRegistrationDate">Company Registration Date</label>
+            <label htmlFor="companyRegistrationDate">Company Registration Date (If applicable)</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="date"
               name="companyRegistrationDate"
               id="companyRegistrationDate"
               placeholder="Enter Company Registration Date"
@@ -839,17 +897,19 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="dpiitRecognised">DPIIT Recognised</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="dpiitRecognised"
+            <label htmlFor="dpiitRecognised">Is startup recognised by DPIIT?</label>
+            <select
+              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
               id="dpiitRecognised"
-              placeholder="DPIIT Recognised"
+              name="dpiitRecognised"
               value={values.dpiitRecognised}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+              required
+            >
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
+            </select>
             <div className="h-3 mb-2">
               {errors.dpiitRecognised && touched.dpiitRecognised ? (
                 <p className="input-block__error">{errors.dpiitRecognised}</p>
@@ -860,7 +920,7 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="dpiitCertificateNo">DPIIT Cartification No</label>
+            <label htmlFor="dpiitCertificateNo">DPIIT Certification No (If applicable)</label>
             <input
               className="border border-gray-400"
               type="text"
@@ -881,17 +941,25 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="incubatedAt">incubatedAt</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="incubatedAt"
+            <label htmlFor="incubatedAt">Incubated At (EDC, VSS, RSS, ASS and SSS)</label>
+            <select
+              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
               id="incubatedAt"
-              placeholder="incubatedAt"
+              name="incubatedAt"
               value={values.incubatedAt}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+              required
+            >
+              <option value="" hidden disabled>
+                Incubated at
+              </option>
+              <option value="EDC">EDC</option>
+              <option value="VSS">VSS</option>
+              <option value="RSS">RSS</option>
+              <option value="ASS">ASS</option>
+              <option value="SSS">SSS</option>
+            </select>
             <div className="h-3 mb-2">
               {errors.incubatedAt && touched.incubatedAt ? (
                 <p className="input-block__error">{errors.incubatedAt}</p>
@@ -902,17 +970,19 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="ipFilledGranted">ipFilledGranted</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="ipFilledGranted"
+            <label htmlFor="ipFilledGranted">Whether IP filled/granted? (Yes/No)</label>
+            <select
+              className="border border-gray-400 p-2 rounded bg-[#f3ebeb] outline-none"
               id="ipFilledGranted"
-              placeholder="ipFilledGranted"
+              name="ipFilledGranted"
               value={values.ipFilledGranted}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+              required
+            >
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
+            </select>
             <div className="h-3 mb-2">
               {errors.ipFilledGranted && touched.ipFilledGranted ? (
                 <p className="input-block__error">{errors.ipFilledGranted}</p>
@@ -921,34 +991,48 @@ const StageTwoForm = () => {
           </div>
         </div>
 
-        <div className="m-auto w-full max-w-xl">
+        <div className="m-auto w-full max-w-xl mb-3">
           <div className="input__container">
-            <label htmlFor="ipTypes">ipTypes</label>
-            <input
-              className="border border-gray-400"
-              type="text"
-              name="ipTypes"
+            <label htmlFor="ipTypes">IP Types (Patent, Trademark, Copyrights, Design, etc)</label>
+            <Autocomplete
+              multiple
               id="ipTypes"
-              placeholder="ipTypes"
-              value={values.ipTypes}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              options={ipOptions?.map((option) => option)}
+              defaultValue={[]}
+              freeSolo
+              className="w-full"
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  className="bg-[#f3ebeb] w-full max-h-60 overflow-auto"
+                  name="branch"
+                  {...params}
+                  variant="outlined"
+                  label=""
+                  placeholder="Choose IP"
+                  sx={{
+                    outline: 'none',
+                  }}
+                />
+              )}
+              onChange={(event, value) => setIpTypesInput(value)}
             />
-            <div className="h-3 mb-2">
-              {errors.ipTypes && touched.ipTypes ? <p className="input-block__error">{errors.ipTypes}</p> : null}
-            </div>
           </div>
         </div>
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="ipDetails">ipDetails</label>
+            <label htmlFor="ipDetails">IP details with registration and application</label>
             <input
               className="border border-gray-400"
               type="text"
               name="ipDetails"
               id="ipDetails"
-              placeholder="ipDetails"
+              placeholder="IP details"
               value={values.ipDetails}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -961,10 +1045,10 @@ const StageTwoForm = () => {
 
         <div className="m-auto w-full max-w-xl">
           <div className="input__container">
-            <label htmlFor="revenueGeneration">Revenue Generation</label>
+            <label htmlFor="revenueGeneration">Revenue Generation (Annualy)</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="number"
               name="revenueGeneration"
               id="revenueGeneration"
               placeholder="Revenue Generation"
@@ -985,7 +1069,7 @@ const StageTwoForm = () => {
             <label htmlFor="numOfEmployees">No. of employees</label>
             <input
               className="border border-gray-400"
-              type="text"
+              type="number"
               name="numOfEmployees"
               id="numOfEmployees"
               placeholder="Enter No. of employees"
@@ -1009,7 +1093,7 @@ const StageTwoForm = () => {
               type="text"
               name="folderLink"
               id="folderLink"
-              placeholder="First Name"
+              placeholder="Enter Folder Link"
               value={values.folderLink}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -1022,9 +1106,6 @@ const StageTwoForm = () => {
           </div>
         </div>
 
-        <div className="w-full flex justify-center items-center">
-          <span className="text-xl text-red-500  mx-auto text-center px-2 py-2"> {openMsg && openMsg}</span>
-        </div>
         {isLoading ? (
           <button className="admin-add__submit" type="button" disabled>
             Submitting...

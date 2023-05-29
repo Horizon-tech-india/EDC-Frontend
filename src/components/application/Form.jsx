@@ -667,7 +667,7 @@ const Form = ({ refetchStartupStatus }) => {
           <DialogTitle id="alert-dialog-title">{formSuccess ? 'Form submitted successfully!' : 'Error!'}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {formSuccess ? 'Your aplication has been submitted successfully.' : 'Check form details again.'}
+              {formSuccess ? 'Your application has been submitted successfully.' : 'Check form details again.'}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

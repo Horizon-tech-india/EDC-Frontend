@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../../../context/AuthContext'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
@@ -132,29 +133,42 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
               })}
             </div>
             <div className="w-full flex my-2 justify-center gap-5 items-center">
-              {!hideActions &&
-                Object?.values(statusMenuItems)
-                  .filter((item) => item?.value !== modalData?.status)
-                  .map((item) => (
-                    <Button
-                      size="sm"
-                      variant="contained"
-                      color={
-                        (item?.value === 'pending' && 'info') ||
-                        (item?.value === 'verified' && 'success') ||
-                        (item?.value === 'rejected' && 'error')
-                      }
-                      key={item?.value}
-                      onClick={() =>
-                        handleClickPayload({
-                          value: item?.value,
-                          StartupId: modalData?.startupId,
-                        })
-                      }
-                    >
-                      {item?.label}
-                    </Button>
-                  ))}
+              {modalData?.status === 'verified' ? (
+                <NavLink to={`/admin/stageTwoForm/${modalData?.startupId}`} state={data}>
+                  <Button
+                    size="sm"
+                    variant="contained"
+                  >
+                    Stage 2
+                  </Button>
+                </NavLink>
+              ) : (
+                <>
+                  {!hideActions &&
+                    Object?.values(statusMenuItems)
+                      .filter((item) => item?.value !== modalData?.status)
+                      .map((item) => (
+                        <Button
+                          size="sm"
+                          variant="contained"
+                          color={
+                            (item?.value === 'pending' && 'info') ||
+                            (item?.value === 'verified' && 'success') ||
+                            (item?.value === 'rejected' && 'error')
+                          }
+                          key={item?.value}
+                          onClick={() =>
+                            handleClickPayload({
+                              value: item?.value,
+                              StartupId: modalData?.startupId,
+                            })
+                          }
+                        >
+                          {item?.label}
+                        </Button>
+                      ))}
+                </>
+              )}
               {!hideActions && (
                 <Button onClick={() => handleDelete()} size="sm" variant="contained" color="error">
                   Delete
