@@ -64,7 +64,7 @@ const AdminApplicationSection = ({ page, setNotificationsCount }) => {
             {' '}
             <StageTwoForm />
           </>
-        ) : page === 'notifications' ? (
+        ) : page === 'manage-coordinators' ? (
           <>
             {' '}
             <div className="w-full h-10 p-5 flex justify-start items-center">
