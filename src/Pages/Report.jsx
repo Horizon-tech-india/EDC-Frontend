@@ -8,6 +8,7 @@ import { AuthContext } from '../context/AuthContext'
 import Spinner from '../components/Layout/Spinner'
 import { GetFinanceDetails, GetUserStartupStatus } from '../Api/Post'
 import MaterialReactTable from 'material-react-table'
+import { Box } from '@mui/material'
 const App = () => {
   const { state } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(true)
@@ -54,6 +55,22 @@ const [data,setData]= useState([]);
         {
           accessorKey: 'date',
           header: 'Date',
+          accessorFn: (row) => {
+            console.log(row)
+            const date = new Date(row.date)
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1; // Add 1 because getMonth() returns zero-based month
+            const day = date.getDate();
+            
+            return `${year}-${month}-${day}`;
+          },
+          
+          Cell: ({ cell }) => (
+            <Box component="span" className="capitalize">
+              <span className="font-light text-black"> {cell.getValue()}</span>
+            </Box>
+          ),
+          size: 150,
         },
         {
           accessorKey: 'amount',

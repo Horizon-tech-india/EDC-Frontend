@@ -345,8 +345,22 @@ export const StartupData = (formdata, token) => {
 }
 
 export const SubmitFinance = () => {
-  return useMutation(async (formData, token) => {
-    const response = await API('post', url.finance, formData, token)
+  
+  return useMutation(async (formData) => {
+
+    let body ={
+      
+      startupId: formData.startupId,
+      finance: {
+        date: formData.finance.date,
+        type: formData.finance.type,
+        amount: formData.finance.amount,
+        remark: formData.finance.remark,
+        transactionDetail: formData.finance?.transactionDetail,
+        billInvoiceLink: formData.finance?.billInvoiceLink,
+      }
+    }
+    const response = await API('post', url.finance, body, formData.finance.token)
     return response.data
   })
 }
