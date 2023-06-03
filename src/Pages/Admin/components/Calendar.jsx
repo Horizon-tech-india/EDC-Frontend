@@ -11,6 +11,12 @@ import CalendarTable from './CalendarTable'
 import { GetAllMeetingsEventsData, GetAllMeetingsEventsDates } from '../../../Api/Post'
 import Typography from '@mui/material/Typography'
 
+import { formatDate } from '@fullcalendar/core'
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+
 function ServerDay(props) {
   const { highlightedEventDays = [], highlightedMeetingDays = [], day, outsideCurrentMonth, ...other } = props
 
@@ -48,30 +54,118 @@ const Calendar = () => {
   const [highlightedEventDays, setHighlightedEventDays] = useState([])
   const [highlightedMeetingDays, setHighlightedMeetingDays] = useState([])
 
-  const currentDateIs = date.toDate().toISOString().split('T')[0]
-  const { data, isLoading, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
-  useEffect(() => {
-    refetch()
-  }, [date])
+  // const currentDateIs = date.toDate().toISOString().split('T')[0]
+  // const { data, isLoading, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
+  // useEffect(() => {
+  //   refetch()
+  // }, [date])
 
-  const { data: dataDates, refetch: refetchDates } = GetAllMeetingsEventsDates(month, state.token)
+  // const { data: dataDates, refetch: refetchDates } = GetAllMeetingsEventsDates(month, state.token)
 
-  useEffect(() => {
-    setHighlightedEventDays(dataDates?.data?.eventDates)
-    setHighlightedMeetingDays(dataDates?.data?.meetingDates)
-  }, [dataDates])
+  // useEffect(() => {
+  //   setHighlightedEventDays(dataDates?.data?.eventDates)
+  //   setHighlightedMeetingDays(dataDates?.data?.meetingDates)
+  // }, [dataDates])
 
-  const handleMonthChange = (monthNew) => {
-    setHighlightedEventDays([])
-    setHighlightedMeetingDays([])
-    setMonth(monthNew.toDate().toISOString().slice(0, 7))
-    console.log(month)
-    refetchDates()
+  // const handleMonthChange = (monthNew) => {
+  //   setHighlightedEventDays([])
+  //   setHighlightedMeetingDays([])
+  //   setMonth(monthNew.toDate().toISOString().slice(0, 7))
+  //   console.log(month)
+  //   refetchDates()
+  // }
+
+  let eventGuid = 0
+  let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+  const [currentEvents, setCurrentEvents] = useState([])
+
+  const INITIAL_EVENTS = [
+    {
+      id: createEventId(),
+      title: 'All-day event',
+      start: todayStr,
+    },
+    {
+      id: createEventId(),
+      title: 'Timed event',
+      start: todayStr + 'T12:00:00',
+    },
+  ]
+
+  function createEventId() {
+    return String(eventGuid++)
+  }
+
+  const handleWeekendsToggle = () => {
+    this.setState({
+      weekendsVisible: !this.state.weekendsVisible,
+    })
+  }
+
+  const handleDateSelect = (selectInfo) => {
+    // let title = prompt('Please enter a new title for your event')
+    // let calendarApi = selectInfo.view.calendar
+    // calendarApi.unselect() // clear date selection
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //     allDay: selectInfo.allDay,
+    //   })
+    // }
+  }
+
+  const handleEventClick = (clickInfo) => {
+    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    //   clickInfo.event.remove()
+    // }
+    console.log(clickInfo)
+  }
+
+  const handleEvents = (events) => {
+    setCurrentEvents(events)
+  }
+
+  function renderEventContent(eventInfo) {
+    return (
+      <>
+        <b>{eventInfo.timeText}</b>
+        <i>{eventInfo.event.title}</i>
+      </>
+    )
   }
 
   return (
     <div className="calendar-container">
-      <div className="calendar-section">
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: '',
+        }}
+        initialView="dayGridMonth"
+        editable={false}
+        selectable={true}
+        selectMirror={true}
+        dayMaxEvents={true}
+        weekends={true}
+        initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+        select={handleDateSelect}
+        eventContent={renderEventContent} // custom render function
+        eventClick={handleEventClick}
+        eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+        height={'100vh'}
+        /* you can update a remote database when these fire:
+            eventAdd={function(){}}
+            eventChange={function(){}}
+            eventRemove={function(){}}
+            */
+      />
+
+      {/* <div className="calendar-section">
         <Typography
           className="calendar-section-head"
           id="modal-modal-title justify-items-center"
@@ -116,7 +210,7 @@ const Calendar = () => {
       </div>
       <div className="calendar-table">
         <CalendarTable isLoading={isLoading} data={data ? [...data?.data?.events, ...data?.data?.meetings] : []} />
-      </div>
+      </div> */}
     </div>
   )
 }
