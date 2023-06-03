@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
-import { UploadFile } from '@mui/icons-material'
 import { Button, styled, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import '../../styles/form.scss'
 import { API } from '../../Api/Post'
@@ -55,27 +54,10 @@ const Form = ({ refetchStartupStatus }) => {
         setFormSuccess(true)
         setOpen(true)
       }
-      // setIsLoading(true)
-
-      // setEmail(values.email)
-
-      // mutation.mutate(values)(
-      //   mutation.isError
-      //     ? setOpen(true)
-      //     : setTimeout(() => {
-      //         navigate('/signup/2')
-      //         setIsLoading(false)
-      //       }, 1000),
-      //)
     },
   })
 
   const companyName = (state.isAuthenticated && `Hi, ${state?.firstName} ${state?.lastName}`) || `Welcome please Login`
-  const [selectedFile, setSelectedFile] = useState(null)
-
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0])
-  }
 
   const SubmitBtn = styled(Button)({
     backgroundColor: '#0193DC',
@@ -87,33 +69,6 @@ const Form = ({ refetchStartupStatus }) => {
     letterSpacing: 0.7,
     borderRadius: 7,
   })
-
-  const UploadBtn = styled(Button)({
-    padding: '12px 40px',
-    fontSize: 20,
-    fontFamily: 'Open sans',
-    fontWeight: 600,
-    textTransform: 'none',
-    letterSpacing: 0.7,
-    borderRadius: 7,
-  })
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault()
-  //   console.log(values)
-  //   API('post', '/api/users/startup-details', values, state.token)
-  //     .then((res) => {
-  //       console.log(res.data)
-  //       setOpen(true)
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.message)
-  //       console.error(error)
-  //       alert(error.response.data.message)
-  //     })
-  //   handleClickOpen()
-  //   // reset()
-  //
 
   return (
     <div className="form-section">
@@ -401,31 +356,6 @@ const Form = ({ refetchStartupStatus }) => {
                   ) : null}
                 </div>
 
-                <div className="uploadFiles">
-                  <div className="file-upload-text">
-                    <p>Proposal Idea / PPT</p>
-                    <p id="selected-file">
-                      Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
-                    </p>
-                  </div>
-                  {!state.isAuthenticated ? (
-                    <UploadBtn
-                      variant="contained"
-                      component="label"
-                      disabled
-                      endIcon={<UploadFile sx={{ color: 'white' }} />}
-                    >
-                      Upload File
-                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
-                    </UploadBtn>
-                  ) : (
-                    <UploadBtn variant="contained" component="label" endIcon={<UploadFile sx={{ color: 'white' }} />}>
-                      Upload File
-                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
-                    </UploadBtn>
-                  )}
-                </div>
-
                 <div className="submitButton">
                   {!state.isAuthenticated ? (
                     <SubmitBtn variant="contained" type="submit" disabled>
@@ -615,30 +545,7 @@ const Form = ({ refetchStartupStatus }) => {
                   ) : null}
                 </div>
 
-                <div className="uploadFiles">
-                  <div className="file-upload-text">
-                    <p>Proposal Idea / PPT</p>
-                    <p id="selected-file">
-                      Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
-                    </p>
-                  </div>
-                  {!state.isAuthenticated ? (
-                    <UploadBtn
-                      variant="contained"
-                      component="label"
-                      disabled
-                      endIcon={<UploadFile sx={{ color: 'white' }} />}
-                    >
-                      Upload File
-                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
-                    </UploadBtn>
-                  ) : (
-                    <UploadBtn variant="contained" component="label" endIcon={<UploadFile sx={{ color: 'white' }} />}>
-                      Upload File
-                      <input type="file" accept=".pdf" onChange={handleFileChange} hidden></input>
-                    </UploadBtn>
-                  )}
-                </div>
+                
 
                 <div className="submitButton">
                   {!state.isAuthenticated ? (

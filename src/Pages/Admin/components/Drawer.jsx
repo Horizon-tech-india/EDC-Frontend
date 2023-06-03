@@ -50,8 +50,8 @@ const Drawer = ({ notificationsCount }) => {
 
   return (
     <div className="h-screen max-w-xs flex flex-col justify-between w-full bg-[#e5e5e5]">
-      <div className="p-2 h-40 flex flex-col justify-between items-center w-full">
-        <img src={AdminLogo} alt="" />
+      <div className="p-2 h-[9rem] flex flex-col justify-between items-center w-full">
+        <img src={AdminLogo} className="pt-5" alt="logo" />
         <div className="w-60">
           <UserProfile notificationsCount={notificationsCount} />
         </div>
@@ -90,18 +90,18 @@ const Drawer = ({ notificationsCount }) => {
               <span className="ml-4">Calendar</span>
             </li>
           </NavLink>
-          <NavLink className={Styles.btn} to="/admin/dashboard">
+          {/* <NavLink className={Styles.btn} to="/admin/dashboard">
             <li className={Styles.li}>
               <img src={setting} alt="" />
               <span className="ml-4">Settings</span>
             </li>
-          </NavLink>
-          <li className={Styles.li}>
-            <button className={Styles.btn} onClick={handleLogout}>
+          </NavLink> */}
+          <button className={Styles.btn} onClick={handleLogout}>
+            <li className={Styles.li}>
               <img src={logoutIcon} alt="" />
               <span className="ml-4">Logout</span>
-            </button>
-          </li>
+            </li>
+          </button>
         </ul>
       </div>
       <DateTime />

@@ -10,18 +10,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    margin: 50px 0px;
+    margin: 20px 0px;
 
     & .form-header {
       display: block;
-      margin: 50px auto;
+      margin: 30px auto;
+      font-size: 20px;
     }
 
     & .form-contents {
-      padding: 0 70px;
+      padding: 1rem;
     }
     form {
-      width: 60%;
+      max-width: 35rem;
       margin: 0 auto;
     }
     .form-row {
@@ -32,12 +33,11 @@
         display: block;
         width: 100%;
         padding: 0.5rem;
-        font-size: 0.9rem;
+        font-size: 1em;
         border-radius: 5px;
         font-family: 'Poppins';
         font-style: normal;
         font-weight: 400;
-        font-size: 20px;
         line-height: 30px;
         color: #312e49;
 
@@ -45,7 +45,7 @@
       }
 
       & > input {
-        padding: 15px 10px 15px 10px;
+        padding: 5px 10px 5px 10px;
         border: 1px solid #a2a2a6;
         border-radius: 4px;
         // width: calc(100% - 20px);
@@ -60,8 +60,8 @@
       }
 
       & > label {
-        padding-left: 0px;
-        margin: 0.1rem 0;
+        padding: 0;
+        margin: 0;
       }
 
       & > select {
@@ -73,7 +73,7 @@
         background-position: right 0.7rem center;
         background-size: 1.5em;
         width: 100%;
-        padding: 15px 10px 15px 10px;
+        padding: 5px 10px 5px 10px;
         // color: #2C3E50;
         color: #3d444bc1;
         font-size: 1rem;
@@ -83,7 +83,7 @@
 
       &__error {
         color: red;
-        font-size: 16px;
+        font-size: 14px;
         padding: 0;
       }
     }
@@ -92,8 +92,9 @@
 
 .uploadFiles {
   display: flex;
-  justify-content: space-between;
-
+  justify-content: center;
+  gap: 3rem;
+  
   & p {
     position: relative;
     font-size: 20px;

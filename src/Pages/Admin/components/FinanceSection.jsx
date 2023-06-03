@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
-import { useFormik } from 'formik';
-import { useLocation } from 'react-router-dom';
-import { SubmitFinance } from '../../../Api/Post';
-import { AuthContext } from '../../../context/AuthContext';
+import { useFormik } from 'formik'
+import { useLocation } from 'react-router-dom'
+import { SubmitFinance } from '../../../Api/Post'
+import { AuthContext } from '../../../context/AuthContext'
 const FinanceSection = () => {
   const { state } = useContext(AuthContext)
-  const mutation = SubmitFinance();
-  const location = useLocation();
-  let startupId = location.state.startupId;
+  const mutation = SubmitFinance()
+  const location = useLocation()
+  let startupId = location?.state?.startupId
 
   // Initial form values
   const initialValues = {
@@ -23,20 +23,15 @@ const FinanceSection = () => {
         billInvoiceLink: '',
       },
     ],
-  };
-
+  }
 
   // Form validation
-
-
 
   const { values, errors, touched, handleChange, handleSubmit, resetForm } = useFormik({
     initialValues,
 
     onSubmit: async (values) => {
-
       const body = {
-
         startupId: values.startupId,
         finance: {
           date: values.dateTime,
@@ -45,23 +40,17 @@ const FinanceSection = () => {
           remark: values.remark,
           transactionDetail: values?.transactionDetail,
           billInvoiceLink: values?.billInvoiceLink,
-        }
+        },
       }
       //POST REQUEST
       console.log(body)
-      mutation.mutate(body,state.token);
-      mutation.isSuccess ? console.log("success") : console.log("Error")
+      mutation.mutate(body, state.token)
+      mutation.isSuccess ? console.log('success') : console.log('Error')
     },
-
   })
-
-
-
 
   return (
     <>
-
-
       <div className="admin-add  ml-5">
         <form onSubmit={handleSubmit} className=" ml-5 admin-add__form overflow-hidden">
           <h1
@@ -93,43 +82,26 @@ const FinanceSection = () => {
                 value={values.date}
                 onChange={handleChange}
               />
-
             </div>
             <div className="input__container w-full col-span-6">
               <label htmlFor="tags-filled">Type</label>
 
-              <select onChange={handleChange} name="type" className='border rounded-md bg-[#f3ebeb] w-full py-2 border-gray-400'>
-
-                <option value="Credit ">
-                  Credit
-                </option>
-                <option value="Debit">
-                  Debit
-                </option>
+              <select
+                onChange={handleChange}
+                name="type"
+                className="border rounded-md bg-[#f3ebeb] w-full py-2 border-gray-400"
+              >
+                <option value="Credit ">Credit</option>
+                <option value="Debit">Debit</option>
               </select>
-
             </div>
             <div className="input__container w-full col-span-6">
               <label htmlFor="dateTime">Amount</label>
-              <input
-                className="border border-gray-400"
-                type="text"
-                name="amount"
-                id="amount"
-                onChange={handleChange}
-              />
-
+              <input className="border border-gray-400" type="text" name="amount" id="amount" onChange={handleChange} />
             </div>
             <div className="input__container w-full col-span-6">
               <label htmlFor="dateTime">Remark</label>
-              <input
-                className="border border-gray-400"
-                type="text"
-                name="remark"
-                id="remark"
-                onChange={handleChange}
-              />
-
+              <input className="border border-gray-400" type="text" name="remark" id="remark" onChange={handleChange} />
             </div>
             <div className="input__container w-full col-span-6">
               <label htmlFor="dateTime">TransactionDetail</label>
@@ -140,7 +112,6 @@ const FinanceSection = () => {
                 id="transactionDetail"
                 onChange={handleChange}
               />
-
             </div>
 
             <div className="input__container w-full col-span-6">
@@ -157,12 +128,10 @@ const FinanceSection = () => {
           <button className="admin-add__submit" type="submit">
             Submit
           </button>
-
-
         </form>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default FinanceSection;
+export default FinanceSection

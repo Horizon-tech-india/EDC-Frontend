@@ -261,6 +261,17 @@ export async function UpdatePayload({ value, StartupId, token }) {
 }
 
 // submit user common application form
+export async function UploadFile({ payload, token }) {
+  console.log(payload, token)
+  return API('post', '/users/file-upload', payload, token)
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 export async function SubmitApplicationForm({ values, token }) {
   return API('post', '/users/startup-details', values, token)
     .then((res) => {
