@@ -7,11 +7,12 @@ import Navigation from '../components/Layout/Navbar'
 import { GetUserStartupStatus } from '../Api/Post'
 import { UploadFile as UploadFileIcon } from '@mui/icons-material'
 import { styled, Button } from '@mui/material'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 import { UploadFile } from '../Api/Post'
 
 const ApplicationStatus = () => {
   const { state } = useContext(AuthContext)
-
   const { data, refetch, isLoading } = GetUserStartupStatus(state.token)
 
   const status = data?.data?.startupStatus
@@ -20,32 +21,34 @@ const ApplicationStatus = () => {
   const textBodyWaitSec2 = 'Admin PPDB SMPN 1 Cibadak'
 
   const [selectedFile, setSelectedFile] = useState(null)
+  const [open, setOpen] = useState(false)
+  const [openMsg, setOpenMsg] = useState('')
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0])
-    //console.log(event)
   }
 
   const handleUpload = async () => {
     if (selectedFile) {
       const formData = new FormData()
-      formData.append('originalname', selectedFile, selectedFile.name)
-      formData.append('mimetype', selectedFile.type)
       const fileReader = new FileReader()
 
       fileReader.onload = async () => {
         const arrayBuffer = fileReader.result
         const buffer = new Uint8Array(arrayBuffer)
-        formData.append('buffer', buffer)
+        formData.append('file', selectedFile)
         const payload = formData
-        //console.log(selectedFile.name,selectedFile.type,buffer)
         try {
           const token = state.token
           const res = await UploadFile({ payload, token })
           if (res?.status === 200) {
-            console.log('200')
+            setOpenMsg(res?.data?.message)
+            setOpen(true)
+            refetch()
           }
         } catch (error) {
+          setOpenMsg(error.message)
+          setOpen(true)
           console.error(error.message)
         }
       }
@@ -70,6 +73,11 @@ const ApplicationStatus = () => {
 
   return (
     <>
+      <Snackbar open={open} autoHideDuration={3000} onClose={() => setOpen(false)}>
+        <Alert variant="filled" onClose={() => setOpen(false)} severity="success" sx={{ width: '100%' }}>
+          {openMsg && openMsg}
+        </Alert>
+      </Snackbar>
       <Navigation />
       <Header props={'Provide All The Details'} />
       {state.isAuthenticated ? (
@@ -117,11 +125,11 @@ const ApplicationStatus = () => {
                   </div>
                 </div>
               </div>
-              <div className="uploadFiles mx-10">
+              <div className="uploadFiles mx-10 mb-20">
                 <div className="file-upload-text">
                   <p>Proposal Idea / PPT</p>
                   <p id="selected-file">
-                    Selected file: <span>{selectedFile ? selectedFile.name : ''} </span>
+                    Uploaded file: <span>{data?.data?.fileName ? data?.data?.fileName : 'None'} </span>
                   </p>
                 </div>
                 {!state.isAuthenticated ? (
