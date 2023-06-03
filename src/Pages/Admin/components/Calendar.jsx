@@ -2,14 +2,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import dayjs from 'dayjs'
 import { AuthContext } from '../../../context/AuthContext'
 import Badge from '@mui/material/Badge'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
-import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
-import CalendarTable from './CalendarTable'
 import { GetAllMeetingsEventsData, GetAllMeetingsEventsDates } from '../../../Api/Post'
-import Typography from '@mui/material/Typography'
+import ModalEventMeeting from './ModalEventMeeting'
 
 import { formatDate } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
@@ -51,8 +46,8 @@ const Calendar = () => {
   const currentDate = new Date()
   const [date, setDate] = useState(dayjs(currentDate))
   const [month, setMonth] = useState(date.toDate().toISOString().slice(0, 7))
-  const [highlightedEventDays, setHighlightedEventDays] = useState([])
-  const [highlightedMeetingDays, setHighlightedMeetingDays] = useState([])
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalData, setModalData] = useState(null)
 
   // const currentDateIs = date.toDate().toISOString().split('T')[0]
   // const { data, isLoading, refetch } = GetAllMeetingsEventsData(currentDateIs, state.token)
@@ -61,11 +56,6 @@ const Calendar = () => {
   // }, [date])
 
   // const { data: dataDates, refetch: refetchDates } = GetAllMeetingsEventsDates(month, state.token)
-
-  // useEffect(() => {
-  //   setHighlightedEventDays(dataDates?.data?.eventDates)
-  //   setHighlightedMeetingDays(dataDates?.data?.meetingDates)
-  // }, [dataDates])
 
   // const handleMonthChange = (monthNew) => {
   //   setHighlightedEventDays([])
@@ -102,26 +92,10 @@ const Calendar = () => {
     })
   }
 
-  const handleDateSelect = (selectInfo) => {
-    // let title = prompt('Please enter a new title for your event')
-    // let calendarApi = selectInfo.view.calendar
-    // calendarApi.unselect() // clear date selection
-    // if (title) {
-    //   calendarApi.addEvent({
-    //     id: createEventId(),
-    //     title,
-    //     start: selectInfo.startStr,
-    //     end: selectInfo.endStr,
-    //     allDay: selectInfo.allDay,
-    //   })
-    // }
-  }
+  const handleDateSelect = (selectInfo) => {}
 
   const handleEventClick = (clickInfo) => {
-    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove()
-    // }
-    console.log(clickInfo)
+    handlePreview(clickInfo)
   }
 
   const handleEvents = (events) => {
@@ -137,8 +111,28 @@ const Calendar = () => {
     )
   }
 
+  const handlePreview = (rowData) => {
+    //console.log(rowData.event)
+    setModalData(rowData.event)
+    setModalOpen(!modalOpen)
+  }
+
+  const handleMonthChange = (arg) => {
+    const newStart = arg.view.currentStart.toISOString()
+    const month = arg.view.currentEnd.toISOString().slice(0, 7)
+    const formattedMonth = arg.view.title
+    //console.log(month)
+  }
+
   return (
     <div className="calendar-container">
+      <ModalEventMeeting
+        isOpen={modalOpen}
+        data={modalData}
+        onClose={() => {
+          setModalOpen(!modalOpen)
+        }}
+      />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
@@ -157,6 +151,7 @@ const Calendar = () => {
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
         eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+        datesSet={handleMonthChange}
         height={'100vh'}
         /* you can update a remote database when these fire:
             eventAdd={function(){}}

@@ -19,26 +19,28 @@ const ModalEventMeeting = ({ data, isOpen, onClose }) => {
 
   const modalData = {
     title: data?.title,
-    link: data?.link,
-    type: data?.type,
-    date: toDate(data?.dateAndTime).toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    }),
-    time: toDate(data?.dateAndTime).toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }),
-    Members: data?.members.map((val, index) => {
-      return (
-        <span className=" px-2 py-0.5  m-1  border-2 bg-[#cad3be] rounded-xl text-xs" key={index + val}>
-          {val}{' '}
-        </span>
-      )
-    }),
+    // link: data?.link,
+    // type: data?.type,
+    // date: toDate(data?.dateAndTime).toLocaleDateString('en-US', {
+    //   weekday: 'short',
+    //   year: 'numeric',
+    //   month: 'short',
+    //   day: 'numeric',
+    // }),
+    // time: toDate(data?.dateAndTime).toLocaleTimeString('en-US', {
+    //   hour: '2-digit',
+    //   minute: '2-digit',
+    // }),
+    // Members: data?.members?.map((val, index) => {
+    //   return (
+    //     <span className=" px-2 py-0.5  m-1  border-2 bg-[#cad3be] rounded-xl text-xs" key={index + val}>
+    //       {val}{' '}
+    //     </span>
+    //   )
+    // }),
   }
+
+  console.log(modalData)
 
   return (
     <div>
