@@ -70,26 +70,92 @@ const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([])
 
   const INITIAL_EVENTS = [
+    // {
+    //   id: createEventId(),
+    //   title: 'All-day event',
+    //   start: todayStr,
+    // },
+    // {
+    //   id: createEventId(),
+    //   title: 'Timed event',
+    //   start: todayStr + 'T12:00:00',
+    // },
     {
-      id: createEventId(),
-      title: 'All-day event',
-      start: todayStr,
+      title: 'sample event',
+      members: ['admin4@gmail.com'],
+      start: '2023-06-27T08:15:00.000Z',
+      type: 'event',
+      filters: [],
+      createdByName: 'Jayant',
+      createdByEmail: 'jrohila55@gmail.com',
+      description: 'sameeffff',
+      createdAt: '2023-05-25T08:15:40.042Z',
+      updatedAt: '2023-05-25T08:15:40.042Z',
     },
     {
-      id: createEventId(),
-      title: 'Timed event',
-      start: todayStr + 'T12:00:00',
+      title: 'sample',
+      link: 'http:///',
+      members: ['admin4@gmail.com', 'student1@gmail.com'],
+      start: '2023-06-27T08:08:00.000Z',
+      type: 'meeting',
+      filters: [],
+      createdByName: 'Jayant',
+      createdByEmail: 'jrohila55@gmail.com',
+      createdAt: '2023-05-25T08:09:40.882Z',
+      updatedAt: '2023-05-25T08:09:40.882Z',
+    },
+    {
+      title: 'sample4433',
+      link: 'http:///',
+      members: ['admin4@gmail.com', 'student1@gmail.com'],
+      start: '2023-06-27T08:08:00.000Z',
+      type: 'meeting',
+      filters: [],
+      createdByName: 'Jayant',
+      createdByEmail: 'jrohila55@gmail.com',
+      createdAt: '2023-05-25T08:09:40.882Z',
+      updatedAt: '2023-05-25T08:09:40.882Z',
+    },
+    {
+      title: 'sample55',
+      link: 'http:///',
+      members: ['admin4@gmail.com', 'student1@gmail.com'],
+      start: '2023-06-27T08:08:00.000Z',
+      type: 'meeting',
+      filters: [],
+      createdByName: 'Jayant',
+      createdByEmail: 'jrohila55@gmail.com',
+      createdAt: '2023-05-25T08:09:40.882Z',
+      updatedAt: '2023-05-25T08:09:40.882Z',
+    },
+    {
+      title: 'sample9',
+      link: 'http:///',
+      members: ['admin4@gmail.com', 'student1@gmail.com'],
+      start: '2023-06-27T08:08:00.000Z',
+      type: 'meeting',
+      filters: [],
+      createdByName: 'Jayant',
+      createdByEmail: 'jrohila55@gmail.com',
+      createdAt: '2023-05-25T08:09:40.882Z',
+      updatedAt: '2023-05-25T08:09:40.882Z',
+    },
+    {
+      title: 'sample3',
+      link: 'http:///',
+      members: ['admin4@gmail.com', 'student1@gmail.com'],
+      start: '2023-06-27T08:08:00.000Z',
+      type: 'meeting',
+      filters: [],
+      createdByName: 'Jayant',
+      createdByEmail: 'jrohila55@gmail.com',
+      createdAt: '2023-05-25T08:09:40.882Z',
+      updatedAt: '2023-05-25T08:09:40.882Z',
     },
   ]
 
   function createEventId() {
     return String(eventGuid++)
-  }
-
-  const handleWeekendsToggle = () => {
-    this.setState({
-      weekendsVisible: !this.state.weekendsVisible,
-    })
   }
 
   const handleDateSelect = (selectInfo) => {}
@@ -105,22 +171,19 @@ const Calendar = () => {
   function renderEventContent(eventInfo) {
     return (
       <>
-        <b>{eventInfo.timeText}</b>
+        {/* <b>{eventInfo.timeText}</b> */}
         <i>{eventInfo.event.title}</i>
       </>
     )
   }
 
   const handlePreview = (rowData) => {
-    //console.log(rowData.event)
     setModalData(rowData.event)
     setModalOpen(!modalOpen)
   }
 
   const handleMonthChange = (arg) => {
-    const newStart = arg.view.currentStart.toISOString()
     const month = arg.view.currentEnd.toISOString().slice(0, 7)
-    const formattedMonth = arg.view.title
     //console.log(month)
   }
 
