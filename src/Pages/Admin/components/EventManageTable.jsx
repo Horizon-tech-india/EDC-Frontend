@@ -60,8 +60,8 @@ const EventManageTable = ({ data, refetch, isLoading }) => {
       size: 100,
     },
     {
-      accessorKey: 'link',
-      header: 'Meeting Link',
+      accessorKey: 'description',
+      header: 'Event description',
       Cell: ({ cell }) => (
         <Box component="span" className="capitalize">
           <span className="font-light text-black"> {cell.getValue()}</span>
