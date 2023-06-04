@@ -224,8 +224,9 @@ textarea {
 }
 
 .calendar-container {
-  display: flex;
   height: 100vh;
+  width:95%;
+  margin: auto;
 }
 
 .calendar-section {

@@ -19,26 +19,27 @@ const ModalEventMeeting = ({ data, isOpen, onClose }) => {
 
   const modalData = {
     title: data?.title,
-    link: data?.link,
-    type: data?.type,
-    date: toDate(data?.dateAndTime).toLocaleDateString('en-US', {
+    link: data?.extendedProps?.link,
+    type: data?.extendedProps?.type,
+    date: toDate(data?.start).toLocaleDateString('en-US', {
       weekday: 'short',
       year: 'numeric',
       month: 'short',
       day: 'numeric',
     }),
-    time: toDate(data?.dateAndTime).toLocaleTimeString('en-US', {
+    time: toDate(data?.start).toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
     }),
-    Members: data?.members.map((val, index) => {
+    Members: data?.extendedProps?.members?.map((val, index) => {
       return (
-        <span className=" px-2 py-0.5  m-1  border-2 bg-[#cad3be] rounded-xl text-xs" key={index + val}>
+        <span className=" px-2 py-0.5  m-1  border-2 bg-[#cad3be] rounded-xl text-xs" key={String(index) + val}>
           {val}{' '}
         </span>
       )
     }),
   }
+
 
   return (
     <div>
@@ -55,7 +56,7 @@ const ModalEventMeeting = ({ data, isOpen, onClose }) => {
             </Typography>
             {Object.entries(modalData).map((entry) => {
               return (
-                <div key={modalData?.title} className=" max-h-96 overflow-auto grid py-1 grid-cols-12">
+                <div key={entry[0]} className=" max-h-96 overflow-auto grid py-1 grid-cols-12">
                   <span className="capitalize font-semibold text-lg col-span-3 text-[#b4cd93] m-0"> {entry[0]} </span>
                   <span className="capitalize text-lg col-span-9 h-auto ">{entry[1]} </span>
                 </div>
