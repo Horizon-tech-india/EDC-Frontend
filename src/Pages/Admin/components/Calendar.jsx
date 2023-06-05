@@ -1,11 +1,22 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { GetAllMeetingsEventsData, GetAllMeetingsEventsDates } from '../../../Api/Post'
+import { GetAllMeetingsEventsDates } from '../../../Api/Post'
 import ModalEventMeeting from './ModalEventMeeting'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+
+const Label = () => {
+  return (
+    <div className="mx-2 mt-2 flex items-center justify-between absolute right-3">
+      <span className="w-6 h-4 rounded-md bg-green-600" />
+      <span className="ml-1 mr-4 font-semibold">Event</span>
+      <span className="w-6 h-4 rounded-md bg-blue-600" />
+      <span className="ml-1 mr-4 font-semibold">Meeting</span>
+    </div>
+  )
+}
 
 const Calendar = () => {
   const { state } = useContext(AuthContext)
@@ -14,7 +25,7 @@ const Calendar = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState(null)
 
-  const { data, refetch } = GetAllMeetingsEventsData(month + '-27', state.token)
+  const { data, refetch } = GetAllMeetingsEventsDates(month, state.token)
 
   const NEW_EVENTS = [
     {
@@ -92,10 +103,11 @@ const Calendar = () => {
           setModalOpen(!modalOpen)
         }}
       />
+      <Label />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
-          left: 'prev,next today',
+          left: 'prev next today',
           center: 'title',
           right: '',
         }}
@@ -106,11 +118,11 @@ const Calendar = () => {
         dayMaxEvents={true}
         weekends={true}
         initialEvents={[]}
-        events={currentEvents}
+        events={data?.data?.eventMeetingData}
         eventContent={renderEventContent}
         eventClick={(clickInfo) => handlePreview(clickInfo)}
         datesSet={(arg) => setMonth(arg.view.currentEnd.toISOString().slice(0, 7))}
-        height={'100vh'}
+        height={'90vh'}
       />
     </div>
   )
