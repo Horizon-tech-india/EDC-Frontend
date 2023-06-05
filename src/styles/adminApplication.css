@@ -224,9 +224,9 @@ textarea {
 }
 
 .calendar-container {
-  height: 100vh;
   width:95%;
   margin: auto;
+  margin-block:2rem
 }
 
 .calendar-section {
