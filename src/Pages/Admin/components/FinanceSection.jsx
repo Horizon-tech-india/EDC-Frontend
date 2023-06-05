@@ -1,13 +1,16 @@
 import React, { useContext } from 'react'
-import { useFormik } from 'formik'
-import { useLocation } from 'react-router-dom'
-import { SubmitFinance } from '../../../Api/Post'
-import { AuthContext } from '../../../context/AuthContext'
+import { useFormik } from 'formik';
+import { useLocation } from 'react-router-dom';
+import { SubmitFinance } from '../../../Api/Post';
+import { AuthContext } from '../../../context/AuthContext';
+import { Alert, Snackbar } from '@mui/material';
+import { useState } from 'react';
 const FinanceSection = () => {
   const { state } = useContext(AuthContext)
-  const mutation = SubmitFinance()
-  const location = useLocation()
-  let startupId = location?.state?.startupId
+  const mutation = SubmitFinance();
+  const location = useLocation();
+  const [open, setOpen]= useState(false);
+  let startupId = location.state.startupId;
 
   // Initial form values
   const initialValues = {
@@ -40,17 +43,51 @@ const FinanceSection = () => {
           remark: values.remark,
           transactionDetail: values?.transactionDetail,
           billInvoiceLink: values?.billInvoiceLink,
-        },
+          token: state.token,
+        }
       }
       //POST REQUEST
       console.log(body)
-      mutation.mutate(body, state.token)
-      mutation.isSuccess ? console.log('success') : console.log('Error')
+      mutation.mutate(body,state.token);
+      mutation.isSuccess ? setOpen(true) :setOpen(true)
+      setTimeout(()=>{
+        window.location.reload();
+      },3000)
+
     },
   })
 
+
+const handleCloseAlert =()=>{
+setOpen(!open);
+}
+const handleClose =()=>{
+setOpen(!open);
+}
+
   return (
     <>
+  {
+    mutation.isSuccess  ? (<>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
+        <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {mutation.isSuccess && mutation?.data?.message}
+        </Alert>
+      </Snackbar>
+    </>
+    ) :""
+  }
+  {
+    mutation.isError  ? (<>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseAlert}>
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {mutation.isError && mutation.error.message}
+        </Alert>
+      </Snackbar>
+    </>
+    ) :""
+  }
+
       <div className="admin-add  ml-5">
         <form onSubmit={handleSubmit} className=" ml-5 admin-add__form overflow-hidden">
           <h1
@@ -79,7 +116,7 @@ const FinanceSection = () => {
                 type="datetime-local"
                 name="dateTime"
                 id="dateTime"
-                value={values.date}
+                
                 onChange={handleChange}
               />
             </div>
