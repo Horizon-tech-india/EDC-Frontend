@@ -32,6 +32,7 @@ const url = {
   clearNotifications: '/admin/clear-notifications?',
   submitStage2Form: '/admin/sec-stage-startup-support',
   finance: '/admin/finance-details',
+  userMeetingEvents: '/users/user-meetings-events',
 }
 export function API(method, endpoint, payload, token) {
   const encrypted = '' || token
@@ -150,7 +151,7 @@ export function GetAllMeetingsEventsData(currentDate, token) {
 
 // Calendar Meetings Events Highlighted dates api
 
-export function GetAllMeetingsEventsDates(currentMonth, token) {
+export async function GetAllMeetingsEventsDates(currentMonth, token) {
   const queryKey = 'allMeetingsEventsDates'
   const queryFn = () => API('get', `${url.allMeetingsEventsDates}=${currentMonth}`, {}, token)
   const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
@@ -368,4 +369,16 @@ export const SubmitFinance = () => {
 export function GetFinanceDetails(startupId, token) {
   const res = API('get', `${url.finance}?startupId=${startupId}`, {}, token)
   return res
+}
+export   function GetUserMeetingEvents(token) {
+  const queryKey = 'getUserMeetingEvents'
+  const queryFn = () => API('get', url.userMeetingEvents, {}, token)
+  const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
+  const refetchAllStartup = () => {
+    refetch()
+  }
+  return {
+    refetch: refetchAllStartup,
+    ...queryResult,
+  }
 }

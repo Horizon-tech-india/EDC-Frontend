@@ -8,12 +8,13 @@ import Spinner from '../components/Layout/Spinner'
 import React, { useContext, useEffect, useState } from 'react'
 
 import DashboardComponent from '../components/common/DashboardComponent'
+import { GetUserMeetingEvents } from '../Api/Post'
 
 const App = () => {
   const { state } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
-
+const { data, refetch } = GetUserMeetingEvents(state.token);
   useEffect(() => {
     // simulate an API call to check state's role
 
@@ -34,7 +35,7 @@ const App = () => {
           </div>
         ) : state.isAuthenticated == true ? (
           <div>
-            <DashboardComponent />
+            <DashboardComponent data={data?.data}/>
           </div>
         ) : (
           <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">
