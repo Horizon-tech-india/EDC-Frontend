@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom'
 import { Alert, Button, Snackbar } from '@mui/material'
-import { GetAllStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post'
+import { GetAllStartup, GetStatsNumber, UpdatePayload, GetStartupFile } from '../../../Api/Post'
 
 const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
   const { state } = useContext(AuthContext)
@@ -60,6 +60,7 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
       day: 'numeric',
     }),
     currentStage: data?.currentStage,
+    fileName: data?.fileName,
   }
   const handleRefresh = () => {
     myRefetchh()
@@ -99,6 +100,17 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
   }
   const handleFinance = () => {
     navigation('/admin/finance', { state: { startupId: modalData.startupId } })
+  }
+
+  const handleDownload = async (startupId) => {
+    console.log('download')
+    const { token } = state
+
+    try {
+      const res = await GetStartupFile({ startupId, token })
+    } catch (error) {
+      setOpenMsg(error.message)
+    }
   }
   return (
     <div>
@@ -181,6 +193,16 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
               {!hideActions && (
                 <Button onClick={() => handleFinance()} size="sm" variant="contained" color="success">
                   Finance
+                </Button>
+              )}
+              {modalData?.fileName && (
+                <Button
+                  onClick={() => handleDownload(modalData?.startupId)}
+                  size="sm"
+                  variant="contained"
+                  color="success"
+                >
+                  Download File
                 </Button>
               )}
             </div>

@@ -14,21 +14,24 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
   const [netBalance, setNetBalance] = useState(0)
-  const [data, setData] = useState([])
-  const { data: startupData, refetch } = GetUserStartupStatus(state.token)
+  const [dataArray, setData] = useState([])
+  const { data: startupData, refetch } = GetUserStartupStatus(state?.token)
 
   useEffect(() => {
+    refetch()
     if (startupData?.data?.startupId) {
-      console.log(' ready to make', startupData?.data?.startupId)
       getStartupData()
     }
   }, [startupData?.data?.startupId])
 
   const getStartupData = async () => {
     const res = await GetFinanceDetails(startupData?.data?.startupId, state.token)
-    console.log(res)
-    setData(res?.data?.financeDetails?.finance)
-    setNetBalance(res?.data?.financeDetails?.netBalance)
+    console.log(`data 1`, dataArray, netBalance)
+    if (res?.data?.financeDetails?.finance.length !== 0) {
+      setNetBalance(res?.data?.financeDetails?.netBalance)
+      setData(res?.data?.financeDetails?.finance)
+      console.log(`data 2`, dataArray, netBalance)
+    }
   }
 
   const ReportTable = (data) => {
@@ -52,7 +55,7 @@ const App = () => {
           accessorKey: 'date',
           header: 'Date',
           accessorFn: (row) => {
-            console.log(row)
+            // console.log(row)
             const date = new Date(row.date)
             const year = date.getFullYear()
             const month = date.getMonth() + 1 // Add 1 because getMonth() returns zero-based month
@@ -76,13 +79,13 @@ const App = () => {
       [],
     )
     return (
-      <div className="w-full md:overscroll-none overflow-scroll">
-        <MaterialReactTable columns={columns} data={data ? data.data : []} />
+      <div className="w-full md:overscroll-none overflow-x-scroll">
+        {dataArray ? <MaterialReactTable columns={columns} data={dataArray} /> : <></>}
       </div>
     )
   }
 
-  startupData ? console.log('first', startupData.data) : console.log('error')
+  startupData ? console.log('first', startupData?.data) : console.log('error')
   const statusMenuItems = {
     remark: 'remark',
     date: 'date',
@@ -90,7 +93,7 @@ const App = () => {
   useEffect(() => {
     // simulate an API call to check state's role
     setIsLoading(false)
-    if (!state.isAuthenticated) {
+    if (!state?.isAuthenticated) {
       navigate('/')
     }
   }, [state])
@@ -104,7 +107,7 @@ const App = () => {
           <div className="h-screen bg-black opacity-40 w-screen flex justify-center items-center z-50">
             <Spinner />
           </div>
-        ) : state.isAuthenticated === true ? (
+        ) : state?.isAuthenticated === true ? (
           <>
             <div className="flex  justify-center items-center w-full">
               <div className=" w-96 justify-center  m-8 grid grid-cols-2">
@@ -120,8 +123,8 @@ const App = () => {
               </div>
             </div>
 
-            <div className="grid  w-full md:overscroll-none overflow-hidden justify-center">
-              <ReportTable data={data} />
+            <div className="max-w-7xl mx-auto w-full md:overscroll-none overflow-hidden justify-center">
+              <ReportTable data={dataArray} />
             </div>
             {/* <div> */}
 
