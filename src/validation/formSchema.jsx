@@ -1,8 +1,8 @@
 import * as Yup from 'yup'
 
 export const signupSchemaStep1 = Yup.object({
-  firstName: Yup.string().required('Please enter your Full Name'),
-  lastName: Yup.string().required('Please enter your Full Name'),
+  firstName: Yup.string().min(3, 'First name must be atleast 3 characters').required('Please enter your Full Name'),
+  lastName: Yup.string().min(3, 'Last name must be atleast 3 characters').required('Please enter your Full Name'),
   email: Yup.string().email().required('Please enter your Email'),
   phoneNumber: Yup.string()
     .matches(/^[0-9]\d{9}$/, {
@@ -48,8 +48,8 @@ export const forgotPasswordSchemaStep3 = Yup.object({
 })
 
 export const adminAddSchema = Yup.object({
-  firstName: Yup.string().required('Please enter a first name'),
-  lastName: Yup.string().required('Please enter a last name'),
+  firstName: Yup.string().min(3, 'First name must be atleast 3 characters').required('Please enter a first name'),
+  lastName: Yup.string().min(3, 'Last name must be atleast 3 characters').required('Please enter a last name'),
   email: Yup.string().email().required('Please enter an Email'),
   password: Yup.string()
     .min(8, 'Password must be atleast 8 characters')

@@ -57,6 +57,17 @@ export function GetAllStartup(token) {
     ...queryResult,
   }
 }
+
+export function GetStartupFile({ token, startupId }) {
+  return API('get', `/users/download-file?startupId=${startupId}`, {}, token)
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 export function GetStartupsUserEmail(token) {
   const queryKey = 'getStartupsUserEmail'
   const queryFn = () => API('get', url.getStartupsUserEmail, {}, token)
