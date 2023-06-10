@@ -16,11 +16,10 @@ const initialValues = {
   confirm_password: '',
 }
 
-const SignUpStep3 = ( email ) => {
+const SignUpStep3 = (email) => {
   const navigate = useNavigate()
-  const forgotPasswordMutation = ForgotPassword();
-   
-  
+  const forgotPasswordMutation = ForgotPassword()
+
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -47,28 +46,34 @@ const SignUpStep3 = ( email ) => {
       //       navigate('/login')
       //     }, 1000)
       //   : setIsLoading(true)
-      forgotPasswordMutation.mutate(body);
+      forgotPasswordMutation.mutate(body)
       setOpen(true)
-      forgotPasswordMutation.isSuccess ? setTimeout(()=>{ navigate('/login')},5000) : setIsLoading(true);
-
+      forgotPasswordMutation.isSuccess
+        ? setTimeout(() => {
+            navigate('/login')
+          }, 5000)
+        : setIsLoading(true)
     },
   })
-  
 
   return (
     <>
-    {forgotPasswordMutation.isError && (<Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {/* {error} */}
-          Error
-        </Alert>
-      </Snackbar>)}
-      {forgotPasswordMutation.isSuccess && (<Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          Password Changed
-        </Alert>
-      </Snackbar>)}
-      
+      {forgotPasswordMutation.isError && (
+        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {/* {error} */}
+            Error
+          </Alert>
+        </Snackbar>
+      )}
+      {forgotPasswordMutation.isSuccess && (
+        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+            Password Changed
+          </Alert>
+        </Snackbar>
+      )}
+
       <div className="login__head">
         <h2>Create New Password</h2>
         <p>Enter the new password for your account</p>

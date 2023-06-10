@@ -30,7 +30,7 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
   //   onError:()=>  alert("error"),
   //   onSuccess: () => console.log('sss'),
   // })
-  const mutation= Signup1();
+  const mutation = Signup1()
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -49,32 +49,32 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
 
       mutation.mutate(values)
       setOpen(true)
-      mutation.isLoading ?   setIsLoading(true):setTimeout(()=>{setStep(2)},10000);
-      
+      mutation.isLoading
+        ? setIsLoading(true)
+        : setTimeout(() => {
+            setStep(2)
+          }, 10000)
     },
   })
-  
+
   return (
     <>
-      {
-        mutation.isError && (
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-              {/* {mutation.error.message} */}
-              Error
-              </Alert>
-          </Snackbar>)
-
-      }
-      {
-        mutation.isSuccess && (
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-              {/* {error} */}
-              {mutation?.data?.message}
-            </Alert>
-          </Snackbar>)
-      }
+      {mutation.isError && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {/* {mutation.error.message} */}
+            Error
+          </Alert>
+        </Snackbar>
+      )}
+      {mutation.isSuccess && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+            {/* {error} */}
+            {mutation?.data?.message}
+          </Alert>
+        </Snackbar>
+      )}
       <div className="login__head">
         <h2>Register your account</h2>
         <p>Fill the details below to submit register account</p>

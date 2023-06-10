@@ -8,9 +8,9 @@ import Alert from '@mui/material/Alert'
 import { useMutation } from '@tanstack/react-query'
 
 const SignUpStep3 = (email) => {
-  const verifyMutation = VerifyOtp();
-  
-  const resendMutation = ResendOtp();
+  const verifyMutation = VerifyOtp()
+
+  const resendMutation = ResendOtp()
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -42,9 +42,14 @@ const SignUpStep3 = (email) => {
     setIsLoading(true)
     event.preventDefault()
     const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
-    verifyMutation.mutate(body);
+    verifyMutation.mutate(body)
     setOpen(true)
-    verifyMutation.isSuccess ? setTimeout(()=>{setIsLoading(false); navigate('/login')},7000) : setIsLoading(false)
+    verifyMutation.isSuccess
+      ? setTimeout(() => {
+          setIsLoading(false)
+          navigate('/login')
+        }, 7000)
+      : setIsLoading(false)
     // navigate('/login')
   }
 
@@ -52,14 +57,14 @@ const SignUpStep3 = (email) => {
     const body = { email: email.email, isForgotPassword: false }
 
     resendMutation.mutate(body)
-    
+
     setOpen(true)
     resendMutation.isSuccess ? setIsLoading(true) : setIsLoading(false)
   }
   console.log(verifyMutation)
   return (
     <>
-      {(verifyMutation.isError  || resendMutation.isError ) && (
+      {(verifyMutation.isError || resendMutation.isError) && (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
             {/* {error} */}
@@ -70,7 +75,7 @@ const SignUpStep3 = (email) => {
       {(verifyMutation.isSuccess || resendMutation.isSuccess) && (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-            {verifyMutation?.data?.message || resendMutation?.data?.message ||'Register suuceesfuly'}
+            {verifyMutation?.data?.message || resendMutation?.data?.message || 'Register suuceesfuly'}
           </Alert>
         </Snackbar>
       )}
