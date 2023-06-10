@@ -13,37 +13,33 @@ const App = () => {
   const { state } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
-  const [netBalance, setNetBalance]= useState(0)
-const [data,setData]= useState([]);
+  const [netBalance, setNetBalance] = useState(0)
+  const [data, setData] = useState([])
   const { data: startupData, refetch } = GetUserStartupStatus(state.token)
- 
-  useEffect(()=>{
-    if(startupData?.data?.startupId){
-      console.log(" ready to make", startupData?.data?.startupId)
-      getStartupData();
-      
-    } 
-  },[startupData?.data?.startupId])
 
-  const getStartupData = async ()=>{
+  useEffect(() => {
+    if (startupData?.data?.startupId) {
+      console.log(' ready to make', startupData?.data?.startupId)
+      getStartupData()
+    }
+  }, [startupData?.data?.startupId])
 
-     const res = await GetFinanceDetails(startupData?.data?.startupId, state.token);
-     console.log(res)
-    setData(res?.data?.financeDetails?.finance);
+  const getStartupData = async () => {
+    const res = await GetFinanceDetails(startupData?.data?.startupId, state.token)
+    console.log(res)
+    setData(res?.data?.financeDetails?.finance)
     setNetBalance(res?.data?.financeDetails?.netBalance)
-
   }
-  
-  
+
   const ReportTable = (data) => {
-    console.log(data,"kkkh")
+    console.log(data, 'kkkh')
     const columns = useMemo(
       () => [
         {
           accessorKey: 'type', //access nested data with dot notation
           header: 'Type',
         },
-        
+
         {
           accessorKey: 'remark', //normal accessorKey
           header: 'Remark',
@@ -58,13 +54,13 @@ const [data,setData]= useState([]);
           accessorFn: (row) => {
             console.log(row)
             const date = new Date(row.date)
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1; // Add 1 because getMonth() returns zero-based month
-            const day = date.getDate();
-            
-            return `${year}-${month}-${day}`;
+            const year = date.getFullYear()
+            const month = date.getMonth() + 1 // Add 1 because getMonth() returns zero-based month
+            const day = date.getDate()
+
+            return `${year}-${month}-${day}`
           },
-          
+
           Cell: ({ cell }) => (
             <Box component="span" className="capitalize">
               <span className="font-light text-black"> {cell.getValue()}</span>
@@ -78,17 +74,18 @@ const [data,setData]= useState([]);
         },
       ],
       [],
-    );
-    return <MaterialReactTable columns={columns} data={data ? data.data: []} />;
-
+    )
+    return (
+      <div className="w-full md:overscroll-none overflow-scroll">
+        <MaterialReactTable columns={columns} data={data ? data.data : []} />
+      </div>
+    )
   }
 
-
-  startupData ? console.log("first",startupData.data) : console.log("error",)
-  const statusMenuItems ={
-    remark:"remark",
-    "date":"date",
-    
+  startupData ? console.log('first', startupData.data) : console.log('error')
+  const statusMenuItems = {
+    remark: 'remark',
+    date: 'date',
   }
   useEffect(() => {
     // simulate an API call to check state's role
@@ -107,39 +104,34 @@ const [data,setData]= useState([]);
           <div className="h-screen bg-black opacity-40 w-screen flex justify-center items-center z-50">
             <Spinner />
           </div>
-        ) : state.isAuthenticated == true ? (
+        ) : state.isAuthenticated === true ? (
           <>
+            <div className="flex  justify-center items-center w-full">
+              <div className=" w-96 justify-center  m-8 grid grid-cols-2">
+                <label className=" mr-3">Net Balance</label>
+                <input
+                  className="border border-gray-400 w-50 h-8 "
+                  type="text"
+                  name="startupId"
+                  id="startupId"
+                  value={netBalance}
+                  disabled
+                />
+              </div>
+            </div>
 
+            <div className="grid  w-full md:overscroll-none overflow-hidden justify-center">
+              <ReportTable data={data} />
+            </div>
+            {/* <div> */}
 
-        <div className='flex  justify-center items-center w-full'>
-
-          <div className=' w-96 justify-center  m-8 grid grid-cols-2'>
-            <label className=' mr-3'>Net Balance</label>
-            <input
-                className="border border-gray-400 w-50 h-8 "
-                type="text"
-                name="startupId"
-                id="startupId"
-                value={netBalance}
-                disabled
-              />
-              
-                    
-          </div>
-        </div>
-
-        <div className='grid  w-full justify-center'>
-          <ReportTable  data={data}/>
-        </div>
-           {/* <div> */}
-        
             {/* <div className=" h-screen  w-full ">
               <AreaChartComponent />
             </div>
             <div className="min-h-screen w-full ">
               <PieChartComponent />
             </div> */}
-          {/* </div>  */}
+            {/* </div>  */}
           </>
         ) : (
           <div className="h-screen w-screen bg-black opacity-40 flex justify-center items-center z-50">

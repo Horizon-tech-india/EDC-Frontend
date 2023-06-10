@@ -346,11 +346,8 @@ export const StartupData = (formdata, token) => {
 }
 
 export const SubmitFinance = () => {
-  
   return useMutation(async (formData) => {
-
-    let body ={
-      
+    let body = {
       startupId: formData.startupId,
       finance: {
         date: formData.finance.date,
@@ -359,7 +356,7 @@ export const SubmitFinance = () => {
         remark: formData.finance.remark,
         transactionDetail: formData.finance?.transactionDetail,
         billInvoiceLink: formData.finance?.billInvoiceLink,
-      }
+      },
     }
     const response = await API('post', url.finance, body, formData.finance.token)
     return response.data

@@ -13,8 +13,8 @@ const SignUpStep2 = ({ email }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const verifyMutation = useMutation({
-    mutationFn:  (values ) => VerifyOtp(values),
-    onSuccess: ()=>navigate('/forgot-password/3')
+    mutationFn: (values) => VerifyOtp(values),
+    onSuccess: () => navigate('/forgot-password/3'),
   })
 
   const handleClose = () => setOpen(false)

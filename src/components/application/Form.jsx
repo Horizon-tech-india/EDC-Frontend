@@ -33,7 +33,7 @@ const Form = ({ refetchStartupStatus }) => {
   const { state } = useContext(AuthContext)
   const [open, setOpen] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
-  const handleClose= () => {
+  const handleClose = () => {
     setOpen(false)
     refetchStartupStatus()
   }
@@ -544,8 +544,6 @@ const Form = ({ refetchStartupStatus }) => {
                     <p className="form-row__error">{errors.currentStage}</p>
                   ) : null}
                 </div>
-
-                
 
                 <div className="submitButton">
                   {!state.isAuthenticated ? (
