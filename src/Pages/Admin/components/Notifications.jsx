@@ -6,7 +6,7 @@ import { AuthContext } from '../../../context/AuthContext'
 import { GetAdminNotifications, ClearAdminNotifications } from '../../../Api/Post'
 import AdminDashboardModal from './AdminDashboardModal'
 
-const Notifications = ({ setNotificationsCount }) => {
+const Notifications = () => {
   const { state } = useContext(AuthContext)
   const { data, isLoading, refetch } = GetAdminNotifications(state.token)
   const [modalOpen, setModalOpen] = useState(false)
@@ -14,9 +14,6 @@ const Notifications = ({ setNotificationsCount }) => {
   const [modalOpenStartup, setModalOpenStartup] = useState(false)
   const [modalDataStartup, setModalDataStartup] = useState(null)
 
-  useEffect(() => {
-    setNotificationsCount(data?.data?.notificationCount)
-  }, [data?.data?.notificationCount])
 
   const CLEAR_NOTIFICATION_TYPES = {
     ALL: 'all',

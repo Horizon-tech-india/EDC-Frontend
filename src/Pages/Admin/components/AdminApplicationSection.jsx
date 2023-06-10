@@ -12,7 +12,7 @@ import Calendar from './Calendar'
 import StageTwoForm from './StageTwoForm'
 import FinanceSection from './FinanceSection'
 
-const AdminApplicationSection = ({ page, setNotificationsCount }) => {
+const AdminApplicationSection = ({ page }) => {
   return (
     <div className="bg-white flex flex-col justify-start h-screen">
       <section className="h-[65vh] w-full">
@@ -57,7 +57,7 @@ const AdminApplicationSection = ({ page, setNotificationsCount }) => {
             <div className="w-full h-10 p-5 flex justify-start items-center">
               <h1 className="text-3xl font-bold">Notifications </h1>
             </div>
-            <Notifications setNotificationsCount={setNotificationsCount} />
+            <Notifications />
           </>
         ) : page === 'stageTwoForm' ? (
           <>
