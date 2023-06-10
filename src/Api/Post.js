@@ -162,7 +162,7 @@ export function GetAllMeetingsEventsData(currentDate, token) {
 
 // Calendar Meetings Events Highlighted dates api
 
-export async function GetAllMeetingsEventsDates(currentMonth, token) {
+export  function GetAllMeetingsEventsDates(currentMonth, token) {
   const queryKey = 'allMeetingsEventsDates'
   const queryFn = () => API('get', `${url.allMeetingsEventsDates}=${currentMonth}`, {}, token)
   const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
