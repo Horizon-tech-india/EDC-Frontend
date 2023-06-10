@@ -23,7 +23,7 @@ const Gallery = () => {
     <>
       <div className="min-h-screen my-10 md:w-full sm:w-auto">
         <div className="w-full sm:w-auto">
-          <div className="w-[1040px] flex justify-start sm:justify-center mx-auto p-5 items-start">
+          <div className="md:w-[1040px] w-full flex justify-start sm:justify-center mx-auto p-5 items-start">
             <h2 className="font-bold text-2xl text-black">{text}</h2>
           </div>
           <div className="flex flex-col justify-center items-center">

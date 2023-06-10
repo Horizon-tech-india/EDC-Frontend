@@ -32,11 +32,10 @@ const Card = (props) => {
 const Section2 = () => {
   return (
     <>
-      
-      <div className='w-[auto] h-[auto]'>
-        <div className="">
+      <div className="w-[auto] h-[auto]">
+        <div className="p-4 md:p-0">
           <div className="md:flex justify-center  sm:grid items-center flex-row">
-            <div className="w-[450px] h-[450px] border-r-2 mr-10 flex justify-center text-left items-start flex-col">
+            <div className="md:w-[450px] w-full h-[450px] border-r-2 mr-10 flex justify-center text-left items-start flex-col">
               <h2 className="font-bold text-2xl flex items-center tracking-wider text-secondary">Our Vision</h2>
               <div className="font-sans font-normal text-base leading-7 tracking-wider text-gray-500 w-80">
                 <p>

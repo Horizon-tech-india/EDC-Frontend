@@ -21,7 +21,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-content-items">
-            <div className="footer-row1">
+            <div className="flex flex-wrap w-full justify-center">
               <div className="footer-row1-col1">
                 <div className="footer-row1-col1-row1">
                   <img src={logo}></img>
