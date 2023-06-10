@@ -59,7 +59,7 @@ const Box = (props) => {
       ],
       [],
     );
-    return <MaterialReactTable columns={columns} data={data ? data?.data: []} />;
+    return <>{data?.data?.length ? <MaterialReactTable columns={columns} data={data ? data?.data: []} />:<p className='text-center text-yellow-200 text-xl'>You don't have any meetings</p>}</>
 
   }
 
@@ -86,7 +86,7 @@ const Box = (props) => {
           header: 'Date',
           accessorFn: (row) => {
             console.log(row)
-            const date = new Date(row.date)
+            const date = new Date(row.dateAndTime)
             const year = date.getFullYear();
             const month = date.getMonth() + 1; // Add 1 because getMonth() returns zero-based month
             const day = date.getDate();
@@ -108,46 +108,27 @@ const Box = (props) => {
       ],
       [],
     );
-    return <MaterialReactTable columns={columns} data={data ? data?.data: []} />;
+    return (
+      
+      <>{data?.data?.length ? <MaterialReactTable columns={columns} data={data ? data?.data: []} /> :<p>You don't have any events</p>
+      }
+  
+    
+    </>);
 
   }
   return (
     <div className=" border-double border-2 border-slate-400 rounded-md p-2 h-80 w-96">
       <div className="card bg-slate-400 h-full rounded-md">
         <p className="card-title text-indigo-950 text-center w-full font-semibold text-2xl">{props.name}</p>
-        {props.name === 'Upcoming Meetings' && (
-          <div className="card-body ">
-            {props?.data?.meetings?.map((item, index) => (
-              <div className="meeting-item " key={index}>
-              
-                <p className="meeting-title  text-white font-semibold text-center"> {index+1} {item?.title}</p>
-                <a className="meeting-link text-center " href={item?.link}>
-                  {item?.link}
-                </a>
-              </div>
-            ))}
-          </div>
-        )
-        &&
-         <ReportTable  data={props?.data?.meetings}/>
-         }
-
-
-        {props.name === 'Upcoming Events' && (
-          <div className="card-body ">
-            <p>You have <button className='btn btn-primary'>{props?.data?.eventsCount}</button> upcoming events</p>
-            {props?.data?.events?.map((item, index) => (
-              <div className="meeting-item " key={index}>
-              
-                <p className="meeting-title  text-white font-semibold text-center"> {index+1} {item?.title}</p>
-                <a className="meeting-link text-center " href={item?.link}>
-                  {item?.link}
-                </a>
-              </div>
-            ))}
-          </div>
-        ) && <EventsTable data={props?.data?.events}/>}
-
+        {props.name === 'Upcoming Meetings' && props?.data?.meetings &&
+         <ReportTable  data={props?.data?.meetings.length ? props?.data.meetings : []}/>}
+        {props.name === 'Upcoming Events' && (props?.data?.events.length> 0)    && <EventsTable data={props?.data?.events.length ? props?.data?.events :[]}/>}
+        
+          {/* you can see EventsTable is replicating ,so we need to replace tables of there  data is not coming for these  */}
+        {props.name === 'Financial Report' && (props?.data?.events.length> 0)    && <EventsTable data={props?.data?.events.length ? props?.data?.events :[]}/>}
+        {props.name === 'Feedback From Mentors' && (props?.data?.events.length> 0)    && <EventsTable data={props?.data?.events.length ? props?.data?.events :[]}/>}
+        {props.name === 'Connect to Mentors' && (props?.data?.events.length> 0)    && <EventsTable data={props?.data?.events.length ? props?.data?.events :[]}/>}
       </div>
     </div>
   );
