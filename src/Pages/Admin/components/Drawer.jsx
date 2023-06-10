@@ -13,6 +13,7 @@ import setting from '../../../assets/icons/svg/setting-2.svg'
 import calendar from '../../../assets/icons/svg/calendar.svg'
 import Badge from '@mui/material/Badge'
 import DateTime from './DateTime'
+import { GetAdminNotifications } from '../../../Api/Post'
 
 const UserProfile = ({ notificationsCount }) => {
   const { state } = useContext(AuthContext)
@@ -48,12 +49,14 @@ const Drawer = ({ notificationsCount }) => {
     navigate('/')
   }
 
+  const { data } = GetAdminNotifications(state.token)
+
   return (
     <div className="h-screen max-w-xs flex flex-col justify-between w-full bg-[#e5e5e5]">
       <div className="p-2 h-[9rem] flex flex-col justify-between items-center w-full">
         <img src={AdminLogo} className="pt-5" alt="logo" />
         <div className="w-60">
-          <UserProfile notificationsCount={notificationsCount} />
+          <UserProfile notificationsCount={data?.data?.notificationCount} />
         </div>
       </div>
       <div>

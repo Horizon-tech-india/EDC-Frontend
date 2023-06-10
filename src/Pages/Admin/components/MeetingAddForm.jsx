@@ -18,7 +18,8 @@ const initialValues = {
 const MeetingAddForm = ({ submitMeetingData, array }) => {
   const { state } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
-  const [membersData, setMembersData] = useState(null)
+  const [membersData, setMembersData] = useState([])
+  const [membersError, setMembersError] = useState(null)
   const token = state.token
   const { data: Data } = GetStartupsUserEmail(token)
   const data = Data?.data?.data
@@ -26,21 +27,26 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
     initialValues,
     validationSchema: meetingAddSchema,
     onSubmit: async (values) => {
-      setIsLoading(true)
-      const body = {
-        title: values.title,
-        link: values.link,
-        type: 'meeting',
-        dateAndTime: values.dateTime,
-        members: membersData,
-      }
-      //POST REQUEST
-      try {
-        const res = await submitMeetingData(body)
-        resetForm()
-        setIsLoading(false)
-      } catch (error) {
-        setIsLoading(false)
+      if (membersData.length !== 0) {
+        setMembersError(null)
+        setIsLoading(true)
+        const body = {
+          title: values.title,
+          link: values.link,
+          type: 'meeting',
+          dateAndTime: values.dateTime,
+          members: membersData,
+        }
+        //POST REQUEST
+        try {
+          const res = await submitMeetingData(body)
+          resetForm()
+          setIsLoading(false)
+        } catch (error) {
+          setIsLoading(false)
+        }
+      } else {
+        setMembersError('Atleast choose one member')
       }
     },
   })
@@ -123,7 +129,7 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
                   {...params}
                   variant="outlined"
                   label=""
-                  placeholder="Members"
+                  placeholder="Choose Members"
                   sx={{
                     outline: 'none',
                   }}
@@ -131,6 +137,7 @@ const MeetingAddForm = ({ submitMeetingData, array }) => {
               )}
               onChange={(event, value) => handleMembersData(value)}
             />
+            {membersError ? <p className="input-block__error">{membersError}</p> : null}
           </div>
         </div>
         {isLoading ? (
