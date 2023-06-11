@@ -53,7 +53,7 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
         ? setIsLoading(true)
         : setTimeout(() => {
             setStep(2)
-          }, 10000)
+          }, 4000)
     },
   })
 
@@ -62,8 +62,7 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
       {mutation.isError && (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-            {/* {mutation.error.message} */}
-            Error
+            {mutation.error.message}
           </Alert>
         </Snackbar>
       )}
