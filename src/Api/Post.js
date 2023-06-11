@@ -58,6 +58,17 @@ export function GetAllStartup(token) {
     ...queryResult,
   }
 }
+
+export function GetStartupFile({ token, startupId }) {
+  return API('get', `/users/download-file?startupId=${startupId}`, {}, token)
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 export function GetStartupsUserEmail(token) {
   const queryKey = 'getStartupsUserEmail'
   const queryFn = () => API('get', url.getStartupsUserEmail, {}, token)
@@ -151,7 +162,7 @@ export function GetAllMeetingsEventsData(currentDate, token) {
 
 // Calendar Meetings Events Highlighted dates api
 
-export async function GetAllMeetingsEventsDates(currentMonth, token) {
+export  function GetAllMeetingsEventsDates(currentMonth, token) {
   const queryKey = 'allMeetingsEventsDates'
   const queryFn = () => API('get', `${url.allMeetingsEventsDates}=${currentMonth}`, {}, token)
   const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
