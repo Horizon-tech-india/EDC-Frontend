@@ -27,7 +27,7 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
 
   const mutation = useMutation({
     mutationFn: (values) => Signup1(values),
-    onError:(values)=>  alert("error",values),
+    onError:(values)=>  setOpen(true),
     onSuccess: () => {setOpen(true);setTimeout(()=>{setStep(2)},2000)}
   })
   // const mutation = Signup1()

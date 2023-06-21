@@ -11,11 +11,16 @@ const SignUpStep3 = (email) => {
   
   const verifyMutation = useMutation({
     mutationFn: (values) => VerifyOtp(values),
-    onError:(values)=>  alert("error",values),
+    onError:(values)=>  setOpen(true),
     onSuccess: () =>  { setOpen(true);setIsLoading(false); setTimeout(()=>{navigate('/login')},2000) }
   })
 
-  const resendMutation = ResendOtp()
+  
+  const resendMutation = useMutation({
+    mutationFn: (values) => ResendOtp(values),
+    onError:(values)=>  {setOpen(true);setIsLoading(false);},
+    onSuccess: () =>  { setOpen(true);setIsLoading(false); }
+  })
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -44,6 +49,7 @@ const SignUpStep3 = (email) => {
   }
 
   const handleSubmit = (event) => {
+    
     setIsLoading(true)
     event.preventDefault()
     const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
@@ -57,10 +63,10 @@ const SignUpStep3 = (email) => {
 
     resendMutation.mutate(body)
 
-    setOpen(true)
-    resendMutation.isSuccess ? setIsLoading(true) : setIsLoading(false)
+    // setOpen(true)
+    // resendMutation.isSuccess ? setIsLoading(true) : setIsLoading(false)
   }
-  console.log(verifyMutation)
+  
   return (
     <>
       {(verifyMutation.isError || resendMutation.isError) && (
@@ -166,7 +172,7 @@ const SignUpStep3 = (email) => {
       </form>
       <div className="login-link">
         <p>Didn't Receive code?</p>
-        <Link onClick={handleResendCode}>Resend Code</Link>
+        <Link onClick={()=>handleResendCode()}>Resend Code</Link>
       </div>
     </>
   )
