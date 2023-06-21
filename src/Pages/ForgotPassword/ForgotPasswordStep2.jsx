@@ -14,7 +14,7 @@ const SignUpStep2 = ({ email }) => {
 
   const verifyMutation = useMutation({
     mutationFn: (values) => VerifyOtp(values),
-    onSuccess: () => navigate('/forgot-password/3'),
+    onSuccess: () => {setOpen(true);setTimeout(() =>{navigate('/forgot-password/3')},1000) },
   })
 
   const handleClose = () => setOpen(false)
@@ -71,11 +71,23 @@ const SignUpStep2 = ({ email }) => {
   }
   return (
     <>
+
+    {verifyMutation.isError && (
+
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+          {verifyMutation.error.message}
         </Alert>
       </Snackbar>
+    )}
+    {
+      verifyMutation.isSuccess  && (
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {verifyMutation.data.message}
+        </Alert>
+      </Snackbar>
+    )}
       <div className="login__head">
         <h2>Check your Mail</h2>
         <p>We've sent a 6 digit confirmation code to username@gmail.com. Make sure you enter correct code</p>

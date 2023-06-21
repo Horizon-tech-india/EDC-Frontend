@@ -25,12 +25,12 @@ const initialValues = {
 const SignUpStep1 = ({ setEmail, step, setStep }) => {
   let token = ''
 
-  // const mutation = useMutation({
-  //   mutationFn: (values) => Signup1(values),
-  //   onError:()=>  alert("error"),
-  //   onSuccess: () => console.log('sss'),
-  // })
-  const mutation = Signup1()
+  const mutation = useMutation({
+    mutationFn: (values) => Signup1(values),
+    onError:(values)=>  alert("error",values),
+    onSuccess: () => {setOpen(true);setTimeout(()=>{setStep(2)},2000)}
+  })
+  // const mutation = Signup1()
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -44,18 +44,11 @@ const SignUpStep1 = ({ setEmail, step, setStep }) => {
     validationSchema: signupSchemaStep1,
     onSubmit: (values) => {
       setIsLoading(true)
-
       setEmail(values.email)
-
-      mutation.mutate(values)
-      setOpen(true)
-      mutation.isLoading
-        ? setIsLoading(true)
-        : setTimeout(() => {
-            setStep(2)
-          }, 4000)
+      mutation.mutate(values);
     },
-  })
+  });
+ 
 
   return (
     <>

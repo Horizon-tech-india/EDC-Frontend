@@ -3,7 +3,9 @@ import sampleVideo from '../../assets/sample.mp4'
 import thumbnail from '../../assets/UI/thumbnail.png'
 // import PlayBtn from "../assets/icons/playButton.png";
 import Grid from './Grid'
+import { useNavigate } from 'react-router-dom'
 const Section1 = () => {
+  const navigate = useNavigate()
   const VideoPlayer = () => {
     return <video src={sampleVideo} controls poster={thumbnail} className="videoSample"></video>
   }
@@ -56,7 +58,7 @@ const Section1 = () => {
                   their potential into business leaders of tomorrow.
                 </p>
               </div>
-              <button className="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md">
+              <button className="mt-5 flex items-center justify-center font-bold text-white tracking-wider  w-[184px] h-[40px] bg-blue-500 rounded-md" onClick={()=> navigate('/application')}>
                 Submit your Idea
               </button>
             </div>

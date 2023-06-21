@@ -20,8 +20,12 @@ const SignUpStep1 = ({ setEmail }) => {
   const handleClose = () => setOpen(false)
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const resendMutation = ResendOtp()
-
+  // const resendMutation = ResendOtp()
+  const resendMutation = useMutation({
+    mutationFn: (values) => ResendOtp(values),
+    onError:(values)=>  alert("error",values),
+    onSuccess: () =>  { setOpen(true);setIsLoading(false); setTimeout(()=>{navigate('/forgot-password/2')},1000) }
+  })
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchemaStep1,
@@ -30,21 +34,16 @@ const SignUpStep1 = ({ setEmail }) => {
 
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
-      //POST REQUEST
-      // resendMutation.mutate(body,
-      //   {
-      //     onError:()=>{setIsLoading(false)},
-      //     onSuccess:()=>{setIsLoading(false); navigate('/forgot-password/2')}
-      //   });
+ 
       resendMutation.mutate(body)
 
-      setOpen(true)
-      resendMutation.isSuccess
-        ? setTimeout(() => {
-            setIsLoading(false)
-            navigate('/forgot-password/2')
-          }, 10000)
-        : setIsLoading(false)
+      // setOpen(true)
+      // resendMutation.isSuccess
+      //   ? setTimeout(() => {
+      //       setIsLoading(false)
+      //       navigate('/forgot-password/2')
+      //     }, 10000)
+      //   : setIsLoading(false)
 
       // API('post', '/api/users/resend-otp', body, '')
       //   .then((response) => {

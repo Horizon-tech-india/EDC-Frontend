@@ -8,7 +8,12 @@ import Alert from '@mui/material/Alert'
 import { useMutation } from '@tanstack/react-query'
 
 const SignUpStep3 = (email) => {
-  const verifyMutation = VerifyOtp()
+  
+  const verifyMutation = useMutation({
+    mutationFn: (values) => VerifyOtp(values),
+    onError:(values)=>  alert("error",values),
+    onSuccess: () =>  { setOpen(true);setIsLoading(false); setTimeout(()=>{navigate('/login')},2000) }
+  })
 
   const resendMutation = ResendOtp()
   const [error, setError] = useState('')
@@ -44,13 +49,7 @@ const SignUpStep3 = (email) => {
     const body = { email: email.email, otp: otp.join(''), isForgotPassword: false }
     verifyMutation.mutate(body)
     setOpen(true)
-    verifyMutation.isSuccess
-      ? setTimeout(() => {
-          setIsLoading(false)
-          navigate('/login')
-        }, 7000)
-      : setIsLoading(false)
-    // navigate('/login')
+ 
   }
 
   const handleResendCode = () => {

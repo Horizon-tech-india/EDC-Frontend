@@ -320,35 +320,35 @@ export function GetUserStartupStatus(token) {
 
 // Signup1 Api
 
-export const Signup1 = (values) => {
-  return useMutation(async (formData) => {
-    const response = await API('post', url.userSignup, formData, '')
+export const Signup1 = async(values) => {
+  // return useMutation(async (formData) => {
+    const response = await API('post', url.userSignup, values, '')
     return response.data
-  })
+  // })
 }
 
 // verifyOtp APi
-export const VerifyOtp = () => {
-  return useMutation(async (values) => {
+export const VerifyOtp = async(values) => {
+  // return useMutation(async (values) => {
     const response = await API('post', url.userVerifyMailOtp, values, '')
     return response.data
-  })
+  // })
 }
 
 // Resend Otp Api
-export const ResendOtp = () => {
-  return useMutation(async (formData) => {
+export const ResendOtp =async (formData) => {
+  // return useMutation(async (formData) => {
     const response = await API('post', url.userResendOtp, formData, '')
     return response.data
-  })
+  // })
 }
 
 // ForgotPAssword Api
-export const ForgotPassword = () => {
-  return useMutation(async (body) => {
+export const ForgotPassword = async(body) => {
+  // return useMutation(async (body) => {
     const response = await API('post', url.setNewPassword, body, '')
     return response.data
-  })
+  // })
 }
 
 // Startup detail insert

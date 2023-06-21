@@ -18,7 +18,11 @@ const initialValues = {
 
 const SignUpStep3 = (email) => {
   const navigate = useNavigate()
-  const forgotPasswordMutation = ForgotPassword()
+  // const forgotPasswordMutation = ForgotPassword()
+  const forgotPasswordMutation = useMutation({
+    mutationFn: (values) => ForgotPassword(values),
+    onSuccess: () => {setOpen(true);setTimeout(() =>{ navigate('/login')},1000) },
+  })
 
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
