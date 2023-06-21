@@ -272,6 +272,7 @@ export async function UpdatePayload({ value, StartupId, token }) {
     })
 }
 
+
 // submit user common application form
 export async function UploadFile({ payload, token }) {
   console.log(payload, token)
