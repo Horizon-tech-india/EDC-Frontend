@@ -14,7 +14,6 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
   const [openMsg, setOpenMsg] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState('')
-
   const [array, setArray] = useState([])
   const [open, setOpen] = useState(false)
   const { refetch: myRefetchh } = GetStatsNumber(state.token)
@@ -170,6 +169,9 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
     setArray((prevArray) => [...prevArray, ...newArray])
     setIsOpen(true)
   }
+  const handleResetArray = () => {
+    setArray([])
+  }
   const handleDelete = async (rowData) => {
     console.log(rowData)
     const { token } = state
@@ -205,6 +207,7 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
         myEventRefetch={myEventRefetch}
         myMeetingsRefetch={myMeetingsRefetch}
         array={array}
+        handleResetArray={handleResetArray}
         type={type}
         onClose={() => {
           setIsOpen(!isOpen)

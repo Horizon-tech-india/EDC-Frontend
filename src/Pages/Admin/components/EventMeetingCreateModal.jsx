@@ -10,15 +10,24 @@ import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 
-const EventMeetingCreateModal = ({ isOpen, onClose, refetch, myMeetingsRefetch, myEventRefetch, array, type }) => {
+const EventMeetingCreateModal = ({
+  isOpen,
+  handleResetArray,
+  onClose,
+  refetch,
+  myMeetingsRefetch,
+  myEventRefetch,
+  array,
+  type,
+}) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const handleClose = () => {
     onClose()
-    setMembersData([])
     refetch()
     myEventRefetch()
+    handleResetArray()
     myMeetingsRefetch()
   }
   const [isLoading, setIsLoading] = useState(false)
@@ -42,6 +51,7 @@ const EventMeetingCreateModal = ({ isOpen, onClose, refetch, myMeetingsRefetch, 
     title: '',
     dateTime: '',
     description: '',
+    link: '',
   }
   const submitEventData = async (body) => {
     const token = state.token
@@ -63,31 +73,21 @@ const EventMeetingCreateModal = ({ isOpen, onClose, refetch, myMeetingsRefetch, 
     onSubmit: async (values) => {
       if (array.length !== 0) {
         setIsLoading(true)
-        let body = {}
-        if (type === 'event') {
-          body = {
-            title: values.title,
-            description: values.description,
-            type: 'event',
-            dateAndTime: values.dateTime,
-            members: membersData,
-          }
-        } else {
-          body = {
-            title: values.title,
-            link: values.link,
-            type: 'meeting',
-            dateAndTime: values.dateTime,
-            members: membersData,
-          }
+        const body = {
+          title: values.title,
+          type: type === 'event' ? 'event' : 'meeting',
+          dateAndTime: values.dateTime,
+          members: array,
+          ...(type === 'event' ? { description: values.description } : { link: values.link }),
         }
 
         try {
           console.log(body)
           const res = await submitEventData(body)
           resetForm()
-          setIsLoading(false)
         } catch (error) {
+          console.error(error)
+        } finally {
           setIsLoading(false)
         }
       }
@@ -185,7 +185,7 @@ const EventMeetingCreateModal = ({ isOpen, onClose, refetch, myMeetingsRefetch, 
                   </button>
                 ) : (
                   <button className="admin-add__submit my-5" type="submit" onClick={() => handleSubmit()}>
-                    Schedule Event
+                    Schedule
                   </button>
                 )}
               </form>
