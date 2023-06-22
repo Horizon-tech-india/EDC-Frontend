@@ -33,7 +33,7 @@ const EventViewModal = ({ data, isOpen, onClose }) => {
     }),
     Members: data?.members.map((val, index) => {
       return (
-        <span className=" px-2 py-0.5  m-1  border-2 bg-[#cad3be] rounded-xl text-xs" key={index + val}>
+        <span className=" px-2 py-0.5  m-1  border-2 bg-[#cad3be] rounded-xl text-xs" key={index}>
           {val}{' '}
         </span>
       )
@@ -53,9 +53,9 @@ const EventViewModal = ({ data, isOpen, onClose }) => {
             <Typography id="modal-modal-title justify-items-center" variant="h6" component="h5">
               Event Details
             </Typography>
-            {Object.entries(modalData).map((entry) => {
+            {Object.entries(modalData).map((entry, index) => {
               return (
-                <div key={modalData?.title} className=" max-h-96 overflow-auto grid py-1 grid-cols-12">
+                <div key={index} className=" max-h-96 overflow-auto grid py-1 grid-cols-12">
                   <span className="capitalize font-semibold text-lg col-span-3 text-[#b4cd93] m-0"> {entry[0]} </span>
                   <span className="capitalize text-lg col-span-9 h-auto ">{entry[1]} </span>
                 </div>
