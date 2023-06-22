@@ -28,7 +28,7 @@ const EventAddForm = ({ submitEventData, array }) => {
     initialValues,
     validationSchema: eventAddSchema,
     onSubmit: async (values) => {
-      if (membersData.length !== 0) {
+      if (membersData.length !== 0 || array?.length !== 0) {
         setMembersError(null)
         setIsLoading(true)
         const body = {
@@ -36,7 +36,7 @@ const EventAddForm = ({ submitEventData, array }) => {
           description: values.description,
           type: 'event',
           dateAndTime: values.dateTime,
-          members: membersData,
+          members: array ? array : membersData,
         }
         //POST REQUEST
         try {
@@ -55,6 +55,9 @@ const EventAddForm = ({ submitEventData, array }) => {
   const handleMembersData = (values) => {
     const selectedMembers = data?.filter((email) => values.includes(email))
     setMembersData(selectedMembers)
+    if (membersData.includes(array)) {
+    }
+    // setMembersData((prevArray) => [...prevArray, ...array])
   }
 
   return (
@@ -104,37 +107,45 @@ const EventAddForm = ({ submitEventData, array }) => {
               <p className="input-block__error">{errors.description}</p>
             ) : null}
           </div>
-          <div className="input__container w-full  col-span-12">
-            <label htmlFor="tags-filled">Add Members</label>
-            <Autocomplete
-              multiple
-              id="tags-filled"
-              options={data?.map((option) => option)}
-              defaultValue={[]}
-              freeSolo
-              className="w-full"
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
-                ))
-              }
-              renderInput={(params) => (
-                <TextField
-                  className="bg-[#f3ebeb] w-full max-h-60 overflow-auto"
-                  name="branch"
-                  {...params}
-                  variant="outlined"
-                  label=""
-                  placeholder="Choose Members"
-                  sx={{
-                    outline: 'none',
-                  }}
-                />
-              )}
-              onChange={(event, value) => handleMembersData(value)}
-            />
-            {membersError ? <p className="input-block__error">{membersError}</p> : null}
-          </div>
+          {array ? (
+            <>
+              {array.map((option, index) => (
+                <Chip variant="outlined" key={index} label={option} />
+              ))}
+            </>
+          ) : (
+            <div className="input__container w-full  col-span-12">
+              <label htmlFor="tags-filled">Add Members</label>
+              <Autocomplete
+                multiple
+                id="tags-filled"
+                options={data?.map((option) => option)}
+                defaultValue={array ? array : []}
+                freeSolo
+                className="w-full"
+                renderTags={(value, getTagProps) => {
+                  value.map((option, index) => (
+                    <Chip variant="outlined" key={index} label={option} {...getTagProps({ index })} />
+                  ))
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    className="bg-[#f3ebeb] w-full max-h-60 overflow-auto"
+                    name="branch"
+                    {...params}
+                    variant="outlined"
+                    label=""
+                    placeholder="Choose Members"
+                    sx={{
+                      outline: 'none',
+                    }}
+                  />
+                )}
+                onChange={(event, value) => handleMembersData(value)}
+              />
+              {membersError ? <p className="input-block__error">{membersError}</p> : null}
+            </div>
+          )}
         </div>
         {isLoading ? (
           <button className="admin-add__submit my-5" type="button" disabled>

@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import AdminDashboardModal from './AdminDashboardModal'
 import { DeleteStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
 import MeetingAddModal from './MeetingAddModal'
-
+import EventAddModal from './EventAddModal'
 const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
@@ -158,6 +158,12 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
     setArray((prevArray) => [...prevArray, ...newArray])
     setIsOpen(true)
   }
+  const handleAddToEvent = (rows) => {
+    const newArray = rows.map((row) => row.original.email)
+
+    setArray((prevArray) => [...prevArray, ...newArray])
+    setIsOpen(true)
+  }
   const handleDelete = async (rowData) => {
     console.log(rowData)
     const { token } = state
@@ -187,7 +193,14 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
           setModalOpen(!modalOpen)
         }}
       />
-
+      <EventAddModal
+        isOpen={isOpen}
+        refetch={refetch}
+        array={array}
+        onClose={() => {
+          setIsOpen(!isOpen)
+        }}
+      />
       <MaterialReactTable
         data={data}
         state={{ isLoading: isLoading }}
@@ -242,6 +255,13 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
                   onClick={() => handleAddToMeeting(table.getSelectedRowModel().rows)}
                 >
                   Add to Meeting
+                </button>
+                <button
+                  className={btnStyl}
+                  disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
+                  onClick={() => handleAddToEvent(table.getSelectedRowModel().rows)}
+                >
+                  Add to Event
                 </button>
                 <button
                   className={btnStyl}
