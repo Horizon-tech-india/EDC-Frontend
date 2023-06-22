@@ -2,20 +2,24 @@ import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../../../context/AuthContext'
 import MaterialReactTable from 'material-react-table'
-import { Alert, Box, MenuItem, Snackbar, Typography } from '@mui/material'
+import { Alert, Box, Snackbar } from '@mui/material'
 import { ExportToCsv } from 'export-to-csv' //or use your library of choice here
-import EditIcon from '@mui/icons-material/Edit'
+
 import AdminDashboardModal from './AdminDashboardModal'
-import { DeleteStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
-import MeetingAddModal from './MeetingAddModal'
+import { DeleteStartup, GetStatsNumber, GetAllEvent, GetAllMeeting, UpdatePayload } from '../../../Api/Post' //or use your library of choice here
+import EventMeetingCreateModal from './EventMeetingCreateModal'
 
 const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [type, setType] = useState('')
   const [array, setArray] = useState([])
   const [open, setOpen] = useState(false)
   const { refetch: myRefetchh } = GetStatsNumber(state.token)
+  const { refetch: myEventRefetch } = GetAllEvent(state.token)
+  const { refetch: myMeetingsRefetch } = GetAllMeeting(state.token)
+
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState(data[0])
   const btnStyl = 'bg-[#b4cd93] mx-1 disabled:hidden  hover:bg-[#5c664f] hover:text-white  px-2 py-1 rounded-md'
@@ -155,8 +159,18 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
   }
   const handleAddToMeeting = (rows) => {
     const newArray = rows.map((row) => row.original.email)
+    setType('meeting')
     setArray((prevArray) => [...prevArray, ...newArray])
     setIsOpen(true)
+  }
+  const handleAddToEvent = (rows) => {
+    const newArray = rows.map((row) => row.original.email)
+    setType('event')
+    setArray((prevArray) => [...prevArray, ...newArray])
+    setIsOpen(true)
+  }
+  const handleResetArray = () => {
+    setArray([])
   }
   const handleDelete = async (rowData) => {
     console.log(rowData)
@@ -185,6 +199,18 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
         data={modalData}
         onClose={() => {
           setModalOpen(!modalOpen)
+        }}
+      />
+      <EventMeetingCreateModal
+        isOpen={isOpen}
+        refetch={refetch}
+        myEventRefetch={myEventRefetch}
+        myMeetingsRefetch={myMeetingsRefetch}
+        array={array}
+        handleResetArray={handleResetArray}
+        type={type}
+        onClose={() => {
+          setIsOpen(!isOpen)
         }}
       />
 
@@ -242,6 +268,13 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
                   onClick={() => handleAddToMeeting(table.getSelectedRowModel().rows)}
                 >
                   Add to Meeting
+                </button>
+                <button
+                  className={btnStyl}
+                  disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
+                  onClick={() => handleAddToEvent(table.getSelectedRowModel().rows)}
+                >
+                  Add to Event
                 </button>
                 <button
                   className={btnStyl}

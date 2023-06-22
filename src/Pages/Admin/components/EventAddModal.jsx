@@ -7,7 +7,7 @@ import { Alert, Snackbar } from '@mui/material'
 import { useState } from 'react'
 import { CreateNewEvent } from '../../../Api/Post'
 
-const EventAddModal = ({ isOpen, onClose, refetch }) => {
+const EventAddModal = ({ isOpen, onClose, refetch, array }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
@@ -55,7 +55,7 @@ const EventAddModal = ({ isOpen, onClose, refetch }) => {
       >
         <Box sx={style}>
           <div className="w-full bg-gray-100 shadow-xl rounded-md p-5">
-            <EventAddForm submitEventData={submitEventData} />
+            <EventAddForm submitEventData={submitEventData} array={array} />
           </div>
         </Box>
       </Modal>
