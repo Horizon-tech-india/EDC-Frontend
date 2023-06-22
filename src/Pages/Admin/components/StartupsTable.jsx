@@ -13,6 +13,7 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
   const { state } = useContext(AuthContext)
   const [openMsg, setOpenMsg] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [isOpenMeeting, setIsOpenMeeting] = useState(false)
   const [array, setArray] = useState([])
   const [open, setOpen] = useState(false)
   const { refetch: myRefetchh } = GetStatsNumber(state.token)
@@ -156,7 +157,7 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
   const handleAddToMeeting = (rows) => {
     const newArray = rows.map((row) => row.original.email)
     setArray((prevArray) => [...prevArray, ...newArray])
-    setIsOpen(true)
+    setIsOpenMeeting(true)
   }
   const handleAddToEvent = (rows) => {
     const newArray = rows.map((row) => row.original.email)
@@ -197,6 +198,13 @@ const StartupsTable = ({ data, refetch, isLoading }) => {
         isOpen={isOpen}
         refetch={refetch}
         array={array}
+        onClose={() => {
+          setIsOpen(!isOpen)
+        }}
+      />
+      <MeetingAddModal
+        isOpen={isOpenMeeting}
+        refetch={refetch}
         onClose={() => {
           setIsOpen(!isOpen)
         }}
