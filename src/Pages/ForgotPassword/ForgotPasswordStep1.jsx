@@ -23,8 +23,14 @@ const SignUpStep1 = ({ setEmail }) => {
   // const resendMutation = ResendOtp()
   const resendMutation = useMutation({
     mutationFn: (values) => ResendOtp(values),
-    onError:(values)=>  alert("error",values),
-    onSuccess: () =>  { setOpen(true);setIsLoading(false); setTimeout(()=>{navigate('/forgot-password/2')},1000) }
+    onError: (values) => alert('error', values),
+    onSuccess: () => {
+      setOpen(true)
+      setIsLoading(false)
+      setTimeout(() => {
+        navigate('/forgot-password/2')
+      }, 1000)
+    },
   })
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
@@ -34,7 +40,7 @@ const SignUpStep1 = ({ setEmail }) => {
 
       setEmail(values.email)
       const body = { email: values.email, isForgotPassword: true }
- 
+
       resendMutation.mutate(body)
 
       // setOpen(true)
@@ -67,55 +73,10 @@ const SignUpStep1 = ({ setEmail }) => {
 
   return (
     <>
-      {resendMutation.isError && (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-            {resendMutation.error.message}
-          </Alert>
-        </Snackbar>
-      )}
-      {resendMutation.isSuccess && (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-            {resendMutation.data.message}
-          </Alert>
-        </Snackbar>
-      )}
       <div className="login__head">
         <h2>Forgot Password</h2>
         <p>Enter the email of your account and we will send the email to reset your password</p>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="input-block">
-          <label htmlFor="email">Email</label>
-          <div className="input-block__input">
-            <span>
-              <img src={mail} alt="" />
-            </span>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder="Your email"
-            />
-          </div>
-          {errors.email && touched.email ? <p className="input-block__error">{errors.email}</p> : null}
-        </div>
-        <div className="input-block">
-          <button disabled={isLoading} className="submit-btn" type="submit">
-            {isLoading ? (
-              <div className="flex justify-center items-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-t-4 border-b-4 border-blue-500"></div>
-              </div>
-            ) : (
-              'Next'
-            )}
-          </button>
-        </div>
-      </form>
     </>
   )
 }

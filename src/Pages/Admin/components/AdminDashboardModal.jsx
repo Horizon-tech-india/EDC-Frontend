@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom'
 import { Alert, Button, Snackbar } from '@mui/material'
-import { GetAllStartup, GetStatsNumber, UpdatePayload, GetStartupFile } from '../../../Api/Post'
+import { GetAllStartup, GetStatsNumber, UpdatePayload } from '../../../Api/Post'
 
 const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
   const { state } = useContext(AuthContext)
@@ -107,7 +107,7 @@ const AdminDashboardModal = ({ data, isOpen, onClose, hideActions }) => {
     const { token } = state
 
     try {
-      const res = await GetStartupFile({ startupId, token })
+      const res = []
     } catch (error) {
       setOpenMsg(error.message)
     }

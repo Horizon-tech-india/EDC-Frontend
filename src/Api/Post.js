@@ -59,16 +59,6 @@ export function GetAllStartup(token) {
   }
 }
 
-export function GetStartupFile({ token, startupId }) {
-  return API('get', `/users/download-file?startupId=${startupId}`, {}, token)
-    .then((res) => {
-      return res
-    })
-    .catch((error) => {
-      return error
-    })
-}
-
 export function GetStartupsUserEmail(token) {
   const queryKey = 'getStartupsUserEmail'
   const queryFn = () => API('get', url.getStartupsUserEmail, {}, token)
@@ -162,7 +152,7 @@ export function GetAllMeetingsEventsData(currentDate, token) {
 
 // Calendar Meetings Events Highlighted dates api
 
-export  function GetAllMeetingsEventsDates(currentMonth, token) {
+export function GetAllMeetingsEventsDates(currentMonth, token) {
   const queryKey = 'allMeetingsEventsDates'
   const queryFn = () => API('get', `${url.allMeetingsEventsDates}=${currentMonth}`, {}, token)
   const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
@@ -204,19 +194,6 @@ export async function DeleteStartup(rowData, token) {
 }
 
 //Manage and Cordinate Api
-
-export function GetAllAdmin(token) {
-  const queryKey = 'getAllAdmin'
-  const queryFn = () => API('get', url.getAllAdmin, {}, token)
-  const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)
-  const refetchAllStartup = () => {
-    refetch()
-  }
-  return {
-    refetch: refetchAllStartup,
-    ...queryResult,
-  }
-}
 
 export function GetAdminNotifications(token) {
   const queryKey = 'getAdminNotifications'
@@ -272,7 +249,6 @@ export async function UpdatePayload({ value, StartupId, token }) {
     })
 }
 
-
 // submit user common application form
 export async function UploadFile({ payload, token }) {
   console.log(payload, token)
@@ -321,34 +297,34 @@ export function GetUserStartupStatus(token) {
 
 // Signup1 Api
 
-export const Signup1 = async(values) => {
+export const Signup1 = async (values) => {
   // return useMutation(async (formData) => {
-    const response = await API('post', url.userSignup, values, '')
-    return response.data
+  const response = await API('post', url.userSignup, values, '')
+  return response.data
   // })
 }
 
 // verifyOtp APi
-export const VerifyOtp = async(values) => {
+export const VerifyOtp = async (values) => {
   // return useMutation(async (values) => {
-    const response = await API('post', url.userVerifyMailOtp, values, '')
-    return response.data
+  const response = await API('post', url.userVerifyMailOtp, values, '')
+  return response.data
   // })
 }
 
 // Resend Otp Api
-export const ResendOtp =async (formData) => {
+export const ResendOtp = async (formData) => {
   // return useMutation(async (formData) => {
-    const response = await API('post', url.userResendOtp, formData, '')
-    return response.data
+  const response = await API('post', url.userResendOtp, formData, '')
+  return response.data
   // })
 }
 
 // ForgotPAssword Api
-export const ForgotPassword = async(body) => {
+export const ForgotPassword = async (body) => {
   // return useMutation(async (body) => {
-    const response = await API('post', url.setNewPassword, body, '')
-    return response.data
+  const response = await API('post', url.setNewPassword, body, '')
+  return response.data
   // })
 }
 
@@ -379,7 +355,7 @@ export function GetFinanceDetails(startupId, token) {
   const res = API('get', `${url.finance}?startupId=${startupId}`, {}, token)
   return res
 }
-export   function GetUserMeetingEvents(token) {
+export function GetUserMeetingEvents(token) {
   const queryKey = 'getUserMeetingEvents'
   const queryFn = () => API('get', url.userMeetingEvents, {}, token)
   const { refetch, ...queryResult } = useQuery([queryKey], queryFn, queryConfig)

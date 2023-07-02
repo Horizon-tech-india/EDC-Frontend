@@ -70,16 +70,7 @@ const Calendar = () => {
   function renderEventContent(eventInfo) {
     return (
       <>
-        <div
-          className={
-            eventInfo.event?._def?.extendedProps?.type === 'meeting'
-              ? 'bg-blue-600 rounded-md px-[3px] cursor-pointer'
-              : 'bg-green-600 rounded-md px-[3px] cursor-pointer'
-          }
-        >
-          <b>{eventInfo.timeText} </b>
-          <i>{eventInfo.event.title}</i>
-        </div>
+        <div>ohhh sorry</div>
       </>
     )
   }

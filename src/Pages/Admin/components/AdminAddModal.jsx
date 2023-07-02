@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { CreateNewAdmin, GetAllAdmin } from '../../../Api/Post'
+import { CreateNewAdmin } from '../../../Api/Post'
 import { adminAddSchema } from '../../../validation/formSchema'
 import '../styles/adminAddForm.scss'
 import { useFormik } from 'formik'
@@ -20,7 +20,7 @@ const AdminAddModal = ({ isOpen, onClose }) => {
     phoneNumber: '',
   }
   const { state } = useContext(AuthContext)
-  const { refetch } = GetAllAdmin(state.token)
+  const { refetch } = {}
   const [openMsg, setOpenMsg] = useState('')
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)

@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import AdminManageTable from './AdminManageTable'
 import Spinner from '../../../components/Layout/Spinner'
-import { GetAllAdmin } from '../../../Api/Post'
+// import { GetAllAdmin } from '../../../Api/Post'
 const AdminAddSection = () => {
   const { state } = useContext(AuthContext)
-  const { data, isLoading, refetch } = GetAllAdmin(state.token)
+  const { data, isLoading, refetch } = {}
 
   return (
     <div>
